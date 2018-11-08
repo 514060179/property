@@ -4,12 +4,18 @@ import com.simon.backstage.config.Audience;
 import com.simon.backstage.config.JWTToken;
 import com.simon.backstage.util.JwtHelper;
 import io.jsonwebtoken.Claims;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -25,62 +31,49 @@ import java.io.IOException;
  * @author fengtianying
  * @date 2018/11/6 15:45
  */
-//@component
-//@WebFilter(urlPatterns = "/test/*", filterName = "authFilter")
-public class JwtFilter extends FormAuthenticationFilter {
+public class JwtFilter extends AccessControlFilter {
 
+    private static final Logger log = LoggerFactory.getLogger(AccessControlFilter.class);
 
-    private Audience audience;
-
-    public Audience getAudience() {
-        return audience;
-    }
-
-    public void setAudience(Audience audience) {
-        this.audience = audience;
-    }
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    public static final String DEFAULT_JWT_PARAM = "Authorization";
 
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        HttpServletRequest req = (HttpServletRequest) request;
-        String authorization = req.getHeader("Authorization");
-        return JwtHelper.parseJWT(authorization,audience.getBase64Secret())!=null;
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
+        if (null != getSubject(request, response)
+                && getSubject(request, response).isAuthenticated()) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        System.out.println("未登录");
+        if(isJwtSubmission(request)){
+            AuthenticationToken token = createToken(request, response);
+            try {
+                Subject subject = getSubject(request, response);
+                subject.login(token);
+                return true;
+            } catch (AuthenticationException e) {
+                log.error(e.getMessage(),e);
+                WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED,e.getMessage());
+            }
+        }
         return false;
     }
 
-    /**
-     * 对跨域提供支持
-     */
-//    @Override
-//    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-//        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-//        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-//        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
-//        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
-//        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
-//        // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
-//        if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
-//            httpServletResponse.setStatus(HttpStatus.OK.value());
-//            return false;
-//        }
-//        return super.preHandle(request, response);
-//    }
-
-    /**
-     * 将非法请求跳转到 /401
-     */
-    private void response401(ServletRequest req, ServletResponse resp) {
-        try {
-            HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
-            httpServletResponse.sendRedirect("/401");
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
+    protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
+        String jwt = ((HttpServletRequest)request).getHeader(DEFAULT_JWT_PARAM);
+        String host = request.getRemoteHost();
+        log.info("authenticate jwt token:"+jwt);
+        System.out.println("jwt:"+jwt);
+        return new JWTToken(jwt);
     }
+
+    protected boolean isJwtSubmission(ServletRequest request) {
+        String jwt = ((HttpServletRequest)request).getHeader(DEFAULT_JWT_PARAM);
+        return (request instanceof HttpServletRequest)
+                && !StringUtils.isEmpty(jwt);
+    }
+
 }

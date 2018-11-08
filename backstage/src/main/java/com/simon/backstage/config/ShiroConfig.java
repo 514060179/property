@@ -1,16 +1,20 @@
 package com.simon.backstage.config;
 
+import com.simon.backstage.filter.CustomRolesAuthorizationFilter;
 import com.simon.backstage.filter.JwtFilter;
 import com.simon.backstage.shiro.AuthRealm;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.mgt.SubjectFactory;
 import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.subject.SubjectContext;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
@@ -75,6 +79,8 @@ public class ShiroConfig {
     public DefaultWebSecurityManager securityManager(AuthRealm authRealm){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(authRealm);
+//        securityManager.setSessionManager(new JwtSessionManager());
+//        securityManager.setSubjectFactory(new NoSessionDefaultSubjectFactory());
         return securityManager;
     }
     @Autowired
@@ -91,13 +97,15 @@ public class ShiroConfig {
         shiroFilter.setSecurityManager(securityManager);
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
         JwtFilter jwtFilter = new JwtFilter();
-        jwtFilter.setAudience(audience);
+//        jwtFilter.setAudience(audience);
         filters.put("token",jwtFilter );
+        filters.put("customRolesAuthorizationFilter",new CustomRolesAuthorizationFilter() );
 //        filters.put("corsFilter", new RestFilter());
 //        filters.put("customRolesAuthorizationFilter", new CustomRolesAuthorizationFilter());
         shiroFilter.setFilters(filters);
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
-        filterChainDefinitionMap.put("/**","token");
+        filterChainDefinitionMap.put("/test/","token");
+        filterChainDefinitionMap.put("/test/t2","customRolesAuthorizationFilter[admin]");
 //        filterChainDefinitionMap.putAll(roleChains());
         shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilter;
@@ -114,6 +122,8 @@ public class ShiroConfig {
 //                otherChains.put(map.get("url"),"corsFilter,token,customRolesAuthorizationFilter["+map.get("roleName")+"]");
 //            }
 //        }
+//                String permission = "perms[" + resources.getResurl()+ "]";
+//                filterChainDefinitionMap.put(resources.getResurl(),permission);
 //        return otherChains;
 //    }
 
