@@ -1,31 +1,19 @@
-package com.simon.backstage.filter;
+package com.simon.backstage.shiro.filter;
 
-import com.simon.backstage.config.Audience;
-import com.simon.backstage.config.JWTToken;
-import com.simon.backstage.util.JwtHelper;
-import io.jsonwebtoken.Claims;
+import com.simon.backstage.shiro.token.JwtToken;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
-import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.filter.GenericFilterBean;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @author fengtianying
@@ -67,7 +55,7 @@ public class JwtFilter extends AccessControlFilter {
         String host = request.getRemoteHost();
         log.info("authenticate jwt token:"+jwt);
         System.out.println("jwt:"+jwt);
-        return new JWTToken(jwt);
+        return new JwtToken(jwt);
     }
 
     protected boolean isJwtSubmission(ServletRequest request) {

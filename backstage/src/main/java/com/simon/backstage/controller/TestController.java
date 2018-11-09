@@ -1,20 +1,11 @@
 package com.simon.backstage.controller;
 
-import com.simon.backstage.config.Audience;
-import com.simon.backstage.config.JWTToken;
+import com.simon.backstage.shiro.config.Audience;
 import com.simon.backstage.service.UserService;
-import com.simon.backstage.util.JwtHelper;
-import com.simon.backstage.util.SaltEncryUtil;
 import com.simon.dal.model.User;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 /**
  * @author fengtianying

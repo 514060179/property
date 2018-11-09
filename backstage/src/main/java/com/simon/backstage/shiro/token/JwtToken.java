@@ -1,17 +1,14 @@
-package com.simon.backstage.config;
+package com.simon.backstage.shiro.token;
 
 import org.apache.shiro.authc.AuthenticationToken;
 
-/**
- * @author fengtianying
- * @date 2018/11/7 14:58
- */
-public class JWTToken implements AuthenticationToken {
+
+public class JwtToken implements AuthenticationToken {
 
     // 密钥
     private String token;
 
-    public JWTToken(String token) {
+    public JwtToken(String token) {
         this.token = token;
     }
 

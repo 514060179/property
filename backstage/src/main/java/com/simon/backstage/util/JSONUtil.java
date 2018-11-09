@@ -3,11 +3,13 @@ package com.simon.backstage.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.MalformedJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * springboot下的jackon 处理json
@@ -47,6 +49,14 @@ public class JSONUtil {
             logger.error(jsonString+"is not a json array",e);
             return null;
 
+        }
+    }
+
+    public static Map<String, Object> readValue(String val) {
+        try {
+            return mapper.readValue(val, Map.class);
+        } catch (IOException e) {
+            throw new MalformedJwtException("Unable to read JSON value: " + val, e);
         }
     }
     public static String listToJson(List list) {
