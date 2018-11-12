@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.dal.dao.PlaceMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.dal.model.Place" >
+    <id column="place_id" property="placeId" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="place_name" property="placeName" jdbcType="VARCHAR" />
+    <result column="place_traditional_name" property="placeTraditionalName" jdbcType="VARCHAR" />
+    <result column="place_english_name" property="placeEnglishName" jdbcType="VARCHAR" />
+    <result column="place_image" property="placeImage" jdbcType="VARCHAR" />
+    <result column="place_start_time" property="placeStartTime" jdbcType="TIME" />
+    <result column="place_end_time" property="placeEndTime" jdbcType="TIME" />
+    <result column="place_need_order" property="placeNeedOrder" jdbcType="INTEGER" />
+    <result column="place_upper_limit" property="placeUpperLimit" jdbcType="INTEGER" />
+    <result column="place_advance_order_day" property="placeAdvanceOrderDay" jdbcType="INTEGER" />
+    <result column="place_farthest_order_day" property="placeFarthestOrderDay" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="place_introduction" property="placeIntroduction" jdbcType="LONGVARCHAR" />
+    <result column="place_traditional_introduction" property="placeTraditionalIntroduction" jdbcType="LONGVARCHAR" />
+    <result column="place_english_introduction" property="placeEnglishIntroduction" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    place_id, community_id, place_name, place_traditional_name, place_english_name, place_image, 
+    place_start_time, place_end_time, place_need_order, place_upper_limit, place_advance_order_day, 
+    place_farthest_order_day, create_time, update_time,    place_introduction, place_traditional_introduction, place_english_introduction
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from place
+    where place_id = #{placeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from place
+    where place_id = #{placeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.simon.dal.model.Place" >
+    insert into place (place_id, community_id, place_name, 
+      place_traditional_name, place_english_name, 
+      place_image, place_start_time, place_end_time, 
+      place_need_order, place_upper_limit, place_advance_order_day, 
+      place_farthest_order_day, create_time, update_time, 
+      place_introduction, place_traditional_introduction, 
+      place_english_introduction)
+    values (#{placeId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{placeName,jdbcType=VARCHAR}, 
+      #{placeTraditionalName,jdbcType=VARCHAR}, #{placeEnglishName,jdbcType=VARCHAR}, 
+      #{placeImage,jdbcType=VARCHAR}, #{placeStartTime,jdbcType=TIME}, #{placeEndTime,jdbcType=TIME}, 
+      #{placeNeedOrder,jdbcType=INTEGER}, #{placeUpperLimit,jdbcType=INTEGER}, #{placeAdvanceOrderDay,jdbcType=INTEGER}, 
+      #{placeFarthestOrderDay,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{placeIntroduction,jdbcType=LONGVARCHAR}, #{placeTraditionalIntroduction,jdbcType=LONGVARCHAR}, 
+      #{placeEnglishIntroduction,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simon.dal.model.Place" >
+    insert into place
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="placeId != null" >
+        place_id,
+      </if>
+      <if test="communityId != null" >
+        community_id,
+      </if>
+      <if test="placeName != null" >
+        place_name,
+      </if>
+      <if test="placeTraditionalName != null" >
+        place_traditional_name,
+      </if>
+      <if test="placeEnglishName != null" >
+        place_english_name,
+      </if>
+      <if test="placeImage != null" >
+        place_image,
+      </if>
+      <if test="placeStartTime != null" >
+        place_start_time,
+      </if>
+      <if test="placeEndTime != null" >
+        place_end_time,
+      </if>
+      <if test="placeNeedOrder != null" >
+        place_need_order,
+      </if>
+      <if test="placeUpperLimit != null" >
+        place_upper_limit,
+      </if>
+      <if test="placeAdvanceOrderDay != null" >
+        place_advance_order_day,
+      </if>
+      <if test="placeFarthestOrderDay != null" >
+        place_farthest_order_day,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="placeIntroduction != null" >
+        place_introduction,
+      </if>
+      <if test="placeTraditionalIntroduction != null" >
+        place_traditional_introduction,
+      </if>
+      <if test="placeEnglishIntroduction != null" >
+        place_english_introduction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="placeId != null" >
+        #{placeId,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="placeName != null" >
+        #{placeName,jdbcType=VARCHAR},
+      </if>
+      <if test="placeTraditionalName != null" >
+        #{placeTraditionalName,jdbcType=VARCHAR},
+      </if>
+      <if test="placeEnglishName != null" >
+        #{placeEnglishName,jdbcType=VARCHAR},
+      </if>
+      <if test="placeImage != null" >
+        #{placeImage,jdbcType=VARCHAR},
+      </if>
+      <if test="placeStartTime != null" >
+        #{placeStartTime,jdbcType=TIME},
+      </if>
+      <if test="placeEndTime != null" >
+        #{placeEndTime,jdbcType=TIME},
+      </if>
+      <if test="placeNeedOrder != null" >
+        #{placeNeedOrder,jdbcType=INTEGER},
+      </if>
+      <if test="placeUpperLimit != null" >
+        #{placeUpperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="placeAdvanceOrderDay != null" >
+        #{placeAdvanceOrderDay,jdbcType=INTEGER},
+      </if>
+      <if test="placeFarthestOrderDay != null" >
+        #{placeFarthestOrderDay,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="placeIntroduction != null" >
+        #{placeIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="placeTraditionalIntroduction != null" >
+        #{placeTraditionalIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="placeEnglishIntroduction != null" >
+        #{placeEnglishIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simon.dal.model.Place" >
+    update place
+    <set >
+      <if test="communityId != null" >
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="placeName != null" >
+        place_name = #{placeName,jdbcType=VARCHAR},
+      </if>
+      <if test="placeTraditionalName != null" >
+        place_traditional_name = #{placeTraditionalName,jdbcType=VARCHAR},
+      </if>
+      <if test="placeEnglishName != null" >
+        place_english_name = #{placeEnglishName,jdbcType=VARCHAR},
+      </if>
+      <if test="placeImage != null" >
+        place_image = #{placeImage,jdbcType=VARCHAR},
+      </if>
+      <if test="placeStartTime != null" >
+        place_start_time = #{placeStartTime,jdbcType=TIME},
+      </if>
+      <if test="placeEndTime != null" >
+        place_end_time = #{placeEndTime,jdbcType=TIME},
+      </if>
+      <if test="placeNeedOrder != null" >
+        place_need_order = #{placeNeedOrder,jdbcType=INTEGER},
+      </if>
+      <if test="placeUpperLimit != null" >
+        place_upper_limit = #{placeUpperLimit,jdbcType=INTEGER},
+      </if>
+      <if test="placeAdvanceOrderDay != null" >
+        place_advance_order_day = #{placeAdvanceOrderDay,jdbcType=INTEGER},
+      </if>
+      <if test="placeFarthestOrderDay != null" >
+        place_farthest_order_day = #{placeFarthestOrderDay,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="placeIntroduction != null" >
+        place_introduction = #{placeIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="placeTraditionalIntroduction != null" >
+        place_traditional_introduction = #{placeTraditionalIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="placeEnglishIntroduction != null" >
+        place_english_introduction = #{placeEnglishIntroduction,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where place_id = #{placeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simon.dal.model.Place" >
+    update place
+    set community_id = #{communityId,jdbcType=VARCHAR},
+      place_name = #{placeName,jdbcType=VARCHAR},
+      place_traditional_name = #{placeTraditionalName,jdbcType=VARCHAR},
+      place_english_name = #{placeEnglishName,jdbcType=VARCHAR},
+      place_image = #{placeImage,jdbcType=VARCHAR},
+      place_start_time = #{placeStartTime,jdbcType=TIME},
+      place_end_time = #{placeEndTime,jdbcType=TIME},
+      place_need_order = #{placeNeedOrder,jdbcType=INTEGER},
+      place_upper_limit = #{placeUpperLimit,jdbcType=INTEGER},
+      place_advance_order_day = #{placeAdvanceOrderDay,jdbcType=INTEGER},
+      place_farthest_order_day = #{placeFarthestOrderDay,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      place_introduction = #{placeIntroduction,jdbcType=LONGVARCHAR},
+      place_traditional_introduction = #{placeTraditionalIntroduction,jdbcType=LONGVARCHAR},
+      place_english_introduction = #{placeEnglishIntroduction,jdbcType=LONGVARCHAR}
+    where place_id = #{placeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simon.dal.model.Place" >
+    update place
+    set community_id = #{communityId,jdbcType=VARCHAR},
+      place_name = #{placeName,jdbcType=VARCHAR},
+      place_traditional_name = #{placeTraditionalName,jdbcType=VARCHAR},
+      place_english_name = #{placeEnglishName,jdbcType=VARCHAR},
+      place_image = #{placeImage,jdbcType=VARCHAR},
+      place_start_time = #{placeStartTime,jdbcType=TIME},
+      place_end_time = #{placeEndTime,jdbcType=TIME},
+      place_need_order = #{placeNeedOrder,jdbcType=INTEGER},
+      place_upper_limit = #{placeUpperLimit,jdbcType=INTEGER},
+      place_advance_order_day = #{placeAdvanceOrderDay,jdbcType=INTEGER},
+      place_farthest_order_day = #{placeFarthestOrderDay,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where place_id = #{placeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

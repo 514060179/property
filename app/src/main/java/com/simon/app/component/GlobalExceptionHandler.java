@@ -16,19 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     public String paramExceptionHandler(HttpServletRequest req, MissingServletRequestParameterException e) {
         e.printStackTrace();
         logger.error(">>>> system error： ", e);
-        return "";
+        return e.getMessage();
     }
-//    @ResponseStatus(value= HttpStatus.UNAUTHORIZED,reason="没有权限")
-//    public ReturnParam unauthorizedHandler(Exception e) {
-//        logger.error(">>>> system error： ", e);
-//        return ReturnParam.systemError("系统异常！");
-//    }
 
 
 }

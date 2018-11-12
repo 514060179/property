@@ -1,7 +1,7 @@
 package com.simon;
 
-import com.simon.app.filter.JwtFilter;
 import com.simon.app.filter.RestFilter;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -11,6 +11,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
+@MapperScan("com.simon.app.dao")
 public class AppApplication {
 
 	@Bean

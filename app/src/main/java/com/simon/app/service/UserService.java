@@ -8,5 +8,5 @@ import com.simon.dal.model.User;
  */
 public interface UserService {
 
-    User findOne(Long userId);
+    User findOne(String userId);
 }

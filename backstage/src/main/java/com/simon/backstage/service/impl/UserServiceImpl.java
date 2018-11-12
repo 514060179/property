@@ -17,6 +17,6 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Override
     public User findOne(Long userId) {
-        return userMapper.findByUserName("simon");
+        return userMapper.selectByPrimaryKey("simon");
     }
 }

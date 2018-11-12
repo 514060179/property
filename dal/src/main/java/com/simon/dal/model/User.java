@@ -1,42 +1,58 @@
 package com.simon.dal.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.util.Date;
-import java.util.Set;
 
 public class User {
-    private Long userId;
+    private String userId;
 
-    @ApiModelProperty("名字")
+    private String communityId;
+
     private String name;
+
+    private String englishName;
 
     private String sex;
 
-    private Integer age;
+    private String countryCode;
 
-    private String phone;
+    private String tel;
 
-    private String cardNum;
+    private String email;
 
-    private String address;
+    private Date birthday;
 
-    private String remark;
-    @JsonIgnore
-    private Set<String> roleSet;
-    @ApiModelProperty(value = "创建时间",example = "2018-11-07 15:00:00")
+    private String idCard;
+
+    private String username;
+
+    private String password;
+
+    private String portrait;
+
+    private String marriageSystem;
+
+    private String mateName;
+
+    private Boolean deleted;
+
     private Date createTime;
-    @ApiModelProperty(value = "更新时间",example = "2018-11-07 15:00:00")
+
     private Date updateTime;
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId == null ? null : communityId.trim();
     }
 
     public String getName() {
@@ -47,6 +63,14 @@ public class User {
         this.name = name == null ? null : name.trim();
     }
 
+    public String getEnglishName() {
+        return englishName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName == null ? null : englishName.trim();
+    }
+
     public String getSex() {
         return sex;
     }
@@ -55,44 +79,92 @@ public class User {
         this.sex = sex == null ? null : sex.trim();
     }
 
-    public Integer getAge() {
-        return age;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode == null ? null : countryCode.trim();
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTel() {
+        return tel;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+    public void setTel(String tel) {
+        this.tel = tel == null ? null : tel.trim();
     }
 
-    public String getCardNum() {
-        return cardNum;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCardNum(String cardNum) {
-        this.cardNum = cardNum == null ? null : cardNum.trim();
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
     }
 
-    public String getAddress() {
-        return address;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
+    public void setIdCard(String idCard) {
+        this.idCard = idCard == null ? null : idCard.trim();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(String portrait) {
+        this.portrait = portrait == null ? null : portrait.trim();
+    }
+
+    public String getMarriageSystem() {
+        return marriageSystem;
+    }
+
+    public void setMarriageSystem(String marriageSystem) {
+        this.marriageSystem = marriageSystem == null ? null : marriageSystem.trim();
+    }
+
+    public String getMateName() {
+        return mateName;
+    }
+
+    public void setMateName(String mateName) {
+        this.mateName = mateName == null ? null : mateName.trim();
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Date getCreateTime() {
@@ -109,13 +181,5 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public Set<String> getRoleSet() {
-        return roleSet;
-    }
-
-    public void setRoleSet(Set<String> roleSet) {
-        this.roleSet = roleSet;
     }
 }

@@ -11,6 +11,9 @@
     <modules>
         <module>dal</module>
         <module>common</module>
+        <module>app</module>
+        <module>backstage</module>
+        <module>permit</module>
     </modules>
 
     <name>property</name>

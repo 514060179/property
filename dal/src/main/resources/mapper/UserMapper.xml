@@ -1,55 +1,107 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.simon.dal.dao.UserMapper" >
-
-  <resultMap id="BaseResultMap" type="com.simon.dal.model.User">
-    <id column="user_id" property="userId" jdbcType="BIGINT" />
+  <resultMap id="BaseResultMap" type="com.simon.dal.model.User" >
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="english_name" property="englishName" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="CHAR" />
-    <result column="age" property="age" jdbcType="INTEGER" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="card_num" property="cardNum" jdbcType="VARCHAR" />
-    <result column="address" property="address" jdbcType="VARCHAR" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="country_code" property="countryCode" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="portrait" property="portrait" jdbcType="VARCHAR" />
+    <result column="marriage_system" property="marriageSystem" jdbcType="VARCHAR" />
+    <result column="mate_name" property="mateName" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    a.username,a.password,u.user_id, a.account_id, u.NAME, u.sex, u.age, u.phone, u.card_num, u.address, a.`type`, u.remark, u.create_time,
-    u.update_time
+    user_id, community_id, name, english_name, sex, country_code, tel, email, birthday, 
+    id_card, username, password, portrait, marriage_system, mate_name, deleted, create_time, 
+    update_time
   </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.simon.dal.model.User" >
+    insert into user (user_id, community_id, name, 
+      english_name, sex, country_code, 
+      tel, email, birthday, 
+      id_card, username, password, 
+      portrait, marriage_system, mate_name, 
+      deleted, create_time, update_time
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{englishName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{countryCode,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{idCard,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{portrait,jdbcType=VARCHAR}, #{marriageSystem,jdbcType=VARCHAR}, #{mateName,jdbcType=VARCHAR}, 
+      #{deleted,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
   <insert id="insertSelective" parameterType="com.simon.dal.model.User" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
         user_id,
       </if>
-      <if test="accountId != null" >
-        account_id,
+      <if test="communityId != null" >
+        community_id,
       </if>
       <if test="name != null" >
-        NAME,
+        name,
+      </if>
+      <if test="englishName != null" >
+        english_name,
       </if>
       <if test="sex != null" >
         sex,
       </if>
-      <if test="age != null" >
-        age,
+      <if test="countryCode != null" >
+        country_code,
       </if>
-      <if test="phone != null" >
-        phone,
+      <if test="tel != null" >
+        tel,
       </if>
-      <if test="cardNum != null" >
-        card_num,
+      <if test="email != null" >
+        email,
       </if>
-      <if test="address != null" >
-        address,
+      <if test="birthday != null" >
+        birthday,
       </if>
-      <if test="type != null" >
-        TYPE,
+      <if test="idCard != null" >
+        id_card,
       </if>
-      <if test="remark != null" >
-        remark,
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="portrait != null" >
+        portrait,
+      </if>
+      <if test="marriageSystem != null" >
+        marriage_system,
+      </if>
+      <if test="mateName != null" >
+        mate_name,
+      </if>
+      <if test="deleted != null" >
+        deleted,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -60,34 +112,52 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
-        #{userId,jdbcType=BIGINT},
+        #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="accountId != null" >
-        #{accountId,jdbcType=BIGINT},
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="englishName != null" >
+        #{englishName,jdbcType=VARCHAR},
+      </if>
       <if test="sex != null" >
         #{sex,jdbcType=CHAR},
       </if>
-      <if test="age != null" >
-        #{age,jdbcType=INTEGER},
+      <if test="countryCode != null" >
+        #{countryCode,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
       </if>
-      <if test="cardNum != null" >
-        #{cardNum,jdbcType=VARCHAR},
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
       </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
       </if>
-      <if test="type != null" >
-        #{type,jdbcType=CHAR},
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="portrait != null" >
+        #{portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="marriageSystem != null" >
+        #{marriageSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="mateName != null" >
+        #{mateName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -100,32 +170,50 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.simon.dal.model.User" >
     update user
     <set >
-      <if test="accountId != null" >
-        account_id = #{accountId,jdbcType=BIGINT},
+      <if test="communityId != null" >
+        community_id = #{communityId,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
-        NAME = #{name,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="englishName != null" >
+        english_name = #{englishName,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
         sex = #{sex,jdbcType=CHAR},
       </if>
-      <if test="age != null" >
-        age = #{age,jdbcType=INTEGER},
+      <if test="countryCode != null" >
+        country_code = #{countryCode,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
       </if>
-      <if test="cardNum != null" >
-        card_num = #{cardNum,jdbcType=VARCHAR},
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
       </if>
-      <if test="type != null" >
-        TYPE = #{type,jdbcType=CHAR},
+      <if test="idCard != null" >
+        id_card = #{idCard,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="portrait != null" >
+        portrait = #{portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="marriageSystem != null" >
+        marriage_system = #{marriageSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="mateName != null" >
+        mate_name = #{mateName,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -134,41 +222,27 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where user_id = #{userId,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=VARCHAR}
   </update>
-  <select id="findByUserName" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from account a LEFT JOIN user u ON u.account_id=a.account_id
-    where a.username = #{userName,jdbcType=VARCHAR}
-  </select>
-
-  <select id="findListByCondition" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from account a LEFT JOIN user u ON u.account_id=a.account_id
-    <where>
-      <if test="accountId != null" >
-        a.account_id = #{accountId,jdbcType=BIGINT},
-      </if>
-      <if test="name != null" >
-        a.NAME = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="sex != null" >
-        a.sex = #{sex,jdbcType=CHAR},
-      </if>
-      <if test="age != null" >
-        a.age = #{age,jdbcType=INTEGER},
-      </if>
-      <if test="phone != null" >
-        a.phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="cardNum != null" >
-        a.card_num = #{cardNum,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        a.address = #{address,jdbcType=VARCHAR},
-      </if>
-    </where>
-  </select>
+  <update id="updateByPrimaryKey" parameterType="com.simon.dal.model.User" >
+    update user
+    set community_id = #{communityId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      english_name = #{englishName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR},
+      country_code = #{countryCode,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      portrait = #{portrait,jdbcType=VARCHAR},
+      marriage_system = #{marriageSystem,jdbcType=VARCHAR},
+      mate_name = #{mateName,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
 </mapper>
