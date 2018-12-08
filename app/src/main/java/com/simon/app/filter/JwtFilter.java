@@ -1,8 +1,13 @@
 package com.simon.app.filter;
 
 import com.simon.app.config.Audience;
+import com.simon.app.model.vo.ReturnMsg;
+import com.simon.app.util.JSONUtil;
 import com.simon.app.util.JwtHelper;
+import com.sun.deploy.net.HttpUtils;
 import io.jsonwebtoken.Claims;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,15 +22,15 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @author fengtianying
  * @date 2018/11/6 15:45
  */
-//@component
-//@WebFilter(urlPatterns = "/test/*", filterName = "authFilter")
 public class JwtFilter extends GenericFilterBean {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private Audience audience;
 
@@ -35,14 +40,13 @@ public class JwtFilter extends GenericFilterBean {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         //等到请求头信息authorization信息
         final String authHeader = request.getHeader("Authorization");
-        filterChain.doFilter(servletRequest, servletResponse);
-        filterChain.doFilter(servletRequest, servletResponse);
         if ("OPTIONS".equals(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
-
-            if (authHeader == null || !authHeader.startsWith("bearer;")) {
-//                throw new LoginException(ResultEnum.LOGIN_ERROR);
+            if (authHeader == null || !authHeader.startsWith("bearer;")) {//登录失败
+                noLogin(response, JSONUtil.objectToJson(new ReturnMsg(false, ReturnMsg.nologin, "未登录/Authorization参数格式有误", null)));
+                logger.warn("未登录/Authorization参数格式有误Authorization="+authHeader);
+                return;
             }
             final String token = authHeader.substring(7);
 
@@ -53,13 +57,36 @@ public class JwtFilter extends GenericFilterBean {
                 }
                 final Claims claims = JwtHelper.parseJWT(token, audience.getBase64Secret());
                 if (claims == null) {
-//                    throw new LoginException(ResultEnum.LOGIN_ERROR);
+                    noLogin(response, JSONUtil.objectToJson(new ReturnMsg(false, ReturnMsg.nologin, "未登录/jwt解析有误", null)));
+                    logger.warn("未登录/jwt解析有误token="+token);
+                    return;
                 }
-//                request.setAttribute(Constants.CLAIMS, claims);
+                request.setAttribute("claims", claims);
+                filterChain.doFilter(servletRequest, servletResponse);
             } catch (final Exception e) {
-//                throw new LoginException(ResultEnum.LOGIN_ERROR);
+                noLogin(response, JSONUtil.objectToJson(new ReturnMsg(false, ReturnMsg.nologin, "未登录/系统异常", null)));
+                logger.warn("未登录/系统异常token="+token,e);
+                return;
             }
+        }
+    }
 
+    private void noLogin(HttpServletResponse response, String text) {
+        response.setContentType("application/json;charset=UTF-8");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "POST,GET");
+        response.setDateHeader("Expires", 0);
+        PrintWriter pw = null;
+        try {
+            pw = response.getWriter();
+            pw.print(text);
+        } catch (IOException e) {
+            pw.print("IOException");
+        } finally {
+            pw.flush();
+            pw.close();
         }
     }
 }

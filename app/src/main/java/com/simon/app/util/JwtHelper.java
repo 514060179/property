@@ -34,8 +34,7 @@ public class JwtHelper {
     /**
      * 构建jwt
      */
-    public static String createJWT(String name, String userId, String role,
-                                   String audience, String issuer, long TTLMillis, String base64Security) {
+    public static String createJWT(String username, String userId, String communityId,long TTLMillis, String base64Security) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
         long nowMillis = System.currentTimeMillis();
@@ -47,11 +46,11 @@ public class JwtHelper {
 
         //添加构成JWT的参数
         JwtBuilder builder = Jwts.builder().setHeaderParam("typ", "JWT")
-                .claim("role", role)
-                .claim("unique_name", name)
-                .claim("userid", userId)
-                .setIssuer(issuer)
-                .setAudience(audience)
+                .claim("community_id", communityId)
+                .claim("username", username)
+                .claim("user_id", userId)
+//                .setIssuer(issuer)
+//                .setAudience(audience)
                 .signWith(signatureAlgorithm, signingKey);
         //添加Token过期时间
         if (TTLMillis >= 0) {
@@ -62,5 +61,14 @@ public class JwtHelper {
 
         //生成JWT
         return builder.compact();
+    }
+
+    public static void main(String[] args) {
+        String token = createJWT("123456","367","role",
+//                "123","456",
+                -1L,"MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=");
+        System.out.println(token);
+        Claims claims = parseJWT(token,"MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=");
+        System.out.println(parseJWT(token,"MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY="));
     }
 }

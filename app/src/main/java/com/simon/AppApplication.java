@@ -1,5 +1,6 @@
 package com.simon;
 
+import com.simon.app.filter.JwtFilter;
 import com.simon.app.filter.RestFilter;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -17,20 +18,20 @@ public class AppApplication {
 	@Bean
 	public FilterRegistrationBean restFilter() {
 		FilterRegistrationBean registration = new FilterRegistrationBean(new RestFilter());
-		registration.addUrlPatterns("/test/*"); //
+		registration.addUrlPatterns("/*"); //
 //		registration.addInitParameter("paramName", "paramValue"); //
 		registration.setName("testFilter");
-		registration.setOrder(1);
+		registration.setOrder(1);//排序
 		return registration;
 	}
-//	@Bean
-//	public FilterRegistrationBean jwtFilter() {
-//		FilterRegistrationBean registration = new FilterRegistrationBean(new JwtFilter());
-//		registration.addUrlPatterns("/test/*"); //
-//		registration.setName("jwtFilter");
-//		registration.setOrder(2);
-//		return registration;
-//	}
+	@Bean
+	public FilterRegistrationBean jwtFilter() {
+		FilterRegistrationBean registration = new FilterRegistrationBean(new JwtFilter());
+		registration.addUrlPatterns("/api/*"); //
+		registration.setName("jwtFilter");
+		registration.setOrder(2);
+		return registration;
+	}
 
 
 	public static void main(String[] args) {
