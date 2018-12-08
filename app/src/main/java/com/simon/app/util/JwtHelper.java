@@ -64,7 +64,7 @@ public class JwtHelper {
     }
 
     public static void main(String[] args) {
-        String token = createJWT("123456","367","role",
+        String token = createJWT("simon","u123456","c123456",
 //                "123","456",
                 -1L,"MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=");
         System.out.println(token);

@@ -284,4 +284,9 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where community_id = #{communityId,jdbcType=VARCHAR}
   </update>
+  <select id="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from community
+  </select>
 </mapper>

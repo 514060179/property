@@ -1,5 +1,6 @@
 package com.simon.dal.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -41,7 +42,8 @@ public class User {
     @ApiModelProperty("用户登录账号")
     private String username;
 
-    @ApiModelProperty("用户登录密码")
+    @ApiModelProperty(value = "用户登录密码",hidden = true)
+    @JsonIgnore
     private String password;
 
     @ApiModelProperty("用户头像")
