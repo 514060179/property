@@ -1,7 +1,6 @@
 package com.simon.app.controller;
 
 import com.simon.app.dao.SeatLayoutMapper;
-import com.simon.app.model.SeatLayout;
 import com.simon.app.service.UserService;
 import com.simon.dal.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,4 @@ public class TestController {
         return userService.findOne(user.getUserId());
     }
 
-    @PostMapping("t4")
-    public List<SeatLayout> t4(@RequestBody User user){
-        return seatLayoutMapper.findAllList();
-    }
 }
