@@ -1,38 +1,59 @@
 package com.simon.dal.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
+@ApiModel(value = "User", description = "用户")
 public class User {
+
+    @ApiModelProperty("用户id")
     private String userId;
 
+    @ApiModelProperty("社区id")
     private String communityId;
 
+    @ApiModelProperty("名字")
     private String name;
 
+    @ApiModelProperty("英文名字")
     private String englishName;
 
+    @ApiModelProperty("性别(0女1男)")
     private String sex;
 
+    @ApiModelProperty("区号")
     private String countryCode;
 
+    @ApiModelProperty("手机号")
     private String tel;
 
+    @ApiModelProperty("电邮")
     private String email;
 
+    @ApiModelProperty("生日:2018-12-15")
     private Date birthday;
 
+    @ApiModelProperty("身份证号码")
     private String idCard;
 
+    @ApiModelProperty("用户登录账号")
     private String username;
 
+    @ApiModelProperty("用户登录密码")
     private String password;
 
+    @ApiModelProperty("用户头像")
     private String portrait;
 
+    @ApiModelProperty("婚姻制度")
     private String marriageSystem;
 
+    @ApiModelProperty("配偶名字")
     private String mateName;
 
+    @ApiModelProperty("是否删除")
     private Boolean deleted;
 
     private Date createTime;

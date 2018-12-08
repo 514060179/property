@@ -1,10 +1,12 @@
 package com.simon.dal.model;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
+@ApiModel(value = "Community", description = "社区")
 public class Community {
 
     @ApiModelProperty("社区id")

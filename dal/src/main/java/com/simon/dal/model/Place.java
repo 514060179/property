@@ -1,9 +1,11 @@
 package com.simon.dal.model;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
+@ApiModel(value = "Place", description = "场所信息")
 public class Place {
 
     @ApiModelProperty("id")

@@ -1,9 +1,11 @@
 package com.simon.dal.model;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
+@ApiModel(value = "Notice", description = "广告/公告/推送")
 public class Notice {
     @ApiModelProperty("id")
     private String noticeId;

@@ -1,12 +1,9 @@
 package com.simon.app.controller;
 
-import com.simon.app.dao.SeatLayoutMapper;
 import com.simon.app.service.UserService;
 import com.simon.dal.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author fengtianying
@@ -19,7 +16,6 @@ public class TestController {
     @Autowired
     private UserService userService;
     @Autowired
-    private SeatLayoutMapper seatLayoutMapper;
     @GetMapping("t1")
     public String t1(String param){
         return "t1";
