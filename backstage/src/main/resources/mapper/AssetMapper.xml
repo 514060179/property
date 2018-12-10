@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.backstage.dao.AssetMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.Asset" >
+    <id column="asset_id" property="assetId" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="asset_type" property="assetType" jdbcType="VARCHAR" />
+    <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
+    <result column="asset_traditional_name" property="assetTraditionalName" jdbcType="VARCHAR" />
+    <result column="asset_english_name" property="assetEnglishName" jdbcType="VARCHAR" />
+    <result column="asset_position" property="assetPosition" jdbcType="VARCHAR" />
+    <result column="asset_traditional_position" property="assetTraditionalPosition" jdbcType="VARCHAR" />
+    <result column="asset_english_position" property="assetEnglishPosition" jdbcType="VARCHAR" />
+    <result column="asset_describe" property="assetDescribe" jdbcType="LONGVARCHAR" />
+    <result column="asset_traditional_describe" property="assetTraditionalDescribe" jdbcType="LONGVARCHAR" />
+    <result column="asset_english_describe" property="assetEnglishDescribe" jdbcType="LONGVARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    asset_id, community_id, asset_type, asset_name, asset_traditional_name, asset_english_name, 
+    asset_position, asset_traditional_position, asset_english_position, create_time, 
+    update_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    asset_describe, asset_traditional_describe, asset_english_describe
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from asset
+    where asset_id = #{assetId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from asset
+    where asset_id = #{assetId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.simon.backstage.domain.model.Asset" >
+    insert into asset (asset_id, community_id, asset_type, 
+      asset_name, asset_traditional_name, asset_english_name, 
+      asset_position, asset_traditional_position, 
+      asset_english_position, create_time, update_time, 
+      asset_describe, asset_traditional_describe, 
+      asset_english_describe)
+    values (#{assetId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{assetType,jdbcType=VARCHAR}, 
+      #{assetName,jdbcType=VARCHAR}, #{assetTraditionalName,jdbcType=VARCHAR}, #{assetEnglishName,jdbcType=VARCHAR}, 
+      #{assetPosition,jdbcType=VARCHAR}, #{assetTraditionalPosition,jdbcType=VARCHAR}, 
+      #{assetEnglishPosition,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{assetDescribe,jdbcType=LONGVARCHAR}, #{assetTraditionalDescribe,jdbcType=LONGVARCHAR}, 
+      #{assetEnglishDescribe,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simon.backstage.domain.model.Asset" >
+    insert into asset
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="assetId != null" >
+        asset_id,
+      </if>
+      <if test="communityId != null" >
+        community_id,
+      </if>
+      <if test="assetType != null" >
+        asset_type,
+      </if>
+      <if test="assetName != null" >
+        asset_name,
+      </if>
+      <if test="assetTraditionalName != null" >
+        asset_traditional_name,
+      </if>
+      <if test="assetEnglishName != null" >
+        asset_english_name,
+      </if>
+      <if test="assetPosition != null" >
+        asset_position,
+      </if>
+      <if test="assetTraditionalPosition != null" >
+        asset_traditional_position,
+      </if>
+      <if test="assetEnglishPosition != null" >
+        asset_english_position,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="assetDescribe != null" >
+        asset_describe,
+      </if>
+      <if test="assetTraditionalDescribe != null" >
+        asset_traditional_describe,
+      </if>
+      <if test="assetEnglishDescribe != null" >
+        asset_english_describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="assetId != null" >
+        #{assetId,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="assetType != null" >
+        #{assetType,jdbcType=VARCHAR},
+      </if>
+      <if test="assetName != null" >
+        #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetTraditionalName != null" >
+        #{assetTraditionalName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetEnglishName != null" >
+        #{assetEnglishName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetPosition != null" >
+        #{assetPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="assetTraditionalPosition != null" >
+        #{assetTraditionalPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="assetEnglishPosition != null" >
+        #{assetEnglishPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="assetDescribe != null" >
+        #{assetDescribe,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="assetTraditionalDescribe != null" >
+        #{assetTraditionalDescribe,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="assetEnglishDescribe != null" >
+        #{assetEnglishDescribe,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simon.backstage.domain.model.Asset" >
+    update asset
+    <set >
+      <if test="communityId != null" >
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="assetType != null" >
+        asset_type = #{assetType,jdbcType=VARCHAR},
+      </if>
+      <if test="assetName != null" >
+        asset_name = #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetTraditionalName != null" >
+        asset_traditional_name = #{assetTraditionalName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetEnglishName != null" >
+        asset_english_name = #{assetEnglishName,jdbcType=VARCHAR},
+      </if>
+      <if test="assetPosition != null" >
+        asset_position = #{assetPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="assetTraditionalPosition != null" >
+        asset_traditional_position = #{assetTraditionalPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="assetEnglishPosition != null" >
+        asset_english_position = #{assetEnglishPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="assetDescribe != null" >
+        asset_describe = #{assetDescribe,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="assetTraditionalDescribe != null" >
+        asset_traditional_describe = #{assetTraditionalDescribe,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="assetEnglishDescribe != null" >
+        asset_english_describe = #{assetEnglishDescribe,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where asset_id = #{assetId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simon.backstage.domain.model.Asset" >
+    update asset
+    set community_id = #{communityId,jdbcType=VARCHAR},
+      asset_type = #{assetType,jdbcType=VARCHAR},
+      asset_name = #{assetName,jdbcType=VARCHAR},
+      asset_traditional_name = #{assetTraditionalName,jdbcType=VARCHAR},
+      asset_english_name = #{assetEnglishName,jdbcType=VARCHAR},
+      asset_position = #{assetPosition,jdbcType=VARCHAR},
+      asset_traditional_position = #{assetTraditionalPosition,jdbcType=VARCHAR},
+      asset_english_position = #{assetEnglishPosition,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      asset_describe = #{assetDescribe,jdbcType=LONGVARCHAR},
+      asset_traditional_describe = #{assetTraditionalDescribe,jdbcType=LONGVARCHAR},
+      asset_english_describe = #{assetEnglishDescribe,jdbcType=LONGVARCHAR}
+    where asset_id = #{assetId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.Asset" >
+    update asset
+    set community_id = #{communityId,jdbcType=VARCHAR},
+      asset_type = #{assetType,jdbcType=VARCHAR},
+      asset_name = #{assetName,jdbcType=VARCHAR},
+      asset_traditional_name = #{assetTraditionalName,jdbcType=VARCHAR},
+      asset_english_name = #{assetEnglishName,jdbcType=VARCHAR},
+      asset_position = #{assetPosition,jdbcType=VARCHAR},
+      asset_traditional_position = #{assetTraditionalPosition,jdbcType=VARCHAR},
+      asset_english_position = #{assetEnglishPosition,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where asset_id = #{assetId,jdbcType=VARCHAR}
+  </update>
+</mapper>

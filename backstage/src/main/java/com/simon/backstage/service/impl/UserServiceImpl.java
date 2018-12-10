@@ -1,5 +1,6 @@
 package com.simon.backstage.service.impl;
 
+import com.simon.backstage.dao.ManagerMapper;
 import com.simon.backstage.service.UserService;
 import com.simon.dal.dao.UserMapper;
 import com.simon.dal.model.User;
@@ -15,6 +16,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private ManagerMapper managerMapper;
+
     @Override
     public User findOne(Long userId) {
         return userMapper.selectByPrimaryKey("simon");

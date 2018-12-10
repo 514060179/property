@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.backstage.dao.EventMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.Event" >
+    <id column="event_id" property="eventId" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="event_status" property="eventStatus" jdbcType="INTEGER" />
+    <result column="event_remark" property="eventRemark" jdbcType="VARCHAR" />
+    <result column="event_date" property="eventDate" jdbcType="DATE" />
+    <result column="event_type" property="eventType" jdbcType="INTEGER" />
+    <result column="event_finish_date" property="eventFinishDate" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="event_content" property="eventContent" jdbcType="LONGVARCHAR" />
+    <result column="event_cause" property="eventCause" jdbcType="LONGVARCHAR" />
+    <result column="event_solve" property="eventSolve" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    event_id, community_id, event_status, event_remark, event_date, event_type, event_finish_date, 
+    create_time, update_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    event_content, event_cause, event_solve
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from event
+    where event_id = #{eventId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from event
+    where event_id = #{eventId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.simon.backstage.domain.model.Event" >
+    insert into event (event_id, community_id, event_status, 
+      event_remark, event_date, event_type, 
+      event_finish_date, create_time, update_time, 
+      event_content, event_cause, event_solve
+      )
+    values (#{eventId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{eventStatus,jdbcType=INTEGER}, 
+      #{eventRemark,jdbcType=VARCHAR}, #{eventDate,jdbcType=DATE}, #{eventType,jdbcType=INTEGER}, 
+      #{eventFinishDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{eventContent,jdbcType=LONGVARCHAR}, #{eventCause,jdbcType=LONGVARCHAR}, #{eventSolve,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.simon.backstage.domain.model.Event" >
+    insert into event
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="eventId != null" >
+        event_id,
+      </if>
+      <if test="communityId != null" >
+        community_id,
+      </if>
+      <if test="eventStatus != null" >
+        event_status,
+      </if>
+      <if test="eventRemark != null" >
+        event_remark,
+      </if>
+      <if test="eventDate != null" >
+        event_date,
+      </if>
+      <if test="eventType != null" >
+        event_type,
+      </if>
+      <if test="eventFinishDate != null" >
+        event_finish_date,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="eventContent != null" >
+        event_content,
+      </if>
+      <if test="eventCause != null" >
+        event_cause,
+      </if>
+      <if test="eventSolve != null" >
+        event_solve,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="eventId != null" >
+        #{eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventStatus != null" >
+        #{eventStatus,jdbcType=INTEGER},
+      </if>
+      <if test="eventRemark != null" >
+        #{eventRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDate != null" >
+        #{eventDate,jdbcType=DATE},
+      </if>
+      <if test="eventType != null" >
+        #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="eventFinishDate != null" >
+        #{eventFinishDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventContent != null" >
+        #{eventContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="eventCause != null" >
+        #{eventCause,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="eventSolve != null" >
+        #{eventSolve,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simon.backstage.domain.model.Event" >
+    update event
+    <set >
+      <if test="communityId != null" >
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="eventStatus != null" >
+        event_status = #{eventStatus,jdbcType=INTEGER},
+      </if>
+      <if test="eventRemark != null" >
+        event_remark = #{eventRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDate != null" >
+        event_date = #{eventDate,jdbcType=DATE},
+      </if>
+      <if test="eventType != null" >
+        event_type = #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="eventFinishDate != null" >
+        event_finish_date = #{eventFinishDate,jdbcType=DATE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventContent != null" >
+        event_content = #{eventContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="eventCause != null" >
+        event_cause = #{eventCause,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="eventSolve != null" >
+        event_solve = #{eventSolve,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where event_id = #{eventId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simon.backstage.domain.model.Event" >
+    update event
+    set community_id = #{communityId,jdbcType=VARCHAR},
+      event_status = #{eventStatus,jdbcType=INTEGER},
+      event_remark = #{eventRemark,jdbcType=VARCHAR},
+      event_date = #{eventDate,jdbcType=DATE},
+      event_type = #{eventType,jdbcType=INTEGER},
+      event_finish_date = #{eventFinishDate,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      event_content = #{eventContent,jdbcType=LONGVARCHAR},
+      event_cause = #{eventCause,jdbcType=LONGVARCHAR},
+      event_solve = #{eventSolve,jdbcType=LONGVARCHAR}
+    where event_id = #{eventId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.Event" >
+    update event
+    set community_id = #{communityId,jdbcType=VARCHAR},
+      event_status = #{eventStatus,jdbcType=INTEGER},
+      event_remark = #{eventRemark,jdbcType=VARCHAR},
+      event_date = #{eventDate,jdbcType=DATE},
+      event_type = #{eventType,jdbcType=INTEGER},
+      event_finish_date = #{eventFinishDate,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where event_id = #{eventId,jdbcType=VARCHAR}
+  </update>
+</mapper>

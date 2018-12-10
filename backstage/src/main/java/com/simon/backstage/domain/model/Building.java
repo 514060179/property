@@ -1,0 +1,140 @@
+package com.simon.backstage.domain.model;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Date;
+
+@ApiModel(value = "Building", description = "楼宇信息")
+public class Building {
+
+    @ApiModelProperty("id")
+    private String buildingId;
+
+    @ApiModelProperty("社区id")
+    private String communityId;
+
+    @ApiModelProperty("楼宇名字")
+    private String buildingName;
+
+    @ApiModelProperty("楼宇编号")
+    private String buildingNo;
+
+    @ApiModelProperty("楼宇全址")
+    private String fullAddress;
+
+    @ApiModelProperty("楼宇结构")
+    private String buildingStruct;
+
+    @ApiModelProperty("楼宇方向")
+    private String buildingDirection;
+
+    @ApiModelProperty("楼上几层")
+    private Integer floorUpNum;
+
+    @ApiModelProperty("楼下几层")
+    private Integer floorLowNum;
+
+    @ApiModelProperty("是否注销")
+    private Boolean deleted;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+    public String getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId == null ? null : buildingId.trim();
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId == null ? null : communityId.trim();
+    }
+
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName == null ? null : buildingName.trim();
+    }
+
+    public String getBuildingNo() {
+        return buildingNo;
+    }
+
+    public void setBuildingNo(String buildingNo) {
+        this.buildingNo = buildingNo == null ? null : buildingNo.trim();
+    }
+
+    public String getFullAddress() {
+        return fullAddress;
+    }
+
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress == null ? null : fullAddress.trim();
+    }
+
+    public String getBuildingStruct() {
+        return buildingStruct;
+    }
+
+    public void setBuildingStruct(String buildingStruct) {
+        this.buildingStruct = buildingStruct == null ? null : buildingStruct.trim();
+    }
+
+    public String getBuildingDirection() {
+        return buildingDirection;
+    }
+
+    public void setBuildingDirection(String buildingDirection) {
+        this.buildingDirection = buildingDirection == null ? null : buildingDirection.trim();
+    }
+
+    public Integer getFloorUpNum() {
+        return floorUpNum;
+    }
+
+    public void setFloorUpNum(Integer floorUpNum) {
+        this.floorUpNum = floorUpNum;
+    }
+
+    public Integer getFloorLowNum() {
+        return floorLowNum;
+    }
+
+    public void setFloorLowNum(Integer floorLowNum) {
+        this.floorLowNum = floorLowNum;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+}
