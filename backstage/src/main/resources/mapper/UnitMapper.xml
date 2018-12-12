@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.backstage.dao.UnitMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.Unit" >
+    <id column="unit_id" property="unitId" jdbcType="VARCHAR" />
+    <result column="building_id" property="buildingId" jdbcType="VARCHAR" />
+    <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+    <result column="unit_no" property="unitNo" jdbcType="VARCHAR" />
+    <result column="unit_covered_area" property="unitCoveredArea" jdbcType="DECIMAL" />
+    <result column="unit_relative_proportion" property="unitRelativeProportion" jdbcType="DECIMAL" />
+    <result column="unit_child_relative_proportion" property="unitChildRelativeProportion" jdbcType="DECIMAL" />
+    <result column="unit_purpose" property="unitPurpose" jdbcType="VARCHAR" />
+    <result column="unit_position" property="unitPosition" jdbcType="VARCHAR" />
+    <result column="unit_type" property="unitType" jdbcType="INTEGER" />
+    <result column="unit_full_address" property="unitFullAddress" jdbcType="VARCHAR" />
+    <result column="unit_status" property="unitStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    unit_id, building_id, unit_name, unit_no, unit_covered_area, unit_relative_proportion, 
+    unit_child_relative_proportion, unit_purpose, unit_position, unit_type, unit_full_address, 
+    unit_status, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from unit
+    where unit_id = #{unitId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from unit
+    where unit_id = #{unitId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.simon.backstage.domain.model.Unit" >
+    insert into unit (unit_id, building_id, unit_name, 
+      unit_no, unit_covered_area, unit_relative_proportion, 
+      unit_child_relative_proportion, unit_purpose, 
+      unit_position, unit_type, unit_full_address, 
+      unit_status, create_time, update_time
+      )
+    values (#{unitId,jdbcType=VARCHAR}, #{buildingId,jdbcType=VARCHAR}, #{unitName,jdbcType=VARCHAR}, 
+      #{unitNo,jdbcType=VARCHAR}, #{unitCoveredArea,jdbcType=DECIMAL}, #{unitRelativeProportion,jdbcType=DECIMAL}, 
+      #{unitChildRelativeProportion,jdbcType=DECIMAL}, #{unitPurpose,jdbcType=VARCHAR}, 
+      #{unitPosition,jdbcType=VARCHAR}, #{unitType,jdbcType=INTEGER}, #{unitFullAddress,jdbcType=VARCHAR}, 
+      #{unitStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.simon.backstage.domain.model.Unit" >
+    insert into unit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="unitId != null" >
+        unit_id,
+      </if>
+      <if test="buildingId != null" >
+        building_id,
+      </if>
+      <if test="unitName != null" >
+        unit_name,
+      </if>
+      <if test="unitNo != null" >
+        unit_no,
+      </if>
+      <if test="unitCoveredArea != null" >
+        unit_covered_area,
+      </if>
+      <if test="unitRelativeProportion != null" >
+        unit_relative_proportion,
+      </if>
+      <if test="unitChildRelativeProportion != null" >
+        unit_child_relative_proportion,
+      </if>
+      <if test="unitPurpose != null" >
+        unit_purpose,
+      </if>
+      <if test="unitPosition != null" >
+        unit_position,
+      </if>
+      <if test="unitType != null" >
+        unit_type,
+      </if>
+      <if test="unitFullAddress != null" >
+        unit_full_address,
+      </if>
+      <if test="unitStatus != null" >
+        unit_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="unitId != null" >
+        #{unitId,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingId != null" >
+        #{buildingId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null" >
+        #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="unitCoveredArea != null" >
+        #{unitCoveredArea,jdbcType=DECIMAL},
+      </if>
+      <if test="unitRelativeProportion != null" >
+        #{unitRelativeProportion,jdbcType=DECIMAL},
+      </if>
+      <if test="unitChildRelativeProportion != null" >
+        #{unitChildRelativeProportion,jdbcType=DECIMAL},
+      </if>
+      <if test="unitPurpose != null" >
+        #{unitPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPosition != null" >
+        #{unitPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="unitType != null" >
+        #{unitType,jdbcType=INTEGER},
+      </if>
+      <if test="unitFullAddress != null" >
+        #{unitFullAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="unitStatus != null" >
+        #{unitStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simon.backstage.domain.model.Unit" >
+    update unit
+    <set >
+      <if test="buildingId != null" >
+        building_id = #{buildingId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitName != null" >
+        unit_name = #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null" >
+        unit_no = #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="unitCoveredArea != null" >
+        unit_covered_area = #{unitCoveredArea,jdbcType=DECIMAL},
+      </if>
+      <if test="unitRelativeProportion != null" >
+        unit_relative_proportion = #{unitRelativeProportion,jdbcType=DECIMAL},
+      </if>
+      <if test="unitChildRelativeProportion != null" >
+        unit_child_relative_proportion = #{unitChildRelativeProportion,jdbcType=DECIMAL},
+      </if>
+      <if test="unitPurpose != null" >
+        unit_purpose = #{unitPurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPosition != null" >
+        unit_position = #{unitPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="unitType != null" >
+        unit_type = #{unitType,jdbcType=INTEGER},
+      </if>
+      <if test="unitFullAddress != null" >
+        unit_full_address = #{unitFullAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="unitStatus != null" >
+        unit_status = #{unitStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where unit_id = #{unitId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.Unit" >
+    update unit
+    set building_id = #{buildingId,jdbcType=VARCHAR},
+      unit_name = #{unitName,jdbcType=VARCHAR},
+      unit_no = #{unitNo,jdbcType=VARCHAR},
+      unit_covered_area = #{unitCoveredArea,jdbcType=DECIMAL},
+      unit_relative_proportion = #{unitRelativeProportion,jdbcType=DECIMAL},
+      unit_child_relative_proportion = #{unitChildRelativeProportion,jdbcType=DECIMAL},
+      unit_purpose = #{unitPurpose,jdbcType=VARCHAR},
+      unit_position = #{unitPosition,jdbcType=VARCHAR},
+      unit_type = #{unitType,jdbcType=INTEGER},
+      unit_full_address = #{unitFullAddress,jdbcType=VARCHAR},
+      unit_status = #{unitStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where unit_id = #{unitId,jdbcType=VARCHAR}
+  </update>
+</mapper>
