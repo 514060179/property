@@ -1,7 +1,5 @@
 package com.simon.dal.dao;
 
-import java.util.List;
-
 import com.simon.dal.model.Notice;
 
 public interface NoticeMapper {
@@ -18,6 +16,4 @@ public interface NoticeMapper {
     int updateByPrimaryKeyWithBLOBs(Notice record);
 
     int updateByPrimaryKey(Notice record);
-    
-    List<Notice> list();
 }

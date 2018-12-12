@@ -26,16 +26,6 @@
     id_card, username, password, portrait, marriage_system, mate_name, deleted, create_time, 
     update_time
   </sql>
-  <select id="selectUser" resultMap="BaseResultMap">
-  	select 
-    *
-    from user
-  	where username=#{username,jdbcType=VARCHAR} 
-  	<if test="password != null" >
-       and password = #{password,jdbcType=VARCHAR}
-    </if>
-  </select>
-  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

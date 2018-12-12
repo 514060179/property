@@ -32,10 +32,6 @@ public class ReturnMsg<T> implements Code {
     public static ReturnMsg success(Object object){
         return new ReturnMsg(Boolean.TRUE,Code.success,"成功",object);
     }
-    
-    public static ReturnMsg fail(){
-    	return new ReturnMsg(Boolean.FALSE,Code.nologin,"失败",null);
-    }
 
     public boolean isSuccess() {
         return success;

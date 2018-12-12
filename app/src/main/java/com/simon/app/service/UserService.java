@@ -9,6 +9,4 @@ import com.simon.dal.model.User;
 public interface UserService {
 
     User findOne(String userId);
-
-	User findUser(String username, String password);
 }

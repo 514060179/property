@@ -19,10 +19,4 @@ public class UserServiceImpl implements UserService {
     public User findOne(String userId) {
         return userMapper.selectByPrimaryKey(userId);
     }
-    
-    @Override
-    public User findUser(String username, String password) {
-		return userMapper.selectUser(username, password);
-    }
-    
 }

@@ -16,16 +16,6 @@
     record_id, user_id, place_id, order_date, order_start_time, order_end_time, record_status, 
     update_time, create_time
   </sql>
-  <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.model.PlaceRecord" >
-  	select
-  	<include refid="Base_Column_List" />
-  	from place_record
-  	<where>
-  		<if test="userId != null">
-  			user_Id = #{userId,jdbcType=VARCHAR}
-  		</if>
-  	</where>
-  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

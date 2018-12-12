@@ -1,7 +1,5 @@
 package com.simon.dal.dao;
 
-import java.util.List;
-
 import com.simon.dal.model.Complain;
 
 public interface ComplainMapper {
@@ -18,6 +16,4 @@ public interface ComplainMapper {
     int updateByPrimaryKeyWithBLOBs(Complain record);
 
     int updateByPrimaryKey(Complain record);
-
-	List<Complain> list(Complain record);
 }
