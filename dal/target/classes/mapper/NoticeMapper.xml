@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.dal.dao.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.dal.model.Notice" >
+    <id column="notice_id" property="noticeId" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="notice_type" property="noticeType" jdbcType="CHAR" />
+    <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
+    <result column="notice_traditional_title" property="noticeTraditionalTitle" jdbcType="VARCHAR" />
+    <result column="notice_english_title" property="noticeEnglishTitle" jdbcType="VARCHAR" />
+    <result column="notice_image" property="noticeImage" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="notice_details" property="noticeDetails" jdbcType="LONGVARCHAR" />
+    <result column="notice_traditional_details" property="noticeTraditionalDetails" jdbcType="LONGVARCHAR" />
+    <result column="notice_english_details" property="noticeEnglishDetails" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    notice_id, community_id, notice_type, notice_title, notice_traditional_title, notice_english_title, 
+    notice_image, create_time, update_time,    notice_details, notice_traditional_details, notice_english_details
+  </sql>
+
+  <select id="list" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from notice
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where notice_id = #{noticeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from notice
+    where notice_id = #{noticeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.simon.dal.model.Notice" >
+    insert into notice (notice_id, community_id, notice_type, 
+      notice_title, notice_traditional_title, notice_english_title, 
+      notice_image, create_time, update_time, 
+      notice_details, notice_traditional_details, 
+      notice_english_details)
+    values (#{noticeId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{noticeType,jdbcType=CHAR}, 
+      #{noticeTitle,jdbcType=VARCHAR}, #{noticeTraditionalTitle,jdbcType=VARCHAR}, #{noticeEnglishTitle,jdbcType=VARCHAR}, 
+      #{noticeImage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{noticeDetails,jdbcType=LONGVARCHAR}, #{noticeTraditionalDetails,jdbcType=LONGVARCHAR}, 
+      #{noticeEnglishDetails,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simon.dal.model.Notice" >
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        notice_id,
+      </if>
+      <if test="communityId != null" >
+        community_id,
+      </if>
+      <if test="noticeType != null" >
+        notice_type,
+      </if>
+      <if test="noticeTitle != null" >
+        notice_title,
+      </if>
+      <if test="noticeTraditionalTitle != null" >
+        notice_traditional_title,
+      </if>
+      <if test="noticeEnglishTitle != null" >
+        notice_english_title,
+      </if>
+      <if test="noticeImage != null" >
+        notice_image,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="noticeDetails != null" >
+        notice_details,
+      </if>
+      <if test="noticeTraditionalDetails != null" >
+        notice_traditional_details,
+      </if>
+      <if test="noticeEnglishDetails != null" >
+        notice_english_details,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noticeId != null" >
+        #{noticeId,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeType != null" >
+        #{noticeType,jdbcType=CHAR},
+      </if>
+      <if test="noticeTitle != null" >
+        #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeTraditionalTitle != null" >
+        #{noticeTraditionalTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeEnglishTitle != null" >
+        #{noticeEnglishTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeImage != null" >
+        #{noticeImage,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="noticeDetails != null" >
+        #{noticeDetails,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="noticeTraditionalDetails != null" >
+        #{noticeTraditionalDetails,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="noticeEnglishDetails != null" >
+        #{noticeEnglishDetails,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simon.dal.model.Notice" >
+    update notice
+    <set >
+      <if test="communityId != null" >
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeType != null" >
+        notice_type = #{noticeType,jdbcType=CHAR},
+      </if>
+      <if test="noticeTitle != null" >
+        notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeTraditionalTitle != null" >
+        notice_traditional_title = #{noticeTraditionalTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeEnglishTitle != null" >
+        notice_english_title = #{noticeEnglishTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeImage != null" >
+        notice_image = #{noticeImage,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="noticeDetails != null" >
+        notice_details = #{noticeDetails,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="noticeTraditionalDetails != null" >
+        notice_traditional_details = #{noticeTraditionalDetails,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="noticeEnglishDetails != null" >
+        notice_english_details = #{noticeEnglishDetails,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where notice_id = #{noticeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simon.dal.model.Notice" >
+    update notice
+    set community_id = #{communityId,jdbcType=VARCHAR},
+      notice_type = #{noticeType,jdbcType=CHAR},
+      notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      notice_traditional_title = #{noticeTraditionalTitle,jdbcType=VARCHAR},
+      notice_english_title = #{noticeEnglishTitle,jdbcType=VARCHAR},
+      notice_image = #{noticeImage,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      notice_details = #{noticeDetails,jdbcType=LONGVARCHAR},
+      notice_traditional_details = #{noticeTraditionalDetails,jdbcType=LONGVARCHAR},
+      notice_english_details = #{noticeEnglishDetails,jdbcType=LONGVARCHAR}
+    where notice_id = #{noticeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simon.dal.model.Notice" >
+    update notice
+    set community_id = #{communityId,jdbcType=VARCHAR},
+      notice_type = #{noticeType,jdbcType=CHAR},
+      notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      notice_traditional_title = #{noticeTraditionalTitle,jdbcType=VARCHAR},
+      notice_english_title = #{noticeEnglishTitle,jdbcType=VARCHAR},
+      notice_image = #{noticeImage,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where notice_id = #{noticeId,jdbcType=VARCHAR}
+  </update>
+</mapper>
