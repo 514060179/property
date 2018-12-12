@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.dal.dao.PlaceRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.dal.model.PlaceRecord" >
+    <id column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="place_id" property="placeId" jdbcType="VARCHAR" />
+    <result column="order_date" property="orderDate" jdbcType="DATE" />
+    <result column="order_start_time" property="orderStartTime" jdbcType="TIME" />
+    <result column="order_end_time" property="orderEndTime" jdbcType="TIME" />
+    <result column="record_status" property="recordStatus" jdbcType="CHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    record_id, user_id, place_id, order_date, order_start_time, order_end_time, record_status, 
+    update_time, create_time
+  </sql>
+  <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.model.PlaceRecord" >
+  	select
+  	<include refid="Base_Column_List" />
+  	from place_record
+  	<where>
+  		<if test="userId != null">
+  			user_Id = #{userId,jdbcType=VARCHAR}
+  		</if>
+  	</where>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from place_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from place_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.simon.dal.model.PlaceRecord" >
+    insert into place_record (record_id, user_id, place_id, 
+      order_date, order_start_time, order_end_time, 
+      record_status, update_time, create_time
+      )
+    values (#{recordId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{placeId,jdbcType=VARCHAR}, 
+      #{orderDate,jdbcType=DATE}, #{orderStartTime,jdbcType=TIME}, #{orderEndTime,jdbcType=TIME}, 
+      #{recordStatus,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.simon.dal.model.PlaceRecord" >
+    insert into place_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        record_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="placeId != null" >
+        place_id,
+      </if>
+      <if test="orderDate != null" >
+        order_date,
+      </if>
+      <if test="orderStartTime != null" >
+        order_start_time,
+      </if>
+      <if test="orderEndTime != null" >
+        order_end_time,
+      </if>
+      <if test="recordStatus != null" >
+        record_status,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="placeId != null" >
+        #{placeId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null" >
+        #{orderDate,jdbcType=DATE},
+      </if>
+      <if test="orderStartTime != null" >
+        #{orderStartTime,jdbcType=TIME},
+      </if>
+      <if test="orderEndTime != null" >
+        #{orderEndTime,jdbcType=TIME},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simon.dal.model.PlaceRecord" >
+    update place_record
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="placeId != null" >
+        place_id = #{placeId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null" >
+        order_date = #{orderDate,jdbcType=DATE},
+      </if>
+      <if test="orderStartTime != null" >
+        order_start_time = #{orderStartTime,jdbcType=TIME},
+      </if>
+      <if test="orderEndTime != null" >
+        order_end_time = #{orderEndTime,jdbcType=TIME},
+      </if>
+      <if test="recordStatus != null" >
+        record_status = #{recordStatus,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simon.dal.model.PlaceRecord" >
+    update place_record
+    set user_id = #{userId,jdbcType=VARCHAR},
+      place_id = #{placeId,jdbcType=VARCHAR},
+      order_date = #{orderDate,jdbcType=DATE},
+      order_start_time = #{orderStartTime,jdbcType=TIME},
+      order_end_time = #{orderEndTime,jdbcType=TIME},
+      record_status = #{recordStatus,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </update>
+</mapper>

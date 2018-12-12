@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.dal.dao.CommunityMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.dal.model.Community" >
+    <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+    <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    <result column="community_loc_x" property="communityLocX" jdbcType="DECIMAL" />
+    <result column="community_loc_y" property="communityLocY" jdbcType="DECIMAL" />
+    <result column="community_address" property="communityAddress" jdbcType="VARCHAR" />
+    <result column="community_area" property="communityArea" jdbcType="DECIMAL" />
+    <result column="community_building_area" property="communityBuildingArea" jdbcType="DECIMAL" />
+    <result column="community_road_area" property="communityRoadArea" jdbcType="DECIMAL" />
+    <result column="community_greenarea" property="communityGreenarea" jdbcType="DECIMAL" />
+    <result column="community_common_area" property="communityCommonArea" jdbcType="DECIMAL" />
+    <result column="community_garage_area" property="communityGarageArea" jdbcType="DECIMAL" />
+    <result column="community_garage_count" property="communityGarageCount" jdbcType="INTEGER" />
+    <result column="community_room_count" property="communityRoomCount" jdbcType="INTEGER" />
+    <result column="community_management_type" property="communityManagementType" jdbcType="TINYINT" />
+    <result column="community_contacts" property="communityContacts" jdbcType="VARCHAR" />
+    <result column="community_contacts_phone" property="communityContactsPhone" jdbcType="VARCHAR" />
+    <result column="community_remark" property="communityRemark" jdbcType="VARCHAR" />
+    <result column="community_deleted" property="communityDeleted" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    community_id, community_no, community_name, community_loc_x, community_loc_y, community_address, 
+    community_area, community_building_area, community_road_area, community_greenarea,
+    community_common_area, community_garage_area, community_garage_count, community_room_count,
+    community_management_type, community_contacts, community_contacts_phone, community_remark,
+    community_deleted, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from community
+    where community_id = #{communityId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from community
+    where community_id = #{communityId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.simon.dal.model.Community" >
+    insert into community (community_id, community_no, community_name, 
+      community_loc_x, community_loc_y, community_address, 
+      community_area, community_building_area, community_road_area,
+      community_greenarea, community_common_area,
+      community_garage_area, community_garage_count,
+      community_room_count, community_management_type,
+      community_contacts, community_contacts_phone,
+      community_remark, community_deleted, create_time,
+      update_time)
+    values (#{communityId,jdbcType=VARCHAR}, #{communityNo,jdbcType=VARCHAR}, #{communityName,jdbcType=VARCHAR},
+      #{communityLocX,jdbcType=DECIMAL}, #{communityLocY,jdbcType=DECIMAL}, #{communityAddress,jdbcType=VARCHAR},
+      #{communityArea,jdbcType=DECIMAL}, #{communityBuildingArea,jdbcType=DECIMAL}, #{communityRoadArea,jdbcType=DECIMAL},
+      #{communityGreenarea,jdbcType=DECIMAL}, #{communityCommonArea,jdbcType=DECIMAL},
+      #{communityGarageArea,jdbcType=DECIMAL}, #{communityGarageCount,jdbcType=INTEGER},
+      #{communityRoomCount,jdbcType=INTEGER}, #{communityManagementType,jdbcType=TINYINT},
+      #{communityContacts,jdbcType=VARCHAR}, #{communityContactsPhone,jdbcType=VARCHAR},
+      #{communityRemark,jdbcType=VARCHAR}, #{communityDeleted,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simon.dal.model.Community" >
+    insert into community
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="communityId != null" >
+        community_id,
+      </if>
+      <if test="communityNo != null" >
+        community_no,
+      </if>
+      <if test="communityName != null" >
+        community_name,
+      </if>
+      <if test="communityLocX != null" >
+        community_loc_x,
+      </if>
+      <if test="communityLocY != null" >
+        community_loc_y,
+      </if>
+      <if test="communityAddress != null" >
+        community_address,
+      </if>
+      <if test="communityArea != null" >
+        community_area,
+      </if>
+      <if test="communityBuildingArea != null" >
+        community_building_area,
+      </if>
+      <if test="communityRoadArea != null" >
+        community_road_area,
+      </if>
+      <if test="communityGreenarea != null" >
+        community_greenarea,
+      </if>
+      <if test="communityCommonArea != null" >
+        community_common_area,
+      </if>
+      <if test="communityGarageArea != null" >
+        community_garage_area,
+      </if>
+      <if test="communityGarageCount != null" >
+        community_garage_count,
+      </if>
+      <if test="communityRoomCount != null" >
+        community_room_count,
+      </if>
+      <if test="communityManagementType != null" >
+        community_management_type,
+      </if>
+      <if test="communityContacts != null" >
+        community_contacts,
+      </if>
+      <if test="communityContactsPhone != null" >
+        community_contacts_phone,
+      </if>
+      <if test="communityRemark != null" >
+        community_remark,
+      </if>
+      <if test="communityDeleted != null" >
+        community_deleted,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="communityNo != null" >
+        #{communityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="communityName != null" >
+        #{communityName,jdbcType=VARCHAR},
+      </if>
+      <if test="communityLocX != null" >
+        #{communityLocX,jdbcType=DECIMAL},
+      </if>
+      <if test="communityLocY != null" >
+        #{communityLocY,jdbcType=DECIMAL},
+      </if>
+      <if test="communityAddress != null" >
+        #{communityAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="communityArea != null" >
+        #{communityArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityBuildingArea != null" >
+        #{communityBuildingArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityRoadArea != null" >
+        #{communityRoadArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityGreenarea != null" >
+        #{communityGreenarea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityCommonArea != null" >
+        #{communityCommonArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityGarageArea != null" >
+        #{communityGarageArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityGarageCount != null" >
+        #{communityGarageCount,jdbcType=INTEGER},
+      </if>
+      <if test="communityRoomCount != null" >
+        #{communityRoomCount,jdbcType=INTEGER},
+      </if>
+      <if test="communityManagementType != null" >
+        #{communityManagementType,jdbcType=TINYINT},
+      </if>
+      <if test="communityContacts != null" >
+        #{communityContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="communityContactsPhone != null" >
+        #{communityContactsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="communityRemark != null" >
+        #{communityRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="communityDeleted != null" >
+        #{communityDeleted,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simon.dal.model.Community" >
+    update community
+    <set >
+      <if test="communityNo != null" >
+        community_no = #{communityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="communityName != null" >
+        community_name = #{communityName,jdbcType=VARCHAR},
+      </if>
+      <if test="communityLocX != null" >
+        community_loc_x = #{communityLocX,jdbcType=DECIMAL},
+      </if>
+      <if test="communityLocY != null" >
+        community_loc_y = #{communityLocY,jdbcType=DECIMAL},
+      </if>
+      <if test="communityAddress != null" >
+        community_address = #{communityAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="communityArea != null" >
+        community_area = #{communityArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityBuildingArea != null" >
+        community_building_area = #{communityBuildingArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityRoadArea != null" >
+        community_road_area = #{communityRoadArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityGreenarea != null" >
+        community_greenarea = #{communityGreenarea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityCommonArea != null" >
+        community_common_area = #{communityCommonArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityGarageArea != null" >
+        community_garage_area = #{communityGarageArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityGarageCount != null" >
+        community_garage_count = #{communityGarageCount,jdbcType=INTEGER},
+      </if>
+      <if test="communityRoomCount != null" >
+        community_room_count = #{communityRoomCount,jdbcType=INTEGER},
+      </if>
+      <if test="communityManagementType != null" >
+        community_management_type = #{communityManagementType,jdbcType=TINYINT},
+      </if>
+      <if test="communityContacts != null" >
+        community_contacts = #{communityContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="communityContactsPhone != null" >
+        community_contacts_phone = #{communityContactsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="communityRemark != null" >
+        community_remark = #{communityRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="communityDeleted != null" >
+        community_deleted = #{communityDeleted,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where community_id = #{communityId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simon.dal.model.Community" >
+    update community
+    set community_no = #{communityNo,jdbcType=VARCHAR},
+      community_name = #{communityName,jdbcType=VARCHAR},
+      community_loc_x = #{communityLocX,jdbcType=DECIMAL},
+      community_loc_y = #{communityLocY,jdbcType=DECIMAL},
+      community_address = #{communityAddress,jdbcType=VARCHAR},
+      community_area = #{communityArea,jdbcType=DECIMAL},
+      community_building_area = #{communityBuildingArea,jdbcType=DECIMAL},
+      community_road_area = #{communityRoadArea,jdbcType=DECIMAL},
+      community_greenarea = #{communityGreenarea,jdbcType=DECIMAL},
+      community_common_area = #{communityCommonArea,jdbcType=DECIMAL},
+      community_garage_area = #{communityGarageArea,jdbcType=DECIMAL},
+      community_garage_count = #{communityGarageCount,jdbcType=INTEGER},
+      community_room_count = #{communityRoomCount,jdbcType=INTEGER},
+      community_management_type = #{communityManagementType,jdbcType=TINYINT},
+      community_contacts = #{communityContacts,jdbcType=VARCHAR},
+      community_contacts_phone = #{communityContactsPhone,jdbcType=VARCHAR},
+      community_remark = #{communityRemark,jdbcType=VARCHAR},
+      community_deleted = #{communityDeleted,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where community_id = #{communityId,jdbcType=VARCHAR}
+  </update>
+  <select id="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from community
+  </select>
+</mapper>
