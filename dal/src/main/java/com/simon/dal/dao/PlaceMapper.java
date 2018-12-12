@@ -1,5 +1,7 @@
 package com.simon.dal.dao;
 
+import java.util.List;
+
 import com.simon.dal.model.Place;
 
 public interface PlaceMapper {
@@ -16,4 +18,6 @@ public interface PlaceMapper {
     int updateByPrimaryKeyWithBLOBs(Place record);
 
     int updateByPrimaryKey(Place record);
+    
+    List<Place> list();
 }
