@@ -27,6 +27,64 @@
     complain_liaisons_email, complain_status, complain_finish_time, complain_handler,complain_describe, complain_voice,
     create_time, update_time
   </sql>
+  <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.model.Complain">
+  	select 
+    <include refid="Base_Column_List" />
+    from complain
+    <where>
+      <if test="complainId != null" >
+        complain_id = #{complainId,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="complainPosition != null" >
+        complain_position = 
+      </if>
+      <if test="complainSpecificPosition != null" >
+        complain_specific_position = #{complainSpecificPosition,jdbcType=VARCHAR}
+      </if>
+      <if test="complainType != null" >
+        complain_type = #{complainType,jdbcType=VARCHAR}
+      </if>
+      <if test="complainClassType != null" >
+        complain_class_type = #{complainClassType,jdbcType=VARCHAR}
+      </if>
+      <if test="complainImages != null" >
+        complain_images = #{complainImages,jdbcType=VARCHAR}
+      </if>
+      <if test="complainLiaisonsName != null" >
+        complain_liaisons_name = #{complainLiaisonsName,jdbcType=VARCHAR}
+      </if>
+      <if test="complainLiaisonsSex != null" >
+        complain_liaisons_sex = #{complainLiaisonsSex,jdbcType=CHAR}
+      </if>
+      <if test="complainLiaisonsEmail != null" >
+        complain_liaisons_email = #{complainLiaisonsEmail,jdbcType=VARCHAR}
+      </if>
+      <if test="complainStatus != null" >
+        complain_status = #{complainStatus,jdbcType=CHAR}
+      </if>
+      <if test="complainFinishTime != null" >
+        complain_finish_time = #{complainFinishTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="complainHandler != null" >
+        complain_handler = #{complainHandler,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="complainDescribe != null" >
+        complain_describe = #{complainDescribe,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="complainVoice != null" >
+        complain_voice = #{complainVoice,jdbcType=LONGVARBINARY}
+      </if>
+    </where>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -53,7 +111,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{complainDescribe,jdbcType=LONGVARCHAR}, 
       #{complainVoice,jdbcType=LONGVARBINARY})
   </insert>
-  <insert id="insertSelective" parameterType="com.simon.dal.model.Complain" >
+  <insert id="insertSelective" parameterType="com.simon.dal.model.Complain" useGeneratedKeys="true">
     insert into complain
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="complainId != null" >

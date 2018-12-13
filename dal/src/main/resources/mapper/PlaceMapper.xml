@@ -25,6 +25,11 @@
     place_start_time, place_end_time, place_need_order, place_upper_limit, place_advance_order_day, 
     place_farthest_order_day, create_time, update_time,    place_introduction, place_traditional_introduction, place_english_introduction
   </sql>
+  <select id="list" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from place
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

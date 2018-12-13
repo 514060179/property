@@ -21,6 +21,11 @@
     notice_image, create_time, update_time,    notice_details, notice_traditional_details, notice_english_details
   </sql>
 
+  <select id="list" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from notice
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
