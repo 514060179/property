@@ -1,4 +1,13 @@
-package com.simon.dal.util;
+package com.simon.app.util;
+
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sun.misc.BASE64Encoder;
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @Author simon.feng
@@ -17,7 +26,7 @@ public class EncryUtil {
      * @return
      */
 
-    private static final Logger log = LoggerFactory.getLogger(EncryptUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(EncryUtil.class);
 
     public static String Encrypt(String strSrc, String encName) {
         MessageDigest md = null;
@@ -126,4 +135,3 @@ public class EncryUtil {
 
 }
 
-}
