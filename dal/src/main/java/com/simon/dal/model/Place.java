@@ -26,10 +26,10 @@ public class Place {
     @ApiModelProperty("图片url")
     private String placeImage;
 
-    @ApiModelProperty("起始时间")
+    @ApiModelProperty(name="起始时间",hidden=true)
     private Date placeStartTime;
 
-    @ApiModelProperty("结束时间")
+    @ApiModelProperty(name="结束时间",hidden=true)
     private Date placeEndTime;
 
     @ApiModelProperty("需要预定(0否1是)")
@@ -44,8 +44,10 @@ public class Place {
     @ApiModelProperty("最大天数")
     private Integer placeFarthestOrderDay;
 
+    @ApiModelProperty(name="创建时间",hidden=true)
     private Date createTime;
 
+    @ApiModelProperty(name="更新时间",hidden=true)
     private Date updateTime;
 
     @ApiModelProperty("简介(中文)")

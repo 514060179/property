@@ -38,10 +38,10 @@ public class Complain {
     @ApiModelProperty("联络人电邮")
     private String complainLiaisonsEmail;
 
-    @ApiModelProperty("状态0发起1收到2处理中3处理完成")
+    @ApiModelProperty(name="状态:0发起1收到2处理中3处理完成",hidden=true)
     private String complainStatus;
 
-    @ApiModelProperty("完成时间")
+    @ApiModelProperty(name="完成时间",hidden=true)
     private Date complainFinishTime;
 
     @ApiModelProperty("处理人")
@@ -50,11 +50,13 @@ public class Complain {
     @ApiModelProperty("描述")
     private String complainDescribe;
 
-    @ApiModelProperty("声音")
+    @ApiModelProperty(name="声音",hidden=true)
     private byte[] complainVoice;
 
+    @ApiModelProperty(name="创建时间",hidden=true)
     private Date createTime;
 
+    @ApiModelProperty(name="更新时间",hidden=true)
     private Date updateTime;
 
     public String getComplainId() {

@@ -1,5 +1,6 @@
 package com.simon.app.controller;
 
+import com.simon.app.config.Audience;
 import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.model.vo.UserWithToken;
 import com.simon.app.service.UserService;
@@ -28,6 +29,9 @@ public class PassController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private Audience audience;
+	
     @PostMapping("login")
     @ApiOperation("用户登录")
     public ReturnMsg<UserWithToken> login(@RequestParam String username, @RequestParam String password){
@@ -37,7 +41,7 @@ public class PassController {
  			if(result != null){//存在该用户名
  				UserWithToken userToken = new UserWithToken();
  				String token = JwtHelper.createJWT(result.getUsername(), result.getUserId(), result.getCommunityId(),
- 						-1L, "MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=");//登陆成功生成token
+ 						-1L, audience.getBase64Secret());//登陆成功生成token
  				userToken.setToken(token);
  				userToken.setUserId(result.getUserId());
  				msg.setData(userToken);
