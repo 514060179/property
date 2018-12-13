@@ -1,4 +1,4 @@
-package com.simon.app.util;
+package com.simon.dal.util;
 
 import java.util.UUID;
 

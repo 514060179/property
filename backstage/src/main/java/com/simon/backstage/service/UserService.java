@@ -9,4 +9,11 @@ import com.simon.dal.model.User;
 public interface UserService {
 
     User findOne(Long userId);
+
+    /**
+     * 新增住户
+     * @param user
+     * @return
+     */
+    User add(User user);
 }

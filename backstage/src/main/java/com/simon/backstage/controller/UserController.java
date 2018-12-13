@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.msg.BaseQueryParam;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.UserService;
+import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,13 +29,14 @@ public class UserController {
 
     @PostMapping("add")
     @ApiOperation("添加住户")
-    public ReturnMsg<User> add(@RequestBody User unit){
-        return ReturnMsg.success();
+    public ReturnMsg<User> add(@RequestBody User user){
+        logger.info("添加住户user={}", JSONUtil.objectToJson(user));
+        return ReturnMsg.success(add(user));
     }
 
     @PostMapping("upd")
     @ApiOperation("修改住户")
-    public ReturnMsg<User> upd(@RequestBody User unit){
+    public ReturnMsg<User> upd(@RequestBody User user){
         return ReturnMsg.success();
     }
 

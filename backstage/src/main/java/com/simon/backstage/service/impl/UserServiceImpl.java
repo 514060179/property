@@ -4,6 +4,7 @@ import com.simon.backstage.dao.ManagerMapper;
 import com.simon.backstage.service.UserService;
 import com.simon.dal.dao.UserMapper;
 import com.simon.dal.model.User;
+import com.simon.dal.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findOne(Long userId) {
         return userMapper.selectByPrimaryKey("simon");
+    }
+
+    @Override
+    public User add(User user) {
+        user.setUserId(UUIDUtil.uidString());
+        if(userMapper.insertSelective(user)>0){
+            return user;
+        }
+        return null;
     }
 }
