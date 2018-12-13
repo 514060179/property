@@ -60,14 +60,16 @@ public class Community {
     @ApiModelProperty("备注")
     private String communityRemark;
 
-    @ApiModelProperty("是否删除")
+    @ApiModelProperty(name="是否删除",hidden=true)
     private Boolean communityDeleted;
 
     @ApiModelProperty("管理类型(0普通管理1综合管理)")
     private String communityManagementType;
 
+    @ApiModelProperty(name="创建时间",hidden=true)
     private Date createTime;
 
+    @ApiModelProperty(name="更新时间",hidden=true)
     private Date updateTime;
 
     public String getCommunityId() {
