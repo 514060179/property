@@ -28,10 +28,8 @@ public class Notice {
     @ApiModelProperty("图片")
     private String noticeImage;
 
-    @ApiModelProperty(name="创建时间",hidden=true)
     private Date createTime;
 
-    @ApiModelProperty(name="更新时间",hidden=true)
     private Date updateTime;
 
     @ApiModelProperty("详情")

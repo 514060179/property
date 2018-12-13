@@ -58,10 +58,8 @@ public class User {
     @ApiModelProperty("是否删除")
     private Boolean deleted;
 
-    @ApiModelProperty(name="创建时间",hidden=true)
     private Date createTime;
 
-    @ApiModelProperty(name="更新时间",hidden=true)
     private Date updateTime;
 
     public String getUserId() {
