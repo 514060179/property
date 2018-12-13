@@ -34,7 +34,7 @@ public class ReturnMsg<T> implements Code {
     }
     
     public static ReturnMsg fail(){
-    	return new ReturnMsg(Boolean.FALSE,Code.nologin,"失败",null);
+    	return new ReturnMsg(Boolean.FALSE,Code.systemError,"失败",null);
     }
 
     public boolean isSuccess() {
