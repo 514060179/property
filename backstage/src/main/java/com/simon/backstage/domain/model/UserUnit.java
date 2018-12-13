@@ -1,7 +1,10 @@
 package com.simon.backstage.domain.model;
 
+import io.swagger.annotations.ApiModel;
+
 import java.util.Date;
 
+@ApiModel(value = "UserUnit", description = "用户单元关系")
 public class UserUnit {
     private Long userUnitId;
 

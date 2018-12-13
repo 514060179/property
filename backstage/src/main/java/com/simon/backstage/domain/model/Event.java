@@ -1,30 +1,44 @@
 package com.simon.backstage.domain.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
+@ApiModel(value = "Event", description = "事件")
 public class Event {
+    @ApiModelProperty("id")
     private String eventId;
 
+    @ApiModelProperty("社区id")
     private String communityId;
 
+    @ApiModelProperty("事件进度0开始1待定2完成")
     private Integer eventStatus;
 
+    @ApiModelProperty("备注")
     private String eventRemark;
 
+    @ApiModelProperty("事件日期")
     private Date eventDate;
 
+    @ApiModelProperty("事件类型1采购2保养")
     private Integer eventType;
 
+    @ApiModelProperty("完成时间")
     private Date eventFinishDate;
 
     private Date createTime;
 
     private Date updateTime;
-	
+
+    @ApiModelProperty("事件内容")
 	private String eventContent;
 
+    @ApiModelProperty("事件原因")
     private String eventCause;
 
+    @ApiModelProperty("解决方案")
     private String eventSolve;
 
     public String getEventContent() {

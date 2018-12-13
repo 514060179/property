@@ -1,31 +1,48 @@
 package com.simon.backstage.domain.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+@ApiModel(value = "Unit", description = "单元")
 public class Unit {
+
+    @ApiModelProperty("id")
     private String unitId;
 
+    @ApiModelProperty("建筑id")
     private String buildingId;
 
+    @ApiModelProperty("单元名字")
     private String unitName;
 
+    @ApiModelProperty("单元编号")
     private String unitNo;
 
+    @ApiModelProperty("覆盖面积大小(单位平方米)")
     private BigDecimal unitCoveredArea;
 
+    @ApiModelProperty("分层建筑物相对比(千分之一)")
     private BigDecimal unitRelativeProportion;
 
+    @ApiModelProperty("分层建筑物之子部分相对比(千分之一)")
     private BigDecimal unitChildRelativeProportion;
 
+    @ApiModelProperty("用途")
     private String unitPurpose;
 
+    @ApiModelProperty("位置(地下,一楼,二楼,三楼,户外.)")
     private String unitPosition;
 
+    @ApiModelProperty("单位类型1商铺2住宅3停车场")
     private Integer unitType;
 
+    @ApiModelProperty("全址")
     private String unitFullAddress;
 
+    @ApiModelProperty("单元状态0空置1租赁2装修中3入住")
     private Integer unitStatus;
 
     private Date createTime;

@@ -1,16 +1,30 @@
 package com.simon.backstage.domain.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.math.BigDecimal;
 import java.util.Date;
 
+@ApiModel(value = "AssetStorageRecord", description = "资源出入库记录")
 public class AssetStorageRecord {
+
+    @ApiModelProperty("id")
     private String storageRecordId;
 
+    @ApiModelProperty("资源id")
     private String assetId;
 
+    @ApiModelProperty("出入类型 1入库2出库")
     private Integer storageType;
 
+    @ApiModelProperty("数量")
     private Integer storageAmount;
 
+    @ApiModelProperty("单价")
+    private BigDecimal storageUnitprice;
+
+    @ApiModelProperty("备注")
     private String storageRemark;
 
     private Date createTime;
@@ -47,6 +61,14 @@ public class AssetStorageRecord {
 
     public void setStorageAmount(Integer storageAmount) {
         this.storageAmount = storageAmount;
+    }
+
+    public BigDecimal getStorageUnitprice() {
+        return storageUnitprice;
+    }
+
+    public void setStorageUnitprice(BigDecimal storageUnitprice) {
+        this.storageUnitprice = storageUnitprice;
     }
 
     public String getStorageRemark() {

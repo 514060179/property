@@ -1,18 +1,29 @@
 package com.simon.backstage.domain.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
+@ApiModel(value = "Visitor", description = "访客记录")
 public class Visitor {
+
+    @ApiModelProperty("id")
     private String visitorId;
 
+    @ApiModelProperty("社区id")
     private String communityId;
 
+    @ApiModelProperty("访客名字")
     private String visitorName;
 
+    @ApiModelProperty("性别")
     private Integer visitorSex;
 
+    @ApiModelProperty("联系号码")
     private String visitorPhone;
 
+    @ApiModelProperty("访问事由")
     private String visitorCause;
 
     private Date createTime;
