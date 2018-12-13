@@ -18,18 +18,20 @@ public class PlaceRecord {
     @ApiModelProperty("预订日期")
     private Date orderDate;
 
-    @ApiModelProperty("开始时间")
+    @ApiModelProperty(name="开始时间",hidden=true)
     private Date orderStartTime;
 
-    @ApiModelProperty("结束时间")
+    @ApiModelProperty(name="结束时间",hidden=true)
     private Date orderEndTime;
 
-    @ApiModelProperty("预定状态(-1预约取消0开始发起1预约成功2预约失败)")
+    @ApiModelProperty(name="预定状态(-1预约取消0开始发起1预约成功2预约失败)",hidden=true)
     private String recordStatus;
 
-    private Date updateTime;
-
+    @ApiModelProperty(name="创建时间",hidden=true)
     private Date createTime;
+
+    @ApiModelProperty(name="更新时间",hidden=true)
+    private Date updateTime;
 
     public String getRecordId() {
         return recordId;
