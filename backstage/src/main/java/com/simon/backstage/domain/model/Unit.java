@@ -12,41 +12,43 @@ public class Unit {
     @ApiModelProperty("id")
     private String unitId;
 
-    @ApiModelProperty("建筑id")
+    @ApiModelProperty(value = "建筑id",example = "1231das12")
     private String buildingId;
 
-    @ApiModelProperty("单元名字")
+    @ApiModelProperty(value = "单元名字",example = "A001")
     private String unitName;
 
-    @ApiModelProperty("单元编号")
+    @ApiModelProperty(value = "单元编号",example = "A001")
     private String unitNo;
 
-    @ApiModelProperty("覆盖面积大小(单位平方米)")
+    @ApiModelProperty(value = "覆盖面积大小(单位平方米)",example = "101.05")
     private BigDecimal unitCoveredArea;
 
-    @ApiModelProperty("分层建筑物相对比(千分之一)")
+    @ApiModelProperty(value = "分层建筑物相对比(千分之一)",example = "0.002")
     private BigDecimal unitRelativeProportion;
 
-    @ApiModelProperty("分层建筑物之子部分相对比(千分之一)")
+    @ApiModelProperty(value = "分层建筑物之子部分相对比(千分之一)",example = "0.05")
     private BigDecimal unitChildRelativeProportion;
 
-    @ApiModelProperty("用途")
+    @ApiModelProperty(value = "用途",example = "居住")
     private String unitPurpose;
 
-    @ApiModelProperty("位置(地下,一楼,二楼,三楼,户外.)")
+    @ApiModelProperty(value = "位置(地下,一楼,二楼,三楼,户外.)",example = "三楼")
     private String unitPosition;
 
-    @ApiModelProperty("单位类型1商铺2住宅3停车场")
+    @ApiModelProperty(value = "单位类型1商铺2住宅3停车场",example = "2")
     private Integer unitType;
 
-    @ApiModelProperty("全址")
+    @ApiModelProperty(value = "全址",example = "三楼A001")
     private String unitFullAddress;
 
-    @ApiModelProperty("单元状态0空置1租赁2装修中3入住")
+    @ApiModelProperty(value = "单元状态0空置1租赁2装修中3入住",example = "3")
     private Integer unitStatus;
 
+    @ApiModelProperty(hidden = true)
     private Date createTime;
 
+    @ApiModelProperty(hidden = true)
     private Date updateTime;
 
     public String getUnitId() {

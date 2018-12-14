@@ -12,23 +12,25 @@ public class AssetStorageRecord {
     @ApiModelProperty("id")
     private String storageRecordId;
 
-    @ApiModelProperty("资源id")
+    @ApiModelProperty(value = "资产id",example = "qe213sg97w5asda")
     private String assetId;
 
-    @ApiModelProperty("出入类型 1入库2出库")
+    @ApiModelProperty(value = "出入类型 1入库2出库",example = "1")
     private Integer storageType;
 
-    @ApiModelProperty("数量")
+    @ApiModelProperty(value = "数量",example = "2")
     private Integer storageAmount;
 
-    @ApiModelProperty("单价")
+    @ApiModelProperty(value = "单价",example = "10.5")
     private BigDecimal storageUnitprice;
 
-    @ApiModelProperty("备注")
+    @ApiModelProperty(value = "备注",example = "备注")
     private String storageRemark;
 
+    @ApiModelProperty(hidden = true)
     private Date createTime;
 
+    @ApiModelProperty(hidden = true)
     private Date updateTime;
 
     public String getStorageRecordId() {

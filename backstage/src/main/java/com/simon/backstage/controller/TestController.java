@@ -31,13 +31,6 @@ public class TestController {
         return "t2";
     }
 
-    @PostMapping("t3/find")
-    public User t3(@RequestBody User user) {
-
-        SecurityUtils.getSubject().hasRole("1");
-        SecurityUtils.getSubject().isPermitted("1");
-        return userService.findOne(1L);
-    }
 
     @PostMapping("t4")
     public User t4(@RequestBody User user) {
@@ -53,6 +46,6 @@ public class TestController {
 //        String jwt = JwtHelper.issueJwt(UUID.randomUUID().toString(), audience.getClientId(), audience.getName(), 100000L, "", "", audience.getBase64Secret());
 //        System.out.println(jwt);
 
-        return userService.findOne(1L);
+        return null;
     }
 }

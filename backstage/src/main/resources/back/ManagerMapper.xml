@@ -6,6 +6,7 @@
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
@@ -13,7 +14,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    manager_id, community_id, NAME, sex, email, username, PASSWORD, create_time, update_time
+    manager_id, community_id, NAME, sex,type, email, username, PASSWORD, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -21,17 +22,27 @@
     from manager
     where manager_id = #{managerId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+    select
+    <include refid="Base_Column_List" />
+    from manager
+    <where>
+      <if test="keyword!=null and keyword!=''">
+        CONCAT(IFNULL(NAME,''),IFNULL(username,''),IFNULL(email,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from manager
     where manager_id = #{managerId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.Manager" >
     insert into manager (manager_id, community_id, NAME, 
-      sex, email, username, 
+      sex,type, email, username,
       PASSWORD, create_time, update_time
       )
     values (#{managerId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER},#{type,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
       #{password,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -49,6 +60,9 @@
       </if>
       <if test="sex != null" >
         sex,
+      </if>
+      <if test="type != null" >
+        type,
       </if>
       <if test="email != null" >
         email,
@@ -79,6 +93,9 @@
       <if test="sex != null" >
         #{sex,jdbcType=INTEGER},
       </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
       </if>
@@ -108,6 +125,9 @@
       <if test="sex != null" >
         sex = #{sex,jdbcType=INTEGER},
       </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
@@ -131,6 +151,7 @@
     set community_id = #{communityId,jdbcType=VARCHAR},
       NAME = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
       email = #{email,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR},
       PASSWORD = #{password,jdbcType=VARCHAR},

@@ -1,11 +1,11 @@
 package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.simon.backstage.domain.msg.BaseQueryParam;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.CommunityService;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.Community;
+import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;

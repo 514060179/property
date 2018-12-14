@@ -1,7 +1,7 @@
 package com.simon.app.service;
 
-import com.simon.app.model.vo.BaseQueryParam;
 import com.simon.dal.model.Community;
+import com.simon.dal.vo.BaseQueryParam;
 
 import java.util.List;
 

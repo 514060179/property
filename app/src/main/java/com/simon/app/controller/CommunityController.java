@@ -1,10 +1,10 @@
 package com.simon.app.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.simon.app.model.vo.BaseQueryParam;
 import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.service.CommunityService;
 import com.simon.dal.model.Community;
+import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

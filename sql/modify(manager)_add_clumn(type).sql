@@ -1,0 +1,2 @@
+ALTER TABLE `bms`.`manager`
+  ADD COLUMN `type` INT DEFAULT 0 NULL COMMENT '类型0普通管理员1超级管理员' AFTER `PASSWORD`;

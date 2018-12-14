@@ -1,10 +1,10 @@
 package com.simon.app.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.simon.app.model.vo.BaseQueryParam;
 import com.simon.app.service.CommunityService;
 import com.simon.dal.dao.CommunityMapper;
 import com.simon.dal.model.Community;
+import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

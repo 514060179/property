@@ -11,35 +11,37 @@ public class Building {
     @ApiModelProperty("id")
     private String buildingId;
 
-    @ApiModelProperty("社区id")
+    @ApiModelProperty(value = "社区id",example = "erre1231dasda")
     private String communityId;
 
-    @ApiModelProperty("楼宇名字")
+    @ApiModelProperty(value = "楼宇名字",example = "生产楼")
     private String buildingName;
 
-    @ApiModelProperty("楼宇编号")
+    @ApiModelProperty(value = "楼宇编号",example = "TC001")
     private String buildingNo;
 
-    @ApiModelProperty("楼宇全址")
+    @ApiModelProperty(value = "楼宇全址",example = "珠海太川110号")
     private String fullAddress;
 
-    @ApiModelProperty("楼宇结构")
+    @ApiModelProperty(value = "楼宇结构",example = "四面环绕")
     private String buildingStruct;
 
-    @ApiModelProperty("楼宇方向")
+    @ApiModelProperty(value = "楼宇方向",example = "坐北向东")
     private String buildingDirection;
 
-    @ApiModelProperty("楼上几层")
+    @ApiModelProperty(value = "楼上几层",example = "30")
     private Integer floorUpNum;
 
-    @ApiModelProperty("楼下几层")
+    @ApiModelProperty(value = "楼下几层",example = "4")
     private Integer floorLowNum;
 
-    @ApiModelProperty("是否注销")
+    @ApiModelProperty(value = "是否注销")
     private Boolean deleted;
 
+    @ApiModelProperty(hidden = true)
     private Date createTime;
 
+    @ApiModelProperty(hidden = true)
     private Date updateTime;
 
     public String getBuildingId() {

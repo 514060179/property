@@ -11,41 +11,43 @@ public class Asset {
     @ApiModelProperty("id")
     private String assetId;
 
-    @ApiModelProperty("社区id")
+    @ApiModelProperty(value = "社区id",example = "r1w2s3rs4s5hj6s")
     private String communityId;
 
-    @ApiModelProperty("资产类型")
+    @ApiModelProperty(value = "资产类型：电器、公共设备",example = "电器")
     private String assetType;
 
-    @ApiModelProperty("资产名字")
+    @ApiModelProperty(value = "资产名字",example = "路灯")
     private String assetName;
 
-    @ApiModelProperty("资产名字(繁体)")
+    @ApiModelProperty(value = "资产名字(繁体)",example = "路燈")
     private String assetTraditionalName;
 
-    @ApiModelProperty("资产名字(英文)")
+    @ApiModelProperty(value = "资产名字(英文)",example = "street lamp")
     private String assetEnglishName;
 
-    @ApiModelProperty("位置信息")
+    @ApiModelProperty(value = "位置信息",example = "正门")
     private String assetPosition;
 
-    @ApiModelProperty("位置信息(繁体)")
+    @ApiModelProperty(value = "位置信息(繁体)",example = "正門")
     private String assetTraditionalPosition;
 
-    @ApiModelProperty("位置信息(英文)")
+    @ApiModelProperty(value = "位置信息(英文)",example = "Front gate")
     private String assetEnglishPosition;
 
+    @ApiModelProperty(hidden = true)
     private Date createTime;
 
+    @ApiModelProperty(hidden = true)
     private Date updateTime;
 
-    @ApiModelProperty("描述")
+    @ApiModelProperty(value = "描述",example = "描述信息")
 	private String assetDescribe;
 
-    @ApiModelProperty("描述(繁体)")
+    @ApiModelProperty(value = "描述(繁体)",example = "苗述信息")
     private String assetTraditionalDescribe;
 
-    @ApiModelProperty("描述(英文)")
+    @ApiModelProperty(value = "描述(英文)",example = "Descriptive information")
     private String assetEnglishDescribe;
 
     public String getAssetDescribe() {

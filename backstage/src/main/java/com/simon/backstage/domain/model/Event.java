@@ -10,35 +10,37 @@ public class Event {
     @ApiModelProperty("id")
     private String eventId;
 
-    @ApiModelProperty("社区id")
+    @ApiModelProperty(value = "社区id")
     private String communityId;
 
-    @ApiModelProperty("事件进度0开始1待定2完成")
+    @ApiModelProperty(value = "事件进度0开始1待定2完成",example = "0")
     private Integer eventStatus;
 
-    @ApiModelProperty("备注")
+    @ApiModelProperty(value = "备注",example = "备注")
     private String eventRemark;
 
-    @ApiModelProperty("事件日期")
+    @ApiModelProperty(value = "事件日期",example = "2018-11-11 10:00:00")
     private Date eventDate;
 
-    @ApiModelProperty("事件类型1采购2保养")
+    @ApiModelProperty(value = "事件类型1采购2保养3其他",example = "1")
     private Integer eventType;
 
-    @ApiModelProperty("完成时间")
+    @ApiModelProperty(value = "完成时间",example = "2018-11-11 12:00:00")
     private Date eventFinishDate;
 
+    @ApiModelProperty(hidden = true)
     private Date createTime;
 
+    @ApiModelProperty(hidden = true)
     private Date updateTime;
 
-    @ApiModelProperty("事件内容")
+    @ApiModelProperty(value = "事件内容",example = "事件内容")
 	private String eventContent;
 
-    @ApiModelProperty("事件原因")
+    @ApiModelProperty(value = "事件原因",example = "事件原因")
     private String eventCause;
 
-    @ApiModelProperty("解决方案")
+    @ApiModelProperty(value = "解决方案",example = "解决方案")
     private String eventSolve;
 
     public String getEventContent() {

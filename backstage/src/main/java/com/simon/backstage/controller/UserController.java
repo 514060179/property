@@ -1,11 +1,11 @@
 package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.simon.backstage.domain.msg.BaseQueryParam;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.UserService;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.User;
+import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -37,19 +37,18 @@ public class UserController {
     @PostMapping("upd")
     @ApiOperation("修改住户")
     public ReturnMsg<User> upd(@RequestBody User user){
-        return ReturnMsg.success();
+        return ReturnMsg.success(userService.upd(user));
     }
 
     @GetMapping("del")
     @ApiOperation("删除住户")
     public ReturnMsg<User> del(@RequestParam String userId){
-        return ReturnMsg.success();
+        return ReturnMsg.success(userService.del(userId));
     }
 
     @GetMapping("list")
     @ApiOperation("住户列表")
     public ReturnMsg<PageInfo<User>> list(BaseQueryParam baseQueryParam){
-//        return ReturnMsg.success(userService.findOne(1L));
-        return null;
+        return ReturnMsg.success(userService.list(baseQueryParam));
     }
 }

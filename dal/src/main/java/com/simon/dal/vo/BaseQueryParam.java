@@ -1,4 +1,4 @@
-package com.simon.app.model.vo;
+package com.simon.dal.vo;
 
 /**
  * @author fengtianying
@@ -6,9 +6,11 @@ package com.simon.app.model.vo;
  */
 public class BaseQueryParam {
 
-    private int pageNo;
+    private int pageNo = 0;
 
-    private int pageSize;
+    private int pageSize = 15;
+
+    private String keyword;
 
     public int getPageNo() {
         return pageNo;
@@ -24,5 +26,13 @@ public class BaseQueryParam {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }

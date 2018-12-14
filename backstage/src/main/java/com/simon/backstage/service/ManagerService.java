@@ -1,41 +1,41 @@
 package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
-import com.simon.dal.model.User;
+import com.simon.backstage.domain.model.Manager;
 import com.simon.dal.vo.BaseQueryParam;
 
 /**
- * 用户管理
+ * 管理员 Manager 业务层
  * @author fengtianying
- * @date 2018/11/7 13:32
+ * @date 2018/12/14 13:33
  */
-public interface UserService {
+public interface ManagerService {
 
     /**
      * 新增
-     * @param user
+     * @param manager
      * @return
      */
-    User add(User user);
+    Manager add(Manager manager);
 
     /**
      * 修改
-     * @param user
+     * @param manager
      * @return
      */
-    int upd(User user);
+    int upd(Manager manager);
 
     /**
      * 删除
-     * @param userId
+     * @param managerId
      * @return
      */
-    int del(String userId);
+    int del(String managerId);
 
     /**
      * 列表
      * @param baseQueryParam
      * @return
      */
-    PageInfo<User> list(BaseQueryParam baseQueryParam);
+    PageInfo<Manager> list(BaseQueryParam baseQueryParam);
 }

@@ -2,8 +2,8 @@ package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Event;
-import com.simon.backstage.domain.msg.BaseQueryParam;
 import com.simon.backstage.domain.msg.ReturnMsg;
+import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public class EventController {
 
     @GetMapping("del")
     @ApiOperation("删除事件")
-    public ReturnMsg<Event> del(@RequestParam String unitId){
+    public ReturnMsg<Event> del(@RequestParam String eventId){
         return ReturnMsg.success();
     }
 

@@ -25,6 +25,10 @@ public class ReturnMsg<T> implements Code {
         return new ReturnMsg(Boolean.TRUE,Code.success,"成功",null);
     }
 
+    public static ReturnMsg fail(int code, String msg){
+        return new ReturnMsg(Boolean.FALSE,code,msg,null);
+    }
+
     public static ReturnMsg success(Object object){
         return new ReturnMsg(Boolean.TRUE,Code.success,"成功",object);
     }

@@ -11,23 +11,25 @@ public class Visitor {
     @ApiModelProperty("id")
     private String visitorId;
 
-    @ApiModelProperty("社区id")
+    @ApiModelProperty(value = "社区id",example = "qesa1231")
     private String communityId;
 
-    @ApiModelProperty("访客名字")
+    @ApiModelProperty(value = "访客名字",example = "simon")
     private String visitorName;
 
-    @ApiModelProperty("性别")
+    @ApiModelProperty(value = "性别0女1男",example = "0")
     private Integer visitorSex;
 
-    @ApiModelProperty("联系号码")
+    @ApiModelProperty(value = "联系号码",example = "13421256541")
     private String visitorPhone;
 
-    @ApiModelProperty("访问事由")
+    @ApiModelProperty(value = "访问事由",example = "逛逛")
     private String visitorCause;
 
+    @ApiModelProperty(hidden = true)
     private Date createTime;
 
+    @ApiModelProperty(hidden = true)
     private Date updateTime;
 
     public String getVisitorId() {

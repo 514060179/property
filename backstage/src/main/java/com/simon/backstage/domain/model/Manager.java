@@ -1,8 +1,11 @@
 package com.simon.backstage.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @ApiModel(value = "Manager", description = "管理员")
@@ -11,26 +14,35 @@ public class Manager {
     @ApiModelProperty("id")
     private String managerId;
 
-    @ApiModelProperty("社区id")
+    @ApiModelProperty(value = "社区id",example = "qwe4567saeqw")
+    @NotEmpty(message = "社区id不能为空")
     private String communityId;
 
-    @ApiModelProperty("名字")
+    @ApiModelProperty(value = "名字",example = "simon")
     private String name;
 
-    @ApiModelProperty("性别")
+    @ApiModelProperty(value = "性别0女1男",example = "1")
     private Integer sex;
 
-    @ApiModelProperty("邮箱")
+    @ApiModelProperty(value = "类型0普通管理员1超级管理员",example = "0")
+    private Integer type;
+
+    @ApiModelProperty(value = "邮箱",example = "15487845@qq.com")
+    @Email(message = "非法邮箱！")
     private String email;
 
-    @ApiModelProperty("用户名")
+    @ApiModelProperty(value = "用户名",example = "simon")
+    @NotEmpty(message = "用户名不能为空")
     private String username;
 
-    @ApiModelProperty("密码")
+    @ApiModelProperty(value = "密码",example = "123456")
+    @JsonIgnore
     private String password;
 
+    @ApiModelProperty(hidden = true)
     private Date createTime;
 
+    @ApiModelProperty(hidden = true)
     private Date updateTime;
 
     public String getManagerId() {
@@ -55,6 +67,14 @@ public class Manager {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getSex() {

@@ -2,12 +2,16 @@ package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Manager;
-import com.simon.backstage.domain.msg.BaseQueryParam;
 import com.simon.backstage.domain.msg.ReturnMsg;
+import com.simon.backstage.service.ManagerService;
+import com.simon.backstage.util.JSONUtil;
+import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,27 +25,33 @@ public class ManagerController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired
+    private ManagerService managerService;
     @PostMapping("add")
     @ApiOperation("添加管理员")
-    public ReturnMsg<Manager> add(@RequestBody Manager manager){
-        return ReturnMsg.success();
+    public ReturnMsg<Manager> add(@RequestBody @Validated Manager manager){
+        logger.info("添加管理员manager={}", JSONUtil.objectToJson(manager));
+        return ReturnMsg.success(managerService.add(manager));
     }
 
     @PostMapping("upd")
     @ApiOperation("修改管理员")
-    public ReturnMsg<Manager> upd(@RequestBody Manager manager){
-        return ReturnMsg.success();
+    public ReturnMsg<Manager> upd(@RequestBody @Validated Manager manager){
+        logger.info("修改管理员manager={}", JSONUtil.objectToJson(manager));
+        return ReturnMsg.success(managerService.upd(manager));
     }
 
     @GetMapping("del")
     @ApiOperation("删除管理员")
     public ReturnMsg<Manager> del(@RequestParam String managerId){
-        return ReturnMsg.success();
+        logger.info("删除管理员managerId={}", managerId);
+        return ReturnMsg.success(managerService.del(managerId));
     }
 
     @GetMapping("list")
     @ApiOperation("管理员列表")
     public ReturnMsg<PageInfo<Manager>> list(BaseQueryParam baseQueryParam){
-        return ReturnMsg.success();
+        logger.info("管理员列表baseQueryParam={}", JSONUtil.objectToJson(baseQueryParam));
+        return ReturnMsg.success(managerService.list(baseQueryParam));
     }
 }
