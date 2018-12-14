@@ -1,5 +1,6 @@
 package com.simon.dal.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -34,6 +35,7 @@ public class User {
     private String email;
 
     @ApiModelProperty("生日:2018-12-15")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     @ApiModelProperty("身份证号码")

@@ -31,7 +31,7 @@ public class UserController {
     @ApiOperation("添加住户")
     public ReturnMsg<User> add(@RequestBody User user){
         logger.info("添加住户user={}", JSONUtil.objectToJson(user));
-        return ReturnMsg.success(add(user));
+        return ReturnMsg.success(userService.add(user));
     }
 
     @PostMapping("upd")
