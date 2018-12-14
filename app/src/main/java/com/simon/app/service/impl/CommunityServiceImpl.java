@@ -23,6 +23,6 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     public List<Community> list(BaseQueryParam baseQueryParam) {
         PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
-        return communityMapper.list();
+        return communityMapper.list(baseQueryParam);
     }
 }
