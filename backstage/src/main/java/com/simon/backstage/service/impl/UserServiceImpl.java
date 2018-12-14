@@ -30,6 +30,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User detail(String userId) {
+        return userMapper.selectByPrimaryKey(userId);
+    }
+
+    @Override
     public int upd(User user) {
         return userMapper.updateByPrimaryKeySelective(user);
     }

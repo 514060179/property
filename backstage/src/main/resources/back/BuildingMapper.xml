@@ -25,6 +25,17 @@
     from building
     where building_id = #{buildingId,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+    select
+    <include refid="Base_Column_List" />
+    from building
+    <where>
+      <if test="keyword!=null and keyword!=''">
+        CONCAT(IFNULL(building_name,''),IFNULL(building_no,''),IFNULL(full_address,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from building
     where building_id = #{buildingId,jdbcType=VARCHAR}

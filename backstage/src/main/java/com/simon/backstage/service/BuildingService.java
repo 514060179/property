@@ -1,48 +1,49 @@
 package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
-import com.simon.dal.model.User;
+import com.simon.backstage.domain.model.Building;
 import com.simon.dal.vo.BaseQueryParam;
 
 /**
- * 用户管理
  * @author fengtianying
- * @date 2018/11/7 13:32
+ * @date 2018/12/14 16:57
  */
-public interface UserService {
+public interface BuildingService {
+
 
     /**
      * 新增
-     * @param user
+     * @param building
      * @return
      */
-    User add(User user);
+    Building add(Building building);
 
     /**
      * 新增
-     * @param userId
+     * @param buildingId
      * @return
      */
-    User detail(String userId);
+    Building detail(String buildingId);
 
     /**
      * 修改
-     * @param user
+     * @param building
      * @return
      */
-    int upd(User user);
+    int upd(Building building);
 
     /**
      * 删除
-     * @param userId
+     * @param buildingId
      * @return
      */
-    int del(String userId);
+    int del(String buildingId);
 
     /**
      * 列表
      * @param baseQueryParam
      * @return
      */
-    PageInfo<User> list(BaseQueryParam baseQueryParam);
+    PageInfo<Building> list(BaseQueryParam baseQueryParam);
+
 }

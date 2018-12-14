@@ -21,6 +21,16 @@
     from visitor
     where visitor_id = #{visitorId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+    select
+    <include refid="Base_Column_List" />
+    from visitor
+    <where>
+      <if test="keyword!=null and keyword!=''">
+        CONCAT(IFNULL(visitor_name,''),IFNULL(visitor_phone,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from visitor
     where visitor_id = #{visitorId,jdbcType=VARCHAR}

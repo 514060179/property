@@ -1,48 +1,48 @@
 package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
-import com.simon.dal.model.User;
+import com.simon.backstage.domain.model.Event;
 import com.simon.dal.vo.BaseQueryParam;
 
 /**
- * 用户管理
  * @author fengtianying
- * @date 2018/11/7 13:32
+ * @date 2018/12/14 17:13
  */
-public interface UserService {
+public interface EventService {
 
     /**
      * 新增
-     * @param user
+     * @param event
      * @return
      */
-    User add(User user);
+    Event add(Event event);
 
     /**
      * 新增
-     * @param userId
+     * @param eventId
      * @return
      */
-    User detail(String userId);
+    Event detail(String eventId);
 
     /**
      * 修改
-     * @param user
+     * @param event
      * @return
      */
-    int upd(User user);
+    int upd(Event event);
 
     /**
      * 删除
-     * @param userId
+     * @param eventId
      * @return
      */
-    int del(String userId);
+    int del(String eventId);
 
     /**
      * 列表
      * @param baseQueryParam
      * @return
      */
-    PageInfo<User> list(BaseQueryParam baseQueryParam);
+    PageInfo<Event> list(BaseQueryParam baseQueryParam);
+
 }
