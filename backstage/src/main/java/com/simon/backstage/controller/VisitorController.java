@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Visitor;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.VisitorService;
+import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,7 @@ public class VisitorController {
     @GetMapping("list")
     @ApiOperation("访问者列表")
     public ReturnMsg<PageInfo<Visitor>> list(BaseQueryParam baseQueryParam){
+        logger.info("访问者列表baseQueryParam={}", JSONUtil.objectToJson(baseQueryParam));
         return ReturnMsg.success(visitorService.list(baseQueryParam));
     }
 }

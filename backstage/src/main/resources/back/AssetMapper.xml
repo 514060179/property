@@ -34,6 +34,19 @@
     from asset
     where asset_id = #{assetId,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from asset
+    <where>
+      <if test="keyword!=null and keyword!=''">
+        CONCAT(IFNULL(asset_name,''),IFNULL(asset_position,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from asset
     where asset_id = #{assetId,jdbcType=VARCHAR}

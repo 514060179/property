@@ -1,6 +1,9 @@
 package com.simon.backstage.dao;
 
 import com.simon.backstage.domain.model.Asset;
+import com.simon.dal.vo.BaseQueryParam;
+
+import java.util.List;
 
 public interface AssetMapper {
     int deleteByPrimaryKey(String assetId);
@@ -10,6 +13,8 @@ public interface AssetMapper {
     int insertSelective(Asset record);
 
     Asset selectByPrimaryKey(String assetId);
+
+    List<Asset> selectByCondition(BaseQueryParam baseQueryParam);
 
     int updateByPrimaryKeySelective(Asset record);
 

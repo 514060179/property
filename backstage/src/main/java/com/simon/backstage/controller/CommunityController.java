@@ -36,21 +36,21 @@ public class CommunityController {
     @PostMapping("upd")
     @ApiOperation("修改社区")
     public ReturnMsg upd(@RequestBody Community community){
-
-        return ReturnMsg.success();
+        logger.info("添加社区community={}", JSONUtil.objectToJson(community));
+        return ReturnMsg.success(communityService.upd(community));
     }
 
     @GetMapping("del")
     @ApiOperation("删除社区")
     public ReturnMsg del(@RequestParam String communityId){
-
-        return ReturnMsg.success();
+        logger.info("删除社区communityId={}", communityId);
+        return ReturnMsg.success(communityService.del(communityId));
     }
 
     @GetMapping("list")
     @ApiOperation("社区列表")
     public ReturnMsg<PageInfo<Community>> list(BaseQueryParam baseQueryParam){
-
-        return ReturnMsg.success();
+        logger.info("社区列表baseQueryParam={}",  JSONUtil.objectToJson(baseQueryParam));
+        return ReturnMsg.success(communityService.list(baseQueryParam));
     }
 }

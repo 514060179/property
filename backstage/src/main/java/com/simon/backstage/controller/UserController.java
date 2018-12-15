@@ -37,18 +37,21 @@ public class UserController {
     @PostMapping("upd")
     @ApiOperation("修改住户")
     public ReturnMsg<User> upd(@RequestBody User user){
+        logger.info("修改住户user={}", JSONUtil.objectToJson(user));
         return ReturnMsg.success(userService.upd(user));
     }
 
     @GetMapping("del")
     @ApiOperation("删除住户")
     public ReturnMsg<User> del(@RequestParam String userId){
+        logger.info("删除住户userId={}", userId);
         return ReturnMsg.success(userService.del(userId));
     }
 
     @GetMapping("list")
     @ApiOperation("住户列表")
     public ReturnMsg<PageInfo<User>> list(BaseQueryParam baseQueryParam){
+        logger.info("住户列表baseQueryParam={}", JSONUtil.objectToJson(baseQueryParam));
         return ReturnMsg.success(userService.list(baseQueryParam));
     }
 }
