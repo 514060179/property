@@ -40,6 +40,10 @@ public class ReturnMsg<T> implements Code {
     public static ReturnMsg loginFail(){
     	return new ReturnMsg(Boolean.FALSE,Code.loginfail,"账号或密码错误",null);
     }
+    
+    public static ReturnMsg wrongPassword(){
+    	return new ReturnMsg(Boolean.FALSE,Code.loginfail,"旧密码不正确",null);
+    }
 
     public boolean isSuccess() {
         return success;

@@ -11,6 +11,8 @@ public interface Code {
     String nologin = "100";
     //登录失败
     String loginfail = "105";
+    //密码错误
+    String wrongPassword = "106";
     
     String systemError = "999";
 }

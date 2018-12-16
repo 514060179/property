@@ -10,7 +10,7 @@ public interface UserService {
 
     User findOne(String userId);
 
-	User findUser(String username, String password);
+	User findUser(User user);
 
 	int updateByPrimaryKeySelective(User user);
 }

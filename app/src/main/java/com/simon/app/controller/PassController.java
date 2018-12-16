@@ -37,7 +37,10 @@ public class PassController {
     @ApiOperation("用户登录")
     public ReturnMsg<UserWithToken> login(@RequestParam String username, @RequestParam String password){
     	ReturnMsg<UserWithToken> msg = new ReturnMsg<UserWithToken>();
- 		User result = userService.findUser(username,EncryUtil.getMD5(password));
+    	User user = new User();
+    	user.setUsername(username);
+    	user.setPassword(EncryUtil.getMD5(password));
+ 		User result = userService.findUser(user);
  		if(result != null){//存在该用户名
  			UserWithToken userToken = new UserWithToken();
  			String token = JwtHelper.createJWT(result.getUsername(), result.getUserId(),
@@ -47,7 +50,7 @@ public class PassController {
  			msg.setData(userToken);
  			return ReturnMsg.success(userToken);
  		}else{
- 			return ReturnMsg.fail();
+ 			return ReturnMsg.loginFail();
  		}
     }
 }
