@@ -37,19 +37,17 @@ public class PassController {
     @ApiOperation("用户登录")
     public ReturnMsg<UserWithToken> login(@RequestParam String username, @RequestParam String password){
     	ReturnMsg<UserWithToken> msg = new ReturnMsg<UserWithToken>();
-    	String upassword = EncryUtil.getMD5(password);
-    	if(!username.isEmpty() && !upassword.isEmpty()){
- 			User result = userService.findUser(username,upassword);
- 			if(result != null){//存在该用户名
- 				UserWithToken userToken = new UserWithToken();
- 				String token = JwtHelper.createJWT(result.getUsername(), result.getUserId(), result.getCommunityId(),
- 						-1L, audience.getBase64Secret());//登陆成功生成token
- 				userToken.setToken(token);
- 				userToken.setUserId(result.getUserId());
- 				msg.setData(userToken);
- 				return ReturnMsg.success(userToken);
- 			}
-    	}
-		return ReturnMsg.fail();
+ 		User result = userService.findUser(username,EncryUtil.getMD5(password));
+ 		if(result != null){//存在该用户名
+ 			UserWithToken userToken = new UserWithToken();
+ 			String token = JwtHelper.createJWT(result.getUsername(), result.getUserId(),
+ 					result.getCommunityId(),-1L, audience.getBase64Secret());//登陆成功生成token
+ 			userToken.setToken(token);
+ 			userToken.setUserId(result.getUserId());
+ 			msg.setData(userToken);
+ 			return ReturnMsg.success(userToken);
+ 		}else{
+ 			return ReturnMsg.fail();
+ 		}
     }
 }

@@ -9,6 +9,8 @@ public interface Code {
     String success = "200";
     //未登录
     String nologin = "100";
-
+    //登录失败
+    String loginfail = "105";
+    
     String systemError = "999";
 }

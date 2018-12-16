@@ -32,5 +32,11 @@ public class ComplainServiceImpl implements ComplainService{
 		
 		return complainMapper.insertSelective(complain);
 	}
+
+	@Override
+	public int updateByPrimaryKeySelective(Complain complain) {
+		// TODO Auto-generated method stub
+		return complainMapper.updateByPrimaryKeySelective(complain);
+	}
 	
 }

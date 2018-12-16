@@ -24,5 +24,10 @@ public class UserServiceImpl implements UserService {
     public User findUser(String username, String password) {
 		return userMapper.selectUser(username, password);
     }
+
+	@Override
+	public int updateByPrimaryKeySelective(User user) {
+		return userMapper.updateByPrimaryKeySelective(user);
+	}
     
 }

@@ -11,7 +11,7 @@ public class Complain {
     @ApiModelProperty("id")
     private String complainId;
 
-    @ApiModelProperty("用户id")
+    @ApiModelProperty(name="用户id",hidden=true)
     private String userId;
 
     @ApiModelProperty("位置(XX大厦)")
@@ -26,7 +26,7 @@ public class Complain {
     @ApiModelProperty("类型分类（供电系统，发电机...）")
     private String complainClassType;
 
-    @ApiModelProperty("图片")
+    @ApiModelProperty(name="图片",hidden=true)
     private String complainImages;
 
     @ApiModelProperty("联络人")
@@ -44,14 +44,14 @@ public class Complain {
     @ApiModelProperty(name="完成时间",hidden=true)
     private Date complainFinishTime;
 
-    @ApiModelProperty("处理人")
+    @ApiModelProperty(name="处理人",hidden=true)
     private String complainHandler;
 
     @ApiModelProperty("描述")
     private String complainDescribe;
 
     @ApiModelProperty(name="声音",hidden=true)
-    private byte[] complainVoice;
+    private String complainVoice;
 
     @ApiModelProperty(name="创建时间",hidden=true)
     private Date createTime;
@@ -171,11 +171,11 @@ public class Complain {
         this.complainDescribe = complainDescribe == null ? null : complainDescribe.trim();
     }
 
-    public byte[] getComplainVoice() {
+    public String getComplainVoice() {
         return complainVoice;
     }
 
-    public void setComplainVoice(byte[] complainVoice) {
+    public void setComplainVoice(String complainVoice) {
         this.complainVoice = complainVoice;
     }
 

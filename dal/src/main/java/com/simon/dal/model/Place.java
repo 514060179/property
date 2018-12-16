@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @ApiModel(value = "Place", description = "场所信息")
 public class Place {
 
@@ -23,13 +25,15 @@ public class Place {
     @ApiModelProperty("场所名字(英文)")
     private String placeEnglishName;
 
-    @ApiModelProperty("图片url")
+    @ApiModelProperty(name="图片url",hidden=true)
     private String placeImage;
 
-    @ApiModelProperty(name="起始时间",hidden=true)
+    @ApiModelProperty("起始时间")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date placeStartTime;
-
-    @ApiModelProperty(name="结束时间",hidden=true)
+    
+    @ApiModelProperty("结束时间")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date placeEndTime;
 
     @ApiModelProperty("需要预定(0否1是)")

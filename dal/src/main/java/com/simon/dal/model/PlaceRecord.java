@@ -4,24 +4,29 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 @ApiModel(value = "PlaceRecord", description = "订场记录")
 public class PlaceRecord {
     @ApiModelProperty("id")
     private String recordId;
 
-    @ApiModelProperty("用户id")
+    @ApiModelProperty(name="用户id",hidden=true)
     private String userId;
 
     @ApiModelProperty("场所id")
     private String placeId;
 
     @ApiModelProperty("预订日期")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date orderDate;
 
-    @ApiModelProperty(name="开始时间",hidden=true)
+    @ApiModelProperty("开始时间")
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date orderStartTime;
 
-    @ApiModelProperty(name="结束时间",hidden=true)
+    @ApiModelProperty("结束时间")
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date orderEndTime;
 
     @ApiModelProperty(name="预定状态(-1预约取消0开始发起1预约成功2预约失败)",hidden=true)
