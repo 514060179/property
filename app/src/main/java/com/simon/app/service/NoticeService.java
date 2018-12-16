@@ -6,6 +6,10 @@ import com.simon.dal.model.Notice;
 
 public interface NoticeService {
 	
+	/**
+	 * 列表
+	 * @return
+	 */
 	List<Notice> list();
 	
 	/**
@@ -14,4 +18,6 @@ public interface NoticeService {
 	 * @return
 	 */
 	Notice findOne(String noticeId);
+	
+	int updateByPrimaryKeySelective(Notice record);
 }

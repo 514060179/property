@@ -33,7 +33,7 @@ public class User {
     @ApiModelProperty("电邮")
     private String email;
 
-    @ApiModelProperty("生日:2018-12-15")
+    @ApiModelProperty(name="出生日期",example="2018-08-08")
     private Date birthday;
 
     @ApiModelProperty("身份证号码")
@@ -42,7 +42,7 @@ public class User {
     @ApiModelProperty("用户登录账号")
     private String username;
 
-    @ApiModelProperty(value = "用户登录密码",hidden = true)
+    @ApiModelProperty("用户登录密码")
     @JsonIgnore
     private String password;
 
@@ -55,7 +55,7 @@ public class User {
     @ApiModelProperty("配偶名字")
     private String mateName;
 
-    @ApiModelProperty("是否删除")
+    @ApiModelProperty(name="是否删除",hidden=true)
     private Boolean deleted;
 
     @ApiModelProperty(name="创建时间",hidden=true)

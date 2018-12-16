@@ -11,4 +11,6 @@ public interface UserService {
     User findOne(String userId);
 
 	User findUser(String username, String password);
+
+	int updateByPrimaryKeySelective(User user);
 }

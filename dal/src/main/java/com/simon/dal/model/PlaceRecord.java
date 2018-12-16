@@ -9,19 +9,19 @@ public class PlaceRecord {
     @ApiModelProperty("id")
     private String recordId;
 
-    @ApiModelProperty("用户id")
+    @ApiModelProperty(name="用户id",hidden=true)
     private String userId;
 
     @ApiModelProperty("场所id")
     private String placeId;
 
-    @ApiModelProperty("预订日期")
+    @ApiModelProperty(name="预订日期",example="2018-08-08")
     private Date orderDate;
 
-    @ApiModelProperty(name="开始时间",hidden=true)
+    @ApiModelProperty(name="开始时间",example="2018-08-08 08:08:08")
     private Date orderStartTime;
 
-    @ApiModelProperty(name="结束时间",hidden=true)
+    @ApiModelProperty(name="结束时间",example="2018-08-08 08:08:08")
     private Date orderEndTime;
 
     @ApiModelProperty(name="预定状态(-1预约取消0开始发起1预约成功2预约失败)",hidden=true)

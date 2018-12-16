@@ -25,7 +25,7 @@ public class Notice {
     @ApiModelProperty("场所标题(英文)")
     private String noticeEnglishTitle;
 
-    @ApiModelProperty("图片")
+    @ApiModelProperty(name="图片",hidden=true)
     private String noticeImage;
 
     @ApiModelProperty(name="创建时间",hidden=true)

@@ -26,4 +26,10 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		return noticeMapper.selectByPrimaryKey(noticeId);
 	}
+
+	@Override
+	public int updateByPrimaryKeySelective(Notice record) {
+		
+		return noticeMapper.updateByPrimaryKeySelective(record);
+	}
 }

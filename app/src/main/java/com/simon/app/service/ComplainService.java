@@ -23,4 +23,6 @@ public interface ComplainService {
 	 * @return
 	 */
 	int addComplain(Complain complain);
+	
+	int updateByPrimaryKeySelective(Complain complain);
 }

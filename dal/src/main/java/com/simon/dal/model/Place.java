@@ -23,13 +23,13 @@ public class Place {
     @ApiModelProperty("场所名字(英文)")
     private String placeEnglishName;
 
-    @ApiModelProperty("图片url")
+    @ApiModelProperty(name="图片url",hidden=true)
     private String placeImage;
 
-    @ApiModelProperty(name="起始时间",hidden=true)
+    @ApiModelProperty(name="起始时间",example="2018-08-08 08:08:08")
     private Date placeStartTime;
 
-    @ApiModelProperty(name="结束时间",hidden=true)
+    @ApiModelProperty(name="结束时间",example="2018-08-08 08:08:08")
     private Date placeEndTime;
 
     @ApiModelProperty("需要预定(0否1是)")
