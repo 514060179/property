@@ -17,15 +17,15 @@ public class PlaceRecord {
     @ApiModelProperty("场所id")
     private String placeId;
 
-    @ApiModelProperty("预订日期")
+    @ApiModelProperty(name="预订日期",example="2018-08-08")
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date orderDate;
 
-    @ApiModelProperty("开始时间")
+    @ApiModelProperty(name="开始时间",example="2018-08-08 08:08:08")
     @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date orderStartTime;
 
-    @ApiModelProperty("结束时间")
+    @ApiModelProperty(name="结束时间",example="2018-08-08 08:08:08")
     @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date orderEndTime;
 

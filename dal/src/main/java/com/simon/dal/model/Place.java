@@ -28,11 +28,11 @@ public class Place {
     @ApiModelProperty(name="图片url",hidden=true)
     private String placeImage;
 
-    @ApiModelProperty("起始时间")
+    @ApiModelProperty(name="起始时间",example="2018-08-08 08:08:08")
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date placeStartTime;
-    
-    @ApiModelProperty("结束时间")
+
+    @ApiModelProperty(name="结束时间",example="2018-08-08 08:08:08")
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date placeEndTime;
 

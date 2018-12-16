@@ -34,7 +34,7 @@ public class User {
     @ApiModelProperty("电邮")
     private String email;
 
-    @ApiModelProperty("生日:2018-12-15")
+    @ApiModelProperty(name="出生日期",example="2018-08-08")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
