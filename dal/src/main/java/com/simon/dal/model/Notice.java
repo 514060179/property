@@ -7,7 +7,7 @@ import java.util.Date;
 
 @ApiModel(value = "Notice", description = "广告/公告/推送")
 public class Notice {
-    @ApiModelProperty("id")
+    @ApiModelProperty(name="id",readOnly=true)
     private String noticeId;
 
     @ApiModelProperty("社区id")
@@ -25,13 +25,13 @@ public class Notice {
     @ApiModelProperty("场所标题(英文)")
     private String noticeEnglishTitle;
 
-    @ApiModelProperty(name="图片",hidden=true)
+    @ApiModelProperty(name="图片",readOnly=true)
     private String noticeImage;
 
-    @ApiModelProperty(name="创建时间",hidden=true)
+    @ApiModelProperty(name="创建时间",readOnly=true)
     private Date createTime;
 
-    @ApiModelProperty(name="更新时间",hidden=true)
+    @ApiModelProperty(name="更新时间",readOnly=true)
     private Date updateTime;
 
     @ApiModelProperty("详情")

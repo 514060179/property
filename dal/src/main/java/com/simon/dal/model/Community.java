@@ -9,7 +9,7 @@ import java.util.Date;
 @ApiModel(value = "Community", description = "社区")
 public class Community {
 
-    @ApiModelProperty("社区id")
+    @ApiModelProperty(name="社区id",readOnly=true)
     private String communityId;
 
     @ApiModelProperty("社区编号")
@@ -60,16 +60,16 @@ public class Community {
     @ApiModelProperty("备注")
     private String communityRemark;
 
-    @ApiModelProperty(name="是否删除",hidden=true)
+    @ApiModelProperty(name="是否删除",readOnly=true)
     private Boolean communityDeleted;
 
     @ApiModelProperty("管理类型(0普通管理1综合管理)")
     private String communityManagementType;
 
-    @ApiModelProperty(name="创建时间",hidden=true)
+    @ApiModelProperty(name="创建时间",readOnly=true)
     private Date createTime;
 
-    @ApiModelProperty(name="更新时间",hidden=true)
+    @ApiModelProperty(name="更新时间",readOnly=true)
     private Date updateTime;
 
     public String getCommunityId() {

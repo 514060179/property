@@ -8,10 +8,10 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 @ApiModel(value = "PlaceRecord", description = "订场记录")
 public class PlaceRecord {
-    @ApiModelProperty("id")
+    @ApiModelProperty(name="id",readOnly=true)
     private String recordId;
 
-    @ApiModelProperty(name="用户id",hidden=true)
+    @ApiModelProperty(name="用户id",readOnly=true)
     private String userId;
 
     @ApiModelProperty("场所id")
@@ -29,13 +29,13 @@ public class PlaceRecord {
     @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date orderEndTime;
 
-    @ApiModelProperty(name="预定状态(-1预约取消0开始发起1预约成功2预约失败)",hidden=true)
+    @ApiModelProperty(name="预定状态(-1预约取消0开始发起1预约成功2预约失败)",readOnly=true)
     private String recordStatus;
 
-    @ApiModelProperty(name="创建时间",hidden=true)
+    @ApiModelProperty(name="创建时间",readOnly=true)
     private Date createTime;
 
-    @ApiModelProperty(name="更新时间",hidden=true)
+    @ApiModelProperty(name="更新时间",readOnly=true)
     private Date updateTime;
 
     public String getRecordId() {

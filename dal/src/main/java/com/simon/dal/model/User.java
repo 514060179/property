@@ -10,7 +10,7 @@ import java.util.Date;
 @ApiModel(value = "User", description = "用户")
 public class User {
 
-    @ApiModelProperty("用户id")
+    @ApiModelProperty(value="用户id", readOnly=true)
     private String userId;
 
     @ApiModelProperty("社区id")
@@ -57,13 +57,13 @@ public class User {
     @ApiModelProperty("配偶名字")
     private String mateName;
 
-    @ApiModelProperty(name="是否删除",hidden=true)
+    @ApiModelProperty(name="是否删除",readOnly=true)
     private Boolean deleted;
 
-    @ApiModelProperty(name="创建时间",hidden=true)
+    @ApiModelProperty(name="创建时间",readOnly=true)
     private Date createTime;
 
-    @ApiModelProperty(name="更新时间",hidden=true)
+    @ApiModelProperty(name="更新时间",readOnly=true)
     private Date updateTime;
 
     public String getUserId() {
