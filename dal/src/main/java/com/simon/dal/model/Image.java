@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value="Image", description="图片")
 public class Image {
 	
-	@ApiModelProperty("图片id")
+	@ApiModelProperty(name="图片id",readOnly=true)
 	private String imageId;
 	
 	@ApiModelProperty("图片url")
@@ -23,10 +23,10 @@ public class Image {
 	@ApiModelProperty("场所id")
 	private String placeId;
 	
-	@ApiModelProperty(name="创建时间",hidden=true)
+	@ApiModelProperty(name="创建时间",readOnly=true)
     private Date createTime;
 
-    @ApiModelProperty(name="更新时间",hidden=true)
+    @ApiModelProperty(name="更新时间",readOnly=true)
     private Date updateTime;
 
 	public String getImageId() {

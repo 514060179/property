@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @ApiModel(value = "Place", description = "场所信息")
 public class Place {
 
-    @ApiModelProperty("id")
+    @ApiModelProperty(name="id",readOnly=true)
     private String placeId;
 
     @ApiModelProperty("社区id")
@@ -25,7 +25,7 @@ public class Place {
     @ApiModelProperty("场所名字(英文)")
     private String placeEnglishName;
 
-    @ApiModelProperty(name="图片url",hidden=true)
+    @ApiModelProperty(name="图片url",readOnly=true)
     private String placeImage;
 
     @ApiModelProperty(name="起始时间",example="2018-08-08 08:08:08")
@@ -48,10 +48,10 @@ public class Place {
     @ApiModelProperty("最大天数")
     private Integer placeFarthestOrderDay;
 
-    @ApiModelProperty(name="创建时间",hidden=true)
+    @ApiModelProperty(name="创建时间",readOnly=true)
     private Date createTime;
 
-    @ApiModelProperty(name="更新时间",hidden=true)
+    @ApiModelProperty(name="更新时间",readOnly=true)
     private Date updateTime;
 
     @ApiModelProperty("简介(中文)")

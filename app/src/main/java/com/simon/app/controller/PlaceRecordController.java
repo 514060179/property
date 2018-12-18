@@ -6,6 +6,8 @@ import com.simon.app.service.PlaceRecordService;
 import com.simon.app.util.ClaimsUtil;
 import com.simon.dal.model.Complain;
 import com.simon.dal.model.PlaceRecord;
+import com.simon.dal.util.UUIDUtil;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -44,7 +46,11 @@ public class PlaceRecordController {
 
     @PostMapping("add")
     @ApiOperation("添加")
-    public ReturnMsg<PlaceRecord> add(@RequestBody PlaceRecord placeRecord){
+    public ReturnMsg<PlaceRecord> add(@RequestBody PlaceRecord placeRecord
+    		,HttpServletRequest request){
+    	String userId = ClaimsUtil.getUserId(request);
+    	placeRecord.setRecordId(UUIDUtil.uidString());
+    	placeRecord.setUserId(userId);
     	placeRecordService.addPlaceRecord(placeRecord);
         return ReturnMsg.success(placeRecordService.findOne(placeRecord.getRecordId()));
     }

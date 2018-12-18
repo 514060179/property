@@ -6,6 +6,8 @@ import com.simon.app.service.ComplainService;
 import com.simon.app.util.ClaimsUtil;
 import com.simon.dal.model.Complain;
 import com.simon.dal.model.Notice;
+import com.simon.dal.util.UUIDUtil;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -48,6 +50,7 @@ public class ComplainController {
     @PostMapping("add")
     @ApiOperation("添加")
     public ReturnMsg<Complain> add(@RequestBody Complain complain){
+    	complain.setComplainId(UUIDUtil.uidString());
     	int id = complainService.addComplain(complain);
     	return ReturnMsg.success(complainService.findOne(complain.getComplainId()));
     }
