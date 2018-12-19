@@ -8,10 +8,10 @@ import java.util.Date;
 @ApiModel(value = "Complain", description = "投诉/保修")
 public class Complain {
 
-    @ApiModelProperty(name="id",readOnly=true)
+    @ApiModelProperty(value="id",readOnly=true)
     private String complainId;
 
-    @ApiModelProperty(name="用户id",readOnly=true)
+    @ApiModelProperty(value="用户id",readOnly=true)
     private String userId;
 
     @ApiModelProperty("位置(XX大厦)")
@@ -26,7 +26,7 @@ public class Complain {
     @ApiModelProperty("类型分类（供电系统，发电机...）")
     private String complainClassType;
 
-    @ApiModelProperty(name="图片",readOnly=true)
+    @ApiModelProperty(value="图片",readOnly=true)
     private String complainImages;
 
     @ApiModelProperty("联络人")
@@ -38,25 +38,25 @@ public class Complain {
     @ApiModelProperty("联络人电邮")
     private String complainLiaisonsEmail;
 
-    @ApiModelProperty(name="状态:0发起1收到2处理中3处理完成",readOnly=true)
+    @ApiModelProperty(value="状态:0发起1收到2处理中3处理完成",readOnly=true)
     private String complainStatus;
 
-    @ApiModelProperty(name="完成时间",readOnly=true)
+    @ApiModelProperty(value="完成时间",readOnly=true)
     private Date complainFinishTime;
 
-    @ApiModelProperty(name="处理人",readOnly=true)
+    @ApiModelProperty(value="处理人",readOnly=true)
     private String complainHandler;
 
     @ApiModelProperty("描述")
     private String complainDescribe;
 
-    @ApiModelProperty(name="声音",readOnly=true)
+    @ApiModelProperty(value="声音",readOnly=true)
     private String complainVoice;
 
-    @ApiModelProperty(name="创建时间",readOnly=true)
+    @ApiModelProperty(value="创建时间",readOnly=true)
     private Date createTime;
 
-    @ApiModelProperty(name="更新时间",readOnly=true)
+    @ApiModelProperty(value="更新时间",readOnly=true)
     private Date updateTime;
 
     public String getComplainId() {

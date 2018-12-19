@@ -34,7 +34,7 @@ public class User {
     @ApiModelProperty("电邮")
     private String email;
 
-    @ApiModelProperty(name="出生日期",example="2018-08-08")
+    @ApiModelProperty(value="出生日期",example="2018-08-08")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
@@ -57,13 +57,13 @@ public class User {
     @ApiModelProperty("配偶名字")
     private String mateName;
 
-    @ApiModelProperty(name="是否删除",readOnly=true)
+    @ApiModelProperty(value="是否删除",readOnly=true)
     private Boolean deleted;
 
-    @ApiModelProperty(name="创建时间",readOnly=true)
+    @ApiModelProperty(value="创建时间",readOnly=true)
     private Date createTime;
 
-    @ApiModelProperty(name="更新时间",readOnly=true)
+    @ApiModelProperty(value="更新时间",readOnly=true)
     private Date updateTime;
 
     public String getUserId() {
