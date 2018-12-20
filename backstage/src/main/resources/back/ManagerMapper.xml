@@ -159,4 +159,27 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where manager_id = #{managerId,jdbcType=VARCHAR}
   </update>
+
+  <select id="findCustomRolesAuthorization" resultType="map">
+    SELECT
+    j.jn_url AS url,
+    concat(group_concat(r.role_name),'') AS roleName
+    FROM role r
+    LEFT JOIN role_jn rj ON r.role_id=rj.role_id
+    LEFT JOIN jurisdiction j ON rj.jn_id=j.jn_id
+    GROUP BY  j.jn_url
+  </select>
+  <select id="findAllJurisdiction" resultType="string">
+    SELECT
+    jn_url AS url
+    FROM jurisdiction
+  </select>
+  <insert id="addJurisdiction">
+    INSERT INTO jurisdiction (jn_name,jn_url) VALUES
+    <foreach collection="list" item="item" separator=",">
+      (
+        #{item.jnName},#{item.jnUrl}
+      )
+    </foreach>
+  </insert>
 </mapper>

@@ -13,7 +13,10 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 public class JwtRealm extends AuthorizingRealm {
@@ -33,11 +36,12 @@ public class JwtRealm extends AuthorizingRealm {
                 && payload.charAt(payload.length() - 1) == '}') {
 
             Map<String, Object> payloadMap = JSONUtil.jsonToObject(payload.substring(4),Map.class);
-//            Set<String> roles = JsonWebTokenUtil.split((String)payloadMap.get("roles"));
-//            Set<String> permissions = JsonWebTokenUtil.split((String)payloadMap.get("perms"));
+            String roleStr = (String)payloadMap.get("roles");
+            Set<String> roles = new HashSet<>(Arrays.asList(roleStr.split(",")));
             SimpleAuthorizationInfo info =  new SimpleAuthorizationInfo();
-//            if(null!=roles&&!roles.isEmpty())
-//                info.setRoles(roles);
+            if(null!=roles&&!roles.isEmpty())
+                info.setRoles(roles);
+//            Set<String> permissions = JsonWebTokenUtil.split((String)payloadMap.get("perms"));
 //            if(null!=permissions&&!permissions.isEmpty())
 //                info.setStringPermissions(permissions);
             return info;

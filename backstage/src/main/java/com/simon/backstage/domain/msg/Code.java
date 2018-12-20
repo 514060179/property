@@ -20,4 +20,7 @@ public interface Code {
     //参数异常
     int paramiolationException=300;
 
+    //未授权
+    int unauthorized = 401;
+
 }

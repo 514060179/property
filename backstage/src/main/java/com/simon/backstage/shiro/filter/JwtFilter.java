@@ -1,6 +1,10 @@
 package com.simon.backstage.shiro.filter;
 
+import com.simon.backstage.domain.msg.Code;
+import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.shiro.token.JwtToken;
+import com.simon.backstage.util.JSONUtil;
+import com.simon.backstage.util.ResponseUtil;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
@@ -44,7 +48,8 @@ public class JwtFilter extends AccessControlFilter {
                 return true;
             } catch (AuthenticationException e) {
                 log.error(e.getMessage(),e);
-                WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED,e.getMessage());
+                ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.unauthorized,"该账户未授权！")),response);
+//                WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED,e.getMessage());
             }
         }
         return false;

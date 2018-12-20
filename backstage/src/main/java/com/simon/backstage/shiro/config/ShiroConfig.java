@@ -1,5 +1,6 @@
 package com.simon.backstage.shiro.config;
 
+import com.simon.backstage.service.RoleService;
 import com.simon.backstage.shiro.filter.CustomRolesAuthorizationFilter;
 import com.simon.backstage.shiro.filter.JwtFilter;
 import com.simon.backstage.shiro.filter.NoSessionFilter;
@@ -53,39 +54,38 @@ public class ShiroConfig {
         shiroFilter.setSecurityManager(securityManager);
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
         JwtFilter jwtFilter = new JwtFilter();
-//        jwtFilter.setAudience(audience);
         filters.put("token",jwtFilter );
         filters.put("customRolesAuthorizationFilter",new CustomRolesAuthorizationFilter() );
 //        filters.put("corsFilter", new RestFilter());
 //        filters.put("customRolesAuthorizationFilter", new CustomRolesAuthorizationFilter());
         shiroFilter.setFilters(filters);
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
-        filterChainDefinitionMap.put("/test/","token");
-        filterChainDefinitionMap.put("/test/t2","customRolesAuthorizationFilter[admin]");
-//        filterChainDefinitionMap.putAll(roleChains());
+//        filterChainDefinitionMap.put("/back/*","token");
+//        filterChainDefinitionMap.put("/test/t2","customRolesAuthorizationFilter[admin]");
+        filterChainDefinitionMap.putAll(roleChains());
         shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilter;
     }
 
     //角色拦截
-//    @Bean
-//    public Map<String,String> roleChains() {
-//        Map<String,String> otherChains = new HashMap<>();//规则集合
-//        //获取权限
-//        List<Map<String,String>> mapList = roleAndJnService().findCustomRolesAuthorization();
-//        for (Map<String,String> map : mapList){
-//            if (map.get("url")!=null&&!"".equals(map.get("url").trim())){
-//                otherChains.put(map.get("url"),"corsFilter,token,customRolesAuthorizationFilter["+map.get("roleName")+"]");
-//            }
-//        }
+    @Bean
+    public Map<String,String> roleChains() {
+        Map<String,String> otherChains = new HashMap<>();//规则集合
+        //获取权限
+        List<Map<String,String>> mapList = roleService().findCustomRolesAuthorization();
+        for (Map<String,String> map : mapList){
+            if (map.get("url")!=null&&!"".equals(map.get("url").trim())){
+                otherChains.put(map.get("url"),"token,customRolesAuthorizationFilter["+map.get("roleName")+"]");
+            }
+        }
 //                String permission = "perms[" + resources.getResurl()+ "]";
 //                filterChainDefinitionMap.put(resources.getResurl(),permission);
-//        return otherChains;
-//    }
+        return otherChains;
+    }
 
-//    @Bean
-//    public  RoleAndJnService roleAndJnService(){
-//        return new RoleAndJnServiceImpl();
-//    }
+    @Bean
+    public RoleService roleService(){
+        return new RoleService();
+    }
 
 }
