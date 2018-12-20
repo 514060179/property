@@ -26,7 +26,7 @@ public class Complain {
     @ApiModelProperty("类型分类（供电系统，发电机...）")
     private String complainClassType;
 
-    @ApiModelProperty(value="图片",readOnly=true)
+    @ApiModelProperty(value="图片url",readOnly=true)
     private String complainImages;
 
     @ApiModelProperty("联络人")
@@ -50,7 +50,7 @@ public class Complain {
     @ApiModelProperty("描述")
     private String complainDescribe;
 
-    @ApiModelProperty(value="声音",readOnly=true)
+    @ApiModelProperty("声音path")
     private String complainVoice;
 
     @ApiModelProperty(value="创建时间",readOnly=true)

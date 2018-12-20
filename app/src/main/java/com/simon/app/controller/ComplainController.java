@@ -3,14 +3,17 @@ package com.simon.app.controller;
 import com.github.pagehelper.PageInfo;
 import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.service.ComplainService;
+import com.simon.app.service.ImageService;
 import com.simon.app.util.ClaimsUtil;
 import com.simon.dal.model.Complain;
+import com.simon.dal.model.Image;
 import com.simon.dal.model.Notice;
 import com.simon.dal.util.UUIDUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +33,8 @@ public class ComplainController {
 
 	@Autowired
 	private ComplainService complainService;
+	@Autowired
+	private ImageService imageService;
 	
     @PostMapping("list")
     @ApiOperation("我的投诉/报修")
@@ -49,11 +54,19 @@ public class ComplainController {
 
     @PostMapping("add")
     @ApiOperation("添加")
-    public ReturnMsg<Complain> add(@RequestBody Complain complain){
+    public ReturnMsg<Complain> add(@RequestBody Complain complain,@RequestParam String paths){
     	complain.setComplainId(UUIDUtil.uidString());
-    	int id = complainService.addComplain(complain);
+    	complainService.addComplain(complain);
+    	if(paths != "" && paths != null){
+    		String[] path = paths.split(",");
+    		for (String url : path) {
+    			Image image = new Image();
+    			image.setComplainId(complain.getComplainId());
+				image.setImageId(UUIDUtil.uidString());
+				image.setImageUrl(url);
+				imageService.insertSelective(image);
+			}
+    	}
     	return ReturnMsg.success(complainService.findOne(complain.getComplainId()));
     }
-
-
 }

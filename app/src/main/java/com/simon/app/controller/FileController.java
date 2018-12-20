@@ -2,7 +2,9 @@ package com.simon.app.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +20,7 @@ import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.service.ComplainService;
 import com.simon.app.service.ImageService;
 import com.simon.app.service.UserService;
+import com.simon.app.util.ClaimsUtil;
 import com.simon.app.util.ImageType;
 import com.simon.dal.model.Complain;
 import com.simon.dal.model.Image;
@@ -41,7 +44,8 @@ public class FileController {
 	
 	@PostMapping("upload")
     @ApiOperation("文件上传")
-    public ReturnMsg<Object> upload(@RequestParam("id") String id, @RequestParam("图片类型") String type,
+    public ReturnMsg<Object> upload(@RequestParam(name="type", required=false) String type,
+    		@RequestParam(name="userId", required=false) String userId,
     		@RequestParam("file") MultipartFile files, HttpServletRequest request)
     		throws IllegalStateException, IOException{
     	//文件夹路径
@@ -53,45 +57,48 @@ public class FileController {
 		}
 		MultipartHttpServletRequest multipart= (MultipartHttpServletRequest)request;
 		List<MultipartFile> fileNames = multipart.getFiles("file");
+		Map<String,String> map = new HashMap<>();
+		String paths = "";
     	for (MultipartFile file : fileNames) {
     		String fileName = file.getOriginalFilename();
     		String path = realPath + fileName;
     		if(!file.isEmpty() && file!=null){
     			File localFile = new File(path);
     			file.transferTo(localFile);
-    			if(ImageType.IMAGE_TYPE_USER == type){//用户头像，更新用户信息
+    			if(ImageType.IMAGE_TYPE_USER .equals(type)){//用户头像，更新用户信息
     				User user = new User();
-    				user.setUserId(id);
+    				user.setUserId(userId);
     				user.setPortrait(path);
          			int i = userService.updateByPrimaryKeySelective(user);
          			if(i < 1){
          				return ReturnMsg.fail();
          			}
-    			}else if(ImageType.IMAGE_TYPE_COMPLAIN_VOICE == type){//投诉/报修 语音上传
-    				Complain complain =new Complain();
-    				complain.setComplainId(id);
-    				complain.setComplainVoice(path);
-    				int i = complainService.updateByPrimaryKeySelective(complain);
-    				if(i < 1){
-         				return ReturnMsg.fail();
-         			}
-    			}else{
-    				Image image = new Image();
-    				image.setImageId(UUIDUtil.uidString());
-    				image.setImageUrl(path);
-    				if(ImageType.IMAGE_TYPE_COMPLAIN == type){
-    					image.setComplainId(id);
-    				}else if(ImageType.IMAGE_TYPE_PLACE == type){
-    					image.setPlaceId(id);
-    				}
-    				//新增图片
-    				int i = imageService.insertSelective(image);
-    				if(i < 1){
-         				return ReturnMsg.fail();
-         			}
+         			return ReturnMsg.success();
+//    			}else if(ImageType.IMAGE_TYPE_COMPLAIN_VOICE == type){//投诉/报修 语音上传
+//    				Complain complain =new Complain();
+//    				complain.setComplainId(id);
+//    				complain.setComplainVoice(path);
+//    				int i = complainService.updateByPrimaryKeySelective(complain);
+//    				if(i < 1){
+//         				return ReturnMsg.fail();
+//         			}
+//    			}else{
+//    				Image image = new Image();
+//    				image.setImageId(UUIDUtil.uidString());
+//    				image.setImageUrl(path);
+//    				if(ImageType.IMAGE_TYPE_COMPLAIN == type){
+//    					image.setComplainId(id);
+//    				}
+//    				//新增图片
+//    				int i = imageService.insertSelective(image);
+//    				if(i < 1){
+//         				return ReturnMsg.fail();
+//         			}
     			}
+    			paths = path + "," + paths;
         	}
 		}
-    	return ReturnMsg.success();
+    	map.put("path", paths);
+    	return ReturnMsg.success(map);
 	}
 }
