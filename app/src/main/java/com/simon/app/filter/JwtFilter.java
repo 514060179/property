@@ -4,6 +4,8 @@ import com.simon.app.config.Audience;
 import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.util.JSONUtil;
 import com.simon.app.util.JwtHelper;
+import com.simon.dal.config.RedisService;
+
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,8 @@ public class JwtFilter extends GenericFilterBean {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private Audience audience;
+    @Autowired
+    private RedisService redis;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -57,6 +61,17 @@ public class JwtFilter extends GenericFilterBean {
                     noLogin(response, JSONUtil.objectToJson(new ReturnMsg(false, ReturnMsg.nologin, "未登录/jwt解析有误", null)));
                     logger.warn("未登录/jwt解析有误token="+token);
                     return;
+                }
+                if (redis == null) {
+                    BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+                    redis = (RedisService) factory.getBean("redisService");
+                }
+                String id = claims.get("user_id",String.class);
+                boolean hasKey = redis.hasKey(id);
+                if(!hasKey){
+                	noLogin(response, JSONUtil.objectToJson(new ReturnMsg(false, ReturnMsg.nologin, "未登录/登陆缓存已过期，请重新登陆", null)));
+                	logger.warn("未登录/登陆缓存已过期，请重新登陆");
+                	return;
                 }
                 request.setAttribute("claims", claims);
                 filterChain.doFilter(servletRequest, servletResponse);

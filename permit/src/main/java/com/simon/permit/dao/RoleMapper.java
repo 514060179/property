@@ -1,6 +1,6 @@
 package com.simon.permit.dao;
 
-import com.simon.basics.model.Role;
+import com.simon.permit.model.Role;
 
 import java.util.List;
 import java.util.Map;

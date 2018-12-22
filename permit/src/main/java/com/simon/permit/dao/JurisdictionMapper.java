@@ -1,6 +1,6 @@
 package com.simon.permit.dao;
 
-import com.simon.basics.model.Jurisdiction;
+import com.simon.permit.model.Jurisdiction;
 
 import java.util.List;
 
