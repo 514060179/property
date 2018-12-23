@@ -28,6 +28,8 @@ import com.simon.dal.model.User;
 import com.simon.dal.util.UUIDUtil;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -44,8 +46,11 @@ public class FileController {
 	
 	@PostMapping("upload")
     @ApiOperation("文件上传")
-    public ReturnMsg<Object> upload(@RequestParam(name="type", required=false) String type,
-    		@RequestParam(name="userId", required=false) String userId,
+	@ApiImplicitParams({
+			@ApiImplicitParam(name="type",value="文件类型（用户头像：1，投诉/报修图片：4，语音：44）",paramType="query"),
+			@ApiImplicitParam(name="userId",value="上传头像时需要的用户id",paramType="query")
+		})
+    public ReturnMsg<Object> upload(String type,String userId,
     		@RequestParam("file") MultipartFile files, HttpServletRequest request)
     		throws IllegalStateException, IOException{
     	//文件夹路径

@@ -6,6 +6,8 @@ import com.simon.app.util.ClaimsUtil;
 import com.simon.app.util.EncryUtil;
 import com.simon.dal.model.User;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +38,12 @@ public class UserController {
     
     @PostMapping("updatePassword")
     @ApiOperation("修改密码")
-    public ReturnMsg updatePassword(@RequestParam("旧密码") String password,
-    		@RequestParam("新密码") String newpassword, HttpServletRequest request){
+    @ApiImplicitParams({
+    	@ApiImplicitParam(name="password",value="旧密码",paramType="query"),
+    	@ApiImplicitParam(name="newpassword",value="新密码",paramType="query")
+    })
+    public ReturnMsg updatePassword(@RequestParam String password,
+    		@RequestParam String newpassword, HttpServletRequest request){
     	String userId = ClaimsUtil.getUserId(request);
     	User user = new User();
     	user.setUserId(userId);

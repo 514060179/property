@@ -21,11 +21,11 @@ public class PlaceRecord {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date orderDate;
 
-    @ApiModelProperty(value="开始时间",example="2018-08-08 08:08:08")
+    @ApiModelProperty(value="开始时间",example="08:00:00")
     @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date orderStartTime;
 
-    @ApiModelProperty(value="结束时间",example="2018-08-08 08:08:08")
+    @ApiModelProperty(value="结束时间",example="18:00:00")
     @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date orderEndTime;
 

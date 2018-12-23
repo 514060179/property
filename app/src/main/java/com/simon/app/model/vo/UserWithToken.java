@@ -6,11 +6,21 @@ import com.simon.dal.model.User;
  * @author fengtianying
  * @date 2018/11/9 16:12
  */
-public class UserWithToken extends User {
+public class UserWithToken {
 
+	private User user;
+	
     private String token;
 
-    public String getToken() {
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getToken() {
         return token;
     }
 

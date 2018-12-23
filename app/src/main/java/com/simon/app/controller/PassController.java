@@ -45,16 +45,11 @@ public class PassController {
  		User result = userService.findUser(user);
  		if(result != null){//存在该用户名
  			UserWithToken userToken = new UserWithToken();
- 			String token = null;
- 			boolean hasKey = redis.hasKey(result.getUserId());
- 			if(!hasKey){//如果缓存已过期则创建新的token
- 				token = JwtHelper.createJWT(result.getUsername(), result.getUserId(),
- 	 					result.getCommunityId(),-1L, audience.getBase64Secret());
- 				redis.set(result.getUserId(), token, 3600*24*25);
- 			}
- 			token = (String)redis.get(result.getUserId());
+ 			String token = JwtHelper.createJWT(result.getUsername(), result.getUserId(),
+ 	 				result.getCommunityId(), -1L, audience.getBase64Secret());
+ 			redis.set(result.getUserId(), token, 600);//有效期十分钟
  			userToken.setToken(token);
- 			userToken.setUserId(result.getUserId());
+ 			userToken.setUser(result);
  			msg.setData(userToken);
  			return ReturnMsg.success(userToken);
  		}else{

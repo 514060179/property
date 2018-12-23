@@ -66,13 +66,20 @@ public class JwtFilter extends GenericFilterBean {
                     BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
                     redis = (RedisService) factory.getBean("redisService");
                 }
-                String id = claims.get("user_id",String.class);
-                boolean hasKey = redis.hasKey(id);
-                if(!hasKey){
+                String userId = claims.get("user_id", String.class);
+                boolean hasKey = redis.hasKey(userId);
+                if( !hasKey ) {
                 	noLogin(response, JSONUtil.objectToJson(new ReturnMsg(false, ReturnMsg.nologin, "未登录/登陆缓存已过期，请重新登陆", null)));
                 	logger.warn("未登录/登陆缓存已过期，请重新登陆");
                 	return;
                 }
+                String obj = (String) redis.get(userId);
+                if( !token.equals(obj)){
+                	noLogin(response, JSONUtil.objectToJson(new ReturnMsg(false, ReturnMsg.nologin, "未登录/该账号已被其他设备登陆", null)));
+                	logger.warn("未登录/该账号已被其他设备登陆");
+                	return;
+                }
+                redis.set(userId, token, 600);
                 request.setAttribute("claims", claims);
                 filterChain.doFilter(servletRequest, servletResponse);
             } catch (final Exception e) {
