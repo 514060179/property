@@ -2,6 +2,7 @@ package com.simon.app.service.impl;
 
 import java.util.List;
 
+import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,8 @@ public class PlaceServiceImpl implements PlaceService{
 	private PlaceMapper placeMapper;
 
 	@Override
-	public List<Place> list() {
-		return placeMapper.list();
+	public List<Place> list(BaseQueryParam baseQueryParam) {
+		return placeMapper.list(baseQueryParam);
 	}
 
 	@Override

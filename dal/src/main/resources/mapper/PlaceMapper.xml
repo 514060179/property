@@ -29,6 +29,11 @@
   	select 
   	<include refid="Base_Column_List" />
   	from place
+    <where>
+      <if test="keyword!=null and keyword!=''">
+        CONCAT(IFNULL(place_name,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+    </where>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

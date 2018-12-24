@@ -3,13 +3,14 @@ package com.simon.app.service;
 import java.util.List;
 
 import com.simon.dal.model.Place;
+import com.simon.dal.vo.BaseQueryParam;
 
 public interface PlaceService {
 	/**
 	 * 场所列表
 	 * @return
 	 */
-	List<Place> list();
+	List<Place> list(BaseQueryParam baseQueryParam);
 	
 	/**
 	 * 场所详情
