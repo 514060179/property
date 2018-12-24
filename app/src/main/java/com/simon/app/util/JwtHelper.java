@@ -49,6 +49,7 @@ public class JwtHelper {
                 .claim("community_id", communityId)
                 .claim("username", username)
                 .claim("user_id", userId)
+                .claim("random", System.currentTimeMillis())
 //                .setIssuer(issuer)
 //                .setAudience(audience)
                 .signWith(signatureAlgorithm, signingKey);
