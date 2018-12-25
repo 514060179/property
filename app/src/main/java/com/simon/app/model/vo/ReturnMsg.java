@@ -37,6 +37,10 @@ public class ReturnMsg<T> implements Code {
     	return new ReturnMsg(Boolean.FALSE,Code.nologin,"失败",null);
     }
     
+    public static ReturnMsg fail(String msg, String code){
+    	return new ReturnMsg(Boolean.FALSE, code, msg,null);
+    }
+    
     public static ReturnMsg loginFail(){
     	return new ReturnMsg(Boolean.FALSE,Code.loginfail,"账号或密码错误",null);
     }

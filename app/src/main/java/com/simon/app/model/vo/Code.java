@@ -13,6 +13,8 @@ public interface Code {
     String loginfail = "105";
     //密码错误
     String wrongPassword = "106";
+    //订场失败
+    String orderFail = "401";
     
     String systemError = "999";
 }
