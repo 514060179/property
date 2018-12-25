@@ -5,6 +5,7 @@ import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.service.PlaceService;
 import com.simon.dal.model.Notice;
 import com.simon.dal.model.Place;
+import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -29,9 +30,9 @@ public class PlaceController {
 
     @PostMapping("list")
     @ApiOperation("场所列表")
-    public ReturnMsg<PageInfo<Place>> list(){
+    public ReturnMsg<PageInfo<Place>> list(BaseQueryParam baseQueryParam){
 
-        return ReturnMsg.success(new PageInfo<>(placeService.list()));
+        return ReturnMsg.success(new PageInfo<>(placeService.list(baseQueryParam)));
     }
     @PostMapping("detail")
     @ApiOperation("场所详情")

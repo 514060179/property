@@ -10,22 +10,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @ApiModel(value = "Place", description = "场所信息")
 public class Place {
 
-    @ApiModelProperty(value="id",readOnly=true)
+    @ApiModelProperty(value="id")
     private String placeId;
 
-    @ApiModelProperty("社区id")
+    @ApiModelProperty(value = "社区id",example = "")
     private String communityId;
 
-    @ApiModelProperty("场所名字(简体)")
+    @ApiModelProperty(value = "场所名字(简体)",example = "游泳池")
     private String placeName;
 
-    @ApiModelProperty("场所名字(繁体)")
+    @ApiModelProperty(value = "场所名字(繁体)",example = "游泳池")
     private String placeTraditionalName;
 
-    @ApiModelProperty("场所名字(英文)")
+    @ApiModelProperty(value = "场所名字(英文)",example = "Swimming Pool")
     private String placeEnglishName;
 
-    @ApiModelProperty(value="图片url",readOnly=true)
+    @ApiModelProperty(value="图片url",readOnly=true,example = "/images/swimming/123.png")
     private String placeImage;
 
     @ApiModelProperty(value="起始时间",example="2018-08-08 08:08:08")
@@ -36,16 +36,16 @@ public class Place {
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date placeEndTime;
 
-    @ApiModelProperty("需要预定(0否1是)")
+    @ApiModelProperty(value = "需要预定(0否1是)",example = "0")
     private Integer placeNeedOrder;
 
-    @ApiModelProperty("预约时间上限")
+    @ApiModelProperty(value = "预约时间上限",example = "10")
     private Integer placeUpperLimit;
 
-    @ApiModelProperty("提前天数")
+    @ApiModelProperty(value = "提前天数",example = "1")
     private Integer placeAdvanceOrderDay;
 
-    @ApiModelProperty("最大天数")
+    @ApiModelProperty(value = "最大天数",example = "30")
     private Integer placeFarthestOrderDay;
 
     @ApiModelProperty(value="创建时间",readOnly=true)
@@ -54,13 +54,13 @@ public class Place {
     @ApiModelProperty(value="更新时间",readOnly=true)
     private Date updateTime;
 
-    @ApiModelProperty("简介(中文)")
+    @ApiModelProperty(value = "简介(中文)",example = "世界上最深的游泳")
     private String placeIntroduction;
 
-    @ApiModelProperty("简介(简体)")
+    @ApiModelProperty(value = "简介(简体)",example = "世界上最深的游泳池")
     private String placeTraditionalIntroduction;
 
-    @ApiModelProperty("简介(英文)")
+    @ApiModelProperty(value = "简介(英文)",example = "The deepest swimming in the world")
     private String placeEnglishIntroduction;
 
     public String getPlaceIntroduction() {
