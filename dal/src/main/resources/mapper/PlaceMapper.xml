@@ -8,6 +8,7 @@
     <result column="place_traditional_name" property="placeTraditionalName" jdbcType="VARCHAR" />
     <result column="place_english_name" property="placeEnglishName" jdbcType="VARCHAR" />
     <result column="place_image" property="placeImage" jdbcType="VARCHAR" />
+    <result column="place_status" property="placeStatus" jdbcType="INTEGER" />
     <result column="place_start_time" property="placeStartTime" jdbcType="TIME" />
     <result column="place_end_time" property="placeEndTime" jdbcType="TIME" />
     <result column="place_need_order" property="placeNeedOrder" jdbcType="INTEGER" />
@@ -21,7 +22,7 @@
     <result column="place_english_introduction" property="placeEnglishIntroduction" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    place_id, community_id, place_name, place_traditional_name, place_english_name, place_image, 
+    place_id, community_id, place_name, place_traditional_name, place_english_name, place_image, place_status,
     place_start_time, place_end_time, place_need_order, place_upper_limit, place_advance_order_day, 
     place_farthest_order_day, create_time, update_time,    place_introduction, place_traditional_introduction, place_english_introduction
   </sql>

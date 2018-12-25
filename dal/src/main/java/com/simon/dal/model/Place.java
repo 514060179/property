@@ -26,7 +26,7 @@ public class Place {
     private String placeEnglishName;
     
     @ApiModelProperty(value="场所状态(0未开放1开放)",example="1")
-    private Integer palceStatus;
+    private Integer placeStatus;
 
     @ApiModelProperty(value="图片url",readOnly=true,example = "/images/swimming/123.png")
     private String placeImage;
@@ -106,12 +106,12 @@ public class Place {
         this.communityId = communityId == null ? null : communityId.trim();
     }
 
-    public Integer getPalceStatus() {
-		return palceStatus;
+    public Integer getPlaceStatus() {
+		return placeStatus;
 	}
 
-	public void setPalceStatus(Integer palceStatus) {
-		this.palceStatus = palceStatus;
+	public void setPlaceStatus(Integer placeStatus) {
+		this.placeStatus = placeStatus;
 	}
 
 	public String getPlaceName() {
