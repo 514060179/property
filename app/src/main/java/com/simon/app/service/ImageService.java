@@ -1,5 +1,7 @@
 package com.simon.app.service;
 
+import java.util.List;
+
 import com.simon.dal.model.Image;
 
 public interface ImageService {
@@ -8,6 +10,6 @@ public interface ImageService {
 	 * @param record
 	 * @return
 	 */
-    int insertSelective(Image record);
+	int insertBatch(List<Image> list);
 
 }

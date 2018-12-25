@@ -1,5 +1,7 @@
 package com.simon.app.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,9 @@ public class ImageServiceImpl implements ImageService {
 	private ImageMapper imageMapper;
 	
 	@Override
-	public int insertSelective(Image record) {
+	public int insertBatch(List<Image> list) {
 		// TODO Auto-generated method stub
-		return imageMapper.insertSelective(record);
+		return imageMapper.insertBatch(list);
 	}
 
 }

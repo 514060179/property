@@ -13,6 +13,7 @@ import com.simon.dal.util.UUIDUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -59,13 +60,15 @@ public class ComplainController {
     	complainService.addComplain(complain);
     	if(paths != "" && paths != null){
     		String[] path = paths.split(",");
+    		List<Image> list = new ArrayList<Image>();
     		for (String url : path) {
     			Image image = new Image();
     			image.setComplainId(complain.getComplainId());
 				image.setImageId(UUIDUtil.uidString());
 				image.setImageUrl(url);
-				imageService.insertSelective(image);
+				list.add(image);
 			}
+    		imageService.insertBatch(list);
     	}
     	return ReturnMsg.success(complainService.findOne(complain.getComplainId()));
     }
