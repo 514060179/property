@@ -27,4 +27,8 @@ public interface ManagerMapper {
     List<String> findAllJurisdiction();
 
     int addJurisdiction(List<Jurisdiction> list);
+    
+    Manager findManager(Manager record);
+    
+    String findManagerAndRole(String managerId);
 }

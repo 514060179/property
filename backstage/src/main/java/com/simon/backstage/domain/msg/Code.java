@@ -7,6 +7,9 @@ package com.simon.backstage.domain.msg;
 public interface Code {
     //成功
     int success=200;
+    
+    //未登录
+    int nologin=100;
 
     //数据库key重复
     int duplicate=201;

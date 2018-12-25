@@ -16,6 +16,52 @@
   <sql id="Base_Column_List" >
     manager_id, community_id, NAME, sex,type, email, username, PASSWORD, create_time, update_time
   </sql>
+  <select id="findManagerAndRole" resultType="java.lang.String" parameterType="java.lang.String">
+  	SELECT
+      	concat(group_concat(r.role_name),'') AS roleName
+  	FROM
+	  	user_role ur
+		LEFT JOIN role r ON r.role_id = ur.role_id
+  	WHERE 
+		ur.manager_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="findManager" resultMap="BaseResultMap" parameterType="com.simon.backstage.domain.model.Manager">
+  	select
+  	<include refid="Base_Column_List"/>
+  	from manager
+  	<where>
+  	  <if test="managerId != null" >
+        manager_id = #{managerId,jdbcType=VARCHAR}
+      </if>
+      <if test="communityId != null" >
+        and community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null" >
+        and NAME = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="sex != null" >
+        and sex = #{sex,jdbcType=INTEGER}
+      </if>
+      <if test="type != null" >
+        and type = #{type,jdbcType=INTEGER}
+      </if>
+      <if test="email != null" >
+        and email = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test="username != null" >
+        and username = #{username,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null" >
+        and PASSWORD = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null" >
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateTime != null" >
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+  	</where>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

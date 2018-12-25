@@ -48,4 +48,15 @@
 			</if>
 		</trim>
 	</insert>
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert 
+			into image(image_id,image_url,place_id,complain_id,notice_id) values
+		<foreach collection="list" item="image" index="index" separator=",">
+	       (#{image.imageId,jdbcType=VARCHAR},
+	        #{image.imageUrl,jdbcType=VARCHAR},
+	        #{image.placeId,jdbcType=VARCHAR},
+			#{image.complainId,jdbcType=VARCHAR},
+			#{image.noticeId,jdbcType=VARCHAR})
+        </foreach>
+	</insert>
 </mapper>

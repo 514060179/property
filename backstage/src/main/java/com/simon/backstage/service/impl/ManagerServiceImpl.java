@@ -41,4 +41,16 @@ public class ManagerServiceImpl implements ManagerService{
         PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
         return new PageInfo<>(managerMapper.selectByCondition(baseQueryParam));
     }
+
+	@Override
+	public Manager findManager(Manager record) {
+		// TODO Auto-generated method stub
+		return managerMapper.findManager(record);
+	}
+
+	@Override
+	public String findManagerAndRole(String managerId) {
+		// TODO Auto-generated method stub
+		return managerMapper.findManagerAndRole(managerId);
+	}
 }

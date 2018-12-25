@@ -38,4 +38,18 @@ public interface ManagerService {
      * @return
      */
     PageInfo<Manager> list(BaseQueryParam baseQueryParam);
+    
+    /**
+     * 查询
+     * @param record
+     * @return
+     */
+    Manager findManager(Manager record);
+    
+    /**
+     * 根据id查询所拥有的角色名称
+     * @param managerId
+     * @return
+     */
+    String findManagerAndRole(String managerId);
 }

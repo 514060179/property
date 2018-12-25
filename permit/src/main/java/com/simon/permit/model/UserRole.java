@@ -8,6 +8,8 @@ public class UserRole {
     private Long roleId;
 
     private String userId;
+    
+    private String managerId;
 
     private Date createTime;
 
@@ -33,7 +35,15 @@ public class UserRole {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public String getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(String managerId) {
+		this.managerId = managerId;
+	}
+
+	public void setUserId(String userId) {
         this.userId = userId == null ? null : userId.trim();
     }
 

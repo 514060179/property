@@ -1,4 +1,4 @@
-package com.simon.app.util;
+package com.simon.dal.util;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;

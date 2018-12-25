@@ -4,10 +4,10 @@ import com.simon.app.config.Audience;
 import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.model.vo.UserWithToken;
 import com.simon.app.service.UserService;
-import com.simon.app.util.EncryUtil;
 import com.simon.app.util.JwtHelper;
 import com.simon.dal.config.RedisService;
 import com.simon.dal.model.User;
+import com.simon.dal.util.EncryUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
