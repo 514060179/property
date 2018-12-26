@@ -1,5 +1,6 @@
 package com.simon.permit.dao;
 
+import com.simon.permit.model.BaseQueryParam;
 import com.simon.permit.model.Role;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public interface RoleMapper {
     List<String> findRoleListByAccountId(Long accountId);
 
     List<Role> findAll();
+
+    List<Role> findByCondition(BaseQueryParam baseQueryParam);
 
     List<Map<String,String>> findCustomRolesAuthorization();
 }

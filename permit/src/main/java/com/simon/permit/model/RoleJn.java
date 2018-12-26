@@ -17,6 +17,11 @@ public class RoleJn {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
+
+    private Jurisdiction jurisdiction;
+
+    private Boolean isHad;
+
     public Long getRoleJnId() {
         return roleJnId;
     }
@@ -55,5 +60,21 @@ public class RoleJn {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Jurisdiction getJurisdiction() {
+        return jurisdiction;
+    }
+
+    public void setJurisdiction(Jurisdiction jurisdiction) {
+        this.jurisdiction = jurisdiction;
+    }
+
+    public Boolean getHad() {
+        return isHad;
+    }
+
+    public void setHad(Boolean had) {
+        isHad = had;
     }
 }

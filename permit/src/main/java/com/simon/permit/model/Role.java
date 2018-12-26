@@ -10,6 +10,8 @@ public class Role {
 
     private String roleName;
 
+    private String roleDescription;
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
@@ -56,5 +58,13 @@ public class Role {
 
     public void setJurisdictionList(List<Jurisdiction> jurisdictionList) {
         this.jurisdictionList = jurisdictionList;
+    }
+
+    public String getRoleDescription() {
+        return roleDescription;
+    }
+
+    public void setRoleDescription(String roleDescription) {
+        this.roleDescription = roleDescription;
     }
 }
