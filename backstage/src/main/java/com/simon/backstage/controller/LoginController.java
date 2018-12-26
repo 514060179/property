@@ -21,7 +21,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/back/login")
+@RequestMapping("/pass")
 @Api(value = "LoginController", description = "通行")
 public class LoginController {
 	
