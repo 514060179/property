@@ -14,28 +14,29 @@ public class Complain {
     @ApiModelProperty(value="用户id",readOnly=true)
     private String userId;
 
-    @ApiModelProperty("位置(XX大厦)")
+    @ApiModelProperty(value="位置(XX大厦)",example="平安大厦")
     private String complainPosition;
 
-    @ApiModelProperty("具体位置(停车场,商铺...)")
+    @ApiModelProperty(value="具体位置(停车场,商铺...)",example="A1栋2单元501")
     private String complainSpecificPosition;
 
-    @ApiModelProperty("类型(土木工程，清洁，保安...)")
+    @ApiModelProperty(value="类型(土木工程，清洁，保安...)",example="土木工程")
     private String complainType;
 
-    @ApiModelProperty("类型分类（供电系统，发电机...）")
+    @ApiModelProperty(value="类型分类（供电系统，发电机...）",example="供电系统")
     private String complainClassType;
 
+    @Deprecated
     @ApiModelProperty(value="图片url",readOnly=true)
     private String complainImages;
 
-    @ApiModelProperty("联络人")
+    @ApiModelProperty(value="联络人",example="冯小猪")
     private String complainLiaisonsName;
 
-    @ApiModelProperty("联络人性别")
+    @ApiModelProperty(value="联络人性别(0女1男)",example="1")
     private String complainLiaisonsSex;
 
-    @ApiModelProperty("联络人电邮")
+    @ApiModelProperty(value="联络人电邮",example="120212485@gmail.com")
     private String complainLiaisonsEmail;
 
     @ApiModelProperty(value="状态:0发起1收到2处理中3处理完成",readOnly=true)
@@ -47,10 +48,10 @@ public class Complain {
     @ApiModelProperty(value="处理人",readOnly=true)
     private String complainHandler;
 
-    @ApiModelProperty("描述")
+    @ApiModelProperty(value="描述",example="隔三差五的断电，已向物业反应多次都没有得到解决")
     private String complainDescribe;
 
-    @ApiModelProperty("声音path")
+    @ApiModelProperty(value="声音path",example="E:/XXX/投诉.mp3")
     private String complainVoice;
 
     @ApiModelProperty(value="创建时间",readOnly=true)

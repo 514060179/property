@@ -20,9 +20,10 @@ public interface ComplainService {
 	/**
 	 * 添加
 	 * @param complain
+	 * @param paths 
 	 * @return
 	 */
-	int addComplain(Complain complain);
+	int addComplain(Complain complain, String paths);
 	
 	int updateByPrimaryKeySelective(Complain complain);
 }
