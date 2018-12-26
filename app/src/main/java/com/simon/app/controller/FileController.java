@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.simon.app.config.ResourceConfig;
 import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.service.ComplainService;
 import com.simon.app.service.ImageService;
@@ -43,6 +44,8 @@ public class FileController {
 	private ComplainService complainService;
 	@Autowired
 	private ImageService imageService;
+	@Autowired
+	private ResourceConfig resourceConfig;
 	
 	@PostMapping("upload")
     @ApiOperation("文件上传")
@@ -54,7 +57,7 @@ public class FileController {
     		@RequestParam("file") MultipartFile files, HttpServletRequest request)
     		throws IllegalStateException, IOException{
     	//文件夹路径
-    	String realPath = "E:/SelfWork/images/";
+		String realPath = resourceConfig.getImagePath();
 		File fileIo = new File(realPath);
 		//判断文件夹是否存在
 		if(!fileIo.exists()){
