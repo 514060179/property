@@ -228,4 +228,15 @@
       )
     </foreach>
   </insert>
+
+  <insert id="initRole">
+    INSERT INTO `role` (`role_name`, `role_description`, `role_default`) VALUES('manager','管理员',1),('admin','超级管理员',1);
+  </insert>
+
+  <select id="findAdminRole" resultType="long">
+    SELECT
+    role_id
+    FROM role
+    where role_name='admin'
+  </select>
 </mapper>

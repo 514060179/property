@@ -33,4 +33,11 @@ public class RoleService {
         return managerMapper.addJurisdiction(jurisdictionList);
     }
 
+    public int initRole(){
+        return managerMapper.initRole();
+    }
+
+    public Long findAdminRole(){
+        return managerMapper.findAdminRole();
+    }
 }

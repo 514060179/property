@@ -3,6 +3,8 @@ package com.simon.permit.dao;
 
 import com.simon.permit.model.RoleJn;
 
+import java.util.List;
+
 public interface RoleJnMapper {
     int deleteByPrimaryKey(Long roleJnId);
 
@@ -11,6 +13,10 @@ public interface RoleJnMapper {
     int insertSelective(RoleJn record);
 
     RoleJn selectByPrimaryKey(Long roleJnId);
+
+    List<RoleJn> selectByRoleId(Long roleId);
+
+    int deleteByPrimaryRoleId(Long roleId);
 
     int updateByPrimaryKeySelective(RoleJn record);
 

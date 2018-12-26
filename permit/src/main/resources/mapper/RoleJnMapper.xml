@@ -11,15 +11,41 @@
   <sql id="Base_Column_List" >
     role_jn_id, role_id, jn_id, create_time, update_time
   </sql>
+
+  <resultMap id="BaseResultWithJn" type="com.simon.permit.model.RoleJn" extends="BaseResultMap" >
+    <result column="isHad" property="isHad" jdbcType="BIGINT" />
+    <association property="jurisdiction" javaType="com.simon.permit.model.Jurisdiction" >
+      <id column="jn_id" property="jnId" jdbcType="BIGINT" />
+      <result column="jn_name" property="jnName" jdbcType="VARCHAR" />
+      <result column="jn_url" property="jnUrl" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_WithJn" >
+    j.jn_id,j.jn_name,j.jn_url,
+    rj.role_jn_id, rj.role_id, rj.jn_id, rj.create_time, rj.update_time,IFNULL(rj.role_jn_id,FALSE) AS isHad
+  </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from role_jn
     where role_jn_id = #{roleJnId,jdbcType=BIGINT}
   </select>
+
+  <select id="selectByRoleId" resultMap="BaseResultWithJn" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_WithJn" />
+    FROM jurisdiction j LEFT JOIN role_jn rj ON rj.jn_id=j.jn_id
+    AND rj.role_id =#{roleId,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from role_jn
     where role_jn_id = #{roleJnId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimaryRoleId" parameterType="java.lang.Long" >
+    delete from role_jn
+    where role_id = #{roleId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.simon.permit.model.RoleJn" >
     insert into role_jn (role_jn_id, role_id, jn_id, 
@@ -27,7 +53,7 @@
     values (#{roleJnId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{jnId,jdbcType=BIGINT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.simon.permit.model.RoleJn" >
+  <insert id="insertSelective" parameterType="com.simon.permit.model.RoleJn" useGeneratedKeys="true" keyProperty="roleJnId">
     insert into role_jn
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleJnId != null" >
