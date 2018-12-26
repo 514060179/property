@@ -14,7 +14,6 @@ import com.simon.dal.model.Complain;
 import com.simon.dal.model.Image;
 import com.simon.dal.util.UUIDUtil;
 
-@Transactional
 @Service
 public class ComplainServiceImpl implements ComplainService{
 
@@ -35,6 +34,7 @@ public class ComplainServiceImpl implements ComplainService{
 		return complainMapper.list(complain);
 	}
 
+	@Transactional
 	@Override
 	public int addComplain(Complain complain, String paths) {
 		if(paths != "" && paths != null){
