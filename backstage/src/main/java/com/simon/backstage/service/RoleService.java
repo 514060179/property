@@ -37,7 +37,7 @@ public class RoleService {
         return managerMapper.initRole();
     }
 
-    public Long findAdminRole(){
-        return managerMapper.findAdminRole();
+    public Long findRoleByName(String roleName){
+        return managerMapper.findAdminRole(roleName);
     }
 }

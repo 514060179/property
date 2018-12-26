@@ -48,10 +48,11 @@ public class JwtFilter extends AccessControlFilter {
                 return true;
             } catch (AuthenticationException e) {
                 log.error(e.getMessage(),e);
-                ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.unauthorized,"该账户未授权！")),response);
+                ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.nologin,"该账户未登录！")),response);
 //                WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED,e.getMessage());
             }
         }
+        ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.nologin,"该账户未登录！")),response);
         return false;
     }
 

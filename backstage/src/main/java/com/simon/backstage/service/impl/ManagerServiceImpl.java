@@ -10,6 +10,12 @@ import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author fengtianying
@@ -20,12 +26,23 @@ public class ManagerServiceImpl implements ManagerService{
 
     @Autowired
     private ManagerMapper managerMapper;
+
+    @Transactional
     @Override
-    public Manager add(Manager manager) {
+    public Manager add(Manager manager,String[] roleIds) {
         manager.setManagerId(UUIDUtil.uidString());
         manager.setPassword(EncryUtil.getMD5(manager.getPassword()));
         managerMapper.insertSelective(manager);//默认普通管理员角色
         //添加角色关系
+        List<Map<String,Object>> list = new ArrayList<>();
+        for (String roleId:roleIds
+             ) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("roleId",roleId);
+            map.put("userId",manager.getManagerId());
+            list.add(map);
+        }
+        managerMapper.addUserRole(list);
         return manager;
     }
 

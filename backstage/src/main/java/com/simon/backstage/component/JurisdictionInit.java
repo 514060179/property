@@ -64,7 +64,7 @@ public class JurisdictionInit implements ApplicationRunner {
                 jurisdictionList.add(jurisdiction);
             }
         });
-        Long roleId = roleService.findAdminRole();
+        Long roleId = roleService.findRoleByName("admin");
         //初始化角色  admin 以及  manager
         if (Objects.isNull(roleId)){
             roleService.initRole();

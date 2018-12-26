@@ -30,9 +30,11 @@ public interface ManagerMapper {
 
     int initRole();
 
-    Long findAdminRole();
+    Long findAdminRole(String roleName);
 
     Manager findManager(Manager record);
     
     String findManagerAndRole(String managerId);
+
+    int addUserRole(List<Map<String,Object>> list);
 }

@@ -36,7 +36,6 @@ public class Manager {
     private String username;
 
     @ApiModelProperty(value = "密码",example = "123456")
-    @JsonIgnore
     private String password;
 
     @ApiModelProperty(hidden = true)
@@ -44,6 +43,9 @@ public class Manager {
 
     @ApiModelProperty(hidden = true)
     private Date updateTime;
+
+    @ApiModelProperty(value = "角色id集合",example = "5,6")
+    private String roleIds;
 
     public String getManagerId() {
         return managerId;
@@ -123,5 +125,13 @@ public class Manager {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(String roleIds) {
+        this.roleIds = roleIds;
     }
 }

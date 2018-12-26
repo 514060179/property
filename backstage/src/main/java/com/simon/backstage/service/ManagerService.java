@@ -16,7 +16,7 @@ public interface ManagerService {
      * @param manager
      * @return
      */
-    Manager add(Manager manager);
+    Manager add(Manager manager,String[] roleId);
 
     /**
      * 修改
