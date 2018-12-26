@@ -43,6 +43,10 @@
     delete from role_jn
     where role_jn_id = #{roleJnId,jdbcType=BIGINT}
   </delete>
+  <delete id="deleteByPrimaryRoleId" parameterType="java.lang.Long" >
+    delete from role_jn
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </delete>
   <insert id="insert" parameterType="com.simon.permit.model.RoleJn" >
     insert into role_jn (role_jn_id, role_id, jn_id, 
       create_time, update_time)

@@ -57,6 +57,11 @@ public class PermitController {
         Role role = JSONUtil.jsonToObject(params,Role.class);
         return JSONUtil.objectToJson(ReturnMsg.success(roleService.add(role)));
     }
+    @RequestMapping("/roleDel")
+    @ResponseBody
+    public String roleDel(Long roleId){
+        return JSONUtil.objectToJson(ReturnMsg.success(roleService.roleDel(roleId)));
+    }
 
     @RequestMapping("/list")
     @ResponseBody

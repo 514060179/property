@@ -12,6 +12,7 @@
   <resultMap id="BaseWithJnResultMap" type="com.simon.permit.model.Role" >
     <id column="role_id" property="roleId" jdbcType="BIGINT" />
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="role_default" property="roleDefault" jdbcType="VARCHAR" />
     <result column="role_description" property="roleDescription" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -24,7 +25,7 @@
     </collection>
   </resultMap>
   <sql id="Base_Column_List" >
-    role_id, role_name,role_description, create_time, update_time
+    role_id,role_default, role_name,role_description, create_time, update_time
   </sql>
   <!--携带角色权限列表-->
   <sql id="Base_With_Jn_Column_List" >

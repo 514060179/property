@@ -74,7 +74,9 @@
 				<td>
 					<a href="javascript:" data-id="{{ item.roleId }}" data-opt="view" class="layui-btn layui-btn-normal layui-btn-mini">详情</a>
 					<a href="javascript:" data-id="{{ item.roleId }}" data-opt="edit" class="layui-btn layui-btn-mini">编辑</a>
-					<a href="javascript:" data-id="{{ item.roleId }}" data-opt="del" class="layui-btn layui-btn-mini">删除</a>
+                    {{#  if(!item.roleDefault){ }}
+                        <a href="javascript:" data-id="{{ item.roleId }}" data-opt="del" class="layui-btn layui-btn-mini">删除</a>
+                    {{# } }}
 				</td>
 			</tr>
 			{{# }); }}
@@ -153,7 +155,20 @@
                         $('#content').children('tr').each(function() {
                             var $that = $(this);
                             $that.children('td:last-child').children('a[data-opt=del]').on('click', function() {
-                                layer.msg($(this).data('id'));
+                                var id = $(this).data('id');
+                                var parent = $(this).parent().parent();
+                                layer.confirm('确定删除记录'+id, function(index){
+                                    $.get('/permit/roleDel?roleId='+id,function (data) {
+                                        var d = JSON.parse(data);
+                                        if (d.success){
+                                            layerTips.msg('删除成功!');
+                                            $(parent).remove();
+                                        }else{
+                                            alert(d.msg)
+                                        }
+                                    });
+                                    layer.close(index);
+                                });
                             });
                         });
 

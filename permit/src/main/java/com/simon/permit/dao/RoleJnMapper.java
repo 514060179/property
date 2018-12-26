@@ -16,7 +16,7 @@ public interface RoleJnMapper {
 
     List<RoleJn> selectByRoleId(Long roleId);
 
-    List<RoleJn> noSelectByRoleId(Long roleId);
+    int deleteByPrimaryRoleId(Long roleId);
 
     int updateByPrimaryKeySelective(RoleJn record);
 

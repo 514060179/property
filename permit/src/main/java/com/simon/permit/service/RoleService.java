@@ -28,6 +28,13 @@ public interface RoleService {
     Role add(Role role);
 
     /**
+     * 删除角色
+     * @param roleId
+     * @return
+     */
+    int roleDel(Long roleId);
+
+    /**
      * 根据id查询角色
      * @param roleId
      * @return

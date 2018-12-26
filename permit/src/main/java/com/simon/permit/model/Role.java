@@ -12,6 +12,8 @@ public class Role {
 
     private String roleDescription;
 
+    private Boolean roleDefault;
+
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
@@ -19,6 +21,14 @@ public class Role {
     private Date updateTime;
 
     private List<Jurisdiction> jurisdictionList;
+
+    public Boolean getRoleDefault() {
+        return roleDefault;
+    }
+
+    public void setRoleDefault(Boolean roleDefault) {
+        this.roleDefault = roleDefault;
+    }
 
     public Long getRoleId() {
         return roleId;

@@ -50,6 +50,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public int roleDel(Long roleId) {
+        int i = roleJnMapper.deleteByPrimaryRoleId(roleId);
+        i += roleMapper.deleteByPrimaryKey(roleId);
+        return i;
+    }
+
+    @Override
     public Role findRoleById(Long roleId) {
         return roleMapper.selectByPrimaryKey(roleId);
     }
