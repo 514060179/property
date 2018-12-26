@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.ManagerMapper;
 import com.simon.backstage.domain.model.Manager;
 import com.simon.backstage.service.ManagerService;
+import com.simon.dal.util.EncryUtil;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,9 @@ public class ManagerServiceImpl implements ManagerService{
     @Override
     public Manager add(Manager manager) {
         manager.setManagerId(UUIDUtil.uidString());
-        managerMapper.insertSelective(manager);
+        manager.setPassword(EncryUtil.getMD5(manager.getPassword()));
+        managerMapper.insertSelective(manager);//默认普通管理员角色
+        //添加角色关系
         return manager;
     }
 

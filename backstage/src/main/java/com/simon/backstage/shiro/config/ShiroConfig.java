@@ -75,7 +75,7 @@ public class ShiroConfig {
         List<Map<String,String>> mapList = roleService().findCustomRolesAuthorization();
         for (Map<String,String> map : mapList){
             if (map.get("url")!=null&&!"".equals(map.get("url").trim())){
-                otherChains.put(map.get("url"),"token,customRolesAuthorizationFilter["+map.get("roleName")+"]");
+                otherChains.put(map.get("url"),"token,customRolesAuthorizationFilter["+map.get("roleName")+",admin]");
             }
         }
 //                String permission = "perms[" + resources.getResurl()+ "]";

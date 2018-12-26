@@ -2,6 +2,7 @@ package com.simon.backstage.component;
 
 import com.simon.backstage.domain.model.Jurisdiction;
 import com.simon.backstage.service.RoleService;
+import com.simon.dal.config.RedisService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
@@ -30,6 +32,9 @@ public class JurisdictionInit implements ApplicationRunner {
 
     @Autowired
     RoleService roleService;
+
+    @Autowired
+    RedisService redisService;
 
 
     @Override
@@ -59,6 +64,11 @@ public class JurisdictionInit implements ApplicationRunner {
                 jurisdictionList.add(jurisdiction);
             }
         });
+        Long roleId = roleService.findAdminRole();
+        //初始化角色  admin 以及  manager
+        if (Objects.isNull(roleId)){
+            roleService.initRole();
+        }
         if (jurisdictionList.size()!=0)
             roleService.addJurisdiction(jurisdictionList);
     }
