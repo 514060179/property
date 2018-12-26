@@ -106,7 +106,8 @@ public class FileController {
     			paths = path + "," + paths;
         	}
 		}
-    	map.put("path", paths);
+    	String substring = paths.substring(0, paths.length()-1);
+    	map.put("path", substring);
     	return ReturnMsg.success(map);
 	}
 }
