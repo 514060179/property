@@ -20,9 +20,9 @@
             <td>${r.jurisdiction.jnUrl}</td>
             <td>
                 <#if r.had==true>
-                    <a href="javascript:" data-id="${r.roleJnId!}"  data-roleid="${roleId}" data-jnid="${r.jurisdiction.jnId!}" data-opt="del" class="layui-btn layui-btn-normal layui-btn-mini">删除</a>
+                    <a href="javascript:" id="${r.roleJnId!}del" data-id="${r.roleJnId!}"  data-roleid="${roleId}" data-jnid="${r.jurisdiction.jnId!}" data-opt="del" class="layui-btn layui-btn-normal layui-btn-mini">删除</a>
                 <#else>
-                    <a href="javascript:" data-id="${r.roleJnId!}"  data-roleid="${roleId}" data-jnid="${r.jurisdiction.jnId!}" data-opt="add" class="layui-btn layui-btn-mini">添加</a>
+                    <a href="javascript:" id="${r.roleJnId!}add" data-id="${r.roleJnId!}"  data-roleid="${roleId}" data-jnid="${r.jurisdiction.jnId!}" data-opt="add" class="layui-btn layui-btn-mini">添加</a>
                 </#if>
             </td>
         </tr>

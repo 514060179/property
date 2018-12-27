@@ -241,7 +241,7 @@
   </select>
 
   <insert id="addUserRole">
-    INSERT INTO user_role (role_id,user_id) VALUES
+    INSERT INTO user_role (role_id,manager_id) VALUES
     <foreach collection="list" item="item" separator=",">
     (
       #{item.roleId},#{item.userId}
