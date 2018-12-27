@@ -209,6 +209,47 @@
 					$('#layui-layer' + index).children('div.layui-layer-content').css('color', '#000000');
 				});
 
+                function roleJnAdd(id,roleId,jnId) {
+                    layerTips.confirm('确定添加', function(index){
+                        var url = "/permit/roleJnAdd?roleId="+roleId+"&jnId="+jnId;
+                        $.get(url,function (data) {
+                            var d = JSON.parse(data);
+                            if (d.success){
+                                layerTips.msg('添加成功!');
+                                $("#"+jnId+"add").before('<a href="javascript:" id="'+jnId+'del" data-id="'+d.data.roleJnId+'"  data-roleid="'+roleId+'" data-jnid="'+jnId+'" data-opt="del" class="layui-btn layui-btn-normal layui-btn-mini">删除</a>');
+                                $("#"+jnId+"add").remove();
+                                //添加删除按钮
+                                //绑定函数
+                                $("#"+jnId+"del").bind('click',function () {
+                                    roleJnDel(d.data.roleJnId,roleId,jnId);
+                                });
+                            }else{
+                                alert(d.msg)
+                            }
+                        })
+                        layer.close(index);
+                    });
+                }
+                function roleJnDel(id,roleId,jnId) {
+                    layerTips.confirm('确定删除记录'+id, function(index){
+                        $.get('/permit/roleJnDel?roleJnId='+id,function (data) {
+                            var d = JSON.parse(data);
+                            if (d.success){
+                                layerTips.msg('删除成功!');
+                                $("#"+jnId+"del").after('<a href="javascript:"id="'+jnId+'add" data-id="'+id+'"  data-roleid="'+roleId+'" data-jnid="'+jnId+'" data-opt="add" class="layui-btn layui-btn-mini">添加</a>');
+                                $("#"+jnId+"del").remove();
+                                //绑定函数
+                                $("#"+jnId+"add").bind('click',function () {
+                                    roleJnAdd(id,roleId,jnId);
+                                });
+                            }else{
+                                alert(d.msg)
+                            }
+                        })
+                        layer.close(index);
+                    });
+                }
+
                 function viewForm(id) {
                     //本表单通过ajax加载 --以模板的形式，当然你也可以直接写在页面上读取
                     $.get('/permit/view.html?roleId=' + id, null, function(form) {
@@ -244,13 +285,18 @@
                                         var id = $(this).data('id');
                                         var roleId = $(this).data('roleid');
                                         var jnId = $(this).data('jnid');
+                                        var param = "'"+id+"','"+roleId+"','"+jnId+"'";
                                         layerTips.confirm('确定删除记录'+id, function(index){
                                             $.get('/permit/roleJnDel?roleJnId='+id,function (data) {
                                                 var d = JSON.parse(data);
                                                 if (d.success){
                                                     layerTips.msg('删除成功!');
-                                                    $(self).after('<a href="javascript:" data-id="'+id+'"  data-roleid="'+roleId+'" data-jnid="'+jnId+'" data-opt="add" class="layui-btn layui-btn-mini">添加</a>');
+                                                    $(self).after('<a href="javascript:" id="'+jnId+'add" data-id="'+id+'"  data-roleid="'+roleId+'" data-jnid="'+jnId+'" data-opt="add" class="layui-btn layui-btn-mini" >添加</a>');
                                                     $(self).remove();
+                                                    //绑定函数
+                                                    $("#"+jnId+"add").bind('click',function () {
+                                                        roleJnAdd(id,roleId,jnId);
+                                                    });
                                                 }else{
                                                     alert(d.msg)
                                                 }
@@ -272,9 +318,12 @@
                                                 var d = JSON.parse(data);
                                                 if (d.success){
                                                     layerTips.msg('添加成功!');
-                                                    $(self).before('<a href="javascript:" data-id="'+d.data.roleJnId+'"  data-roleid="'+roleId+'" data-jnid="'+jnId+'" data-opt="del" class="layui-btn layui-btn-normal layui-btn-mini">删除</a>');
+                                                    $(self).before('<a href="javascript:" id="'+jnId+'del" data-id="'+d.data.roleJnId+'"  data-roleid="'+roleId+'" data-jnid="'+jnId+'" data-opt="del" class="layui-btn layui-btn-normal layui-btn-mini">删除</a>');
                                                     $(self).remove();
-                                                    //添加删除按钮
+                                                    //绑定函数
+                                                    $("#"+jnId+"del").bind('click',function () {
+                                                        roleJnDel(d.data.roleJnId,roleId,jnId);
+                                                    });
                                                 }else{
                                                     alert(d.msg)
                                                 }
