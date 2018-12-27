@@ -3,7 +3,7 @@ package com.simon.backstage.controller;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +15,7 @@ import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.ManagerService;
 import com.simon.backstage.shiro.config.Audience;
 import com.simon.backstage.util.JwtHelper;
+import com.simon.dal.config.RedisService;
 import com.simon.dal.util.EncryUtil;
 
 import io.swagger.annotations.Api;
@@ -29,8 +30,10 @@ public class LoginController {
     private ManagerService managerService;
 	@Autowired
 	private Audience audience;
+	@Autowired
+	private RedisService redisService;
 	
-	@GetMapping("login")
+	@PostMapping("login")
 	@ApiOperation("用户登陆")
 	public ReturnMsg<ManagerWithToken> login(@RequestParam String username,@RequestParam String password){
     	Manager manager = new Manager();
@@ -45,6 +48,7 @@ public class LoginController {
     		ManagerWithToken withToken = new ManagerWithToken();
     		withToken.setManager(result);
     		withToken.setToken(token);
+    		redisService.set(result.getManagerId(), token, 600);
     		return ReturnMsg.success(withToken);
     	}
     	return ReturnMsg.fail(Code.nologin, "账号或密码错误");

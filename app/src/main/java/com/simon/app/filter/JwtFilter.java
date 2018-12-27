@@ -44,7 +44,7 @@ public class JwtFilter extends GenericFilterBean {
         if ("OPTIONS".equals(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
-            if (authHeader == null || !authHeader.startsWith("bearer;")) {//登录失败
+            if (authHeader == null) {//登录失败
                 noLogin(response, JSONUtil.objectToJson(new ReturnMsg(false, ReturnMsg.nologin, "未登录/Authorization参数格式有误", null)));
                 logger.warn("未登录/Authorization参数格式有误Authorization="+authHeader);
                 return;
