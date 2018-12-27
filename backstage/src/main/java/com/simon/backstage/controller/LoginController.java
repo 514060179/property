@@ -40,7 +40,7 @@ public class LoginController {
     	if(result != null){
     		String roles = managerService.findManagerAndRole(result.getManagerId());
     		String token = JwtHelper.issueJwt(UUID.randomUUID().toString(), result.getManagerId(),
-    				result.getUsername(), 600*1000L, roles, null, 
+    				result.getUsername(), result.getCommunityId(), 600*1000L, roles, null, 
     				audience.getBase64Secret());
     		ManagerWithToken withToken = new ManagerWithToken();
     		withToken.setManager(result);

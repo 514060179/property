@@ -35,16 +35,17 @@ public class JwtHelper {
         return claims;
     }
     /**
-     * @param id          令牌ID
-     * @param subject     用户ID
-     * @param issuer      签发人
-     * @param period      有效时间(毫秒)
-     * @param roles       访问主张-角色
-     * @param permissions 访问主张-权限
-     * @param base64Security 秘钥
+     * @param id           令牌ID
+     * @param subject      用户ID
+     * @param issuer       签发人
+     * @param communityId  社区ID
+     * @param period       有效时间(毫秒)
+     * @param roles        访问主张-角色
+     * @param permissions  访问主张-权限
+     * @param base64Security  秘钥
      * @return json web token
      */
-    public static String issueJwt(String id, String subject, String issuer, Long period, String roles
+    public static String issueJwt(String id, String subject, String issuer, String communityId, Long period, String roles
             , String permissions,String base64Security) {
         long currentTimeMillis = System.currentTimeMillis();// 当前时间戳
         byte[] secretKeyBytes = DatatypeConverter.parseBase64Binary(base64Security);// 秘钥
@@ -69,6 +70,9 @@ public class JwtHelper {
         }
         if (Strings.isNotBlank(permissions)){
             jwt.claim("perms", permissions);//权限
+        }
+        if (Strings.isNotBlank(communityId)){
+        	jwt.claim("community", communityId);//所在社区
         }
         jwt.compressWith(CompressionCodecs.DEFLATE);//压缩，可选GZIP
         jwt.signWith(SignatureAlgorithm.HS256, secretKeyBytes);//加密设置
@@ -151,7 +155,7 @@ public class JwtHelper {
     }
     public static void main(String[] args) {
         String key = "MDk3ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=";
-        String token = JwtHelper.issueJwt(UUID.randomUUID().toString(), "123456", "restapiuser", 3600*1000L, "admin", "2", key);
+        String token = JwtHelper.issueJwt(UUID.randomUUID().toString(), "123456", "c123456", "restapiuser", 3600*1000L, "admin", "2", key);
 //        String token = "eyJhbGciOiJIUzI1NiIsImNhbGciOiJERUYifQ.eNo8y0EKwyAQheG7zDqCo2bU3EadEVJaGjSBQujdq5vuHj_fu-Fx7rABr6IxeFIhUlFOW1RJo1OJMdZQmHP2sEC_8sA6hkq5sCODbL0ticVJsIaMz67SgHvvAzbpZzr2q0ubLZ2w4eqQyFC0C8jn-Ac_Q3s_Zf5w6EPaa24D3x8AAAD__w.0uDD4CKv7d-5VCo075s5D1Nlu7VcXhbkdwFRpieOv28.eNo8yk0KhDAMQOG7ZG0hGdMavU0rqVTwh4mCIHP3qRuX7-PdMB8FBgiIMXmfXd8zO87SuSTKLkpqI46q2Qs0YGeq82n6RapZzGpaWbY16zo9Eg8YyDOF8EGhBvTaXyCh3x8AAP__.UWBe3Yfl6Atqmmp3yb_xXhZWdJB1md0D2Tog4OYSWZE";
         Claims claims = parseJWT(token,"MDk3ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=");
         System.out.println(token);
