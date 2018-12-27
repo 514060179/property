@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.service.UserService;
 import com.simon.dal.dao.UserMapper;
 import com.simon.dal.model.User;
+import com.simon.dal.util.EncryUtil;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User add(User user) {
         user.setUserId(UUIDUtil.uidString());
+        user.setPassword(EncryUtil.getMD5(user.getPassword()));
         if(userMapper.insertSelective(user)>0){
             return user;
         }

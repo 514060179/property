@@ -6,7 +6,7 @@
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="english_name" property="englishName" jdbcType="VARCHAR" />
-    <result column="sex" property="sex" jdbcType="CHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
     <result column="country_code" property="countryCode" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
@@ -78,7 +78,7 @@
       deleted, create_time, update_time
       )
     values (#{userId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{englishName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, #{countryCode,jdbcType=VARCHAR}, 
+      #{englishName,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{countryCode,jdbcType=VARCHAR},
       #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, 
       #{idCard,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{portrait,jdbcType=VARCHAR}, #{marriageSystem,jdbcType=VARCHAR}, #{mateName,jdbcType=VARCHAR}, 
@@ -157,7 +157,7 @@
         #{englishName,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
-        #{sex,jdbcType=CHAR},
+        #{sex,jdbcType=INTEGER},
       </if>
       <if test="countryCode != null" >
         #{countryCode,jdbcType=VARCHAR},
@@ -213,7 +213,7 @@
         english_name = #{englishName,jdbcType=VARCHAR},
       </if>
       <if test="sex != null" >
-        sex = #{sex,jdbcType=CHAR},
+        sex = #{sex,jdbcType=INTEGER},
       </if>
       <if test="countryCode != null" >
         country_code = #{countryCode,jdbcType=VARCHAR},
@@ -262,7 +262,7 @@
     set community_id = #{communityId,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       english_name = #{englishName,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=CHAR},
+      sex = #{sex,jdbcType=INTEGER},
       country_code = #{countryCode,jdbcType=VARCHAR},
       tel = #{tel,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},

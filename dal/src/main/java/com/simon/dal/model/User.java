@@ -16,45 +16,44 @@ public class User {
     @ApiModelProperty("社区id")
     private String communityId;
 
-    @ApiModelProperty("名字")
+    @ApiModelProperty(value = "名字",example = "西蒙")
     private String name;
 
-    @ApiModelProperty("英文名字")
+    @ApiModelProperty(value = "英文名字",example = "simon")
     private String englishName;
 
-    @ApiModelProperty("性别(0女1男)")
-    private String sex;
+    @ApiModelProperty(value = "性别(0女1男)",example = "0")
+    private Integer sex;
 
-    @ApiModelProperty("区号")
+    @ApiModelProperty(value = "区号",example = "86")
     private String countryCode;
 
-    @ApiModelProperty("手机号")
+    @ApiModelProperty(value = "手机号",example = "13421266955")
     private String tel;
 
-    @ApiModelProperty("电邮")
+    @ApiModelProperty(value = "电邮",example = "514060179@qq.com")
     private String email;
 
     @ApiModelProperty(value="出生日期",example="2018-08-08")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
-    @ApiModelProperty("身份证号码")
+    @ApiModelProperty(value = "身份证号码",example = "441781199803043548")
     private String idCard;
 
-    @ApiModelProperty("用户登录账号")
+    @ApiModelProperty(value = "用户登录账号",example = "simon")
     private String username;
 
-    @ApiModelProperty("用户登录密码")
-    @JsonIgnore
+    @ApiModelProperty(value = "用户登录密码",example="123456")
     private String password;
 
-    @ApiModelProperty("用户头像")
+    @ApiModelProperty(value = "用户头像",example = "/a/b/c.jpg")
     private String portrait;
 
-    @ApiModelProperty("婚姻制度")
+    @ApiModelProperty(value = "婚姻制度",example = "")
     private String marriageSystem;
 
-    @ApiModelProperty("配偶名字")
+    @ApiModelProperty(value = "配偶名字",example = "nimei")
     private String mateName;
 
     @ApiModelProperty(value="是否删除",readOnly=true)
@@ -98,12 +97,12 @@ public class User {
         this.englishName = englishName == null ? null : englishName.trim();
     }
 
-    public String getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 
     public String getCountryCode() {
