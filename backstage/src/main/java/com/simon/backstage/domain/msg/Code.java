@@ -17,6 +17,9 @@ public interface Code {
     //参数溢出(数据长度过长，非外键数据)
     int truncation=202;
 
+    //未知文件
+    int unknownFile = 203;
+
     //系统异常
     int error=999;
 
@@ -25,5 +28,6 @@ public interface Code {
 
     //未授权
     int unauthorized = 401;
+
 
 }
