@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,14 +20,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * @author fengtianying
  * @date 2018/12/25 9:17
  */
 @Controller
-@RequestMapping("file")
+@RequestMapping("/back/file")
 public class FileController {
 
     @Autowired
@@ -36,42 +36,11 @@ public class FileController {
             ".jpg", ".bmp", ".jpeg", ".png", ".gif",
             ".JPG", ".BMP", ".JPEG", ".PNG", ".GIF"
     };
-    @RequestMapping("upload")
+    @PostMapping("upload")
     @ResponseBody
     public ReturnMsg upload(HttpServletRequest request,@ApiParam(name = "type",value = "图片类型：1场所2公告3其他",defaultValue = "1")@RequestParam Integer type){
 
-//        String fileName = file.getOriginalFilename();  // 文件名
-//        String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
-//        if (!verifyImage(fileName)){
-//            return ReturnMsg.fail(Code.unknownFile,"非法文件!"+fileName);
-//        }
-//        String filePath = resourceConfig.getRootPath(); // 上传后的路径
-//        String relativePath = "/";
-//        if (1==type){//场所图片
-//            relativePath = resourceConfig.getPlacePath();
-//            filePath += relativePath;
-//        }else if (2==type){//公告
-//            relativePath = resourceConfig.getNoticePath();
-//            filePath += relativePath;
-//        }else{
-//            filePath += "/";
-//        }
-//
-//        fileName = System.currentTimeMillis() + suffixName; // 新文件名
-//        File dest = new File(filePath + fileName);
-//        if (!dest.getParentFile().exists()) {
-//            dest.getParentFile().mkdirs();
-//        }
-//        try {
-//            file.transferTo(dest);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        String filename = relativePath + fileName;
         List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
-//        if (files.length>0) {
-//            System.out.println("文件为空空");
-//        }
 
         String relativePath = "/";
         String filePath = resourceConfig.getRootPath(); // 上传后的路径
@@ -120,6 +89,6 @@ public class FileController {
                 }
             }
         }
-        return true;
+        return false;
     }
 }
