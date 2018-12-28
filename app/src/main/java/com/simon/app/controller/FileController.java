@@ -57,7 +57,7 @@ public class FileController {
     		@RequestParam("file") MultipartFile files, HttpServletRequest request)
     		throws IllegalStateException, IOException{
     	//文件夹路径
-		String realPath = resourceConfig.getImagePath();
+		String realPath = resourceConfig.getRootPath()+resourceConfig.getImagePath();
 		File fileIo = new File(realPath);
 		//判断文件夹是否存在
 		if(!fileIo.exists()){
@@ -69,7 +69,7 @@ public class FileController {
 		String paths = "";
     	for (MultipartFile file : fileNames) {
     		String fileName = file.getOriginalFilename();
-    		String path = realPath + fileName;
+    		String path = resourceConfig.getImagePath() + fileName;
     		if(!file.isEmpty() && file!=null){
     			File localFile = new File(path);
     			file.transferTo(localFile);
