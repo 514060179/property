@@ -18,15 +18,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.simon.app.config.ResourceConfig;
 import com.simon.app.model.vo.ReturnMsg;
-import com.simon.app.service.ComplainService;
-import com.simon.app.service.ImageService;
 import com.simon.app.service.UserService;
 import com.simon.app.util.ClaimsUtil;
 import com.simon.app.util.ImageType;
-import com.simon.dal.model.Complain;
-import com.simon.dal.model.Image;
 import com.simon.dal.model.User;
-import com.simon.dal.util.UUIDUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -34,32 +29,39 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/app/file")
+@RequestMapping("/api/file")
 @Api(tags="file", description="文件上传")
 public class FileController {
 	
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private ComplainService complainService;
-	@Autowired
-	private ImageService imageService;
-	@Autowired
 	private ResourceConfig resourceConfig;
 	
 	@PostMapping("upload")
     @ApiOperation("文件上传")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name="type",value="文件类型（用户头像：1，投诉/报修图片：4，语音：44）",paramType="query"),
-			@ApiImplicitParam(name="userId",value="上传头像时需要的用户id",paramType="query")
+			@ApiImplicitParam(name="type",value="图片类型0投诉/保修1头像4其他",paramType="query"),
 		})
-    public ReturnMsg<Object> upload(String type,String userId,
+    public ReturnMsg<Object> upload(@RequestParam String type,
     		@RequestParam("file") MultipartFile files, HttpServletRequest request)
     		throws IllegalStateException, IOException{
-    	//文件夹路径
-		String realPath = resourceConfig.getRootPath()+resourceConfig.getImagePath();
-		File fileIo = new File(realPath);
+		String userId = ClaimsUtil.getUserId(request);
+    	//根目录
+		String rootPath = resourceConfig.getRootPath();
+		String realPath = "/";
+		if(ImageType.IMAGE_TYPE_USER.equals(type)){
+			realPath = resourceConfig.getImagePath();
+			rootPath += realPath;
+		}else if(ImageType.IMAGE_TYPE_COMPLAIN.equals(type)){
+			realPath = resourceConfig.getImagePath();
+			rootPath += realPath;
+		}else{
+			realPath = resourceConfig.getFilePath();
+			rootPath += realPath;
+		}
 		//判断文件夹是否存在
+		File fileIo = new File(rootPath);
 		if(!fileIo.exists()){
 			fileIo.mkdirs();
 		}
@@ -69,14 +71,15 @@ public class FileController {
 		String paths = "";
     	for (MultipartFile file : fileNames) {
     		String fileName = file.getOriginalFilename();
-    		String path = resourceConfig.getImagePath() + fileName;
+    		String sufName = fileName.substring(fileName.lastIndexOf("."));
+    		String newName = System.currentTimeMillis() + sufName; //上传后的新名字
     		if(!file.isEmpty() && file!=null){
-    			File localFile = new File(path);
+    			File localFile = new File(rootPath + newName);
     			file.transferTo(localFile);
     			if(ImageType.IMAGE_TYPE_USER .equals(type)){//用户头像，更新用户信息
     				User user = new User();
     				user.setUserId(userId);
-    				user.setPortrait(path);
+    				user.setPortrait(realPath + newName);
          			int i = userService.updateByPrimaryKeySelective(user);
          			if(i < 1){
          				return ReturnMsg.fail();
@@ -103,7 +106,7 @@ public class FileController {
 //         				return ReturnMsg.fail();
 //         			}
     			}
-    			paths = path + "," + paths;
+    			paths = realPath + newName + "," + paths;
         	}
 		}
     	String substring = paths.substring(0, paths.length()-1);

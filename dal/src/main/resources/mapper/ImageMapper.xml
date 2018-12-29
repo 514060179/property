@@ -4,12 +4,10 @@
 	<resultMap id="BaseResultMap" type="com.simon.dal.model.Image" >
 		<id column="image_id" property="imageId" />
 		<result column="image_url" property="imageUrl" />
-		<result column="place_Id" property="placeId" />
-		<result column="complain_id" property="complainId" />
-		<result column="notice_id" property="noticeId" />
+		<result column="object_id" property="objectId" />
 	</resultMap>
 	<sql id="Base_Column_List" >
-		image_id, image_url, place_Id, complain_id, notice_id
+		image_id, image_url, object_id
 	</sql>
 	<insert id="insertSelective" parameterType="com.simon.dal.model.Image" >
 		insert into image
@@ -21,13 +19,7 @@
 				image_url,
 			</if>
 			<if test="placeId != null">
-				place_id
-			</if>
-			<if test="complainId != null">
-				complain_id
-			</if>
-			<if test="noticeId != null">
-				notice_id
+				object_id
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -38,25 +30,17 @@
 				#{imageUrl,jdbcType=VARCHAR},
 			</if>
 			<if test="placeId != null">
-				#{placeId,jdbcType=VARCHAR},
-			</if>
-			<if test="complainId != null">
-				#{complainId,jdbcType=VARCHAR},
-			</if>
-			<if test="noticeId != null">
-				#{noticeId,jdbcType=VARCHAR}
+				#{objectId,jdbcType=VARCHAR}
 			</if>
 		</trim>
 	</insert>
 	<insert id="insertBatch" parameterType="java.util.List">
 		insert 
-			into image(image_id,image_url,place_id,complain_id,notice_id) values
+			into image(image_id,image_url,object_id) values
 		<foreach collection="list" item="image" index="index" separator=",">
 	       (#{image.imageId,jdbcType=VARCHAR},
 	        #{image.imageUrl,jdbcType=VARCHAR},
-	        #{image.placeId,jdbcType=VARCHAR},
-			#{image.complainId,jdbcType=VARCHAR},
-			#{image.noticeId,jdbcType=VARCHAR})
+	        #{image.objectId,jdbcType=VARCHAR}
         </foreach>
 	</insert>
 </mapper>

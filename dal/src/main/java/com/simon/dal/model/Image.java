@@ -14,14 +14,11 @@ public class Image {
 	@ApiModelProperty("图片url")
 	private String imageUrl;
 	
-	@ApiModelProperty("投诉/报修id")
-	private String complainId;
+	@ApiModelProperty("对象id(对应的业务id，如：placeId)")
+	private String objectId;
 	
-	@ApiModelProperty("公告id")
-	private String noticeId;
-	
-	@ApiModelProperty("场所id")
-	private String placeId;
+	@ApiModelProperty("图片类型0投诉/保修1场所2公告3其他")
+	private String imageType;
 	
 	@ApiModelProperty(name="创建时间",readOnly=true)
     private Date createTime;
@@ -45,28 +42,20 @@ public class Image {
 		this.imageUrl = imageUrl;
 	}
 
-	public String getComplainId() {
-		return complainId;
+	public String getObjectId() {
+		return objectId;
 	}
 
-	public void setComplainId(String complainId) {
-		this.complainId = complainId;
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
 	}
 
-	public String getNoticeId() {
-		return noticeId;
+	public String getImageType() {
+		return imageType;
 	}
 
-	public void setNoticeId(String noticeId) {
-		this.noticeId = noticeId;
-	}
-
-	public String getPlaceId() {
-		return placeId;
-	}
-
-	public void setPlaceId(String placeId) {
-		this.placeId = placeId;
+	public void setImageType(String imageType) {
+		this.imageType = imageType;
 	}
 
 	public Date getCreateTime() {

@@ -42,9 +42,10 @@ public class ComplainServiceImpl implements ComplainService{
     		List<Image> list = new ArrayList<Image>();
     		for (String url : path) {
     			Image image = new Image();
-    			image.setComplainId(complain.getComplainId());
-				image.setImageId(UUIDUtil.uidString());
+    			image.setImageId(UUIDUtil.uidString());
+    			image.setObjectId(complain.getComplainId());
 				image.setImageUrl(url);
+				image.setImageType("0");
 				list.add(image);
 			}
     		imageMapper.insertBatch(list);
