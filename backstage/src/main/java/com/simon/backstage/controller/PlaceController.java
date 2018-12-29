@@ -3,11 +3,15 @@ package com.simon.backstage.controller;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.PlaceService;
+import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.Place;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +29,8 @@ public class PlaceController {
     private PlaceService placeService;
     @PostMapping("add")
     @ApiOperation("添加场所")
-    public ReturnMsg<Place> add(@RequestBody @Validated Place place){
+    public ReturnMsg<Place> add(@RequestBody @Validated Place place, HttpServletRequest request){
+    	place.setCommunityId(ClaimsUtil.getCommunityId(request));
         logger.info("添加场所place={}", JSONUtil.objectToJson(place));
         return ReturnMsg.success(placeService.add(place));
     }

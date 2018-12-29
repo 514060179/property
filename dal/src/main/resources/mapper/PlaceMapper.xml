@@ -49,14 +49,14 @@
   <insert id="insert" parameterType="com.simon.dal.model.Place" >
     insert into place (place_id, community_id, place_name, 
       place_traditional_name, place_english_name, 
-      place_image, place_start_time, place_end_time, 
+      place_image, place_status, place_start_time, place_end_time, 
       place_need_order, place_upper_limit, place_advance_order_day, 
       place_farthest_order_day, create_time, update_time, 
       place_introduction, place_traditional_introduction, 
       place_english_introduction)
     values (#{placeId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{placeName,jdbcType=VARCHAR}, 
       #{placeTraditionalName,jdbcType=VARCHAR}, #{placeEnglishName,jdbcType=VARCHAR}, 
-      #{placeImage,jdbcType=VARCHAR}, #{placeStartTime,jdbcType=TIME}, #{placeEndTime,jdbcType=TIME}, 
+      #{placeImage,jdbcType=VARCHAR},#{placeStatus,jdbcType=INTEGER} #{placeStartTime,jdbcType=TIME}, #{placeEndTime,jdbcType=TIME}, 
       #{placeNeedOrder,jdbcType=INTEGER}, #{placeUpperLimit,jdbcType=INTEGER}, #{placeAdvanceOrderDay,jdbcType=INTEGER}, 
       #{placeFarthestOrderDay,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{placeIntroduction,jdbcType=LONGVARCHAR}, #{placeTraditionalIntroduction,jdbcType=LONGVARCHAR}, 
@@ -82,6 +82,9 @@
       </if>
       <if test="placeImage != null" >
         place_image,
+      </if>
+      <if test="placeStatus != null" >
+      	place_status
       </if>
       <if test="placeStartTime != null" >
         place_start_time,
@@ -136,6 +139,9 @@
       <if test="placeImage != null" >
         #{placeImage,jdbcType=VARCHAR},
       </if>
+      <if test="placeStatus != null" >
+        #{placeStatus,jdbcType=INTEGER},
+      </if>
       <if test="placeStartTime != null" >
         #{placeStartTime,jdbcType=TIME},
       </if>
@@ -189,6 +195,9 @@
       <if test="placeImage != null" >
         place_image = #{placeImage,jdbcType=VARCHAR},
       </if>
+      <if test="placeStatus != null" >
+        place_status = #{placeStatus,jdbcType=INTEGER},
+      </if>
       <if test="placeStartTime != null" >
         place_start_time = #{placeStartTime,jdbcType=TIME},
       </if>
@@ -232,6 +241,7 @@
       place_traditional_name = #{placeTraditionalName,jdbcType=VARCHAR},
       place_english_name = #{placeEnglishName,jdbcType=VARCHAR},
       place_image = #{placeImage,jdbcType=VARCHAR},
+      place_status = #{placeStatus,jdbcType=INTEGER},
       place_start_time = #{placeStartTime,jdbcType=TIME},
       place_end_time = #{placeEndTime,jdbcType=TIME},
       place_need_order = #{placeNeedOrder,jdbcType=INTEGER},
@@ -252,6 +262,7 @@
       place_traditional_name = #{placeTraditionalName,jdbcType=VARCHAR},
       place_english_name = #{placeEnglishName,jdbcType=VARCHAR},
       place_image = #{placeImage,jdbcType=VARCHAR},
+      place_status = #{placeStatus,jdbcType=INTEGER},
       place_start_time = #{placeStartTime,jdbcType=TIME},
       place_end_time = #{placeEndTime,jdbcType=TIME},
       place_need_order = #{placeNeedOrder,jdbcType=INTEGER},

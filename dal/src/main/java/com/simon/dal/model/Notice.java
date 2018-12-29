@@ -10,7 +10,7 @@ public class Notice {
     @ApiModelProperty(value="id",readOnly=true)
     private String noticeId;
 
-    @ApiModelProperty("社区id")
+    @ApiModelProperty(value="社区id",readOnly=true)
     private String communityId;
 
     @ApiModelProperty("通知类型")

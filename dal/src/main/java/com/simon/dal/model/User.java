@@ -13,7 +13,7 @@ public class User {
     @ApiModelProperty(value="用户id", readOnly=true)
     private String userId;
 
-    @ApiModelProperty("社区id")
+    @ApiModelProperty(value="社区id", readOnly=true)
     private String communityId;
 
     @ApiModelProperty(value = "名字",example = "西蒙")
@@ -50,7 +50,7 @@ public class User {
     @ApiModelProperty(value = "用户头像",example = "/a/b/c.jpg")
     private String portrait;
 
-    @ApiModelProperty(value = "婚姻制度",example = "")
+    @ApiModelProperty(value = "婚姻制度",example = "未婚")
     private String marriageSystem;
 
     @ApiModelProperty(value = "配偶名字",example = "nimei")

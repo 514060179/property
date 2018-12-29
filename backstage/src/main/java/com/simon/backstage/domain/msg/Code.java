@@ -10,6 +10,11 @@ public interface Code {
     
     //未登录
     int nologin=100;
+    
+    int loginfail = 101;
+
+    //注销失败
+    int logoutfail = 102;
 
     //数据库key重复
     int duplicate=201;

@@ -11,7 +11,7 @@ public class Building {
     @ApiModelProperty("id")
     private String buildingId;
 
-    @ApiModelProperty(value = "社区id",example = "erre1231dasda")
+    @ApiModelProperty(value = "社区id",readOnly=true)
     private String communityId;
 
     @ApiModelProperty(value = "楼宇名字",example = "生产楼")

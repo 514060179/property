@@ -4,10 +4,14 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Building;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.BuildingService;
+import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +31,8 @@ public class BuildingController {
     private BuildingService buildingService;
     @PostMapping("add")
     @ApiOperation("添加建筑")
-    public ReturnMsg<Building> add(@RequestBody Building building){
+    public ReturnMsg<Building> add(@RequestBody Building building, HttpServletRequest request){
+    	building.setCommunityId(ClaimsUtil.getCommunityId(request));
         logger.info("添加建筑building={}", JSONUtil.objectToJson(building));
         return ReturnMsg.success(buildingService.add(building));
     }

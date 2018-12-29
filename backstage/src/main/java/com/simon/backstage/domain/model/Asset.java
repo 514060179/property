@@ -11,7 +11,7 @@ public class Asset {
     @ApiModelProperty("id")
     private String assetId;
 
-    @ApiModelProperty(value = "社区id",example = "r1w2s3rs4s5hj6s")
+    @ApiModelProperty(value = "社区id",readOnly=true)
     private String communityId;
 
     @ApiModelProperty(value = "资产类型：电器、公共设备",example = "电器")

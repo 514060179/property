@@ -4,10 +4,14 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Asset;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.AssetService;
+import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +32,8 @@ public class AssetController {
     private AssetService assetService;
     @PostMapping("add")
     @ApiOperation("添加资源")
-    public ReturnMsg<Asset> add(@RequestBody Asset asset){
+    public ReturnMsg<Asset> add(@RequestBody Asset asset, HttpServletRequest request){
+    	asset.setCommunityId(ClaimsUtil.getCommunityId(request));
         logger.info("添加资源asset={}", JSONUtil.objectToJson(asset));
         return ReturnMsg.success(assetService.add(asset));
     }

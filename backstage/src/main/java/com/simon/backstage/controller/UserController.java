@@ -3,11 +3,15 @@ package com.simon.backstage.controller;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.UserService;
+import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.User;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +33,8 @@ public class UserController {
 
     @PostMapping("add")
     @ApiOperation("添加住户")
-    public ReturnMsg<User> add(@RequestBody User user){
+    public ReturnMsg<User> add(@RequestBody User user, HttpServletRequest request){
+    	user.setCommunityId(ClaimsUtil.getCommunityId(request));
         logger.info("添加住户user={}", JSONUtil.objectToJson(user));
         return ReturnMsg.success(userService.add(user));
     }

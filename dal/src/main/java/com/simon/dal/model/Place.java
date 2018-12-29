@@ -10,10 +10,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @ApiModel(value = "Place", description = "场所信息")
 public class Place {
 
-    @ApiModelProperty(value="id")
+    @ApiModelProperty(value="id",readOnly=true)
     private String placeId;
 
-    @ApiModelProperty(value = "社区id",example = "")
+    @ApiModelProperty(value = "社区id",readOnly=true)
     private String communityId;
 
     @ApiModelProperty(value = "场所名字(简体)",example = "游泳池")
@@ -28,6 +28,7 @@ public class Place {
     @ApiModelProperty(value="场所状态(0未开放1开放)",example="1")
     private Integer placeStatus;
 
+    @Deprecated
     @ApiModelProperty(value="图片url",readOnly=true,example = "/images/swimming/123.png")
     private String placeImage;
 

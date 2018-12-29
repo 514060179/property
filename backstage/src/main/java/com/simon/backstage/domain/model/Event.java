@@ -10,7 +10,7 @@ public class Event {
     @ApiModelProperty("id")
     private String eventId;
 
-    @ApiModelProperty(value = "社区id")
+    @ApiModelProperty(value = "社区id",readOnly=true)
     private String communityId;
 
     @ApiModelProperty(value = "事件进度0开始1待定2完成",example = "0")
