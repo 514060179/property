@@ -1,16 +1,20 @@
 package com.simon.app.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "resource")
 @Component
 public class ResourceConfig {
 	//文件根目录
+	@Value("${resource.rootPath}")
 	private String rootPath;
-	//图片路径
+	
+	//图片目录
+	@Value("${resource.imagePath}")
 	private String imagePath;
-	//文件路径
+	
+	//音频文件目录
+	@Value("${resource.filePath}")
 	private String filePath;
 
 	public String getRootPath() {
@@ -24,12 +28,15 @@ public class ResourceConfig {
 	public String getImagePath() {
 		return imagePath;
 	}
+
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
+
 	public String getFilePath() {
 		return filePath;
 	}
+
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
