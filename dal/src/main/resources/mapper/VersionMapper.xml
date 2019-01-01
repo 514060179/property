@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.dal.dao.VersionMapper">
+  <resultMap id="BaseResultMap" type="com.simon.dal.model.Version" >
+	  <id column="version_id" property="versionId" jdbcType="VARCHAR" />
+	  <result column="version_number" property="versionNumber" jdbcType="VARCHAR" />
+	  <result column="version_describe" property="versionDescribe" jdbcType="VARCHAR" />
+	  <result column="forced_update" property="forcedUpdate" jdbcType="BOOLEAN" />
+	  <result column="device_type" property="deviceType" jdbcType="CHAR" />
+	  <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+      <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List">
+	  version_id, version_number, version_describe, forced_update, device_type, create_time, update_time
+  </sql>
+  <select id="findVersion" resultMap="BaseResultMap" parameterType="com.simon.dal.model.Version">
+		Select
+			<include refid="Base_Column_List"/>
+		from 
+			version
+		<where>
+			<if test="versionId != null">
+				version_id = #{versionId,jdbcType=VARCHAR}
+			</if>
+			<if test="versionNumber != null">
+				and version_number = #{versionNumber,jdbcType=VARCHAR}
+			</if>
+			<if test="versionDescribe != null">
+				and version_describe = #{versionDescribe,jdbcType=VARCHAR}
+			</if>
+			<if test="forcedUpdate != null">
+				and forced_update = #{forcedUpdate,jdbcType=BOOLEAN}
+			</if>
+			<if test="deviceType != null">
+				and device_type = #{deviceType,jdbcType=CHAR}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime,jdbcType=TIMESTAMP}
+			</if>
+		</where>
+		ORDER BY create_time DESC LIMIT 0,1
+  </select>
+</mapper>
