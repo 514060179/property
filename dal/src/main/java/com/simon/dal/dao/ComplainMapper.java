@@ -3,6 +3,7 @@ package com.simon.dal.dao;
 import java.util.List;
 
 import com.simon.dal.model.Complain;
+import com.simon.dal.vo.BaseQueryParam;
 
 public interface ComplainMapper {
     int deleteByPrimaryKey(String complainId);
@@ -19,5 +20,7 @@ public interface ComplainMapper {
 
     int updateByPrimaryKey(Complain record);
 
-	List<Complain> list(Complain record);
+	List<Complain> selfList(String userId);
+	
+	List<Complain> list(BaseQueryParam baseQueryParam);
 }

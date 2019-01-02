@@ -7,10 +7,10 @@ import com.simon.dal.model.Complain;
 public interface ComplainService {
 	/**
 	 * 我的投诉/报修列表
-	 * @param complain
+	 * @param userId
 	 * @return
 	 */
-	List<Complain> selfList(Complain complain);
+	List<Complain> selfList(String userId);
 	/**
 	 * 详情
 	 * @param complainId

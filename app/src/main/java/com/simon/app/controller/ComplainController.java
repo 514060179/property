@@ -29,13 +29,11 @@ public class ComplainController {
 	@Autowired
 	private ComplainService complainService;
 	
-    @PostMapping("list")
+    @PostMapping("selfList")
     @ApiOperation("我的投诉/报修")
-    public ReturnMsg<PageInfo<Complain>> list(HttpServletRequest request){
-    	Complain complain = new Complain();
+    public ReturnMsg<PageInfo<Complain>> selfList(HttpServletRequest request){ 
     	String userId = ClaimsUtil.getUserId(request);
-    	complain.setUserId(userId);
-        return ReturnMsg.success(new PageInfo<>(complainService.selfList(complain)));
+        return ReturnMsg.success(new PageInfo<>(complainService.selfList(userId)));
     }
     
     @PostMapping("detail")
@@ -48,7 +46,7 @@ public class ComplainController {
     @PostMapping("add")
     @ApiOperation("添加")
     @ApiImplicitParam(name="paths",value="图片路径（如上传多次文件以“,”隔开）",paramType="query")
-    public ReturnMsg<Complain> add(@RequestBody Complain complain, @RequestParam String paths,
+    public ReturnMsg<Complain> add(@RequestBody Complain complain,String paths,
     		HttpServletRequest request){
     	complain.setComplainId(UUIDUtil.uidString());
     	complain.setUserId(ClaimsUtil.getUserId(request));

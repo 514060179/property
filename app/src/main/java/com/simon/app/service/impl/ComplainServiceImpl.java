@@ -29,9 +29,9 @@ public class ComplainServiceImpl implements ComplainService{
 	}
 
 	@Override
-	public List<Complain> selfList(Complain complain) {
+	public List<Complain> selfList(String userId) {
 		
-		return complainMapper.list(complain);
+		return complainMapper.selfList(userId);
 	}
 
 	@Transactional
