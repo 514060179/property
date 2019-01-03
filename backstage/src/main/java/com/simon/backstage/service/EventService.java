@@ -2,7 +2,7 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Event;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 
 /**
  * @author fengtianying
@@ -40,9 +40,9 @@ public interface EventService {
 
     /**
      * 列表
-     * @param baseQueryParam
+     * @param baseClaims
      * @return
      */
-    PageInfo<Event> list(BaseQueryParam baseQueryParam);
+    PageInfo<Event> list(BaseClaims baseClaims);
 
 }

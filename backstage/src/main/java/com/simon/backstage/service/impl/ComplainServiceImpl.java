@@ -9,7 +9,7 @@ import com.github.pagehelper.PageHelper;
 import com.simon.backstage.service.ComplainService;
 import com.simon.dal.dao.ComplainMapper;
 import com.simon.dal.model.Complain;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 
 @Service
 public class ComplainServiceImpl implements ComplainService {
@@ -18,9 +18,9 @@ public class ComplainServiceImpl implements ComplainService {
 	private ComplainMapper complainMapper;
 	
 	@Override
-	public List<Complain> list(BaseQueryParam baseQueryParam) {
-		PageHelper.startPage(baseQueryParam.getPageNo(), baseQueryParam.getPageSize());
-		return complainMapper.list(baseQueryParam);
+	public List<Complain> list(BaseClaims baseClaims) {
+		PageHelper.startPage(baseClaims.getPageNo(), baseClaims.getPageSize());
+		return complainMapper.list(baseClaims);
 	}
 	
 }

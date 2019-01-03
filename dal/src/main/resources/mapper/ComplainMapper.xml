@@ -27,7 +27,7 @@
     complain_liaisons_email, complain_status, complain_finish_time, complain_handler,complain_describe, complain_voice,
     create_time, update_time
   </sql>
-  <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam">
+  <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims">
   	select 
     <include refid="Base_Column_List" />
     from complain
@@ -35,15 +35,10 @@
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(complain_position,''),IFNULL(complain_status,''),IFNULL(complain_handler,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
+      <if test="userId != null">
+      	AND user_id = #{userId,jdbcType=VARCHAR}
+      </if>
     </where>
-  </select>
-  <select id="selfList" resultMap="BaseResultMap" parameterType="java.lang.String">
-  	select 
-    <include refid="Base_Column_List" />
-    from 
-    	complain
-	where
-	    user_id = #{userId,jdbcType=VARCHAR}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

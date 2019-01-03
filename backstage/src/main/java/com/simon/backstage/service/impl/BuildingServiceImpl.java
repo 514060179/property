@@ -6,7 +6,7 @@ import com.simon.backstage.dao.BuildingMapper;
 import com.simon.backstage.domain.model.Building;
 import com.simon.backstage.service.BuildingService;
 import com.simon.dal.util.UUIDUtil;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +44,8 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public PageInfo<Building> list(BaseQueryParam baseQueryParam) {
-        PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
-        return new PageInfo<>(buildingMapper.selectByCondition(baseQueryParam));
+    public PageInfo<Building> list(BaseClaims baseClaims) {
+        PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
+        return new PageInfo<>(buildingMapper.selectByCondition(baseClaims));
     }
 }

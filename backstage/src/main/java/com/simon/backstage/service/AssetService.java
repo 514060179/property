@@ -2,7 +2,7 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Asset;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 
 /**
  *
@@ -39,8 +39,8 @@ public interface AssetService {
 
     /**
      * 列表
-     * @param baseQueryParam
+     * @param baseClaims
      * @return
      */
-    PageInfo<Asset> list(BaseQueryParam baseQueryParam);
+    PageInfo<Asset> list(BaseClaims baseClaims);
 }

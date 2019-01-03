@@ -2,10 +2,11 @@ package com.simon.app.service.impl;
 
 import java.util.List;
 
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
 import com.simon.app.service.PlaceService;
 import com.simon.dal.dao.PlaceMapper;
 import com.simon.dal.model.Place;
@@ -17,8 +18,9 @@ public class PlaceServiceImpl implements PlaceService{
 	private PlaceMapper placeMapper;
 
 	@Override
-	public List<Place> list(BaseQueryParam baseQueryParam) {
-		return placeMapper.list(baseQueryParam);
+	public List<Place> list(BaseClaims baseClaims) {
+		PageHelper.startPage(baseClaims.getPageNo(), baseClaims.getPageSize());
+		return placeMapper.list(baseClaims);
 	}
 
 	@Override

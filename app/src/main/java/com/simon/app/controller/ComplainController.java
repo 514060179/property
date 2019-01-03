@@ -6,6 +6,7 @@ import com.simon.app.service.ComplainService;
 import com.simon.app.util.ClaimsUtil;
 import com.simon.dal.model.Complain;
 import com.simon.dal.util.UUIDUtil;
+import com.simon.dal.vo.BaseClaims;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -31,9 +32,10 @@ public class ComplainController {
 	
     @PostMapping("selfList")
     @ApiOperation("我的投诉/报修")
-    public ReturnMsg<PageInfo<Complain>> selfList(HttpServletRequest request){ 
+    public ReturnMsg<PageInfo<Complain>> selfList(HttpServletRequest request, BaseClaims baseClaims){ 
     	String userId = ClaimsUtil.getUserId(request);
-        return ReturnMsg.success(new PageInfo<>(complainService.selfList(userId)));
+    	baseClaims.setUserId(userId);
+        return ReturnMsg.success(new PageInfo<>(complainService.list(baseClaims)));
     }
     
     @PostMapping("detail")

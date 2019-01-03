@@ -35,7 +35,7 @@
     where asset_id = #{assetId,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
     select
     <include refid="Base_Column_List" />
     ,
@@ -44,6 +44,9 @@
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(asset_name,''),IFNULL(asset_position,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+      <if test="communityId != null">
+      	AND community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
   </select>

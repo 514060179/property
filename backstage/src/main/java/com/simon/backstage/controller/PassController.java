@@ -60,8 +60,9 @@ public class PassController {
 	
 	@PostMapping("logout")
 	@ApiOperation("注销登录")
-	public ReturnMsg logout(HttpServletRequest request, @RequestParam(required=false) String userId){
-		if(!StringUtils.isEmpty(userId)&&redisService.hasKey(userId)){
+	public ReturnMsg logout(HttpServletRequest request){
+		String userId = ClaimsUtil.getUserId(request);
+		if(!StringUtils.isEmpty(userId) && redisService.hasKey(userId)){
 			redisService.del(userId);
 			return ReturnMsg.success();
 		}

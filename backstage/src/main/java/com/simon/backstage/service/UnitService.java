@@ -2,7 +2,7 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Unit;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 
 public interface UnitService {
 
@@ -37,8 +37,8 @@ public interface UnitService {
 
     /**
      * 列表
-     * @param baseQueryParam
+     * @param baseClaims
      * @return
      */
-    PageInfo<Unit> list(BaseQueryParam baseQueryParam);
+    PageInfo<Unit> list(BaseClaims baseClaims);
 }

@@ -30,13 +30,16 @@
     from event
     where event_id = #{eventId,jdbcType=VARCHAR}
   </select>
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
     select
     <include refid="Base_Column_List" />
     from event
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(event_remark,''),IFNULL(event_content,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+      <if test="communityId != null">
+      	AND community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
   </select>

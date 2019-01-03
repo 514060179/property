@@ -2,7 +2,7 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Building;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 
 /**
  * @author fengtianying
@@ -41,9 +41,9 @@ public interface BuildingService {
 
     /**
      * 列表
-     * @param baseQueryParam
+     * @param BaseClaims
      * @return
      */
-    PageInfo<Building> list(BaseQueryParam baseQueryParam);
+    PageInfo<Building> list(BaseClaims BaseClaims);
 
 }

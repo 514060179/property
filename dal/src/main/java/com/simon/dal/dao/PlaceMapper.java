@@ -3,7 +3,7 @@ package com.simon.dal.dao;
 import java.util.List;
 
 import com.simon.dal.model.Place;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 
 public interface PlaceMapper {
     int deleteByPrimaryKey(String placeId);
@@ -20,5 +20,5 @@ public interface PlaceMapper {
 
     int updateByPrimaryKey(Place record);
     
-    List<Place> list(BaseQueryParam baseQueryParam);
+    List<Place> list(BaseClaims baseClaims);
 }

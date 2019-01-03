@@ -1,7 +1,7 @@
 package com.simon.backstage.dao;
 
 import com.simon.backstage.domain.model.Building;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface BuildingMapper {
 
     Building selectByPrimaryKey(String buildingId);
 
-    List<Building> selectByCondition(BaseQueryParam baseQueryParam);
+    List<Building> selectByCondition(BaseClaims baseClaims);
 
     int updateByPrimaryKeySelective(Building record);
 

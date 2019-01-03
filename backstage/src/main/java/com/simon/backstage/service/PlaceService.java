@@ -2,7 +2,7 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.dal.model.Place;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 
 public interface PlaceService {
 
@@ -36,8 +36,8 @@ public interface PlaceService {
 
     /**
      * 列表
-     * @param baseQueryParam
+     * @param baseClaims
      * @return
      */
-    PageInfo<Place> list(BaseQueryParam baseQueryParam);
+    PageInfo<Place> list(BaseClaims baseClaims);
 }

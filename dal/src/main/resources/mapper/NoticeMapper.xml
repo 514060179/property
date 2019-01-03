@@ -21,10 +21,19 @@
     notice_image, create_time, update_time,    notice_details, notice_traditional_details, notice_english_details
   </sql>
 
-  <select id="list" resultMap="BaseResultMap">
+  <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims">
   	select 
     <include refid="Base_Column_List" />
-    from notice
+    from 
+    	notice
+    <where>
+    	<if test="keyword != null and keyword!=''" >
+    		CANCAT(IFNULL(notice_title,''),IFNULL(notice_type,'')) LIKE CANCAT('%', #{keyword}, '%')
+    	</if>
+    	<if test="communityId != null">
+    		AND community_id = #{communityId,jdbcType=VARCHAR}
+    	</if>
+    </where>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

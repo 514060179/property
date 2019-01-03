@@ -6,7 +6,7 @@ import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.EventService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -54,9 +54,11 @@ public class EventController {
 
     @GetMapping("list")
     @ApiOperation("事件列表")
-    public ReturnMsg<PageInfo<Event>> list(BaseQueryParam baseQueryParam){
-        logger.info("事件列表baseQueryParam={}", JSONUtil.objectToJson(baseQueryParam));
-        return ReturnMsg.success(eventService.list(baseQueryParam));
+    public ReturnMsg<PageInfo<Event>> list(BaseClaims baseClaims, HttpServletRequest request){
+    	String communityId = ClaimsUtil.getCommunityId(request);
+		baseClaims.setCommunityId(communityId);
+        logger.info("事件列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
+        return ReturnMsg.success(eventService.list(baseClaims));
     }
 
 }

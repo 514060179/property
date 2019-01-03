@@ -1,7 +1,7 @@
 package com.simon.backstage.dao;
 
 import com.simon.backstage.domain.model.Asset;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface AssetMapper {
 
     Asset selectByPrimaryKey(String assetId);
 
-    List<Asset> selectByCondition(BaseQueryParam baseQueryParam);
+    List<Asset> selectByCondition(BaseClaims BaseClaims);
 
     int updateByPrimaryKeySelective(Asset record);
 

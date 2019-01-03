@@ -26,13 +26,16 @@
     where building_id = #{buildingId,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
     select
     <include refid="Base_Column_List" />
     from building
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(building_name,''),IFNULL(building_no,''),IFNULL(full_address,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+      <if test="communityId != null">
+      	AND community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
   </select>

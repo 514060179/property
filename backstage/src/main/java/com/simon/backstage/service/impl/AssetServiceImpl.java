@@ -6,7 +6,7 @@ import com.simon.backstage.dao.AssetMapper;
 import com.simon.backstage.domain.model.Asset;
 import com.simon.backstage.service.AssetService;
 import com.simon.dal.util.UUIDUtil;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +41,8 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public PageInfo<Asset> list(BaseQueryParam baseQueryParam) {
-        PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
-        return new PageInfo<>(assetMapper.selectByCondition(baseQueryParam));
+    public PageInfo<Asset> list(BaseClaims baseClaims) {
+        PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
+        return new PageInfo<>(assetMapper.selectByCondition(baseClaims));
     }
 }

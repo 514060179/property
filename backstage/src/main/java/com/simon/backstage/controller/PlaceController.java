@@ -6,7 +6,7 @@ import com.simon.backstage.service.PlaceService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.Place;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -19,7 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/place")
+@RequestMapping("/back/place")
 @Api(value = "PlaceController", description = "场所管理")
 public class PlaceController {
 
@@ -51,8 +51,10 @@ public class PlaceController {
 
     @GetMapping("list")
     @ApiOperation("场所列表")
-    public ReturnMsg<PageInfo<Place>> list(BaseQueryParam baseQueryParam){
-        logger.info("场所列表baseQueryParam={}", JSONUtil.objectToJson(baseQueryParam));
-        return ReturnMsg.success(placeService.list(baseQueryParam));
+    public ReturnMsg<PageInfo<Place>> list(BaseClaims baseClaims, HttpServletRequest request){
+    	String communityId = ClaimsUtil.getCommunityId(request);
+        baseClaims.setCommunityId(communityId);
+        logger.info("场所列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
+        return ReturnMsg.success(placeService.list(baseClaims));
     }
 }

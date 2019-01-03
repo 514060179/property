@@ -6,7 +6,7 @@ import com.simon.backstage.service.PlaceService;
 import com.simon.dal.dao.PlaceMapper;
 import com.simon.dal.model.Place;
 import com.simon.dal.util.UUIDUtil;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,8 +42,8 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public PageInfo<Place> list(BaseQueryParam baseQueryParam) {
-        PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
-        return new PageInfo<>(placeMapper.list(baseQueryParam));
+    public PageInfo<Place> list(BaseClaims baseClaims) {
+        PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
+        return new PageInfo<>(placeMapper.list(baseClaims));
     }
 }

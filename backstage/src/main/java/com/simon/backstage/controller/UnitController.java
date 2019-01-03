@@ -4,10 +4,14 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.UnitService;
+import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +53,11 @@ public class UnitController {
 
     @GetMapping("list")
     @ApiOperation("单元列表")
-    public ReturnMsg<PageInfo<Unit>> list(BaseQueryParam baseQueryParam){
-        logger.info("单元列表baseQueryParam={}", JSONUtil.objectToJson(baseQueryParam));
-        return ReturnMsg.success(unitService.list(baseQueryParam));
+    public ReturnMsg<PageInfo<Unit>> list(BaseClaims baseClaims, HttpServletRequest request){
+    	String communityId = ClaimsUtil.getCommunityId(request);
+    	baseClaims.setCommunityId(communityId);
+        logger.info("单元列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
+        return ReturnMsg.success(unitService.list(baseClaims));
     }
 
 }

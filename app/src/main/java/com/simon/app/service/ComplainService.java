@@ -3,6 +3,7 @@ package com.simon.app.service;
 import java.util.List;
 
 import com.simon.dal.model.Complain;
+import com.simon.dal.vo.BaseClaims;
 
 public interface ComplainService {
 	/**
@@ -10,7 +11,7 @@ public interface ComplainService {
 	 * @param userId
 	 * @return
 	 */
-	List<Complain> selfList(String userId);
+	List<Complain> list(BaseClaims baseClaims);
 	/**
 	 * 详情
 	 * @param complainId

@@ -6,7 +6,7 @@ import com.simon.backstage.dao.EventMapper;
 import com.simon.backstage.domain.model.Event;
 import com.simon.backstage.service.EventService;
 import com.simon.dal.util.UUIDUtil;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +44,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public PageInfo<Event> list(BaseQueryParam baseQueryParam) {
-        PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
-        return new PageInfo<>(eventMapper.selectByCondition(baseQueryParam));
+    public PageInfo<Event> list(BaseClaims baseClaims) {
+        PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
+        return new PageInfo<>(eventMapper.selectByCondition(baseClaims));
     }
 }

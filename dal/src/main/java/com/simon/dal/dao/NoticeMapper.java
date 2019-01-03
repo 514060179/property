@@ -3,6 +3,7 @@ package com.simon.dal.dao;
 import java.util.List;
 
 import com.simon.dal.model.Notice;
+import com.simon.dal.vo.BaseClaims;
 
 public interface NoticeMapper {
     int deleteByPrimaryKey(String noticeId);
@@ -19,5 +20,5 @@ public interface NoticeMapper {
 
     int updateByPrimaryKey(Notice record);
     
-    List<Notice> list();
+    List<Notice> list(BaseClaims baseClaims);
 }

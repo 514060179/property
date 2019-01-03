@@ -3,11 +3,13 @@ package com.simon.app.controller;
 import com.github.pagehelper.PageInfo;
 import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.service.PlaceService;
-import com.simon.dal.model.Notice;
+import com.simon.app.util.ClaimsUtil;
 import com.simon.dal.model.Place;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +32,10 @@ public class PlaceController {
 
     @PostMapping("list")
     @ApiOperation("场所列表")
-    public ReturnMsg<PageInfo<Place>> list(BaseQueryParam baseQueryParam){
-
-        return ReturnMsg.success(new PageInfo<>(placeService.list(baseQueryParam)));
+    public ReturnMsg<PageInfo<Place>> list(BaseClaims baseClaims,HttpServletRequest request){
+    	String communityId = ClaimsUtil.getCommunityId(request);
+    	baseClaims.setCommunityId(communityId);
+        return ReturnMsg.success(new PageInfo<>(placeService.list(baseClaims)));
     }
     @PostMapping("detail")
     @ApiOperation("场所详情")

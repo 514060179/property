@@ -28,15 +28,23 @@
     from unit
     where unit_id = #{unitId,jdbcType=VARCHAR}
   </select>
-
-
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
-    select
-    <include refid="Base_Column_List" />
-    from unit
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
+    SELECT	
+		u.unit_id, u.building_id, u.unit_name, u.unit_no, u.unit_covered_area, u.unit_relative_proportion, 
+	    u.unit_child_relative_proportion, u.unit_purpose, u.unit_position, u.unit_type, u.unit_full_address, 
+	    u.unit_status, u.create_time, u.update_time
+	FROM 
+		building b 
+	INNER JOIN 
+		community c ON c.community_id=b.community_id
+	INNER JOIN 
+		unit u ON b.building_id=u.building_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(unit_name,''),IFNULL(unit_no,''),IFNULL(unit_full_address,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(u.unit_name,''),IFNULL(u.unit_no,''),IFNULL(u.unit_full_address,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+      <if test="communityId != null">
+      	AND c.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
   </select>
