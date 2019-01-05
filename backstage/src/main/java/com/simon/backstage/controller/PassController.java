@@ -58,7 +58,7 @@ public class PassController {
     	return ReturnMsg.fail(Code.loginfail, "账号或密码错误");
     }
 	
-	@PostMapping("logout")
+	@PostMapping("/back/logout")
 	@ApiOperation("注销登录")
 	public ReturnMsg logout(HttpServletRequest request){
 		String userId = ClaimsUtil.getUserId(request);
