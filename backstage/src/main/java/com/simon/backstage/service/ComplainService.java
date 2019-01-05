@@ -12,4 +12,12 @@ public interface ComplainService {
 	 * @return
 	 */
 	List<Complain> list(BaseClaims baseClaims);
+	
+	/**
+	 * 改变投诉/报修的状态
+	 * @param complain
+	 * @param userId	处理人id
+	 * @return
+	 */
+	int changStatus(Complain complain, String managerId);
 }

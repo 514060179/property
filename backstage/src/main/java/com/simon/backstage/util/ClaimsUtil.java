@@ -11,7 +11,7 @@ import java.util.Objects;
  */
 public class ClaimsUtil {
 
-    public static String getUserId(HttpServletRequest request){
+    public static String getManagerId(HttpServletRequest request){
         Claims claims = (Claims)request.getAttribute("claims");
         if (Objects.isNull(claims)){
             return null;
