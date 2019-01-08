@@ -52,4 +52,11 @@ public interface ManagerService {
      * @return
      */
     String findManagerAndRole(String managerId);
+    
+    /**
+     * 管理员详情
+     * @param managerId
+     * @return
+     */
+    Manager findOne(String managerId);
 }

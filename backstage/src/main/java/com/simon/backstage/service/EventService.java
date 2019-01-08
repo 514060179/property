@@ -45,4 +45,10 @@ public interface EventService {
      */
     PageInfo<Event> list(BaseClaims baseClaims);
 
+	/**
+     * 处理事件
+     * @param event
+     * @return
+     */
+    int changeStatus(Event event);
 }

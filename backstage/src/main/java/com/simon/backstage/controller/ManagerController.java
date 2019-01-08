@@ -5,6 +5,7 @@ import com.simon.backstage.domain.model.Manager;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.ManagerService;
 import com.simon.backstage.service.RoleService;
+import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
@@ -17,6 +18,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author fengtianying
@@ -67,5 +70,13 @@ public class ManagerController {
     public ReturnMsg<PageInfo<Manager>> list(BaseQueryParam baseQueryParam){
         logger.info("管理员列表baseQueryParam={}", JSONUtil.objectToJson(baseQueryParam));
         return ReturnMsg.success(managerService.list(baseQueryParam));
+    }
+    
+    @GetMapping("detail")
+    @ApiOperation("管理员详情")
+    public ReturnMsg<Manager> detail(HttpServletRequest request){
+    	String managerId = ClaimsUtil.getManagerId(request);
+    	logger.info("管理员详情managerId={}", JSONUtil.objectToJson(managerId));
+    	return ReturnMsg.success(managerService.findOne(managerId));
     }
 }

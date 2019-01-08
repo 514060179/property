@@ -8,6 +8,7 @@ import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.vo.BaseClaims;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,4 +62,15 @@ public class EventController {
         return ReturnMsg.success(eventService.list(baseClaims));
     }
 
+    @GetMapping("changeStatus")
+    @ApiOperation("处理事件")
+    @ApiImplicitParam(name="eventStatus", value="事件进度:1待定2完成", required=true)
+    public ReturnMsg changeStatus(@RequestParam String eventId, String eventStatus,
+    		HttpServletRequest request){
+    	logger.info("处理事件eventId={}", JSONUtil.objectToJson(eventId));
+    	Event event = new Event();
+    	event.setEventId(eventId);
+    	event.setEventStatus(Integer.parseInt(eventStatus));
+    	return ReturnMsg.success(eventService.changeStatus(event));
+    }
 }

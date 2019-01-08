@@ -3,10 +3,15 @@ package com.simon.backstage.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.EventMapper;
+import com.simon.backstage.dao.ManagerMapper;
 import com.simon.backstage.domain.model.Event;
+import com.simon.backstage.domain.model.Manager;
 import com.simon.backstage.service.EventService;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseClaims;
+
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +25,8 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private EventMapper eventMapper;
+    @Autowired
+    private ManagerMapper managerMapper;
 
     @Override
     public Event add(Event event) {
@@ -48,4 +55,12 @@ public class EventServiceImpl implements EventService {
         PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
         return new PageInfo<>(eventMapper.selectByCondition(baseClaims));
     }
+
+	@Override
+	public int changeStatus(Event event) {
+		if(event.getEventStatus()==2){//事件完成
+			event.setEventFinishDate(new Date());
+		}
+		return eventMapper.updateByPrimaryKeySelective(event);
+	}
 }

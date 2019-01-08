@@ -73,4 +73,10 @@ public class ManagerServiceImpl implements ManagerService{
 		// TODO Auto-generated method stub
 		return managerMapper.findManagerAndRole(managerId);
 	}
+
+	@Override
+	public Manager findOne(String managerId) {
+		// TODO Auto-generated method stub
+		return managerMapper.selectByPrimaryKey(managerId);
+	}
 }
