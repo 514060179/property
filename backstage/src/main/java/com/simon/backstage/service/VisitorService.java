@@ -1,7 +1,7 @@
 package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
-import com.simon.backstage.domain.model.Visitor;
+import com.simon.dal.model.Visitor;
 import com.simon.dal.vo.BaseQueryParam;
 
 /**

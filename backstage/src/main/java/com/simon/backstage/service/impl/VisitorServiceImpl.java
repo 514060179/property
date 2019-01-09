@@ -2,9 +2,9 @@ package com.simon.backstage.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.simon.backstage.dao.VisitorMapper;
-import com.simon.backstage.domain.model.Visitor;
 import com.simon.backstage.service.VisitorService;
+import com.simon.dal.dao.VisitorMapper;
+import com.simon.dal.model.Visitor;
 import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

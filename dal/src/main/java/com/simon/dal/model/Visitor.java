@@ -1,4 +1,4 @@
-package com.simon.backstage.domain.model;
+package com.simon.dal.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,7 +8,7 @@ import java.util.Date;
 @ApiModel(value = "Visitor", description = "访客记录")
 public class Visitor {
 
-    @ApiModelProperty("id")
+    @ApiModelProperty(value ="id", readOnly=true)
     private String visitorId;
 
     @ApiModelProperty(value = "社区id",example = "qesa1231")
@@ -26,10 +26,10 @@ public class Visitor {
     @ApiModelProperty(value = "访问事由",example = "逛逛")
     private String visitorCause;
 
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value ="创建时间", readOnly=true)
     private Date createTime;
 
-    @ApiModelProperty(hidden = true)
+    @ApiModelProperty(value ="更新时间", readOnly=true)
     private Date updateTime;
 
     public String getVisitorId() {

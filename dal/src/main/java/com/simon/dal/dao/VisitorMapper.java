@@ -1,7 +1,8 @@
-package com.simon.backstage.dao;
+package com.simon.dal.dao;
 
-import com.simon.backstage.domain.model.Visitor;
+import com.simon.dal.model.Visitor;
 import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.VisitorWithToken;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface VisitorMapper {
 
     int insert(Visitor record);
 
-    int insertSelective(Visitor record);
+    int insertSelective(VisitorWithToken record);
 
     Visitor selectByPrimaryKey(String visitorId);
 

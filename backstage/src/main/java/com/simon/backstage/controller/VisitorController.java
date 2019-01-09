@@ -1,10 +1,10 @@
 package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.simon.backstage.domain.model.Visitor;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.VisitorService;
 import com.simon.backstage.util.JSONUtil;
+import com.simon.dal.model.Visitor;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
