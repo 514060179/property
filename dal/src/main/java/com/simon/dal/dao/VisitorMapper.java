@@ -1,7 +1,7 @@
 package com.simon.dal.dao;
 
 import com.simon.dal.model.Visitor;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import com.simon.dal.vo.VisitorWithToken;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface VisitorMapper {
 
     Visitor selectByPrimaryKey(String visitorId);
 
-    List<Visitor> selectByCondition(BaseQueryParam baseQueryParam);
+    List<Visitor> selectByCondition(BaseClaims baseClaims);
 
     int updateByPrimaryKeySelective(Visitor record);
 

@@ -2,7 +2,7 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.dal.model.Visitor;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 
 /**
  * @author fengtianying
@@ -10,5 +10,5 @@ import com.simon.dal.vo.BaseQueryParam;
  */
 public interface VisitorService {
 
-    PageInfo<Visitor> list(BaseQueryParam baseQueryParam);
+    PageInfo<Visitor> list(BaseClaims baseClaims);
 }

@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.service.VisitorService;
 import com.simon.dal.dao.VisitorMapper;
 import com.simon.dal.model.Visitor;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +20,8 @@ public class VisitorServiceImpl implements VisitorService {
     @Autowired
     private VisitorMapper visitorMapper;
     @Override
-    public PageInfo<Visitor> list(BaseQueryParam baseQueryParam) {
-        PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
-        return new PageInfo<>(visitorMapper.selectByCondition(baseQueryParam));
+    public PageInfo<Visitor> list(BaseClaims baseClaims) {
+        PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
+        return new PageInfo<>(visitorMapper.selectByCondition(baseClaims));
     }
 }
