@@ -47,12 +47,12 @@ public class PassController {
     	if(result != null){
     		String roles = managerService.findManagerAndRole(result.getManagerId());
     		String token = JwtHelper.issueJwt(UUID.randomUUID().toString(), result.getManagerId(),
-    				result.getUsername(), result.getCommunityId(), 24*3600*1000L, roles, null, 
+    				result.getUsername(), result.getCommunityId(), null, roles, null,
     				audience.getBase64Secret());
     		ManagerWithToken withToken = new ManagerWithToken();
     		withToken.setManager(result);
     		withToken.setToken(token);
-    		redisService.set(result.getManagerId(), token, 60*15);
+    		redisService.set(result.getManagerId(), token);
     		return ReturnMsg.success(withToken);
     	}
     	return ReturnMsg.fail(Code.loginfail, "账号或密码错误");

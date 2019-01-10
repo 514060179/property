@@ -75,7 +75,6 @@ public class JwtFilter extends AccessControlFilter {
                 	 ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.nologin,"该账户未登录！")),response);
                 	 return false;
                 }
-                redisService.set(userId, jwt, 60*15);
                 request.setAttribute("claims", claims);
                 return true;
             } catch (AuthenticationException e) {

@@ -1,12 +1,13 @@
 package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.domain.model.Visitor;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.VisitorService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
-import com.simon.dal.model.Visitor;
 import com.simon.dal.vo.BaseClaims;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -30,6 +31,7 @@ public class VisitorController {
 
     @Autowired
     private VisitorService visitorService;
+    
     @GetMapping("list")
     @ApiOperation("访问者列表")
     public ReturnMsg<PageInfo<Visitor>> list(BaseClaims baseClaims, HttpServletRequest request){
@@ -38,4 +40,14 @@ public class VisitorController {
         logger.info("访问者列表baseQueryParam={}", JSONUtil.objectToJson(baseClaims));
         return ReturnMsg.success(visitorService.list(baseClaims));
     }
+    
+    @PostMapping("add")
+	@ApiOperation("访问者登记")
+	public ReturnMsg<Visitor> add(@RequestBody Visitor visitor,
+			HttpServletRequest request){
+    	String communityId = ClaimsUtil.getCommunityId(request);
+    	visitor.setCommunityId(communityId);
+    	logger.info("访问者列表visitor={}", JSONUtil.objectToJson(visitor));
+		return ReturnMsg.success(visitorService.add(visitor));
+	}
 }

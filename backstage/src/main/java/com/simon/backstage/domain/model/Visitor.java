@@ -1,4 +1,4 @@
-package com.simon.dal.model;
+package com.simon.backstage.domain.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,7 +11,7 @@ public class Visitor {
     @ApiModelProperty(value ="id", readOnly=true)
     private String visitorId;
 
-    @ApiModelProperty(value = "社区id",example = "qesa1231")
+    @ApiModelProperty(value = "社区id", readOnly=true)
     private String communityId;
 
     @ApiModelProperty(value = "访客名字",example = "simon")
