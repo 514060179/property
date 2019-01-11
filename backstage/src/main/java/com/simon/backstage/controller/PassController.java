@@ -23,6 +23,7 @@ import com.simon.dal.config.RedisService;
 import com.simon.dal.util.EncryUtil;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -39,15 +40,21 @@ public class PassController {
 	
 	@PostMapping("login")
 	@ApiOperation("用户登陆")
-	public ReturnMsg<ManagerWithToken> login(@RequestParam String username,@RequestParam String password){
+	@ApiImplicitParam(name="deviceType", value="终端类型：1PC,2触摸屏", required=true)
+	public ReturnMsg<ManagerWithToken> login(@RequestParam String username,
+			@RequestParam String password,String deviceType){
     	Manager manager = new Manager();
     	manager.setUsername(username);
     	manager.setPassword(EncryUtil.getMD5(password));
     	Manager result = managerService.findManager(manager);
     	if(result != null){
     		String roles = managerService.findManagerAndRole(result.getManagerId());
+    		Long time = null;
+    		if("1".equals(deviceType)){//PC端token有效期为15分钟
+    			time = (long) 15*60*1000;
+    		}
     		String token = JwtHelper.issueJwt(UUID.randomUUID().toString(), result.getManagerId(),
-    				result.getUsername(), result.getCommunityId(), null, roles, null,
+    				result.getUsername(), result.getCommunityId(), time, roles, null,
     				audience.getBase64Secret());
     		ManagerWithToken withToken = new ManagerWithToken();
     		withToken.setManager(result);
