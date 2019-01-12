@@ -40,7 +40,7 @@ public class PassController {
 	
 	@PostMapping("login")
 	@ApiOperation("用户登陆")
-	@ApiImplicitParam(name="deviceType", value="终端类型：1PC,2触摸屏", required=true)
+	@ApiImplicitParam(name="deviceType", value="终端类型：触摸屏1，PC端可省略")
 	public ReturnMsg<ManagerWithToken> login(@RequestParam String username,
 			@RequestParam String password,String deviceType){
     	Manager manager = new Manager();
@@ -49,9 +49,9 @@ public class PassController {
     	Manager result = managerService.findManager(manager);
     	if(result != null){
     		String roles = managerService.findManagerAndRole(result.getManagerId());
-    		Long time = null;
-    		if("1".equals(deviceType)){//PC端token有效期为15分钟
-    			time = (long) 15*60*1000;
+    		Long time = (long) 15*60*1000;//PC端token有效期为15分钟
+    		if(!StringUtils.isEmpty(deviceType)&&deviceType.equals("1")){
+    			time = null;//触摸屏：空则不会过期
     		}
     		String token = JwtHelper.issueJwt(UUID.randomUUID().toString(), result.getManagerId(),
     				result.getUsername(), result.getCommunityId(), time, roles, null,
