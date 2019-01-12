@@ -60,44 +60,36 @@ public class PlaceRecordController {
     	placeRecord.setRecordId(UUIDUtil.uidString());
     	placeRecord.setUserId(userId);
     	Place place = placeService.findOne(placeRecord.getPlaceId());
+    	
     	//场地是否开放
     	if(place==null || place.getPlaceStatus()==0){
     		return ReturnMsg.fail("该场地暂未开放",Code.orderFail);
     	}
+    	
+    	//查询当天该时间段有没有被预约
+    	int count = placeRecordService.findPlaceTime(placeRecord);
+    	if(count > 0){
+    		return ReturnMsg.fail("该时间段已被预约",Code.orderFail);
+    	}
+    	
     	//场地需要提前多少天
-    	Date orderDate = placeRecord.getOrderDate();
     	Integer advance = place.getPlaceAdvanceOrderDay();
-    	int day = DateUtil.getDifferentMillisecond(new Date(),orderDate,"day");
+    	int day = DateUtil.getDifferentMillisecond(new Date(),
+    			placeRecord.getOrderDate(),"day");
     	if(day < 0){
     		return ReturnMsg.fail("请选择合法的日期时间",Code.orderFail);
     	}
     	if(day < advance){
     		return ReturnMsg.fail("要提前"+advance+"天预约",Code.orderFail);
     	}
+    	
     	//场地预约时间上限
     	Integer limit = place.getPlaceUpperLimit();
-    	Date startDate = placeRecord.getOrderStartTime();
-    	Date endDate = placeRecord.getOrderEndTime();
-    	int hour = DateUtil.getDifferentMillisecond(startDate,endDate,"hour");
+    	int hour = DateUtil.getDifferentMillisecond(placeRecord.getOrderStartTime(),
+    			placeRecord.getOrderEndTime(),"hour");
     	if(limit < hour){
     		return ReturnMsg.fail("该场地预约时间最大"+limit+"小时",Code.orderFail);
     	}
-    	List<PlaceRecord> list = placeRecordService.	//获取该场地当天的订场情况
-    			findPlaceTime(placeRecord.getPlaceId(), placeRecord.getOrderDate());
-    	for (PlaceRecord order : list) {
-    		Date startTime = order.getOrderStartTime();
-    		Date endTime = order.getOrderEndTime();
-    		//判断预约时间是否被他人预约
-    		if(DateUtil.timeLimit(placeRecord.getOrderStartTime(), 
-    				placeRecord.getOrderEndTime(), startTime, endTime)){
-    			return ReturnMsg.fail("该时间段已被预约",Code.orderFail);
-    		}else if(DateUtil.timeLimit(placeRecord.getOrderStartTime(), 
-    					placeRecord.getOrderEndTime(), startTime)
-    				|| DateUtil.timeLimit(placeRecord.getOrderStartTime(), 
-    					placeRecord.getOrderEndTime(), endTime)){
-    			return ReturnMsg.fail("该时间段已被预约",Code.orderFail);
-    		}
-		}
         return ReturnMsg.success(placeRecordService.addPlaceRecord(placeRecord));
     }
 }

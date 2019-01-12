@@ -37,12 +37,8 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
 	}
 
 	@Override
-	public List<PlaceRecord> findPlaceTime(String placeId, Date orderDate) {
-		List<PlaceRecord> list = placeRecordMapper.findPlaceTime(placeId, orderDate);
-		if(list.size() > 0){
-			return list;
-		}
-		return null;
+	public int findPlaceTime(PlaceRecord placeRecord) {
+		return placeRecordMapper.findPlaceTime(placeRecord);
 	}
 	
 }

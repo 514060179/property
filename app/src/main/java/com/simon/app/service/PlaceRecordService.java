@@ -25,10 +25,9 @@ public interface PlaceRecordService {
 	 */
 	PlaceRecord addPlaceRecord(PlaceRecord placeRecord);
 	/**
-	 * 查询某天的预约时间
-	 * @param placeId
-	 * @param orderDate
+	 * 查询该时间段的记录数
+	 * @param placeRecord
 	 * @return
 	 */
-	List<PlaceRecord> findPlaceTime(String placeId,Date orderDate);
+	int findPlaceTime(PlaceRecord placeRecord);
 }

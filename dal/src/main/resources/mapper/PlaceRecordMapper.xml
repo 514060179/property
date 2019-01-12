@@ -26,20 +26,24 @@
   		</if>
   	</where>
   </select>
-  <select id="findPlaceTime" resultMap="BaseResultMap" >
-  	select
-  		order_start_time, order_end_time
-  	from place_record
-  	<where>
-  		<if test="placeId != null">
-  			place_id = #{placeId,jdbcType=VARCHAR}
-  		</if>
-  		<if test="orderDate != null">
-  			AND order_date = #{orderDate,jdbcType=DATE}
-  		</if>
-  	</where>
+  <select id="findPlaceTime" parameterType="com.simon.dal.model.PlaceRecord" resultType="int">
+	SELECT 
+		COUNT(*)	
+	FROM 
+	  	place_record
+	WHERE
+	  	order_date = #{orderDate,jdbcType=DATE}
+	AND
+		(( #{orderStartTime, jdbcType=TIME} &lt; order_start_time 
+			AND  order_start_time  &lt;= #{orderEndTime,jdbcType=TIME})
+		OR ( #{orderStartTime, jdbcType=TIME} &lt; order_end_time 
+			AND order_end_time &lt;= #{orderEndTime,jdbcType=TIME}))
+		OR
+		(( order_start_time &lt; #{orderStartTime, jdbcType=TIME}  
+			AND  #{orderStartTime, jdbcType=TIME} &lt;= order_end_time) 
+		OR ( order_start_time &lt; #{orderEndTime,jdbcType=TIME}  
+			AND #{orderEndTime,jdbcType=TIME} &lt;= order_end_time))
   </select>
-  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

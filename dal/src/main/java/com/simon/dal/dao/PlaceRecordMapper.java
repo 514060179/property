@@ -22,5 +22,5 @@ public interface PlaceRecordMapper {
     
     List<PlaceRecord> list(PlaceRecord record);
     
-    List<PlaceRecord> findPlaceTime(@Param("placeId") String placeId, @Param("orderDate") Date orderDate);
+    int findPlaceTime(PlaceRecord placeRecord);
 }
