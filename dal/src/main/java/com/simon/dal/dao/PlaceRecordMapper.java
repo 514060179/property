@@ -1,6 +1,9 @@
 package com.simon.dal.dao;
 
+import java.util.Date;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.simon.dal.model.PlaceRecord;
 
@@ -18,4 +21,6 @@ public interface PlaceRecordMapper {
     int updateByPrimaryKey(PlaceRecord record);
     
     List<PlaceRecord> list(PlaceRecord record);
+    
+    List<PlaceRecord> findPlaceTime(@Param("placeId") String placeId, @Param("orderDate") Date orderDate);
 }

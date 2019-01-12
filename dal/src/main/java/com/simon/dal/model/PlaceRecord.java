@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 @ApiModel(value = "PlaceRecord", description = "订场记录")
 public class PlaceRecord {
@@ -17,16 +19,17 @@ public class PlaceRecord {
     @ApiModelProperty("场所id")
     private String placeId;
 
-    @ApiModelProperty(value="预订日期",example="2018-08-08")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @ApiModelProperty(value="预订日期",example="2018-08-08 00:00:00")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date orderDate;
 
     @ApiModelProperty(value="开始时间",example="08:00:00")
-    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    
+    @JsonFormat(pattern="hh:mm:ss",timezone="GMT+8")
     private Date orderStartTime;
 
     @ApiModelProperty(value="结束时间",example="18:00:00")
-    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(pattern="hh:mm:ss",timezone="GMT+8")
     private Date orderEndTime;
 
     @ApiModelProperty(value="预定状态(-1预约取消0开始发起1预约成功2预约失败)",readOnly=true)

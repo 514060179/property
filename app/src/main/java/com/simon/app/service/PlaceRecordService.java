@@ -1,5 +1,6 @@
 package com.simon.app.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.simon.dal.model.PlaceRecord;
@@ -22,5 +23,12 @@ public interface PlaceRecordService {
 	 * @param placeRecord
 	 * @return
 	 */
-	int addPlaceRecord(PlaceRecord placeRecord);
+	PlaceRecord addPlaceRecord(PlaceRecord placeRecord);
+	/**
+	 * 查询某天的预约时间
+	 * @param placeId
+	 * @param orderDate
+	 * @return
+	 */
+	List<PlaceRecord> findPlaceTime(String placeId,Date orderDate);
 }

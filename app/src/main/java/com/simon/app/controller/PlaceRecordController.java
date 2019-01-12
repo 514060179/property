@@ -15,6 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -66,7 +67,7 @@ public class PlaceRecordController {
     	//场地需要提前多少天
     	Date orderDate = placeRecord.getOrderDate();
     	Integer advance = place.getPlaceAdvanceOrderDay();
-    	int day = DateUtil.differentMillisecond(new Date(),orderDate,"day");
+    	int day = DateUtil.getDifferentMillisecond(new Date(),orderDate,"day");
     	if(day < 0){
     		return ReturnMsg.fail("请选择合法的日期时间",Code.orderFail);
     	}
@@ -75,13 +76,28 @@ public class PlaceRecordController {
     	}
     	//场地预约时间上限
     	Integer limit = place.getPlaceUpperLimit();
-    	Date startTime = placeRecord.getOrderStartTime();
-    	Date endTime = placeRecord.getOrderEndTime();
-    	int hour = DateUtil.differentMillisecond(startTime,endTime,"hour");
+    	Date startDate = placeRecord.getOrderStartTime();
+    	Date endDate = placeRecord.getOrderEndTime();
+    	int hour = DateUtil.getDifferentMillisecond(startDate,endDate,"hour");
     	if(limit < hour){
     		return ReturnMsg.fail("该场地预约时间最大"+limit+"小时",Code.orderFail);
     	}
-    	placeRecordService.addPlaceRecord(placeRecord);
-        return ReturnMsg.success(placeRecordService.findOne(placeRecord.getRecordId()));
+    	List<PlaceRecord> list = placeRecordService.	//获取该场地当天的订场情况
+    			findPlaceTime(placeRecord.getPlaceId(), placeRecord.getOrderDate());
+    	for (PlaceRecord order : list) {
+    		Date startTime = order.getOrderStartTime();
+    		Date endTime = order.getOrderEndTime();
+    		//判断预约时间是否被他人预约
+    		if(DateUtil.timeLimit(placeRecord.getOrderStartTime(), 
+    				placeRecord.getOrderEndTime(), startTime, endTime)){
+    			return ReturnMsg.fail("该时间段已被预约",Code.orderFail);
+    		}else if(DateUtil.timeLimit(placeRecord.getOrderStartTime(), 
+    					placeRecord.getOrderEndTime(), startTime)
+    				|| DateUtil.timeLimit(placeRecord.getOrderStartTime(), 
+    					placeRecord.getOrderEndTime(), endTime)){
+    			return ReturnMsg.fail("该时间段已被预约",Code.orderFail);
+    		}
+		}
+        return ReturnMsg.success(placeRecordService.addPlaceRecord(placeRecord));
     }
 }

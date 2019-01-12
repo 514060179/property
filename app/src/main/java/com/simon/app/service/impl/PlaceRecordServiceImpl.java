@@ -1,5 +1,6 @@
 package com.simon.app.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,21 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
 	}
 
 	@Override
-	public int addPlaceRecord(PlaceRecord placeRecord) {
-		// TODO Auto-generated method stub
-		return placeRecordMapper.insertSelective(placeRecord);
+	public PlaceRecord addPlaceRecord(PlaceRecord placeRecord) {
+		int result = placeRecordMapper.insertSelective(placeRecord);
+		if(result > 0){
+			return placeRecord;
+		}
+		return null;
 	}
-	
+
+	@Override
+	public List<PlaceRecord> findPlaceTime(String placeId, Date orderDate) {
+		List<PlaceRecord> list = placeRecordMapper.findPlaceTime(placeId, orderDate);
+		if(list.size() > 0){
+			return list;
+		}
+		return null;
+	}
 	
 }
