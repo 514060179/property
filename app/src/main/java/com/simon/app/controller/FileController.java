@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.simon.app.config.ResourceConfig;
+import com.simon.app.model.vo.Code;
 import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.service.UserService;
 import com.simon.app.util.ClaimsUtil;
@@ -37,6 +38,11 @@ public class FileController {
 	private UserService userService;
 	@Autowired
 	private ResourceConfig resourceConfig;
+	
+	public static final String[] FORMAT = {
+			".jpg", ".png", ".jpeg", ".bmp", ".gif", ".amr", ".mp3", ".wma", ".wav",
+			".JPG", ".PNG", ".JPEG", ".BMP", ".GIF", ".AMR", ".MP3", ".WMA", ".WAV"
+	}; 
 	
 	@PostMapping("upload")
     @ApiOperation("文件上传")
@@ -72,6 +78,10 @@ public class FileController {
     	for (MultipartFile file : fileNames) {
     		String fileName = file.getOriginalFilename();
     		String sufName = fileName.substring(fileName.lastIndexOf("."));
+    		//校验文件格式
+    		if(!verifyFormat(sufName)){
+    			return ReturnMsg.fail("请选择合法的文件", Code.illegalFile);
+    		}
     		String newName = System.currentTimeMillis() + sufName; //上传后的新名字
     		if(!file.isEmpty() && file!=null){
     			File localFile = new File(rootPath + newName);
@@ -112,5 +122,14 @@ public class FileController {
     	String substring = paths.substring(0, paths.length()-1);
     	map.put("path", substring);
     	return ReturnMsg.success(map);
+	}
+	
+	public boolean verifyFormat(String sufName) {
+		for (int i = 0; i < FORMAT.length; i++) {
+			if(sufName.equals(FORMAT[i])){
+				return true;
+			}
+		}
+		return false;
 	}
 }
