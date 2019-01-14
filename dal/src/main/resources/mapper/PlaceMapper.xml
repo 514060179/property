@@ -87,7 +87,7 @@
         place_image,
       </if>
       <if test="placeStatus != null" >
-      	place_status
+      	place_status,
       </if>
       <if test="placeStartTime != null" >
         place_start_time,
@@ -202,10 +202,10 @@
         place_status = #{placeStatus,jdbcType=INTEGER},
       </if>
       <if test="placeStartTime != null" >
-        place_start_time = #{placeStartTime,jdbcType=TIME},
+        place_start_time = #{placeStartTime},
       </if>
       <if test="placeEndTime != null" >
-        place_end_time = #{placeEndTime,jdbcType=TIME},
+        place_end_time = #{placeEndTime},
       </if>
       <if test="placeNeedOrder != null" >
         place_need_order = #{placeNeedOrder,jdbcType=INTEGER},

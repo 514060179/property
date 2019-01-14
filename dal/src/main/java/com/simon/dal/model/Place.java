@@ -28,9 +28,11 @@ public class Place {
     @ApiModelProperty(value="场所状态(0未开放1开放)",example="1")
     private Integer placeStatus;
 
-    @Deprecated
-    @ApiModelProperty(value="图片url",readOnly=true,example = "/images/swimming/123.png")
+    @ApiModelProperty(value="图片url",example = "/images/swimming/123.png,/images/swimming/456.png")
     private String placeImage;
+
+    @ApiModelProperty(value="缩略图",example = "/images/swimming/123-thumbnail.png,/images/swimming/456-thumbnail.png")
+    private String thumbnailImages;
 
     @ApiModelProperty(value="起始时间",example="2018-08-08 08:08:08")
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
@@ -145,6 +147,14 @@ public class Place {
 
     public void setPlaceImage(String placeImage) {
         this.placeImage = placeImage == null ? null : placeImage.trim();
+    }
+
+    public String getThumbnailImages() {
+        return thumbnailImages;
+    }
+
+    public void setThumbnailImages(String thumbnailImages) {
+        this.thumbnailImages = thumbnailImages;
     }
 
     public Date getPlaceStartTime() {
