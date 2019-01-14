@@ -12,7 +12,7 @@ import com.simon.app.service.ComplainService;
 import com.simon.dal.dao.ComplainMapper;
 import com.simon.dal.dao.ImageMapper;
 import com.simon.dal.model.Complain;
-import com.simon.dal.model.Image;
+import com.simon.dal.model.Images;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseClaims;
 
@@ -41,13 +41,13 @@ public class ComplainServiceImpl implements ComplainService{
 	public int addComplain(Complain complain, String paths) {
 		if(paths != "" && paths != null){
     		String[] path = paths.split(",");
-    		List<Image> list = new ArrayList<Image>();
+    		List<Images> list = new ArrayList<Images>();
     		for (String url : path) {
-    			Image image = new Image();
+    			Images image = new Images();
     			image.setImageId(UUIDUtil.uidString());
     			image.setObjectId(complain.getComplainId());
 				image.setImageUrl(url);
-				image.setImageType("0");
+				image.setImageType(0);
 				list.add(image);
 			}
     		imageMapper.insertBatch(list);
