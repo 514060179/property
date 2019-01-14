@@ -15,6 +15,9 @@ public interface Code {
 
     //注销失败
     int logoutfail = 102;
+    
+    //密码错误
+    int wrongPassword = 103;
 
     //数据库key重复
     int duplicate=201;

@@ -24,6 +24,7 @@ import com.simon.dal.util.EncryUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -74,5 +75,25 @@ public class PassController {
 			return ReturnMsg.success();
 		}
 		return ReturnMsg.fail(Code.logoutfail, "注销失败");
+	}
+
+	@PostMapping("/back/updatePassword")
+	@ApiOperation("修改密码")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name="password",value="旧密码",required=true),
+			@ApiImplicitParam(name="newpassword",value="新密码",required=true)
+	})
+	public ReturnMsg changePossword(String password, String newpassword, HttpServletRequest request){
+		String managerId = ClaimsUtil.getManagerId(request);
+		Manager manager = new Manager();
+		manager.setManagerId(managerId);
+		manager.setPassword(EncryUtil.getMD5(password));
+		Manager result = managerService.findManager(manager);
+		if(!StringUtils.isEmpty(result)&&result!=null){
+			result.setPassword(EncryUtil.getMD5(newpassword));
+			managerService.upd(manager);
+			return ReturnMsg.success();
+		}
+		return ReturnMsg.fail(Code.wrongPassword, "旧密码不正确");
 	}
 }

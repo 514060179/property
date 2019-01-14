@@ -53,4 +53,11 @@ public class CommunityController {
         logger.info("社区列表baseQueryParam={}",  JSONUtil.objectToJson(baseQueryParam));
         return ReturnMsg.success(communityService.list(baseQueryParam));
     }
+    
+    @GetMapping("detail")
+    @ApiOperation("社区详情")
+    public ReturnMsg<Community> detail(String communityId){
+    	logger.info("社区列表communityId={}",  JSONUtil.objectToJson(communityId));
+    	return ReturnMsg.success(communityService.detail(communityId));
+    }
 }

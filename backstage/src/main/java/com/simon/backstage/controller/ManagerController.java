@@ -7,6 +7,7 @@ import com.simon.backstage.service.ManagerService;
 import com.simon.backstage.service.RoleService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
+import com.simon.dal.util.EncryUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -54,6 +55,7 @@ public class ManagerController {
     @PostMapping("upd")
     @ApiOperation("修改管理员")
     public ReturnMsg<Manager> upd(@RequestBody @Validated Manager manager){
+    	manager.setPassword(EncryUtil.getMD5(manager.getPassword()));
         logger.info("修改管理员manager={}", JSONUtil.objectToJson(manager));
         return ReturnMsg.success(managerService.upd(manager));
     }
