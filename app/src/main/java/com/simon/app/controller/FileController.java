@@ -94,27 +94,6 @@ public class FileController {
          			if(i < 1){
          				return ReturnMsg.fail();
          			}
-         			return ReturnMsg.success();
-//    			}else if(ImageType.IMAGE_TYPE_COMPLAIN_VOICE == type){//投诉/报修 语音上传
-//    				Complain complain =new Complain();
-//    				complain.setComplainId(id);
-//    				complain.setComplainVoice(path);
-//    				int i = complainService.updateByPrimaryKeySelective(complain);
-//    				if(i < 1){
-//         				return ReturnMsg.fail();
-//         			}
-//    			}else{
-//    				Image image = new Image();
-//    				image.setImageId(UUIDUtil.uidString());
-//    				image.setImageUrl(path);
-//    				if(ImageType.IMAGE_TYPE_COMPLAIN == type){
-//    					image.setComplainId(id);
-//    				}
-//    				//新增图片
-//    				int i = imageService.insertSelective(image);
-//    				if(i < 1){
-//         				return ReturnMsg.fail();
-//         			}
     			}
     			paths = realPath + newName + "," + paths;
         	}
