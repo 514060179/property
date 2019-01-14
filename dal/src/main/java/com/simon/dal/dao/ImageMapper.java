@@ -2,11 +2,11 @@ package com.simon.dal.dao;
 
 import java.util.List;
 
-import com.simon.dal.model.Image;
+import com.simon.dal.model.Images;
 
 public interface ImageMapper {
 	
-    int insertSelective(Image record);
+    int insertSelective(Images record);
 
-	int insertBatch(List<Image> list);
+	int insertBatch(List<Images> list);
 }

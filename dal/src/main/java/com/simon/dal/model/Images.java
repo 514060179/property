@@ -6,19 +6,22 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value="Image", description="图片")
-public class Image {
+public class Images {
 	
 	@ApiModelProperty(name="图片id",readOnly=true)
 	private String imageId;
 	
 	@ApiModelProperty("图片url")
 	private String imageUrl;
+
+	@ApiModelProperty("压缩图")
+	private String imageThumbnail;
 	
 	@ApiModelProperty("对象id(对应的业务id，如：placeId)")
 	private String objectId;
 	
 	@ApiModelProperty("图片类型0投诉/保修1场所2公告3其他")
-	private String imageType;
+	private Integer imageType;
 	
 	@ApiModelProperty(name="创建时间",readOnly=true)
     private Date createTime;
@@ -42,6 +45,14 @@ public class Image {
 		this.imageUrl = imageUrl;
 	}
 
+	public String getImageThumbnail() {
+		return imageThumbnail;
+	}
+
+	public void setImageThumbnail(String imageThumbnail) {
+		this.imageThumbnail = imageThumbnail;
+	}
+
 	public String getObjectId() {
 		return objectId;
 	}
@@ -50,11 +61,11 @@ public class Image {
 		this.objectId = objectId;
 	}
 
-	public String getImageType() {
+	public Integer getImageType() {
 		return imageType;
 	}
 
-	public void setImageType(String imageType) {
+	public void setImageType(Integer imageType) {
 		this.imageType = imageType;
 	}
 

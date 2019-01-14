@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.simon.dal.dao.ImageMapper" >
-	<resultMap id="BaseResultMap" type="com.simon.dal.model.Image" >
+	<resultMap id="BaseResultMap" type="com.simon.dal.model.Images" >
 		<id column="image_id" property="imageId" />
 		<result column="image_url" property="imageUrl" />
+		<result column="image_thumbnail" property="imageThumbnail" />
 		<result column="object_id" property="objectId" />
 	</resultMap>
 	<sql id="Base_Column_List" >
-		image_id, image_url, object_id
+		image_id, image_url,image_thumbnail, object_id
 	</sql>
-	<insert id="insertSelective" parameterType="com.simon.dal.model.Image" >
-		insert into image
+	<insert id="insertSelective" parameterType="com.simon.dal.model.Images" >
+		insert into images
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="imageId != null">
 				image_id,
 			</if>
 			<if test="imageUrl != null">
 				image_url,
+			</if>
+			<if test="imageThumbnail != null">
+				image_thumbnail,
 			</if>
 			<if test="placeId != null">
 				object_id
@@ -29,6 +33,9 @@
 			<if test="imageUrl != null">
 				#{imageUrl,jdbcType=VARCHAR},
 			</if>
+			<if test="imageThumbnail != null">
+				#{imageThumbnail,jdbcType=VARCHAR},
+			</if>
 			<if test="placeId != null">
 				#{objectId,jdbcType=VARCHAR}
 			</if>
@@ -36,11 +43,14 @@
 	</insert>
 	<insert id="insertBatch" parameterType="java.util.List">
 		insert 
-			into image(image_id,image_url,object_id) values
+			into images(image_id,image_url,image_thumbnail,object_id,image_type) values
 		<foreach collection="list" item="image" index="index" separator=",">
 	       (#{image.imageId,jdbcType=VARCHAR},
 	        #{image.imageUrl,jdbcType=VARCHAR},
-	        #{image.objectId,jdbcType=VARCHAR}
+	        #{image.imageThumbnail,jdbcType=VARCHAR},
+	        #{image.objectId,jdbcType=VARCHAR},
+	        #{image.imageType,jdbcType=VARCHAR}
+			)
         </foreach>
 	</insert>
 </mapper>

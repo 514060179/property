@@ -3,6 +3,10 @@ package com.simon.backstage.controller;
 import com.simon.backstage.config.ResourceConfig;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
+import com.simon.dal.util.ImageUtil;
+import com.simon.dal.vo.ImagesUrl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +32,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/back/file")
+@Api(value = "FileController", description = "文件管理")
 public class FileController {
 
     @Autowired
@@ -38,7 +44,8 @@ public class FileController {
     };
     @PostMapping("upload")
     @ResponseBody
-    public ReturnMsg upload(HttpServletRequest request,@ApiParam(name = "type",value = "图片类型：1场所2公告3其他",defaultValue = "1")@RequestParam Integer type){
+    @ApiImplicitParam(name = "file",value = "资源文件(字节码)",paramType = "payload")
+    public ReturnMsg<ImagesUrl> upload(HttpServletRequest request,@ApiParam(name = "type",value = "图片类型：1场所2公告3其他",defaultValue = "1")@RequestParam Integer type) throws IOException {
 
         List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
 
@@ -54,6 +61,7 @@ public class FileController {
             filePath += "/";
         }
         StringBuffer stringBuffer = new StringBuffer();
+        StringBuffer thumbnail = new StringBuffer();
         for (int i =0 ; i<files.size() ; i++){
             String fileName = files.get(i).getOriginalFilename();  // 文件名
             String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
@@ -71,13 +79,24 @@ public class FileController {
                 e.printStackTrace();
             }
             stringBuffer.append(relativePath).append(fileName);
+            thumbnail.append(filePath).append(fileName);
             if (i<files.size()-1){
                 stringBuffer.append(",");
+                thumbnail.append(",");
             }
         }
-        Map<String,String> resultMap = new HashMap<>();
-        resultMap.put("paths",stringBuffer.toString());
-        return ReturnMsg.success(resultMap);
+        ImagesUrl imagesUrl = new ImagesUrl();
+        imagesUrl.setOriginalUrl(stringBuffer.toString());
+        List thumbnailList = ImageUtil.generateThumbnail2Directory(filePath, thumbnail.toString().split(","));
+        StringBuffer thumbnailSb = new StringBuffer();
+        for (int j = 0; j < thumbnailList.size(); j++) {
+            thumbnailSb.append(thumbnailList.get(j));
+            if (j<files.size()-1){
+                thumbnailSb.append(",");
+            }
+        }
+        imagesUrl.setThumbnailUrl(thumbnailSb.toString());
+        return ReturnMsg.success(imagesUrl);
     }
 
     private boolean verifyImage(String imgPath){
