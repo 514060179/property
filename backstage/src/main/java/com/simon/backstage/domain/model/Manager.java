@@ -10,12 +10,15 @@ import java.util.Date;
 @ApiModel(value = "Manager", description = "管理员")
 public class Manager {
 
-    @ApiModelProperty("id")
+    @ApiModelProperty(value ="id",readOnly=true)
     private String managerId;
 
     @ApiModelProperty(value = "社区id",example = "qwe4567saeqw")
     @NotEmpty(message = "社区id不能为空")
     private String communityId;
+    
+    @ApiModelProperty(value ="社区名称",readOnly=true)
+    private String communityName;
 
     @ApiModelProperty(value = "名字",example = "simon")
     private String name;
@@ -62,7 +65,15 @@ public class Manager {
         this.communityId = communityId == null ? null : communityId.trim();
     }
 
-    public String getName() {
+    public String getCommunityName() {
+		return communityName;
+	}
+
+	public void setCommunityName(String communityName) {
+		this.communityName = communityName;
+	}
+
+	public String getName() {
         return name;
     }
 

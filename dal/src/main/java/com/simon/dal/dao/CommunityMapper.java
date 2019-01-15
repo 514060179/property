@@ -19,4 +19,6 @@ public interface CommunityMapper {
     int updateByPrimaryKey(Community record);
 
     List<Community> list(BaseQueryParam baseQueryParam);
+
+	String findName(String communityId);
 }

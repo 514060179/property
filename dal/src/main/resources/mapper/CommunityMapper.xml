@@ -31,6 +31,12 @@
     community_management_type, community_contacts, community_contacts_phone, community_remark,
     community_deleted, create_time, update_time
   </sql>
+  <select id="findName" parameterType="java.lang.String" resultType="java.lang.String">
+  	select 
+  		community_name 
+  	from community 
+  	where community_id = #{communityId,jdbcType=VARCHAR}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
