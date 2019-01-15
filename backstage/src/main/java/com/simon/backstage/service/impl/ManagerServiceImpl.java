@@ -62,14 +62,7 @@ public class ManagerServiceImpl implements ManagerService{
     @Override
     public PageInfo<Manager> list(BaseQueryParam baseQueryParam) {
         PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
-        List<Manager> result = managerMapper.selectByCondition(baseQueryParam);
-        List<Manager> list = new ArrayList<Manager>();
-        for (Manager manager : result) {
-        	String communityName = communityMapper.findName(manager.getCommunityId());
-        	manager.setCommunityName(communityName);
-        	list.add(manager);
-		}
-        return new PageInfo<>(list);
+        return new PageInfo<>(managerMapper.selectByCondition(baseQueryParam));
     }
 
 	@Override

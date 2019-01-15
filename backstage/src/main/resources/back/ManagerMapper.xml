@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.Manager" >
     <id column="manager_id" property="managerId" jdbcType="VARCHAR" />
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="community_name" property="communityName" jdbcType="VARCHAR" />
     <result column="NAME" property="name" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
@@ -70,8 +71,10 @@
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
     select
-    <include refid="Base_Column_List" />
-    from manager
+    m.community_id, manager_id, community_name, NAME, sex,type, 
+    	email, username, PASSWORD, m.create_time, m.update_time
+    from manager m
+    INNER JOIN community c ON m.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(NAME,''),IFNULL(username,''),IFNULL(email,'')) LIKE CONCAT('%', #{keyword}, '%')
