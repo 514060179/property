@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.ManagerMapper;
 import com.simon.backstage.domain.model.Manager;
 import com.simon.backstage.service.ManagerService;
+import com.simon.dal.dao.CommunityMapper;
 import com.simon.dal.util.EncryUtil;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
@@ -26,6 +27,8 @@ public class ManagerServiceImpl implements ManagerService{
 
     @Autowired
     private ManagerMapper managerMapper;
+    @Autowired
+    private CommunityMapper communityMapper;
 
     @Transactional
     @Override
@@ -59,7 +62,14 @@ public class ManagerServiceImpl implements ManagerService{
     @Override
     public PageInfo<Manager> list(BaseQueryParam baseQueryParam) {
         PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
-        return new PageInfo<>(managerMapper.selectByCondition(baseQueryParam));
+        List<Manager> result = managerMapper.selectByCondition(baseQueryParam);
+        List<Manager> list = new ArrayList<Manager>();
+        for (Manager manager : result) {
+        	String communityName = communityMapper.findName(manager.getCommunityId());
+        	manager.setCommunityName(communityName);
+        	list.add(manager);
+		}
+        return new PageInfo<>(list);
     }
 
 	@Override
