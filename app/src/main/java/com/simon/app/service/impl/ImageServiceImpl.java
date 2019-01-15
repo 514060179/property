@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.simon.app.service.ImageService;
 import com.simon.dal.dao.ImageMapper;
-import com.simon.dal.model.Image;
+import com.simon.dal.model.Images;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -16,7 +16,7 @@ public class ImageServiceImpl implements ImageService {
 	private ImageMapper imageMapper;
 	
 	@Override
-	public int insertBatch(List<Image> list) {
+	public int insertBatch(List<Images> list) {
 		// TODO Auto-generated method stub
 		return imageMapper.insertBatch(list);
 	}
