@@ -10,8 +10,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,9 +32,17 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    
+    @PostMapping("update")
+    @ApiOperation("用户修改")
+    public ReturnMsg<User> update(@RequestBody User user, HttpServletRequest request){
+    	String userId = ClaimsUtil.getUserId(request);
+    	user.setUserId(userId);
+		return ReturnMsg.success(userService.updateByPrimaryKeySelective(user));
+    }
 
     @PostMapping("detail")
-    @ApiOperation("详情")
+    @ApiOperation("用户详情")
     public ReturnMsg<User> detail(HttpServletRequest request){
         return ReturnMsg.success(userService.findOne(ClaimsUtil.getUserId(request)));
     }
