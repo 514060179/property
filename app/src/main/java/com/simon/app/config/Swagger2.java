@@ -1,5 +1,6 @@
 package com.simon.app.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -23,6 +24,8 @@ import java.util.List;
 @Configuration
 public class Swagger2 {
 
+    @Value("${swagger.baseurl}")
+    private String host;
     @Bean
     public Docket createRestApi() {
         ParameterBuilder ticketPar = new ParameterBuilder();
@@ -31,7 +34,7 @@ public class Swagger2 {
                 .modelRef(new ModelRef("string")).parameterType("header")
                 .required(false).build(); //header中的ticket参数非必填，传空也可以
         pars.add(ticketPar.build());    //根据每个方法名也知道当前方法在设置什么参数
-        return new Docket(DocumentationType.SWAGGER_2).
+        return new Docket(DocumentationType.SWAGGER_2).host(host).
                 apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.simon.app.controller"))
