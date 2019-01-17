@@ -8,7 +8,6 @@
     <result column="complain_specific_position" property="complainSpecificPosition" jdbcType="VARCHAR" />
     <result column="complain_type" property="complainType" jdbcType="VARCHAR" />
     <result column="complain_class_type" property="complainClassType" jdbcType="VARCHAR" />
-    <result column="complain_images" property="complainImages" jdbcType="VARCHAR" />
     <result column="complain_liaisons_name" property="complainLiaisonsName" jdbcType="VARCHAR" />
     <result column="complain_liaisons_sex" property="complainLiaisonsSex" jdbcType="CHAR" />
     <result column="complain_liaisons_email" property="complainLiaisonsEmail" jdbcType="VARCHAR" />
@@ -19,18 +18,30 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="complain_describe" property="complainDescribe" jdbcType="LONGVARCHAR" />
     <result column="complain_voice" property="complainVoice" jdbcType="LONGVARBINARY" />
+    
+    <collection property="complainImages" ofType="com.simon.dal.model.Images" column="complain_id" >
+    	<id column="image_id" property="imageId" jdbcType="VARCHAR"/>
+    	<result column="object_id" property="objectId" jdbcType="VARCHAR"/>
+    	<result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
+    	<result column="image_thumbnail" property="imageThumbnail" jdbcType="VARCHAR"/>
+    	<result column="image_type" property="imageType" jdbcType="INTEGER"/>
+    	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </collection>
   </resultMap>
 
   <sql id="Base_Column_List" >
+    image_id, image_url, image_thumbnail, object_id, image_type, img.create_time, img.update_time
     complain_id, user_id, complain_position, complain_specific_position, complain_type, 
-    complain_class_type, complain_images, complain_liaisons_name, complain_liaisons_sex, 
+    complain_class_type, complain_liaisons_name, complain_liaisons_sex, 
     complain_liaisons_email, complain_status, complain_finish_time, complain_handler,complain_describe, complain_voice,
-    create_time, update_time
+    c.create_time, c.update_time
   </sql>
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims">
   	select 
     <include refid="Base_Column_List" />
-    from complain
+    from complain c
+    inner join image img on c.complain_id = img.object_id
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(complain_position,''),IFNULL(complain_status,''),IFNULL(complain_handler,'')) LIKE CONCAT('%', #{keyword}, '%')
@@ -43,7 +54,8 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from complain
+    from complain c
+    inner join image img on c.complain_id = img.object_id
     where complain_id = #{complainId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
@@ -53,14 +65,14 @@
   <insert id="insert" parameterType="com.simon.dal.model.Complain" >
     insert into complain (complain_id, user_id, complain_position, 
       complain_specific_position, complain_type, 
-      complain_class_type, complain_images, complain_liaisons_name, 
+      complain_class_type, complain_liaisons_name, 
       complain_liaisons_sex, complain_liaisons_email, 
       complain_status, complain_finish_time, complain_handler, 
       create_time, update_time, complain_describe, 
       complain_voice)
     values (#{complainId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{complainPosition,jdbcType=VARCHAR}, 
       #{complainSpecificPosition,jdbcType=VARCHAR}, #{complainType,jdbcType=VARCHAR}, 
-      #{complainClassType,jdbcType=VARCHAR}, #{complainImages,jdbcType=VARCHAR}, #{complainLiaisonsName,jdbcType=VARCHAR}, 
+      #{complainClassType,jdbcType=VARCHAR}, #{complainLiaisonsName,jdbcType=VARCHAR}, 
       #{complainLiaisonsSex,jdbcType=CHAR}, #{complainLiaisonsEmail,jdbcType=VARCHAR}, 
       #{complainStatus,jdbcType=CHAR}, #{complainFinishTime,jdbcType=TIMESTAMP}, #{complainHandler,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{complainDescribe,jdbcType=LONGVARCHAR}, 
@@ -86,9 +98,6 @@
       </if>
       <if test="complainClassType != null" >
         complain_class_type,
-      </if>
-      <if test="complainImages != null" >
-        complain_images,
       </if>
       <if test="complainLiaisonsName != null" >
         complain_liaisons_name,
@@ -140,9 +149,6 @@
       <if test="complainClassType != null" >
         #{complainClassType,jdbcType=VARCHAR},
       </if>
-      <if test="complainImages != null" >
-        #{complainImages,jdbcType=VARCHAR},
-      </if>
       <if test="complainLiaisonsName != null" >
         #{complainLiaisonsName,jdbcType=VARCHAR},
       </if>
@@ -193,9 +199,6 @@
       <if test="complainClassType != null" >
         complain_class_type = #{complainClassType,jdbcType=VARCHAR},
       </if>
-      <if test="complainImages != null" >
-        complain_images = #{complainImages,jdbcType=VARCHAR},
-      </if>
       <if test="complainLiaisonsName != null" >
         complain_liaisons_name = #{complainLiaisonsName,jdbcType=VARCHAR},
       </if>
@@ -236,7 +239,6 @@
       complain_specific_position = #{complainSpecificPosition,jdbcType=VARCHAR},
       complain_type = #{complainType,jdbcType=VARCHAR},
       complain_class_type = #{complainClassType,jdbcType=VARCHAR},
-      complain_images = #{complainImages,jdbcType=VARCHAR},
       complain_liaisons_name = #{complainLiaisonsName,jdbcType=VARCHAR},
       complain_liaisons_sex = #{complainLiaisonsSex,jdbcType=CHAR},
       complain_liaisons_email = #{complainLiaisonsEmail,jdbcType=VARCHAR},
@@ -256,7 +258,6 @@
       complain_specific_position = #{complainSpecificPosition,jdbcType=VARCHAR},
       complain_type = #{complainType,jdbcType=VARCHAR},
       complain_class_type = #{complainClassType,jdbcType=VARCHAR},
-      complain_images = #{complainImages,jdbcType=VARCHAR},
       complain_liaisons_name = #{complainLiaisonsName,jdbcType=VARCHAR},
       complain_liaisons_sex = #{complainLiaisonsSex,jdbcType=CHAR},
       complain_liaisons_email = #{complainLiaisonsEmail,jdbcType=VARCHAR},

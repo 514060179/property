@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(value = "Complain", description = "投诉/保修")
 public class Complain {
@@ -26,9 +27,8 @@ public class Complain {
     @ApiModelProperty(value="类型分类（供电系统，发电机...）",example="供电系统")
     private String complainClassType;
 
-    @Deprecated
     @ApiModelProperty(value="图片url",readOnly=true)
-    private String complainImages;
+    private List<Images> complainImages;
 
     @ApiModelProperty(value="联络人",example="冯小猪")
     private String complainLiaisonsName;
@@ -108,15 +108,15 @@ public class Complain {
         this.complainClassType = complainClassType == null ? null : complainClassType.trim();
     }
 
-    public String getComplainImages() {
-        return complainImages;
-    }
+	public List<Images> getComplainImages() {
+		return complainImages;
+	}
 
-    public void setComplainImages(String complainImages) {
-        this.complainImages = complainImages == null ? null : complainImages.trim();
-    }
+	public void setComplainImages(List<Images> complainImages) {
+		this.complainImages = complainImages;
+	}
 
-    public String getComplainLiaisonsName() {
+	public String getComplainLiaisonsName() {
         return complainLiaisonsName;
     }
 
