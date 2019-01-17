@@ -2,9 +2,9 @@ package com.simon.app.util;
 
 public class ImageType {
 	/**
-	 * 其他文件
+	 * 语音文件
 	 */
-	public static final String IMAGE_TYPE_OTHER = "4";
+	public static final String IMAGE_TYPE_VOICE = "2";
 	
 	/**
 	 * 公告图片
@@ -14,7 +14,7 @@ public class ImageType {
 	/**
 	 * 场所图片
 	 */
-	public static final String IMAGE_TYPE_PLACE = "2";
+	public static final String IMAGE_TYPE_PLACE = "4";
 	
 	/**
 	 * 用户头像
