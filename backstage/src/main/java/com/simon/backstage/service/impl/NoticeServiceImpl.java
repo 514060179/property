@@ -43,6 +43,7 @@ public class NoticeServiceImpl implements NoticeService {
 				list.add(image);
 			}
 			imageMapper.insertBatch(list);
+			notice.setNoticeImage(list);
 		}
 		if(noticeMapper.insertSelective(notice) > 0){
 			return notice;

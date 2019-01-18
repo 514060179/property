@@ -75,6 +75,10 @@ public class JwtFilter extends AccessControlFilter {
                 	 ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.nologin,"该账户未登录！")),response);
                 	 return false;
                 }
+                String deviceType = claims.get("device", String.class);//PC端每次刷新15分钟
+                if(deviceType==null || !deviceType.equals("1")){
+                	redisService.set(userId, jwt, 15*60);
+                }
                 request.setAttribute("claims", claims);
                 return true;
             } catch (AuthenticationException e) {

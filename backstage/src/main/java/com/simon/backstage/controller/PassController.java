@@ -50,12 +50,12 @@ public class PassController {
     	Manager result = managerService.findManager(manager);
     	if(result != null){
     		String roles = managerService.findManagerAndRole(result.getManagerId());
-    		Long time = (long) 15*60*1000;//PC端token有效期为15分钟
+    		Long time = (long) 24*60*60*1000;//PC端token有效期为1天
     		if(!StringUtils.isEmpty(deviceType)&&deviceType.equals("1")){
     			time = null;//触摸屏：空则不会过期
     		}
     		String token = JwtHelper.issueJwt(UUID.randomUUID().toString(), result.getManagerId(),
-    				result.getUsername(), result.getCommunityId(), time, roles, null,
+    				result.getUsername(), result.getCommunityId(), deviceType, time, roles, null,
     				audience.getBase64Secret());
     		ManagerWithToken withToken = new ManagerWithToken();
     		withToken.setManager(result);
