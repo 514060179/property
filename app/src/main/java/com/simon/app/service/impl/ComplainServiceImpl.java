@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 import com.simon.app.service.ComplainService;
+import com.simon.dal.constant.Type;
 import com.simon.dal.dao.ComplainMapper;
 import com.simon.dal.dao.ImageMapper;
 import com.simon.dal.model.Complain;
@@ -38,16 +39,19 @@ public class ComplainServiceImpl implements ComplainService{
 
 	@Transactional
 	@Override
-	public int addComplain(Complain complain, String paths) {
-		if(paths != "" && paths != null){
-    		String[] path = paths.split(",");
+	public int addComplain(Complain complain) {
+		if(!complain.getImages().isEmpty() && complain.getImages().get(0)!=null){
+			Images images = complain.getImages().get(0);
+    		String[] imageUrl = images.getImageUrl().split(",");
+    		String[] imageThumbnail = images.getImageThumbnail().split(",");
     		List<Images> list = new ArrayList<Images>();
-    		for (String url : path) {
+    		for (int i = 0; i<imageUrl.length; i++) {
     			Images image = new Images();
     			image.setImageId(UUIDUtil.uidString());
     			image.setObjectId(complain.getComplainId());
-				image.setImageUrl(url);
-				image.setImageType(0);
+				image.setImageUrl(imageUrl[i]);
+				image.setImageThumbnail(imageThumbnail[i]);
+				image.setImageType(Type.IMAGE_TYPE_COMPLAIN);
 				list.add(image);
 			}
     		imageMapper.insertBatch(list);

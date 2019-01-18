@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(value = "Notice", description = "广告/公告/推送")
 public class Notice {
@@ -25,8 +26,7 @@ public class Notice {
     @ApiModelProperty("场所标题(英文)")
     private String noticeEnglishTitle;
 
-    @ApiModelProperty(value="图片",readOnly=true)
-    private String noticeImage;
+    private List<Images> noticeImage;
 
     @ApiModelProperty(value="创建时间",readOnly=true)
     private Date createTime;
@@ -115,15 +115,15 @@ public class Notice {
         this.noticeEnglishTitle = noticeEnglishTitle == null ? null : noticeEnglishTitle.trim();
     }
 
-    public String getNoticeImage() {
-        return noticeImage;
-    }
+    public List<Images> getNoticeImage() {
+		return noticeImage;
+	}
 
-    public void setNoticeImage(String noticeImage) {
-        this.noticeImage = noticeImage == null ? null : noticeImage.trim();
-    }
+	public void setNoticeImage(List<Images> noticeImage) {
+		this.noticeImage = noticeImage;
+	}
 
-    public Date getCreateTime() {
+	public Date getCreateTime() {
         return createTime;
     }
 

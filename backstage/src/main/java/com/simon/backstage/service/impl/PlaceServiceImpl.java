@@ -33,17 +33,18 @@ public class PlaceServiceImpl implements PlaceService {
         place.setPlaceId(UUIDUtil.uidString());
         int i = placeMapper.insertSelective(place);
         //存在图片
-        if (!Objects.isNull(place.getPlaceImage())&&place.getPlaceImage().trim()!=""){
+        if (!place.getImages().isEmpty() && place.getImages().get(0)!=null){
+        	Images images = place.getImages().get(0);
             List<Images> list = new ArrayList<>();
-            List<String> imagesList = Arrays.asList(place.getPlaceImage().split(","));
-            List<String> thumbnailList = Arrays.asList(place.getThumbnailImages().split(","));
+            List<String> imagesList = Arrays.asList(images.getImageUrl().split(","));
+            List<String> thumbnailList = Arrays.asList(images.getImageThumbnail().split(","));
             for (int j = 0 ; j<imagesList.size();j++){
-                Images images = new Images();
-                images.setImageId(UUIDUtil.uidString());
-                images.setObjectId(place.getPlaceId());
-                images.setImageUrl(imagesList.get(j));
-                images.setImageThumbnail(thumbnailList.get(j));
-                images.setImageType(Type.IMAGE_TYPE_PLACE);
+                Images image = new Images();
+                image.setImageId(UUIDUtil.uidString());
+                image.setObjectId(place.getPlaceId());
+                image.setImageUrl(imagesList.get(j));
+                image.setImageThumbnail(thumbnailList.get(j));
+                image.setImageType(Type.IMAGE_TYPE_PLACE);
                 list.add(images);
             }
             imageMapper.insertBatch(list);

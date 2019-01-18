@@ -19,7 +19,7 @@
     <result column="complain_describe" property="complainDescribe" jdbcType="LONGVARCHAR" />
     <result column="complain_voice" property="complainVoice" jdbcType="LONGVARBINARY" />
     
-    <collection property="complainImages" ofType="com.simon.dal.model.Images" column="complain_id" >
+    <collection property="images" ofType="com.simon.dal.model.Images" >
     	<id column="image_id" property="imageId" jdbcType="VARCHAR"/>
     	<result column="object_id" property="objectId" jdbcType="VARCHAR"/>
     	<result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
@@ -31,7 +31,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    image_id, image_url, image_thumbnail, object_id, image_type, img.create_time, img.update_time
+    image_id, image_url, image_thumbnail, object_id, image_type, img.create_time, img.update_time,
     complain_id, user_id, complain_position, complain_specific_position, complain_type, 
     complain_class_type, complain_liaisons_name, complain_liaisons_sex, 
     complain_liaisons_email, complain_status, complain_finish_time, complain_handler,complain_describe, complain_voice,
@@ -41,7 +41,7 @@
   	select 
     <include refid="Base_Column_List" />
     from complain c
-    inner join image img on c.complain_id = img.object_id
+    left join images img on c.complain_id = img.object_id
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(complain_position,''),IFNULL(complain_status,''),IFNULL(complain_handler,'')) LIKE CONCAT('%', #{keyword}, '%')
@@ -55,7 +55,7 @@
     select 
     <include refid="Base_Column_List" />
     from complain c
-    inner join image img on c.complain_id = img.object_id
+    left join images img on c.complain_id = img.object_id
     where complain_id = #{complainId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

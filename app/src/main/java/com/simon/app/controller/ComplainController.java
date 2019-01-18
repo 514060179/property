@@ -47,12 +47,10 @@ public class ComplainController {
 
     @PostMapping("add")
     @ApiOperation("添加")
-    @ApiImplicitParam(name="paths",value="图片路径（如上传多次文件以“,”隔开）",paramType="query")
-    public ReturnMsg<Complain> add(@RequestBody Complain complain,String paths,
-    		HttpServletRequest request){
+    public ReturnMsg<Complain> add(@RequestBody Complain complain,HttpServletRequest request){
     	complain.setComplainId(UUIDUtil.uidString());
     	complain.setUserId(ClaimsUtil.getUserId(request));
-    	complainService.addComplain(complain,paths);
+    	complainService.addComplain(complain);
     	return ReturnMsg.success(complainService.findOne(complain.getComplainId()));
     }
 }

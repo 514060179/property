@@ -24,7 +24,7 @@ public interface ComplainService {
 	 * @param paths 
 	 * @return
 	 */
-	int addComplain(Complain complain, String paths);
+	int addComplain(Complain complain);
 	
 	int updateByPrimaryKeySelective(Complain complain);
 }

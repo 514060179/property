@@ -27,9 +27,6 @@ public class Complain {
     @ApiModelProperty(value="类型分类（供电系统，发电机...）",example="供电系统")
     private String complainClassType;
 
-    @ApiModelProperty(value="图片url",readOnly=true)
-    private List<Images> complainImages;
-
     @ApiModelProperty(value="联络人",example="冯小猪")
     private String complainLiaisonsName;
 
@@ -59,6 +56,8 @@ public class Complain {
 
     @ApiModelProperty(value="更新时间",readOnly=true)
     private Date updateTime;
+    
+    private List<Images> images;
 
     public String getComplainId() {
         return complainId;
@@ -107,14 +106,6 @@ public class Complain {
     public void setComplainClassType(String complainClassType) {
         this.complainClassType = complainClassType == null ? null : complainClassType.trim();
     }
-
-	public List<Images> getComplainImages() {
-		return complainImages;
-	}
-
-	public void setComplainImages(List<Images> complainImages) {
-		this.complainImages = complainImages;
-	}
 
 	public String getComplainLiaisonsName() {
         return complainLiaisonsName;
@@ -195,4 +186,12 @@ public class Complain {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	public List<Images> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Images> images) {
+		this.images = images;
+	}
 }

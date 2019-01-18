@@ -8,24 +8,35 @@
     <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
     <result column="notice_traditional_title" property="noticeTraditionalTitle" jdbcType="VARCHAR" />
     <result column="notice_english_title" property="noticeEnglishTitle" jdbcType="VARCHAR" />
-    <result column="notice_image" property="noticeImage" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="notice_details" property="noticeDetails" jdbcType="LONGVARCHAR" />
     <result column="notice_traditional_details" property="noticeTraditionalDetails" jdbcType="LONGVARCHAR" />
     <result column="notice_english_details" property="noticeEnglishDetails" jdbcType="LONGVARCHAR" />
+    
+    <collection property="noticeImage" ofType="com.simon.dal.model.Images" >
+    	<id column="image_id" property="imageId" jdbcType="VARCHAR"/>
+    	<result column="object_id" property="objectId" jdbcType="VARCHAR"/>
+    	<result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
+    	<result column="image_thumbnail" property="imageThumbnail" jdbcType="VARCHAR"/>
+    	<result column="image_type" property="imageType" jdbcType="INTEGER"/>
+    	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </collection>
   </resultMap>
 
   <sql id="Base_Column_List" >
+  	image_id, image_url, image_thumbnail, object_id, image_type, img.create_time, img.update_time,
     notice_id, community_id, notice_type, notice_title, notice_traditional_title, notice_english_title, 
-    notice_image, create_time, update_time,    notice_details, notice_traditional_details, notice_english_details
+    notice_image, n.create_time, n.update_time, notice_details, notice_traditional_details, notice_english_details
   </sql>
 
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims">
   	select 
     <include refid="Base_Column_List" />
     from 
-    	notice
+    	notice n
+    left join image img on n.notice_id = img.object_id
     <where>
     	<if test="keyword != null and keyword!=''" >
     		CANCAT(IFNULL(notice_title,''),IFNULL(notice_type,'')) LIKE CANCAT('%', #{keyword}, '%')
@@ -38,7 +49,8 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from notice
+    from notice n
+    left join image img on n.notice_id = img.object_id
     where notice_id = #{noticeId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
@@ -48,12 +60,12 @@
   <insert id="insert" parameterType="com.simon.dal.model.Notice" >
     insert into notice (notice_id, community_id, notice_type, 
       notice_title, notice_traditional_title, notice_english_title, 
-      notice_image, create_time, update_time, 
+      create_time, update_time, 
       notice_details, notice_traditional_details, 
       notice_english_details)
     values (#{noticeId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{noticeType,jdbcType=CHAR}, 
-      #{noticeTitle,jdbcType=VARCHAR}, #{noticeTraditionalTitle,jdbcType=VARCHAR}, #{noticeEnglishTitle,jdbcType=VARCHAR}, 
-      #{noticeImage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{noticeTitle,jdbcType=VARCHAR}, #{noticeTraditionalTitle,jdbcType=VARCHAR}, 
+      #{noticeEnglishTitle,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{noticeDetails,jdbcType=LONGVARCHAR}, #{noticeTraditionalDetails,jdbcType=LONGVARCHAR}, 
       #{noticeEnglishDetails,jdbcType=LONGVARCHAR})
   </insert>
@@ -77,9 +89,6 @@
       </if>
       <if test="noticeEnglishTitle != null" >
         notice_english_title,
-      </if>
-      <if test="noticeImage != null" >
-        notice_image,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -116,9 +125,6 @@
       <if test="noticeEnglishTitle != null" >
         #{noticeEnglishTitle,jdbcType=VARCHAR},
       </if>
-      <if test="noticeImage != null" >
-        #{noticeImage,jdbcType=VARCHAR},
-      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -154,9 +160,6 @@
       <if test="noticeEnglishTitle != null" >
         notice_english_title = #{noticeEnglishTitle,jdbcType=VARCHAR},
       </if>
-      <if test="noticeImage != null" >
-        notice_image = #{noticeImage,jdbcType=VARCHAR},
-      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -182,7 +185,6 @@
       notice_title = #{noticeTitle,jdbcType=VARCHAR},
       notice_traditional_title = #{noticeTraditionalTitle,jdbcType=VARCHAR},
       notice_english_title = #{noticeEnglishTitle,jdbcType=VARCHAR},
-      notice_image = #{noticeImage,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       notice_details = #{noticeDetails,jdbcType=LONGVARCHAR},
@@ -197,7 +199,6 @@
       notice_title = #{noticeTitle,jdbcType=VARCHAR},
       notice_traditional_title = #{noticeTraditionalTitle,jdbcType=VARCHAR},
       notice_english_title = #{noticeEnglishTitle,jdbcType=VARCHAR},
-      notice_image = #{noticeImage,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where notice_id = #{noticeId,jdbcType=VARCHAR}
