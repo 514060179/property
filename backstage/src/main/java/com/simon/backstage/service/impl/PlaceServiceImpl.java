@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class PlaceServiceImpl implements PlaceService {
@@ -45,9 +44,10 @@ public class PlaceServiceImpl implements PlaceService {
                 image.setImageUrl(imagesList.get(j));
                 image.setImageThumbnail(thumbnailList.get(j));
                 image.setImageType(Type.IMAGE_TYPE_PLACE);
-                list.add(images);
+                list.add(image);
             }
             imageMapper.insertBatch(list);
+            place.setImages(list);
         }
         if (i>0){
             return place;

@@ -55,6 +55,7 @@ public class ComplainServiceImpl implements ComplainService{
 				list.add(image);
 			}
     		imageMapper.insertBatch(list);
+    		complain.setImages(list);
     	}
 		return complainMapper.insertSelective(complain);
 	}

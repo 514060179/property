@@ -14,16 +14,16 @@ public class Notice {
     @ApiModelProperty(value="社区id",readOnly=true)
     private String communityId;
 
-    @ApiModelProperty("通知类型")
+    @ApiModelProperty(value="通知类型", example="1")
     private String noticeType;
 
-    @ApiModelProperty("场所标题(简体)")
+    @ApiModelProperty(value="场所标题(简体)", example="关于垃圾处理问题")
     private String noticeTitle;
 
-    @ApiModelProperty("场所标题(繁体)")
+    @ApiModelProperty(value="场所标题(繁体)", example="關於垃圾處理問題")
     private String noticeTraditionalTitle;
 
-    @ApiModelProperty("场所标题(英文)")
+    @ApiModelProperty(value="场所标题(英文)", example="About garbage disposal")
     private String noticeEnglishTitle;
 
     private List<Images> noticeImage;
@@ -34,13 +34,13 @@ public class Notice {
     @ApiModelProperty(value="更新时间",readOnly=true)
     private Date updateTime;
 
-    @ApiModelProperty("详情")
+    @ApiModelProperty(value="详情", example="为了培养大家的环保意识，现物业主张各位业主/住户分类垃圾......")
     private String noticeDetails;
 
-    @ApiModelProperty("详情（繁体）")
+    @ApiModelProperty(value="详情（繁体）", example="為了培養大家的環保意識，現物業主張各位業主/住戶分類垃圾......")
     private String noticeTraditionalDetails;
 
-    @ApiModelProperty("详情（英文）")
+    @ApiModelProperty(value="详情（英文）", example="In order to cultivate everyone's awareness of environmental protection, the property now advocates that owners/households classify garbage...")
     private String noticeEnglishDetails;
 
     public String getNoticeDetails() {
