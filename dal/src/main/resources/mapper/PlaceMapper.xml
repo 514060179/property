@@ -7,7 +7,6 @@
     <result column="place_name" property="placeName" jdbcType="VARCHAR" />
     <result column="place_traditional_name" property="placeTraditionalName" jdbcType="VARCHAR" />
     <result column="place_english_name" property="placeEnglishName" jdbcType="VARCHAR" />
-    <result column="place_image" property="placeImage" jdbcType="VARCHAR" />
     <result column="place_status" property="placeStatus" jdbcType="INTEGER" />
     <result column="place_start_time" property="placeStartTime" jdbcType="TIME" />
     <result column="place_end_time" property="placeEndTime" jdbcType="TIME" />
@@ -20,16 +19,28 @@
     <result column="place_introduction" property="placeIntroduction" jdbcType="LONGVARCHAR" />
     <result column="place_traditional_introduction" property="placeTraditionalIntroduction" jdbcType="LONGVARCHAR" />
     <result column="place_english_introduction" property="placeEnglishIntroduction" jdbcType="LONGVARCHAR" />
+    
+    <collection property="images" ofType="com.simon.dal.model.Images" >
+    	<id column="image_id" property="imageId" jdbcType="VARCHAR"/>
+    	<result column="object_id" property="objectId" jdbcType="VARCHAR"/>
+    	<result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
+    	<result column="image_thumbnail" property="imageThumbnail" jdbcType="VARCHAR"/>
+    	<result column="image_type" property="imageType" jdbcType="INTEGER"/>
+    	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </collection>
   </resultMap>
   <sql id="Base_Column_List" >
-    place_id, community_id, place_name, place_traditional_name, place_english_name, place_image, place_status,
+  	image_id, image_url, image_thumbnail, object_id, image_type, img.create_time, img.update_time,
+    place_id, community_id, place_name, place_traditional_name, place_english_name, place_status,
     place_start_time, place_end_time, place_need_order, place_upper_limit, place_advance_order_day, 
-    place_farthest_order_day, create_time, update_time,    place_introduction, place_traditional_introduction, place_english_introduction
+    place_farthest_order_day, p.create_time, p.update_time, place_introduction, place_traditional_introduction, place_english_introduction
   </sql>
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
   	select 
   	<include refid="Base_Column_List" />
-  	from place
+  	from place p
+  	left join images img on p.place_id = img.object_id
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(place_name,'')) LIKE CONCAT('%', #{keyword}, '%')
@@ -42,7 +53,8 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from place
+    from place p
+  	left join images img on p.place_id = img.object_id
     where place_id = #{placeId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
@@ -52,14 +64,14 @@
   <insert id="insert" parameterType="com.simon.dal.model.Place" >
     insert into place (place_id, community_id, place_name, 
       place_traditional_name, place_english_name, 
-      place_image, place_status, place_start_time, place_end_time, 
+      place_status, place_start_time, place_end_time, 
       place_need_order, place_upper_limit, place_advance_order_day, 
       place_farthest_order_day, create_time, update_time, 
       place_introduction, place_traditional_introduction, 
       place_english_introduction)
     values (#{placeId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{placeName,jdbcType=VARCHAR}, 
       #{placeTraditionalName,jdbcType=VARCHAR}, #{placeEnglishName,jdbcType=VARCHAR}, 
-      #{placeImage,jdbcType=VARCHAR},#{placeStatus,jdbcType=INTEGER} #{placeStartTime,jdbcType=TIME}, #{placeEndTime,jdbcType=TIME}, 
+      #{placeStatus,jdbcType=INTEGER} #{placeStartTime,jdbcType=TIME}, #{placeEndTime,jdbcType=TIME}, 
       #{placeNeedOrder,jdbcType=INTEGER}, #{placeUpperLimit,jdbcType=INTEGER}, #{placeAdvanceOrderDay,jdbcType=INTEGER}, 
       #{placeFarthestOrderDay,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{placeIntroduction,jdbcType=LONGVARCHAR}, #{placeTraditionalIntroduction,jdbcType=LONGVARCHAR}, 
@@ -82,9 +94,6 @@
       </if>
       <if test="placeEnglishName != null" >
         place_english_name,
-      </if>
-      <if test="placeImage != null" >
-        place_image,
       </if>
       <if test="placeStatus != null" >
       	place_status,
@@ -139,9 +148,6 @@
       <if test="placeEnglishName != null" >
         #{placeEnglishName,jdbcType=VARCHAR},
       </if>
-      <if test="placeImage != null" >
-        #{placeImage,jdbcType=VARCHAR},
-      </if>
       <if test="placeStatus != null" >
         #{placeStatus,jdbcType=INTEGER},
       </if>
@@ -195,9 +201,6 @@
       <if test="placeEnglishName != null" >
         place_english_name = #{placeEnglishName,jdbcType=VARCHAR},
       </if>
-      <if test="placeImage != null" >
-        place_image = #{placeImage,jdbcType=VARCHAR},
-      </if>
       <if test="placeStatus != null" >
         place_status = #{placeStatus,jdbcType=INTEGER},
       </if>
@@ -243,7 +246,6 @@
       place_name = #{placeName,jdbcType=VARCHAR},
       place_traditional_name = #{placeTraditionalName,jdbcType=VARCHAR},
       place_english_name = #{placeEnglishName,jdbcType=VARCHAR},
-      place_image = #{placeImage,jdbcType=VARCHAR},
       place_status = #{placeStatus,jdbcType=INTEGER},
       place_start_time = #{placeStartTime,jdbcType=TIME},
       place_end_time = #{placeEndTime,jdbcType=TIME},
@@ -264,7 +266,6 @@
       place_name = #{placeName,jdbcType=VARCHAR},
       place_traditional_name = #{placeTraditionalName,jdbcType=VARCHAR},
       place_english_name = #{placeEnglishName,jdbcType=VARCHAR},
-      place_image = #{placeImage,jdbcType=VARCHAR},
       place_status = #{placeStatus,jdbcType=INTEGER},
       place_start_time = #{placeStartTime,jdbcType=TIME},
       place_end_time = #{placeEndTime,jdbcType=TIME},
