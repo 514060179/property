@@ -19,6 +19,9 @@ public interface Code {
     //密码错误
     int wrongPassword = 103;
 
+    //密码错误
+    int missingParameter = 104;
+
     //数据库key重复
     int duplicate=201;
 

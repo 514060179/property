@@ -26,17 +26,17 @@ public class GlobalExceptionHandler {
     private static Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
-    public String paramExceptionHandler(HttpServletRequest req, MissingServletRequestParameterException e) {
+    public ReturnMsg paramExceptionHandler(HttpServletRequest req, MissingServletRequestParameterException e) {
         e.printStackTrace();
         logger.error(">>>> system error： ", e);
-        return "";
+        return ReturnMsg.fail(Code.missingParameter,"缺少参数:"+e.getMessage());
     }
 
     @ExceptionHandler(value = AuthenticationException.class)
-    public String authenticationExceptionHandler(AuthenticationException e) {
+    public ReturnMsg authenticationExceptionHandler(AuthenticationException e) {
         e.printStackTrace();
         logger.error(">>>> system error： ", e);
-        return e.getMessage();
+        return ReturnMsg.fail(Code.loginfail,"登录验证不通过");
     }
 
     @ExceptionHandler(value = DataIntegrityViolationException.class)

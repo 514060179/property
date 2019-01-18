@@ -132,7 +132,7 @@ public class JPushUtil {
                                 .newBuilder()
                                 .setAlert(msg)
                                 .addPlatformNotification(
-                                        IosNotification.newBuilder()
+                                        IosNotification.newBuilder().setSound("default")
                                                 .addExtras(map).build())
                                 .addPlatformNotification(
                                         AndroidNotification.newBuilder()
