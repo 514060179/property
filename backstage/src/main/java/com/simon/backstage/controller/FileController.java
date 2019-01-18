@@ -31,7 +31,7 @@ import java.util.Map;
  * @date 2018/12/25 9:17
  */
 @Controller
-@RequestMapping("/back/file")
+@RequestMapping("/file")
 @Api(value = "FileController", description = "文件管理")
 public class FileController {
 
@@ -95,7 +95,7 @@ public class FileController {
                 thumbnailSb.append(",");
             }
         }
-        imagesUrl.setThumbnailUrl(thumbnailSb.toString());
+        imagesUrl.setThumbnailUrl(thumbnailSb.toString().replaceAll(resourceConfig.getRootPath(),""));
         return ReturnMsg.success(imagesUrl);
     }
 
