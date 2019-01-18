@@ -1,0 +1,16 @@
+CREATE TABLE `bms`.`charge_item`(
+  `item_id` VARCHAR(50) NOT NULL COMMENT 'id',
+  `item_no` VARCHAR(50) NOT NULL COMMENT '项目编号',
+  `item_name` VARCHAR(100) NOT NULL COMMENT '项目名字',
+  `billing_mode` INT NOT NULL DEFAULT 0 COMMENT '收费模式0周期性1临时性',
+  `alculation_method` INT NOT NULL DEFAULT 0 COMMENT '计算方式0定额1公式2抄表',
+  `unit_price` DECIMAL(12,2) NOT NULL COMMENT '计算单价',
+  `late_fee` INT COMMENT '滞纳金率(单位百分之一)',
+  `late_date` INT COMMENT '滞纳开始天数',
+  `formula` VARCHAR(200) COMMENT '计算公式',
+  `describe` VARCHAR(200) COMMENT '描述',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`item_id`),
+  UNIQUE INDEX `UNIPUE_ITEM_NO` (`item_no`)
+) COMMENT '收费项目' ENGINE=INNODB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
