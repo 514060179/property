@@ -14,4 +14,6 @@ public interface NoticeService {
 	int upd(Notice notice);
 	
 	List<Notice> list(BaseClaims baseClaims);
+	
+	Notice findOne(String noticeId);
 }

@@ -1,5 +1,7 @@
 package com.simon.backstage.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.simon.backstage.domain.model.UserUnit;
 
 public interface UserUnitMapper {
@@ -14,4 +16,6 @@ public interface UserUnitMapper {
     int updateByPrimaryKeySelective(UserUnit record);
 
     int updateByPrimaryKey(UserUnit record);
+
+	int deleteByUser(@Param("unitId") String unitId,@Param("userId") String userId);
 }

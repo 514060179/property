@@ -2,6 +2,7 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Unit;
+import com.simon.backstage.domain.model.UserUnit;
 import com.simon.dal.vo.BaseClaims;
 
 public interface UnitService {
@@ -41,4 +42,19 @@ public interface UnitService {
      * @return
      */
     PageInfo<Unit> list(BaseClaims baseClaims);
+    
+    /**
+     * 房间住户添加
+     * @param userUnit
+     * @return
+     */
+    UserUnit addUser(UserUnit userUnit);
+
+    /**
+     * 房间住户删除
+     * @param unitId
+     * @param userId
+     * @return
+     */
+	int delUser(String unitId, String userId);
 }

@@ -2,6 +2,7 @@ package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Unit;
+import com.simon.backstage.domain.model.UserUnit;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.UnitService;
 import com.simon.backstage.util.ClaimsUtil;
@@ -60,4 +61,17 @@ public class UnitController {
         return ReturnMsg.success(unitService.list(baseClaims));
     }
 
+    @PostMapping("addUser")
+    @ApiOperation("房间住户添加")
+    public ReturnMsg<UserUnit> addUser(@RequestBody UserUnit userUnit){
+    	logger.info("房间住户添加userUnit={}", JSONUtil.objectToJson(userUnit));
+    	return ReturnMsg.success(unitService.addUser(userUnit));
+    }
+    
+    @GetMapping("delUser")
+    @ApiOperation("房间住户删除")
+    public ReturnMsg delUser(@RequestParam String userId, @RequestParam String unitId){
+    	logger.info("房间住户删除unitId={}", JSONUtil.objectToJson(unitId));
+    	return ReturnMsg.success(unitService.delUser(unitId, userId));
+    }
 }

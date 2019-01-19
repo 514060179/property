@@ -65,4 +65,10 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<Notice> list(BaseClaims baseClaims) {
 		return noticeMapper.list(baseClaims);
 	}
+
+	@Override
+	public Notice findOne(String noticeId) {
+		// TODO Auto-generated method stub
+		return noticeMapper.selectByPrimaryKey(noticeId);
+	}
 }

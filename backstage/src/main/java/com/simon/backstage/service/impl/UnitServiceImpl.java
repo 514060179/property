@@ -3,7 +3,9 @@ package com.simon.backstage.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.UnitMapper;
+import com.simon.backstage.dao.UserUnitMapper;
 import com.simon.backstage.domain.model.Unit;
+import com.simon.backstage.domain.model.UserUnit;
 import com.simon.backstage.service.UnitService;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseClaims;
@@ -15,6 +17,9 @@ public class UnitServiceImpl implements UnitService {
 
     @Autowired
     private UnitMapper unitMapper;
+    @Autowired
+    private UserUnitMapper userUnitMapper;
+    
     @Override
     public Unit add(Unit unit) {
         unit.setUnitId(UUIDUtil.uidString());
@@ -42,4 +47,20 @@ public class UnitServiceImpl implements UnitService {
         PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
         return new PageInfo<>(unitMapper.selectByCondition(baseClaims));
     }
+    
+
+	@Override
+	public UserUnit addUser(UserUnit userUnit) {
+		int result = userUnitMapper.insertSelective(userUnit);
+		if(result > 0){
+			return userUnit;
+		}
+		return null;
+	}
+
+	@Override
+	public int delUser(String unitId, String userId) {
+		// TODO Auto-generated method stub
+		return userUnitMapper.deleteByUser(unitId, userId);
+	}
 }
