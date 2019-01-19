@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.backstage.dao.UnitChargeItemMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.UnitChargeItem" >
+    <id column="unit_item_id" property="unitItemId" jdbcType="VARCHAR" />
+    <result column="item_id" property="itemId" jdbcType="VARCHAR" />
+    <result column="unit_id" property="unitId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    unit_item_id, item_id, unit_id, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from unit_charge_item
+    where unit_item_id = #{unitItemId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from unit_charge_item
+    where unit_item_id = #{unitItemId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.simon.backstage.domain.model.UnitChargeItem" >
+    insert into unit_charge_item (unit_item_id, item_id, unit_id, 
+      create_time, update_time)
+    values (#{unitItemId,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, #{unitId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simon.backstage.domain.model.UnitChargeItem" >
+    insert into unit_charge_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="unitItemId != null" >
+        unit_item_id,
+      </if>
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="unitId != null" >
+        unit_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="unitItemId != null" >
+        #{unitItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null" >
+        #{unitId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simon.backstage.domain.model.UnitChargeItem" >
+    update unit_charge_item
+    <set >
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null" >
+        unit_id = #{unitId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where unit_item_id = #{unitItemId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.UnitChargeItem" >
+    update unit_charge_item
+    set item_id = #{itemId,jdbcType=VARCHAR},
+      unit_id = #{unitId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where unit_item_id = #{unitItemId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -45,7 +45,7 @@ public class FileController {
     @PostMapping("upload")
     @ResponseBody
     @ApiImplicitParam(name = "file",value = "资源文件(字节码)",paramType = "payload")
-    public ReturnMsg<ImagesUrl> upload(HttpServletRequest request,@ApiParam(name = "type",value = "图片类型：1场所2公告3其他",defaultValue = "1")@RequestParam Integer type) throws IOException {
+    public ReturnMsg<ImagesUrl> upload(HttpServletRequest request,@ApiParam(name = "type",value = "图片类型：1场所2公告3广告4其他",defaultValue = "1")@RequestParam Integer type) throws IOException {
 
         List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
 
