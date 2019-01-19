@@ -1,4 +1,4 @@
-package com.simon.backstage.util;
+package com.simon.dal.util;
 
 import cn.jiguang.common.resp.DefaultResult;
 import cn.jpush.api.JPushClient;
@@ -14,7 +14,6 @@ import cn.jpush.api.push.model.notification.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -44,10 +43,10 @@ public class JPushUtil {
             logger.debug("给设备{}添加标签{}",registrationId,tag);
             DefaultResult defaultResult = jpushClient.updateDeviceTagAlias(registrationId,null,tagsToAdd,null);
             if (defaultResult.isResultOK()){
-                logger.debug("给设备添加标签response:"+JSONUtil.objectToJson(defaultResult));
+                logger.debug("给设备添加标签response:"+defaultResult);
                 return true;
             }
-            logger.debug("添加标签返回结果===>{}",JSONUtil.objectToJson(defaultResult));
+            logger.debug("添加标签返回结果===>{}",defaultResult);
         } catch (Exception e) {
             logger.error("添加标签异常", e);
             e.printStackTrace();
@@ -66,10 +65,10 @@ public class JPushUtil {
             logger.debug("给设备{}添加别名{}",registrationId,alias);
             DefaultResult defaultResult = jpushClient.updateDeviceTagAlias(registrationId,alias,null,null);
             if (defaultResult.isResultOK()){
-                logger.debug("给设备添加别名response:"+JSONUtil.objectToJson(defaultResult));
+                logger.debug("给设备添加别名response:"+defaultResult);
                 return true;
             }
-            logger.debug("添加别名返回结果===>{}",JSONUtil.objectToJson(defaultResult));
+            logger.debug("添加别名返回结果===>{}",defaultResult);
         } catch (Exception e) {
             logger.error("添加别名异常", e);
             e.printStackTrace();
@@ -78,22 +77,21 @@ public class JPushUtil {
         return false;
     }
     /**
-     *  给设备删除别名
+     *  给设备删除所有别名
      * @param registrationId 设备号(由客户端生成)
-     * @param alias 别名
      * @return
      */
-    public static boolean delDeviceTags(String registrationId, String alias) {
+    public static boolean delDeviceAlias(String registrationId) {
         try {
-            logger.debug("给设备{}删除别名{}",registrationId,alias);
+            logger.debug("给设备{}删除所有别名",registrationId);
             DefaultResult defaultResult = jpushClient.updateDeviceTagAlias(registrationId,true,false);
             if (defaultResult.isResultOK()){
-                logger.debug("给设备删除别名response:"+JSONUtil.objectToJson(defaultResult));
+                logger.debug("给设备删除所有别名response:"+defaultResult);
                 return true;
             }
-            logger.debug("删除别名返回结果===>{}",JSONUtil.objectToJson(defaultResult));
+            logger.debug("删除所有别名返回结果===>{}",defaultResult);
         } catch (Exception e) {
-            logger.error("删除别名异常", e);
+            logger.error("删除所有别名异常", e);
             e.printStackTrace();
             return false;
         }
@@ -109,10 +107,10 @@ public class JPushUtil {
         try {
             PushResult result = jpushClient.sendPush(payload);
             if (result.isResultOK()){
-                logger.debug("推送response:"+JSONUtil.objectToJson(result));
+                logger.debug("推送response:"+result);
                 return true;
             }
-            logger.error("推送失败response:"+JSONUtil.objectToJson(result));
+            logger.error("推送失败response:"+result);
         } catch (Exception e) {
             logger.error("推送异常!", e);
             e.printStackTrace();
