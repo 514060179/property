@@ -1,0 +1,3 @@
+ALTER TABLE `bms`.`notice`
+  ADD COLUMN `building_id` VARCHAR(50) NULL COMMENT '楼宇id' AFTER `community_id`,
+  DROP FOREIGN KEY `FK_NOTICE_REFERENCE_COMMUNIT`;

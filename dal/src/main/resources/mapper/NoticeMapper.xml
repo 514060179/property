@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.simon.dal.model.Notice" >
     <id column="notice_id" property="noticeId" jdbcType="VARCHAR" />
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="building_id" property="buildingId" jdbcType="VARCHAR" />
     <result column="notice_type" property="noticeType" jdbcType="CHAR" />
     <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
     <result column="notice_traditional_title" property="noticeTraditionalTitle" jdbcType="VARCHAR" />
@@ -27,7 +28,7 @@
 
   <sql id="Base_Column_List" >
   	image_id, image_url, image_thumbnail, object_id, image_type, img.create_time, img.update_time,
-    notice_id, community_id, notice_type, notice_title, notice_traditional_title, notice_english_title, 
+    notice_id, community_id,building_id, notice_type, notice_title, notice_traditional_title, notice_english_title,
     notice_image, n.create_time, n.update_time, notice_details, notice_traditional_details, notice_english_details
   </sql>
 
@@ -44,6 +45,9 @@
     	<if test="communityId != null">
     		AND community_id = #{communityId,jdbcType=VARCHAR}
     	</if>
+    	<if test="buildingId != null">
+    		AND building_id = #{buildingId,jdbcType=VARCHAR}
+    	</if>
     </where>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -58,12 +62,12 @@
     where notice_id = #{noticeId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.dal.model.Notice" >
-    insert into notice (notice_id, community_id, notice_type, 
+    insert into notice (notice_id, community_id,building_id, notice_type,
       notice_title, notice_traditional_title, notice_english_title, 
       create_time, update_time, 
       notice_details, notice_traditional_details, 
       notice_english_details)
-    values (#{noticeId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{noticeType,jdbcType=CHAR}, 
+    values (#{noticeId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR},#{buildingId,jdbcType=VARCHAR}, #{noticeType,jdbcType=CHAR},
       #{noticeTitle,jdbcType=VARCHAR}, #{noticeTraditionalTitle,jdbcType=VARCHAR}, 
       #{noticeEnglishTitle,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{noticeDetails,jdbcType=LONGVARCHAR}, #{noticeTraditionalDetails,jdbcType=LONGVARCHAR}, 
@@ -77,6 +81,9 @@
       </if>
       <if test="communityId != null" >
         community_id,
+      </if>
+      <if test="buildingId != null" >
+        building_id,
       </if>
       <if test="noticeType != null" >
         notice_type,
@@ -113,6 +120,9 @@
       <if test="communityId != null" >
         #{communityId,jdbcType=VARCHAR},
       </if>
+      <if test="buildingId != null" >
+        #{buildingId,jdbcType=VARCHAR},
+      </if>
       <if test="noticeType != null" >
         #{noticeType,jdbcType=CHAR},
       </if>
@@ -148,6 +158,9 @@
       <if test="communityId != null" >
         community_id = #{communityId,jdbcType=VARCHAR},
       </if>
+      <if test="buildingId != null" >
+        building_id = #{buildingId,jdbcType=VARCHAR},
+      </if>
       <if test="noticeType != null" >
         notice_type = #{noticeType,jdbcType=CHAR},
       </if>
@@ -180,7 +193,7 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simon.dal.model.Notice" >
     update notice
-    set community_id = #{communityId,jdbcType=VARCHAR},
+    set community_id = #{communityId,jdbcType=VARCHAR},building_id = #{buildingId,jdbcType=VARCHAR},
       notice_type = #{noticeType,jdbcType=CHAR},
       notice_title = #{noticeTitle,jdbcType=VARCHAR},
       notice_traditional_title = #{noticeTraditionalTitle,jdbcType=VARCHAR},
@@ -194,7 +207,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.simon.dal.model.Notice" >
     update notice
-    set community_id = #{communityId,jdbcType=VARCHAR},
+    set community_id = #{communityId,jdbcType=VARCHAR},building_id = #{buildingId,jdbcType=VARCHAR},
       notice_type = #{noticeType,jdbcType=CHAR},
       notice_title = #{noticeTitle,jdbcType=VARCHAR},
       notice_traditional_title = #{noticeTraditionalTitle,jdbcType=VARCHAR},

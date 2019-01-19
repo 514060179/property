@@ -14,6 +14,9 @@ public class Notice {
     @ApiModelProperty(value="社区id",readOnly=true)
     private String communityId;
 
+    @ApiModelProperty(value="建筑id",readOnly=true)
+    private String buildingId;
+
     @ApiModelProperty(value="通知类型", example="1")
     private String noticeType;
 
@@ -81,6 +84,14 @@ public class Notice {
 
     public void setCommunityId(String communityId) {
         this.communityId = communityId == null ? null : communityId.trim();
+    }
+
+    public String getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId;
     }
 
     public String getNoticeType() {
