@@ -8,4 +8,4 @@ CREATE TABLE `bms`.`advance_record`(
   `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`advance_record_id`),
   FOREIGN KEY (`advance_id`) REFERENCES `bms`.`advance_money`(`advance_id`)
-) ENGINE=INNODB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+)COMMENT '预收账户流水记录' ENGINE=INNODB CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
