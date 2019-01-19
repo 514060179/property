@@ -12,6 +12,8 @@ public class UserUnit {
 
     private String unitId;
 
+    private Boolean owner;
+
     private Date createTime;
 
     private Date updateTime;
@@ -38,6 +40,14 @@ public class UserUnit {
 
     public void setUnitId(String unitId) {
         this.unitId = unitId == null ? null : unitId.trim();
+    }
+
+    public Boolean getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Boolean owner) {
+        this.owner = owner;
     }
 
     public Date getCreateTime() {
