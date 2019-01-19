@@ -78,7 +78,7 @@ public class JwtFilter extends GenericFilterBean {
                 	logger.warn("未登录/该账号已被其他设备登陆");
                 	return;
                 }
-                redis.set(userId, token, 600);
+                redis.set(userId, token, 60*60*24);
                 request.setAttribute("claims", claims);
                 filterChain.doFilter(servletRequest, servletResponse);
             } catch (final Exception e) {
