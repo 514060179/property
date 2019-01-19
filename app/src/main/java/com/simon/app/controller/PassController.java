@@ -71,15 +71,15 @@ public class PassController {
 
     private void setPushInfo(String registrationId,String tag,String alias){
     	//删除该设备所有绑定信息的别名
-		if (!JPushUtil.delDeviceAlias(alias)){
+		if (!JPushUtil.delDeviceAlias(registrationId)){
 			logger.error("给设备{}删除所有别名{}失败",registrationId,alias);
-			return;
+//			return;
 		}
 		logger.info("{}设置推送标签{}/推送别名{}",registrationId,tag,alias);
-		if (JPushUtil.addDeviceAlias(registrationId,alias)){
+		if (!JPushUtil.addDeviceAlias(registrationId,alias)){
 			logger.error("{}设置推送别名{}失败",registrationId,alias);
 		}
-		if (JPushUtil.addDeviceTag(registrationId,tag)){
+		if (!JPushUtil.addDeviceTag(registrationId,tag)){
 			logger.error("{}设置推送标签{}失败",registrationId,tag);
 		}
 	}
