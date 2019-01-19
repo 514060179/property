@@ -40,14 +40,4 @@ public class VisitorController {
         logger.info("访问者列表baseQueryParam={}", JSONUtil.objectToJson(baseClaims));
         return ReturnMsg.success(visitorService.list(baseClaims));
     }
-    
-    @PostMapping("add")
-	@ApiOperation("访问者登记")
-	public ReturnMsg<Visitor> add(@RequestBody Visitor visitor,
-			HttpServletRequest request){
-    	String communityId = ClaimsUtil.getCommunityId(request);
-    	visitor.setCommunityId(communityId);
-    	logger.info("访问者列表visitor={}", JSONUtil.objectToJson(visitor));
-		return ReturnMsg.success(visitorService.add(visitor));
-	}
 }
