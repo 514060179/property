@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.backstage.dao.ChargeItemMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.ChargeItem" >
+    <id column="item_id" property="itemId" jdbcType="VARCHAR" />
+    <result column="item_no" property="itemNo" jdbcType="VARCHAR" />
+    <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+    <result column="billing_mode" property="billingMode" jdbcType="INTEGER" />
+    <result column="alculation_method" property="alculationMethod" jdbcType="INTEGER" />
+    <result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+    <result column="late_fee" property="lateFee" jdbcType="INTEGER" />
+    <result column="late_date" property="lateDate" jdbcType="INTEGER" />
+    <result column="formula" property="formula" jdbcType="VARCHAR" />
+    <result column="describe" property="describe" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    item_id, item_no, item_name, billing_mode, alculation_method, unit_price, late_fee, 
+    late_date, formula, describe, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from charge_item
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from charge_item
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.simon.backstage.domain.model.ChargeItem" >
+    insert into charge_item (item_id, item_no, item_name, 
+      billing_mode, alculation_method, unit_price, 
+      late_fee, late_date, formula, 
+      describe, create_time, update_time
+      )
+    values (#{itemId,jdbcType=VARCHAR}, #{itemNo,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, 
+      #{billingMode,jdbcType=INTEGER}, #{alculationMethod,jdbcType=INTEGER}, #{unitPrice,jdbcType=DECIMAL}, 
+      #{lateFee,jdbcType=INTEGER}, #{lateDate,jdbcType=INTEGER}, #{formula,jdbcType=VARCHAR}, 
+      #{describe,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.simon.backstage.domain.model.ChargeItem" >
+    insert into charge_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="itemNo != null" >
+        item_no,
+      </if>
+      <if test="itemName != null" >
+        item_name,
+      </if>
+      <if test="billingMode != null" >
+        billing_mode,
+      </if>
+      <if test="alculationMethod != null" >
+        alculation_method,
+      </if>
+      <if test="unitPrice != null" >
+        unit_price,
+      </if>
+      <if test="lateFee != null" >
+        late_fee,
+      </if>
+      <if test="lateDate != null" >
+        late_date,
+      </if>
+      <if test="formula != null" >
+        formula,
+      </if>
+      <if test="describe != null" >
+        describe,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemNo != null" >
+        #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="billingMode != null" >
+        #{billingMode,jdbcType=INTEGER},
+      </if>
+      <if test="alculationMethod != null" >
+        #{alculationMethod,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null" >
+        #{unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="lateFee != null" >
+        #{lateFee,jdbcType=INTEGER},
+      </if>
+      <if test="lateDate != null" >
+        #{lateDate,jdbcType=INTEGER},
+      </if>
+      <if test="formula != null" >
+        #{formula,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null" >
+        #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simon.backstage.domain.model.ChargeItem" >
+    update charge_item
+    <set >
+      <if test="itemNo != null" >
+        item_no = #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="billingMode != null" >
+        billing_mode = #{billingMode,jdbcType=INTEGER},
+      </if>
+      <if test="alculationMethod != null" >
+        alculation_method = #{alculationMethod,jdbcType=INTEGER},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="lateFee != null" >
+        late_fee = #{lateFee,jdbcType=INTEGER},
+      </if>
+      <if test="lateDate != null" >
+        late_date = #{lateDate,jdbcType=INTEGER},
+      </if>
+      <if test="formula != null" >
+        formula = #{formula,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null" >
+        describe = #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.ChargeItem" >
+    update charge_item
+    set item_no = #{itemNo,jdbcType=VARCHAR},
+      item_name = #{itemName,jdbcType=VARCHAR},
+      billing_mode = #{billingMode,jdbcType=INTEGER},
+      alculation_method = #{alculationMethod,jdbcType=INTEGER},
+      unit_price = #{unitPrice,jdbcType=DECIMAL},
+      late_fee = #{lateFee,jdbcType=INTEGER},
+      late_date = #{lateDate,jdbcType=INTEGER},
+      formula = #{formula,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where item_id = #{itemId,jdbcType=VARCHAR}
+  </update>
+</mapper>

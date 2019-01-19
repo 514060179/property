@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.backstage.dao.ChargeItemRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.ChargeItemRecord" >
+    <id column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="unit_item_id" property="unitItemId" jdbcType="VARCHAR" />
+    <result column="record_date" property="recordDate" jdbcType="VARCHAR" />
+    <result column="record_status" property="recordStatus" jdbcType="INTEGER" />
+    <result column="record_time" property="recordTime" jdbcType="TIMESTAMP" />
+    <result column="record_actual_amount" property="recordActualAmount" jdbcType="DECIMAL" />
+    <result column="record_amount" property="recordAmount" jdbcType="DECIMAL" />
+    <result column="record_late_fee" property="recordLateFee" jdbcType="DECIMAL" />
+    <result column="record_late_date" property="recordLateDate" jdbcType="INTEGER" />
+    <result column="record_remark" property="recordRemark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    record_id, user_id, unit_item_id, record_date, record_status, record_time, record_actual_amount, 
+    record_amount, record_late_fee, record_late_date, record_remark, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from charge_item_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from charge_item_record
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.simon.backstage.domain.model.ChargeItemRecord" >
+    insert into charge_item_record (record_id, user_id, unit_item_id, 
+      record_date, record_status, record_time, 
+      record_actual_amount, record_amount, record_late_fee, 
+      record_late_date, record_remark, create_time, 
+      update_time)
+    values (#{recordId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{unitItemId,jdbcType=VARCHAR}, 
+      #{recordDate,jdbcType=VARCHAR}, #{recordStatus,jdbcType=INTEGER}, #{recordTime,jdbcType=TIMESTAMP}, 
+      #{recordActualAmount,jdbcType=DECIMAL}, #{recordAmount,jdbcType=DECIMAL}, #{recordLateFee,jdbcType=DECIMAL}, 
+      #{recordLateDate,jdbcType=INTEGER}, #{recordRemark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.simon.backstage.domain.model.ChargeItemRecord" >
+    insert into charge_item_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        record_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="unitItemId != null" >
+        unit_item_id,
+      </if>
+      <if test="recordDate != null" >
+        record_date,
+      </if>
+      <if test="recordStatus != null" >
+        record_status,
+      </if>
+      <if test="recordTime != null" >
+        record_time,
+      </if>
+      <if test="recordActualAmount != null" >
+        record_actual_amount,
+      </if>
+      <if test="recordAmount != null" >
+        record_amount,
+      </if>
+      <if test="recordLateFee != null" >
+        record_late_fee,
+      </if>
+      <if test="recordLateDate != null" >
+        record_late_date,
+      </if>
+      <if test="recordRemark != null" >
+        record_remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        #{recordId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitItemId != null" >
+        #{unitItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="recordDate != null" >
+        #{recordDate,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=INTEGER},
+      </if>
+      <if test="recordTime != null" >
+        #{recordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordActualAmount != null" >
+        #{recordActualAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="recordAmount != null" >
+        #{recordAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="recordLateFee != null" >
+        #{recordLateFee,jdbcType=DECIMAL},
+      </if>
+      <if test="recordLateDate != null" >
+        #{recordLateDate,jdbcType=INTEGER},
+      </if>
+      <if test="recordRemark != null" >
+        #{recordRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simon.backstage.domain.model.ChargeItemRecord" >
+    update charge_item_record
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitItemId != null" >
+        unit_item_id = #{unitItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="recordDate != null" >
+        record_date = #{recordDate,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        record_status = #{recordStatus,jdbcType=INTEGER},
+      </if>
+      <if test="recordTime != null" >
+        record_time = #{recordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordActualAmount != null" >
+        record_actual_amount = #{recordActualAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="recordAmount != null" >
+        record_amount = #{recordAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="recordLateFee != null" >
+        record_late_fee = #{recordLateFee,jdbcType=DECIMAL},
+      </if>
+      <if test="recordLateDate != null" >
+        record_late_date = #{recordLateDate,jdbcType=INTEGER},
+      </if>
+      <if test="recordRemark != null" >
+        record_remark = #{recordRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.ChargeItemRecord" >
+    update charge_item_record
+    set user_id = #{userId,jdbcType=VARCHAR},
+      unit_item_id = #{unitItemId,jdbcType=VARCHAR},
+      record_date = #{recordDate,jdbcType=VARCHAR},
+      record_status = #{recordStatus,jdbcType=INTEGER},
+      record_time = #{recordTime,jdbcType=TIMESTAMP},
+      record_actual_amount = #{recordActualAmount,jdbcType=DECIMAL},
+      record_amount = #{recordAmount,jdbcType=DECIMAL},
+      record_late_fee = #{recordLateFee,jdbcType=DECIMAL},
+      record_late_date = #{recordLateDate,jdbcType=INTEGER},
+      record_remark = #{recordRemark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where record_id = #{recordId,jdbcType=VARCHAR}
+  </update>
+</mapper>
