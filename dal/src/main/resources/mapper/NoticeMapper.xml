@@ -45,9 +45,6 @@
     	<if test="communityId != null">
     		AND community_id = #{communityId,jdbcType=VARCHAR}
     	</if>
-    	<if test="buildingId != null">
-    		AND building_id = #{buildingId,jdbcType=VARCHAR}
-    	</if>
     </where>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
