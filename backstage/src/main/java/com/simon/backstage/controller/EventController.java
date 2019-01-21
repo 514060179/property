@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,8 +34,7 @@ public class EventController {
     private EventService eventService;
     @PostMapping("add")
     @ApiOperation("添加事件")
-    public ReturnMsg<Event> add(@RequestBody Event event, HttpServletRequest request){
-    	event.setCommunityId(ClaimsUtil.getCommunityId(request));
+    public ReturnMsg<Event> add(@RequestBody Event event){
         logger.info("添加事件event={}", JSONUtil.objectToJson(event));
         return ReturnMsg.success(eventService.add(event));
     }
@@ -57,7 +57,9 @@ public class EventController {
     @ApiOperation("事件列表")
     public ReturnMsg<PageInfo<Event>> list(BaseClaims baseClaims, HttpServletRequest request){
     	String communityId = ClaimsUtil.getCommunityId(request);
-		baseClaims.setCommunityId(communityId);
+		if(!StringUtils.isEmpty(communityId)){
+			baseClaims.setCommunityId(communityId);
+		}
         logger.info("事件列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
         return ReturnMsg.success(eventService.list(baseClaims));
     }

@@ -7,7 +7,7 @@ import com.simon.dal.dao.UserMapper;
 import com.simon.dal.model.User;
 import com.simon.dal.util.EncryUtil;
 import com.simon.dal.util.UUIDUtil;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo<User> list(BaseQueryParam baseQueryParam) {
-        PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
-        return new PageInfo<>(userMapper.selectByCondition(baseQueryParam));
+    public PageInfo<User> list(BaseClaims baseClaims) {
+        PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
+        return new PageInfo<>(userMapper.selectByCondition(baseClaims));
     }
 }

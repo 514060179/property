@@ -2,7 +2,7 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.dal.model.User;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 
 /**
  * 用户管理
@@ -41,8 +41,8 @@ public interface UserService {
 
     /**
      * 列表
-     * @param baseQueryParam
+     * @param baseClaims
      * @return
      */
-    PageInfo<User> list(BaseQueryParam baseQueryParam);
+    PageInfo<User> list(BaseClaims baseClaims);
 }

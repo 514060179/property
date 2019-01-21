@@ -1,7 +1,6 @@
 package com.simon.dal.dao;
 
-import com.simon.dal.vo.BaseQueryParam;
-import org.apache.ibatis.annotations.Param;
+import com.simon.dal.vo.BaseClaims;
 
 import com.simon.dal.model.User;
 
@@ -16,7 +15,7 @@ public interface UserMapper {
 
     User selectByPrimaryKey(String userId);
 
-    List<User> selectByCondition(BaseQueryParam baseQueryParam);
+    List<User> selectByCondition(BaseClaims baseClaims);
 
     int updateByPrimaryKeySelective(User record);
 

@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @ApiModel(value = "Place", description = "场所信息")
@@ -14,7 +16,8 @@ public class Place {
     @ApiModelProperty(value="id",readOnly=true)
     private String placeId;
 
-    @ApiModelProperty(value = "社区id",readOnly=true)
+    @ApiModelProperty(value = "社区id",example="c123456")
+    @NotEmpty(message="社区id不能为空")
     private String communityId;
 
     @ApiModelProperty(value = "场所名字(简体)",example = "游泳池")

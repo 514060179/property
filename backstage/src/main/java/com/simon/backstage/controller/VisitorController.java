@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -36,7 +37,9 @@ public class VisitorController {
     @ApiOperation("访问者列表")
     public ReturnMsg<PageInfo<Visitor>> list(BaseClaims baseClaims, HttpServletRequest request){
     	String communityId = ClaimsUtil.getCommunityId(request);
-    	baseClaims.setCommunityId(communityId);
+		if(!StringUtils.isEmpty(communityId)){
+			baseClaims.setCommunityId(communityId);
+		}
         logger.info("访问者列表baseQueryParam={}", JSONUtil.objectToJson(baseClaims));
         return ReturnMsg.success(visitorService.list(baseClaims));
     }

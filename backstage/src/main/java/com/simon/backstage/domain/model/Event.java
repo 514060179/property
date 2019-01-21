@@ -5,12 +5,15 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotEmpty;
+
 @ApiModel(value = "Event", description = "事件")
 public class Event {
     @ApiModelProperty("id")
     private String eventId;
 
-    @ApiModelProperty(value = "社区id",readOnly=true)
+    @ApiModelProperty(value = "社区id",example = "c123456")
+    @NotEmpty(message = "社区id不能为空")
     private String communityId;
 
     @ApiModelProperty(value = "事件进度0开始1待定2完成",example = "0")

@@ -5,13 +5,16 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotEmpty;
+
 @ApiModel(value = "Asset", description = "资产信息")
 public class Asset {
 
     @ApiModelProperty("id")
     private String assetId;
 
-    @ApiModelProperty(value = "社区id",readOnly=true)
+    @ApiModelProperty(value = "社区id",example = "c123456")
+    @NotEmpty(message = "社区id不能为空")
     private String communityId;
 
     @ApiModelProperty(value = "资产类型：电器、公共设备",example = "电器")

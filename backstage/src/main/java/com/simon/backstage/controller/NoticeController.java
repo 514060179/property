@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,9 +36,7 @@ public class NoticeController {
 	
 	@PostMapping("add")
 	@ApiOperation("添加公告")
-	public ReturnMsg<Notice> add(@RequestBody Notice notice, HttpServletRequest request){
-		String communityId = ClaimsUtil.getCommunityId(request);
-		notice.setCommunityId(communityId);
+	public ReturnMsg<Notice> add(@RequestBody Notice notice){
 		logger.info("添加公告notice={}", JSONUtil.objectToJson(notice));
 		return ReturnMsg.success(noticeService.add(notice));
 	}
@@ -58,10 +57,22 @@ public class NoticeController {
 	
 	@GetMapping("list")
 	@ApiOperation("公告列表")
-	public ReturnMsg<PageInfo<Notice>> list(BaseClaims baseClaims, HttpServletRequest request){
+	public ReturnMsg<PageInfo<Notice>> list(BaseClaims baseClaims, String buildingId, HttpServletRequest request){
 		String communityId = ClaimsUtil.getCommunityId(request);
-		baseClaims.setCommunityId(communityId);
+		if(!StringUtils.isEmpty(communityId)){
+			baseClaims.setCommunityId(communityId);
+		}
+		if(!StringUtils.isEmpty(buildingId) && buildingId.trim()!=""){
+			baseClaims.setBuildingId(buildingId);
+		}
 		logger.info("公告列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
-		return ReturnMsg.success(noticeService.list(baseClaims));
+		return ReturnMsg.success(new PageInfo<>(noticeService.list(baseClaims)));
+	}
+	
+	@GetMapping("detail")
+	@ApiOperation("公告详情")
+	public ReturnMsg<Notice> detail(@RequestParam String noticeId){
+		logger.info("公告详情noticeId={}", JSONUtil.objectToJson(noticeId));
+		return ReturnMsg.success(noticeService.findOne(noticeId));
 	}
 }

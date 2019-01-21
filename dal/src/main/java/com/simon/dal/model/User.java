@@ -7,13 +7,16 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotEmpty;
+
 @ApiModel(value = "User", description = "用户")
 public class User {
 
     @ApiModelProperty(value="用户id", readOnly=true)
     private String userId;
 
-    @ApiModelProperty(value="社区id", readOnly=true)
+    @ApiModelProperty(value="社区id", example="c123456")
+    @NotEmpty(message="社区id不能为空")
     private String communityId;
 
     @ApiModelProperty(value = "名字",example = "西蒙")

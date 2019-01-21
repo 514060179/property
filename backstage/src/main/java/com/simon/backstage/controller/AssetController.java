@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,7 +34,6 @@ public class AssetController {
     @PostMapping("add")
     @ApiOperation("添加资源")
     public ReturnMsg<Asset> add(@RequestBody Asset asset, HttpServletRequest request){
-    	asset.setCommunityId(ClaimsUtil.getCommunityId(request));
         logger.info("添加资源asset={}", JSONUtil.objectToJson(asset));
         return ReturnMsg.success(assetService.add(asset));
     }
@@ -56,7 +56,9 @@ public class AssetController {
     @ApiOperation("资源列表")
     public ReturnMsg<PageInfo<Asset>> list(BaseClaims baseClaims, HttpServletRequest request){
         String communityId = ClaimsUtil.getCommunityId(request);
-        baseClaims.setCommunityId(communityId);
+		if(!StringUtils.isEmpty(communityId)){
+			baseClaims.setCommunityId(communityId);
+		}
         logger.info("资源列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
         return ReturnMsg.success(assetService.list(baseClaims));
     }

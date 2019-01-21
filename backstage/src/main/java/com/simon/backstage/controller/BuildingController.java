@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -31,8 +32,7 @@ public class BuildingController {
     private BuildingService buildingService;
     @PostMapping("add")
     @ApiOperation("添加建筑")
-    public ReturnMsg<Building> add(@RequestBody Building building, HttpServletRequest request){
-    	building.setCommunityId(ClaimsUtil.getCommunityId(request));
+    public ReturnMsg<Building> add(@RequestBody Building building){
         logger.info("添加建筑building={}", JSONUtil.objectToJson(building));
         return ReturnMsg.success(buildingService.add(building));
     }
@@ -52,7 +52,9 @@ public class BuildingController {
     @ApiOperation("建筑列表")
     public ReturnMsg<PageInfo<Building>> list(BaseClaims baseClaims, HttpServletRequest request){
     	String communityId = ClaimsUtil.getCommunityId(request);
-    	baseClaims.setCommunityId(communityId);
+		if(!StringUtils.isEmpty(communityId)){
+			baseClaims.setCommunityId(communityId);
+		}
         logger.info("建筑列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
         return ReturnMsg.success(buildingService.list(baseClaims));
     }

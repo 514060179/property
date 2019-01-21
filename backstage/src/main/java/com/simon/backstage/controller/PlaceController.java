@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,6 @@ public class PlaceController {
     @PostMapping("add")
     @ApiOperation("添加场所")
     public ReturnMsg<Place> add(@RequestBody @Validated Place place, HttpServletRequest request){
-    	place.setCommunityId(ClaimsUtil.getCommunityId(request));
         logger.info("添加场所place={}", JSONUtil.objectToJson(place));
         return ReturnMsg.success(placeService.add(place));
     }
@@ -53,7 +53,9 @@ public class PlaceController {
     @ApiOperation("场所列表")
     public ReturnMsg<PageInfo<Place>> list(BaseClaims baseClaims, HttpServletRequest request){
     	String communityId = ClaimsUtil.getCommunityId(request);
-        baseClaims.setCommunityId(communityId);
+		if(!StringUtils.isEmpty(communityId)){
+			baseClaims.setCommunityId(communityId);
+		}
         logger.info("场所列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
         return ReturnMsg.success(placeService.list(baseClaims));
     }

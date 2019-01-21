@@ -6,7 +6,7 @@ import com.simon.backstage.service.UserService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.User;
-import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.BaseClaims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -34,7 +35,6 @@ public class UserController {
     @PostMapping("add")
     @ApiOperation("添加住户")
     public ReturnMsg<User> add(@RequestBody User user, HttpServletRequest request){
-    	user.setCommunityId(ClaimsUtil.getCommunityId(request));
         logger.info("添加住户user={}", JSONUtil.objectToJson(user));
         return ReturnMsg.success(userService.add(user));
     }
@@ -55,8 +55,12 @@ public class UserController {
 
     @GetMapping("list")
     @ApiOperation("住户列表")
-    public ReturnMsg<PageInfo<User>> list(BaseQueryParam baseQueryParam){
-        logger.info("住户列表baseQueryParam={}", JSONUtil.objectToJson(baseQueryParam));
-        return ReturnMsg.success(userService.list(baseQueryParam));
+    public ReturnMsg<PageInfo<User>> list(BaseClaims baseClaims, HttpServletRequest request){
+    	String communityId = ClaimsUtil.getCommunityId(request);
+		if(!StringUtils.isEmpty(communityId)){
+			baseClaims.setCommunityId(communityId);
+		}
+        logger.info("住户列表baseQueryParam={}", JSONUtil.objectToJson(baseClaims));
+        return ReturnMsg.success(userService.list(baseClaims));
     }
 }

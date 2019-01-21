@@ -46,6 +46,9 @@
       <if test="communityId != null">
       	AND c.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
+      <if test="buildingId != null">
+      	AND b.building_id = #{buildingId, jdbcType=VARCHAR}
+      </if>
     </where>
   </select>
 
