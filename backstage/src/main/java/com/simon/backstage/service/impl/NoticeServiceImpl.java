@@ -1,20 +1,28 @@
 package com.simon.backstage.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.simon.backstage.service.NoticeService;
 import com.simon.dal.constant.Type;
+import com.simon.dal.dao.CommunityMapper;
 import com.simon.dal.dao.ImageMapper;
 import com.simon.dal.dao.NoticeMapper;
+import com.simon.dal.model.Community;
 import com.simon.dal.model.Images;
 import com.simon.dal.model.Notice;
+import com.simon.dal.util.JPushUtil;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseClaims;
+
+import cn.jpush.api.push.model.PushPayload;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {
@@ -24,6 +32,9 @@ public class NoticeServiceImpl implements NoticeService {
 	
 	@Autowired
 	private ImageMapper imageMapper;
+	
+	@Autowired
+	private CommunityMapper communityMapper;
 	
 	@Override
 	@Transactional
@@ -46,6 +57,18 @@ public class NoticeServiceImpl implements NoticeService {
 			notice.setNoticeImage(list);
 		}
 		if(noticeMapper.insertSelective(notice) > 0){
+			String target = "";
+			if(!StringUtils.isEmpty(notice.getCommunityId())){
+				target = notice.getCommunityId();
+			}else if(!StringUtils.isEmpty(notice.getBuildingId())){
+				target = notice.getBuildingId();
+			}else{
+				target = communityMapper.findId();
+			}
+			Map<String, String> map = new HashMap<>();
+			map.put("detail", notice.getNoticeDetails());
+			PushPayload pu = JPushUtil.buildPushObjectByAlias(notice.getNoticeTitle(), true, target, map, 1);
+			JPushUtil.push(pu);
 			return notice;
 		}
 		return null;

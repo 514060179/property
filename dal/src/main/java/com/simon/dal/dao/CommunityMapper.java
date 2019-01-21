@@ -21,4 +21,6 @@ public interface CommunityMapper {
     List<Community> list(BaseQueryParam baseQueryParam);
 
 	String findName(String communityId);
+	
+	String findId();
 }
