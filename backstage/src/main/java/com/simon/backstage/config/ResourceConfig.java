@@ -11,8 +11,12 @@ public class ResourceConfig {
 	//场所图片路径
 	@Value("${resource.imagePath.placePath}")
 	private String placePath;
+	//公告
 	@Value("${resource.imagePath.noticePath}")
 	private String noticePath;
+
+	@Value("${resource.imagePath.advImgPath}")
+	private String advPath;
 
 
 	public String getRootPath() {
@@ -37,5 +41,13 @@ public class ResourceConfig {
 
 	public void setNoticePath(String noticePath) {
 		this.noticePath = noticePath;
+	}
+
+	public String getAdvPath() {
+		return advPath;
+	}
+
+	public void setAdvPath(String advPath) {
+		this.advPath = advPath;
 	}
 }
