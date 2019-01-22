@@ -2,6 +2,11 @@ package com.simon.backstage.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.simon.backstage.domain.model.Building;
+import com.simon.backstage.service.BuildingService;
+import com.simon.backstage.service.CommunityService;
+import com.simon.dal.model.Community;
+import com.simon.dal.vo.BaseQueryParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +32,20 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/back/touch")
 @Api(value="1.TouchController", description="触摸屏管理")
 public class TouchController {
-	
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	@Autowired
     private VisitorService visitorService;
 	@Autowired
 	private NoticeService noticeService;
-	
-	@PostMapping("visitorAdd")
+	@Autowired
+	private CommunityService communityService;
+	@Autowired
+	private BuildingService buildingService;
+	@PostMapping("/back/touch/visitorAdd")
 	@ApiOperation("访问者登记")
 	public ReturnMsg<Visitor> visitorAdd(@RequestBody Visitor visitor,
 			HttpServletRequest request){
@@ -47,10 +54,10 @@ public class TouchController {
     	logger.info("访问者登记visitor={}", JSONUtil.objectToJson(visitor));
 		return ReturnMsg.success(visitorService.add(visitor));
 	}
-	
-	@GetMapping("noticeList")
+
+	@GetMapping("/back/touch/list")
 	@ApiOperation("公告列表")
-	public ReturnMsg<PageInfo<Notice>> list(BaseClaims baseClaims, String buildingId, HttpServletRequest request){
+	public ReturnMsg<PageInfo<Notice>> noticeList(BaseClaims baseClaims, String buildingId, HttpServletRequest request){
 		String communityId = ClaimsUtil.getCommunityId(request);
 		if(!StringUtils.isEmpty(communityId)){
 			baseClaims.setCommunityId(communityId);
@@ -61,11 +68,25 @@ public class TouchController {
 		logger.info("公告列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
 		return ReturnMsg.success(new PageInfo<>(noticeService.list(baseClaims)));
 	}
-	
-	@GetMapping("noticeDetail")
+	@GetMapping("/back/touch/noticeDetail")
 	@ApiOperation("公告详情")
 	public ReturnMsg<Notice> noticeDetail(@RequestParam String noticeId){
 		logger.info("公告详情noticeId={}", JSONUtil.objectToJson(noticeId));
 		return ReturnMsg.success(noticeService.findOne(noticeId));
+	}
+
+	@GetMapping("community/list")
+	@ApiOperation("社区列表")
+	public ReturnMsg<PageInfo<Community>> communityList(BaseQueryParam baseQueryParam){
+		logger.info("社区列表baseQueryParam={}",  JSONUtil.objectToJson(baseQueryParam));
+		return ReturnMsg.success(communityService.list(baseQueryParam));
+	}
+
+	@GetMapping("building/list")
+	@ApiOperation("建筑列表")
+	public ReturnMsg<PageInfo<Building>> buildingList(BaseClaims baseClaims, String communityId, HttpServletRequest request) {
+		logger.info("建筑列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
+		baseClaims.setCommunityId(communityId);
+		return ReturnMsg.success(buildingService.list(baseClaims));
 	}
 }
