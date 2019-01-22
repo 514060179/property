@@ -54,8 +54,12 @@ public class PassController {
     		if(!StringUtils.isEmpty(deviceType)&&deviceType.equals("1")){
     			time = null;//触摸屏：空则不会过期
     		}
+    		String communityId = "";
+    		if (result.getType()==0){//普通管理员
+				communityId = result.getCommunityId();
+			}
     		String token = JwtHelper.issueJwt(UUID.randomUUID().toString(), result.getManagerId(),
-    				result.getUsername(), result.getCommunityId(), deviceType, time, roles, null,
+    				result.getUsername(), communityId, deviceType, time, roles, null,
     				audience.getBase64Secret());
     		ManagerWithToken withToken = new ManagerWithToken();
     		withToken.setManager(result);

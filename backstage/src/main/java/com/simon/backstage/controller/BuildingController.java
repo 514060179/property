@@ -2,6 +2,7 @@ package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Building;
+import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.BuildingService;
 import com.simon.backstage.util.ClaimsUtil;
@@ -32,8 +33,15 @@ public class BuildingController {
     private BuildingService buildingService;
     @PostMapping("add")
     @ApiOperation("添加建筑")
-    public ReturnMsg<Building> add(@RequestBody Building building){
+    public ReturnMsg<Building> add(@RequestBody Building building, HttpServletRequest request){
         logger.info("添加建筑building={}", JSONUtil.objectToJson(building));
+        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+            if (StringUtils.isEmpty(building.getCommunityId())){
+                return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
+            }
+        }else{
+            building.setCommunityId(ClaimsUtil.getCommunityId(request));
+        }
         return ReturnMsg.success(buildingService.add(building));
     }
     @PostMapping("upd")

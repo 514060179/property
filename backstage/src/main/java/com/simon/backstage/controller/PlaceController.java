@@ -1,6 +1,7 @@
 package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.PlaceService;
 import com.simon.backstage.util.ClaimsUtil;
@@ -32,6 +33,13 @@ public class PlaceController {
     @ApiOperation("添加场所")
     public ReturnMsg<Place> add(@RequestBody @Validated Place place, HttpServletRequest request){
         logger.info("添加场所place={}", JSONUtil.objectToJson(place));
+        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+            if (StringUtils.isEmpty(place.getCommunityId())){
+                return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
+            }
+        }else{
+            place.setCommunityId(ClaimsUtil.getCommunityId(request));
+        }
         return ReturnMsg.success(placeService.add(place));
     }
 

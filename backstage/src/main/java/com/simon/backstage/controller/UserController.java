@@ -1,6 +1,7 @@
 package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.UserService;
 import com.simon.backstage.util.ClaimsUtil;
@@ -36,6 +37,13 @@ public class UserController {
     @ApiOperation("添加住户")
     public ReturnMsg<User> add(@RequestBody User user, HttpServletRequest request){
         logger.info("添加住户user={}", JSONUtil.objectToJson(user));
+        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+            if (StringUtils.isEmpty(user.getCommunityId())){
+                return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
+            }
+        }else{
+            user.setCommunityId(ClaimsUtil.getCommunityId(request));
+        }
         return ReturnMsg.success(userService.add(user));
     }
 

@@ -2,6 +2,7 @@ package com.simon.backstage.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.simon.backstage.domain.msg.Code;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,15 @@ public class NoticeController {
 	
 	@PostMapping("add")
 	@ApiOperation("添加公告")
-	public ReturnMsg<Notice> add(@RequestBody Notice notice){
+	public ReturnMsg<Notice> add(@RequestBody Notice notice, HttpServletRequest request){
 		logger.info("添加公告notice={}", JSONUtil.objectToJson(notice));
+		if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+			if (StringUtils.isEmpty(notice.getCommunityId())){
+				return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
+			}
+		}else{
+			notice.setCommunityId(ClaimsUtil.getCommunityId(request));
+		}
 		return ReturnMsg.success(noticeService.add(notice));
 	}
 	

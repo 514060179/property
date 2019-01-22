@@ -2,6 +2,7 @@ package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Event;
+import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.EventService;
 import com.simon.backstage.util.ClaimsUtil;
@@ -34,8 +35,15 @@ public class EventController {
     private EventService eventService;
     @PostMapping("add")
     @ApiOperation("添加事件")
-    public ReturnMsg<Event> add(@RequestBody Event event){
+    public ReturnMsg<Event> add(@RequestBody Event event, HttpServletRequest request){
         logger.info("添加事件event={}", JSONUtil.objectToJson(event));
+        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+            if (StringUtils.isEmpty(event.getCommunityId())){
+                return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
+            }
+        }else{
+            event.setCommunityId(ClaimsUtil.getCommunityId(request));
+        }
         return ReturnMsg.success(eventService.add(event));
     }
 
