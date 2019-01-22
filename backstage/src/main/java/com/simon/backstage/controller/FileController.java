@@ -3,11 +3,17 @@ package com.simon.backstage.controller;
 import com.simon.backstage.config.ResourceConfig;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
+import com.simon.backstage.domain.vo.MultipartFileParam;
+import com.simon.backstage.service.ChunkFileUpload;
 import com.simon.dal.util.ImageUtil;
 import com.simon.dal.vo.ImagesUrl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -19,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -31,7 +38,7 @@ import java.util.Map;
  * @date 2018/12/25 9:17
  */
 @Controller
-@RequestMapping("/file")
+@RequestMapping("/back/file")
 @Api(value = "FileController", description = "文件管理")
 public class FileController {
 
@@ -57,7 +64,9 @@ public class FileController {
         } else if (2 == type) {//公告
             relativePath = resourceConfig.getNoticePath();
             filePath += relativePath;
-        } else {
+        } else if(3 == type){ //广告
+            filePath += resourceConfig.getAdvPath();
+        }else {
             filePath += "/";
         }
         StringBuffer stringBuffer = new StringBuffer();
