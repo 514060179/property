@@ -70,6 +70,6 @@ public class JurisdictionInit implements ApplicationRunner {
             roleService.initRole();
         }
         if (jurisdictionList.size()!=0)
-            roleService.addJurisdiction(jurisdictionList);
+            roleService.addJurisdiction(jurisdictionList,roleId);
     }
 }
