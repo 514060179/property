@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.Visitor" >
     <id column="visitor_id" property="visitorId" jdbcType="VARCHAR" />
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="building_id" property="buildingId" jdbcType="VARCHAR" />
     <result column="visitor_name" property="visitorName" jdbcType="VARCHAR" />
     <result column="visitor_sex" property="visitorSex" jdbcType="INTEGER" />
     <result column="visitor_phone" property="visitorPhone" jdbcType="VARCHAR" />
@@ -12,7 +13,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    visitor_id, community_id, visitor_name, visitor_sex, visitor_phone, visitor_cause, 
+    visitor_id, community_id,building_id, visitor_name, visitor_sex, visitor_phone, visitor_cause,
     create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -39,10 +40,10 @@
     where visitor_id = #{visitorId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.Visitor" >
-    insert into visitor (visitor_id, community_id, visitor_name, 
+    insert into visitor (visitor_id, community_id,building_id, visitor_name,
       visitor_sex, visitor_phone, visitor_cause, 
       create_time, update_time)
-    values (#{visitorId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{visitorName,jdbcType=VARCHAR}, 
+    values (#{visitorId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{buildingId,jdbcType=VARCHAR}, #{visitorName,jdbcType=VARCHAR},
       #{visitorSex,jdbcType=INTEGER}, #{visitorPhone,jdbcType=VARCHAR}, #{visitorCause,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -54,6 +55,9 @@
       </if>
       <if test="communityId != null" >
         community_id,
+      </if>
+      <if test="buildingId != null" >
+        building_id,
       </if>
       <if test="visitorName != null" >
         visitor_name,
@@ -81,6 +85,9 @@
       <if test="communityId != null" >
         #{communityId,jdbcType=VARCHAR},
       </if>
+      <if test="buildingId != null" >
+        #{buildingId,jdbcType=VARCHAR},
+      </if>
       <if test="visitorName != null" >
         #{visitorName,jdbcType=VARCHAR},
       </if>
@@ -107,6 +114,9 @@
       <if test="communityId != null" >
         community_id = #{communityId,jdbcType=VARCHAR},
       </if>
+      <if test="buildingId != null" >
+        building_id = #{buildingId,jdbcType=VARCHAR},
+      </if>
       <if test="visitorName != null" >
         visitor_name = #{visitorName,jdbcType=VARCHAR},
       </if>
@@ -131,6 +141,7 @@
   <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.Visitor" >
     update visitor
     set community_id = #{communityId,jdbcType=VARCHAR},
+      building_id = #{buildingId,jdbcType=VARCHAR},
       visitor_name = #{visitorName,jdbcType=VARCHAR},
       visitor_sex = #{visitorSex,jdbcType=INTEGER},
       visitor_phone = #{visitorPhone,jdbcType=VARCHAR},

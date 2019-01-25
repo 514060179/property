@@ -96,7 +96,7 @@
 
                 paging.init({
                     openWait: true,
-					url: '/permit/list?v=' + new Date().getTime(), //地址
+					url: '/permit/permit/list?v=' + new Date().getTime(), //地址
 					elem: '#content', //内容容器
 					params: { //发送到服务端的参数
 					},
@@ -158,7 +158,7 @@
                                 var id = $(this).data('id');
                                 var parent = $(this).parent().parent();
                                 layer.confirm('确定删除记录'+id, function(index){
-                                    $.get('/permit/roleDel?roleId='+id,function (data) {
+                                    $.get('/permit/permit/roleDel?roleId='+id,function (data) {
                                         var d = JSON.parse(data);
                                         if (d.success){
                                             layerTips.msg('删除成功!');
@@ -211,7 +211,7 @@
 
                 function roleJnAdd(id,roleId,jnId) {
                     layerTips.confirm('确定添加', function(index){
-                        var url = "/permit/roleJnAdd?roleId="+roleId+"&jnId="+jnId;
+                        var url = "/permit/permit/roleJnAdd?roleId="+roleId+"&jnId="+jnId;
                         $.get(url,function (data) {
                             var d = JSON.parse(data);
                             if (d.success){
@@ -232,7 +232,7 @@
                 }
                 function roleJnDel(id,roleId,jnId) {
                     layerTips.confirm('确定删除记录'+id, function(index){
-                        $.get('/permit/roleJnDel?roleJnId='+id,function (data) {
+                        $.get('/permit/permit/roleJnDel?roleJnId='+id,function (data) {
                             var d = JSON.parse(data);
                             if (d.success){
                                 layerTips.msg('删除成功!');
@@ -252,7 +252,7 @@
 
                 function viewForm(id) {
                     //本表单通过ajax加载 --以模板的形式，当然你也可以直接写在页面上读取
-                    $.get('/permit/view.html?roleId=' + id, null, function(form) {
+                    $.get('/permit/permit/view.html?roleId=' + id, null, function(form) {
                         addBoxIndex = layer.open({
                             type: 1,
                             title: '权限详情',
@@ -287,7 +287,7 @@
                                         var jnId = $(this).data('jnid');
                                         var param = "'"+id+"','"+roleId+"','"+jnId+"'";
                                         layerTips.confirm('确定删除记录'+id, function(index){
-                                            $.get('/permit/roleJnDel?roleJnId='+id,function (data) {
+                                            $.get('/permit/permit/roleJnDel?roleJnId='+id,function (data) {
                                                 var d = JSON.parse(data);
                                                 if (d.success){
                                                     layerTips.msg('删除成功!');
@@ -312,7 +312,7 @@
                                         var self = this;
                                         var roleId = $(this).data('roleid');
                                         var jnId = $(this).data('jnid');
-                                        var url = "/permit/roleJnAdd?roleId="+roleId+"&jnId="+jnId;
+                                        var url = "/permit/permit/roleJnAdd?roleId="+roleId+"&jnId="+jnId;
                                         layerTips.confirm('确定添加', function(index){
                                             $.get(url,function (data) {
                                                 var d = JSON.parse(data);
@@ -348,7 +348,7 @@
                         roleId="";
                     }
                     //本表单通过ajax加载 --以模板的形式，当然你也可以直接写在页面上读取
-                    $.get('/permit/edit.html' + roleId, null, function(form) {
+                    $.get('/permit/permit/edit.html' + roleId, null, function(form) {
                         addBoxIndex = layer.open({
                             type: 1,
                             title: '添加角色',
@@ -382,7 +382,7 @@
                                     //这里可以写ajax方法提交表单
                                     $.ajax({
                                         type: "POST",
-                                        url: "/permit/add",
+                                        url: "/permit/permit/add",
                                         data: "params=" + JSON.stringify(data.field),
                                         success: function(msg){
                                             var data = JSON.parse(msg);

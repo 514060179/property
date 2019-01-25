@@ -26,6 +26,14 @@ public class ClaimsUtil {
         }
         return claims.get("community",String.class);
     }
+    //触摸板使用
+    public static String getBuildingId(HttpServletRequest request){
+        Claims claims = (Claims)request.getAttribute("claims");
+        if (Objects.isNull(claims)){
+            return null;
+        }
+        return claims.get("roles",String.class);
+    }
 
     public static String getUsername(HttpServletRequest request){
         Claims claims = (Claims)request.getAttribute("claims");

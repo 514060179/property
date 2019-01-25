@@ -2,6 +2,7 @@ package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Asset;
+import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.AssetService;
 import com.simon.backstage.util.ClaimsUtil;
@@ -35,6 +36,13 @@ public class AssetController {
     @ApiOperation("添加资源")
     public ReturnMsg<Asset> add(@RequestBody Asset asset, HttpServletRequest request){
         logger.info("添加资源asset={}", JSONUtil.objectToJson(asset));
+        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+            if (StringUtils.isEmpty(asset.getCommunityId())){
+                return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
+            }
+        }else{
+            asset.setCommunityId(ClaimsUtil.getCommunityId(request));
+        }
         return ReturnMsg.success(assetService.add(asset));
     }
 

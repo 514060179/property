@@ -1,27 +1,45 @@
 package com.simon.backstage.domain.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
+@ApiModel(value = "Advertisement", description = "广告")
 public class Advertisement {
+
+    @ApiModelProperty(value = "id",example = "1ewq23wqe1dvhjkjk2sdf31ewqe23eeq")
     private String advId;
 
-    private String comunityId;
+    @ApiModelProperty(value = "社区id",example = "05c63989a7344d10940410115aac6214")
+    private String communityId;
 
-    private String unitId;
+    @ApiModelProperty(value = "楼宇id",example = "8caf2c8574b640a69044e668526a9ae8")
+    private String buildingId;
 
+    @ApiModelProperty(value = "标题",example = "")
     private String title;
 
+    @ApiModelProperty(value = "广告类型0普通图片1视频",example = "0")
     private Integer type;
 
+    @ApiModelProperty(value = "资源utl",example = "/simon/test/image")
     private String url;
 
+    @ApiModelProperty(value = "播放时间（单位秒）",example = "10")
     private Integer residenceTime;
 
+    @ApiModelProperty(value = "描述",example = "这是普通广告")
     private String describe;
 
+    @ApiModelProperty(hidden = true)
     private Date createTime;
 
+    @ApiModelProperty(hidden = true)
     private Date updateTime;
+
+    @ApiModelProperty(value = "是否使用0否1是",example = "0")
+    private Boolean used;
 
     public String getAdvId() {
         return advId;
@@ -31,20 +49,20 @@ public class Advertisement {
         this.advId = advId == null ? null : advId.trim();
     }
 
-    public String getComunityId() {
-        return comunityId;
+    public String getCommunityId() {
+        return communityId;
     }
 
-    public void setComunityId(String comunityId) {
-        this.comunityId = comunityId == null ? null : comunityId.trim();
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId == null ? null : communityId.trim();
     }
 
-    public String getUnitId() {
-        return unitId;
+    public String getBuildingId() {
+        return buildingId;
     }
 
-    public void setUnitId(String unitId) {
-        this.unitId = unitId == null ? null : unitId.trim();
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId == null ? null : buildingId.trim();
     }
 
     public String getTitle() {
@@ -101,5 +119,13 @@ public class Advertisement {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Boolean getUsed() {
+        return used;
+    }
+
+    public void setUsed(Boolean used) {
+        this.used = used;
     }
 }

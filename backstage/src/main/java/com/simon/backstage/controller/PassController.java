@@ -41,30 +41,25 @@ public class PassController {
 	
 	@PostMapping("login")
 	@ApiOperation("用户登陆")
-	@ApiImplicitParam(name="deviceType", value="终端类型：触摸屏1，PC端可省略")
 	public ReturnMsg<ManagerWithToken> login(@RequestParam String username,
-			@RequestParam String password,String deviceType){
+			@RequestParam String password){
     	Manager manager = new Manager();
     	manager.setUsername(username);
     	manager.setPassword(EncryUtil.getMD5(password));
     	Manager result = managerService.findManager(manager);
     	if(result != null){
     		String roles = managerService.findManagerAndRole(result.getManagerId());
-    		Long time = (long) 24*60*60*1000;//PC端token有效期为1天
-    		if(!StringUtils.isEmpty(deviceType)&&deviceType.equals("1")){
-    			time = null;//触摸屏：空则不会过期
-    		}
     		String communityId = "";
     		if (result.getType()==0){//普通管理员
 				communityId = result.getCommunityId();
 			}
     		String token = JwtHelper.issueJwt(UUID.randomUUID().toString(), result.getManagerId(),
-    				result.getUsername(), communityId, deviceType, time, roles, null,
+    				result.getUsername(), communityId, "", null, roles, null,
     				audience.getBase64Secret());
     		ManagerWithToken withToken = new ManagerWithToken();
     		withToken.setManager(result);
     		withToken.setToken(token);
-    		redisService.set(result.getManagerId(), token);
+    		redisService.set(result.getManagerId(), token,24*60*60*1000);//PC端token有效期为1天
     		return ReturnMsg.success(withToken);
     	}
     	return ReturnMsg.fail(Code.loginfail, "账号或密码错误");

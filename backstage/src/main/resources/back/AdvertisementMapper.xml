@@ -3,18 +3,19 @@
 <mapper namespace="com.simon.backstage.dao.AdvertisementMapper" >
   <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.Advertisement" >
     <id column="adv_id" property="advId" jdbcType="VARCHAR" />
-    <result column="comunity_id" property="comunityId" jdbcType="VARCHAR" />
-    <result column="unit_id" property="unitId" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="unit_id" property="buildingId" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="residence_time" property="residenceTime" jdbcType="INTEGER" />
     <result column="describe" property="describe" jdbcType="VARCHAR" />
+    <result column="used" property="used" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    adv_id, comunity_id, unit_id, title, type, url, residence_time, describe, create_time, 
+    adv_id, community_id, building_id, title, `type`, url, residence_time, `describe`,used, create_time,
     update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -23,18 +24,42 @@
     from advertisement
     where adv_id = #{advId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByConditon" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+    select
+    <include refid="Base_Column_List" />
+    from advertisement
+    <where>
+      <if test="keyword!=null and keyword!=''">
+        CONCAT(IFNULL(title,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+      <if test="communityId != null">
+        AND community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="selectUsable" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from advertisement where used=1
+    <if test="communityId != null">
+      AND (community_id = #{communityId,jdbcType=VARCHAR} or community_id is null)
+    </if>
+    <if test="buildingId != null">
+      AND (building_id = #{buildingId,jdbcType=VARCHAR} or building_id is null)
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from advertisement
     where adv_id = #{advId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.Advertisement" >
-    insert into advertisement (adv_id, comunity_id, unit_id, 
-      title, type, url, residence_time, 
-      describe, create_time, update_time
+    insert into advertisement (adv_id, community_id, building_id,
+      title, `type`, url, residence_time,
+      `describe`,used, create_time, update_time
       )
-    values (#{advId,jdbcType=VARCHAR}, #{comunityId,jdbcType=VARCHAR}, #{unitId,jdbcType=VARCHAR}, 
+    values (#{advId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{buildingId,jdbcType=VARCHAR},
       #{title,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{residenceTime,jdbcType=INTEGER}, 
-      #{describe,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      #{describe,jdbcType=VARCHAR},#{used,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.simon.backstage.domain.model.Advertisement" >
@@ -43,17 +68,17 @@
       <if test="advId != null" >
         adv_id,
       </if>
-      <if test="comunityId != null" >
-        comunity_id,
+      <if test="communityId != null" >
+        community_id,
       </if>
-      <if test="unitId != null" >
-        unit_id,
+      <if test="buildingId != null" >
+        building_id,
       </if>
       <if test="title != null" >
         title,
       </if>
       <if test="type != null" >
-        type,
+        `type`,
       </if>
       <if test="url != null" >
         url,
@@ -62,7 +87,10 @@
         residence_time,
       </if>
       <if test="describe != null" >
-        describe,
+        `describe`,
+      </if>
+      <if test="used != null" >
+        used,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -75,11 +103,11 @@
       <if test="advId != null" >
         #{advId,jdbcType=VARCHAR},
       </if>
-      <if test="comunityId != null" >
-        #{comunityId,jdbcType=VARCHAR},
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
       </if>
-      <if test="unitId != null" >
-        #{unitId,jdbcType=VARCHAR},
+      <if test="buildingId != null" >
+        #{buildingId,jdbcType=VARCHAR},
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
@@ -96,6 +124,9 @@
       <if test="describe != null" >
         #{describe,jdbcType=VARCHAR},
       </if>
+      <if test="used != null" >
+        #{used,jdbcType=BIT},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -107,17 +138,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.simon.backstage.domain.model.Advertisement" >
     update advertisement
     <set >
-      <if test="comunityId != null" >
-        comunity_id = #{comunityId,jdbcType=VARCHAR},
+      <if test="communityId != null" >
+        community_id = #{communityId,jdbcType=VARCHAR},
       </if>
-      <if test="unitId != null" >
-        unit_id = #{unitId,jdbcType=VARCHAR},
+      <if test="buildingId != null" >
+        building_id = #{buildingId,jdbcType=VARCHAR},
       </if>
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
+        `type` = #{type,jdbcType=INTEGER},
       </if>
       <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
@@ -126,7 +157,10 @@
         residence_time = #{residenceTime,jdbcType=INTEGER},
       </if>
       <if test="describe != null" >
-        describe = #{describe,jdbcType=VARCHAR},
+        `describe` = #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="used != null" >
+        used = #{used,jdbcType=BIT},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -139,13 +173,14 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.Advertisement" >
     update advertisement
-    set comunity_id = #{comunityId,jdbcType=VARCHAR},
-      unit_id = #{unitId,jdbcType=VARCHAR},
+    set community_id = #{communityId,jdbcType=VARCHAR},
+      building_id = #{buildingId,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=INTEGER},
       url = #{url,jdbcType=VARCHAR},
       residence_time = #{residenceTime,jdbcType=INTEGER},
-      describe = #{describe,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
+      used = #{used,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where adv_id = #{advId,jdbcType=VARCHAR}

@@ -12,6 +12,8 @@ public class BaseQueryParam {
 
     private String keyword;
 
+    private String communityId;
+
     public int getPageNo() {
         return pageNo;
     }
@@ -34,5 +36,13 @@ public class BaseQueryParam {
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
     }
 }

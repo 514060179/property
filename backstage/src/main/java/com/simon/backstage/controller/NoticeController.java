@@ -40,9 +40,7 @@ public class NoticeController {
 	public ReturnMsg<Notice> add(@RequestBody Notice notice, HttpServletRequest request){
 		logger.info("添加公告notice={}", JSONUtil.objectToJson(notice));
 		if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
-			if (StringUtils.isEmpty(notice.getCommunityId())){
-				return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
-			}
+
 		}else{
 			notice.setCommunityId(ClaimsUtil.getCommunityId(request));
 		}
@@ -69,9 +67,6 @@ public class NoticeController {
 		String communityId = ClaimsUtil.getCommunityId(request);
 		if(!StringUtils.isEmpty(communityId)){
 			baseClaims.setCommunityId(communityId);
-		}
-		if(!StringUtils.isEmpty(buildingId) && buildingId.trim()!=""){
-			baseClaims.setBuildingId(buildingId);
 		}
 		logger.info("公告列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
 		return ReturnMsg.success(new PageInfo<>(noticeService.list(baseClaims)));

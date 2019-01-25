@@ -14,6 +14,9 @@ public class Visitor {
     @ApiModelProperty(value = "社区id", readOnly=true)
     private String communityId;
 
+    @ApiModelProperty(value = "楼宇id", readOnly=true)
+    private String buildingId;
+
     @ApiModelProperty(value = "访客名字",example = "simon")
     private String visitorName;
 
@@ -31,6 +34,14 @@ public class Visitor {
 
     @ApiModelProperty(value ="更新时间", readOnly=true)
     private Date updateTime;
+
+    public String getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId;
+    }
 
     public String getVisitorId() {
         return visitorId;
