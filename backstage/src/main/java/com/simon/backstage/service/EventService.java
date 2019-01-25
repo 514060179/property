@@ -2,8 +2,8 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Event;
-import com.simon.dal.vo.BaseClaims;
-import com.simon.dal.vo.EventQueryParam;
+import com.simon.backstage.domain.vo.EventQueryParam;
+import com.simon.backstage.domain.vo.EventUpdParam;
 
 /**
  * @author fengtianying
@@ -27,10 +27,10 @@ public interface EventService {
 
     /**
      * 修改
-     * @param event
+     * @param eventUpdParam
      * @return
      */
-    int upd(Event event);
+    int upd(EventUpdParam eventUpdParam);
 
     /**
      * 删除

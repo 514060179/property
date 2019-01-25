@@ -1,5 +1,6 @@
-package com.simon.dal.vo;
+package com.simon.backstage.domain.vo;
 
+import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

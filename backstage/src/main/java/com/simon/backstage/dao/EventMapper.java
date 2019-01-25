@@ -1,8 +1,8 @@
 package com.simon.backstage.dao;
 
 import com.simon.backstage.domain.model.Event;
-import com.simon.dal.vo.BaseClaims;
-import com.simon.dal.vo.EventQueryParam;
+import com.simon.backstage.domain.vo.EventQueryParam;
+import com.simon.backstage.domain.vo.EventUpdParam;
 
 import java.util.List;
 
@@ -18,6 +18,8 @@ public interface EventMapper {
     List<Event> selectByCondition(EventQueryParam eventQueryParam);
 
     int updateByPrimaryKeySelective(Event record);
+
+    int updateSelective(EventUpdParam eventUpdParam);
 
     int updateByPrimaryKeyWithBLOBs(Event record);
 

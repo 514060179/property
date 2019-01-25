@@ -30,9 +30,10 @@
     from event
     where event_id = #{eventId,jdbcType=VARCHAR}
   </select>
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.EventQueryParam" >
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.backstage.domain.vo.EventQueryParam" >
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    <include refid="Blob_Column_List" />
     from event
     <where>
       <if test="keyword!=null and keyword!=''">
@@ -141,6 +142,36 @@
       </if>
     </trim>
   </insert>
+  <update id="updateSelective" parameterType="com.simon.backstage.domain.vo.EventUpdParam" >
+    update event
+    <set >
+      <if test="eventStatus != null" >
+        event_status = #{eventStatus,jdbcType=INTEGER},
+      </if>
+      <if test="eventRemark != null" >
+        event_remark = #{eventRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="eventDate != null" >
+        event_date = #{eventDate,jdbcType=DATE},
+      </if>
+      <if test="eventType != null" >
+        event_type = #{eventType,jdbcType=INTEGER},
+      </if>
+      <if test="eventFinishDate != null" >
+        event_finish_date = #{eventFinishDate,jdbcType=DATE},
+      </if>
+      <if test="eventContent != null" >
+        event_content = #{eventContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="eventCause != null" >
+        event_cause = #{eventCause,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="eventSolve != null" >
+        event_solve = #{eventSolve,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where event_id = #{eventId,jdbcType=VARCHAR}
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.simon.backstage.domain.model.Event" >
     update event
     <set >

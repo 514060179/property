@@ -7,8 +7,8 @@ import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.EventService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
-import com.simon.dal.vo.BaseClaims;
-import com.simon.dal.vo.EventQueryParam;
+import com.simon.backstage.domain.vo.EventQueryParam;
+import com.simon.backstage.domain.vo.EventUpdParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -50,9 +50,9 @@ public class EventController {
 
     @PostMapping("upd")
     @ApiOperation("修改事件")
-    public ReturnMsg<Event> upd(@RequestBody Event event){
-        logger.info("修改事件event={}", JSONUtil.objectToJson(event));
-        return ReturnMsg.success(eventService.upd(event));
+    public ReturnMsg<Event> upd(@RequestBody EventUpdParam eventUpdParam){
+        logger.info("修改事件event={}", JSONUtil.objectToJson(eventUpdParam));
+        return ReturnMsg.success(eventService.upd(eventUpdParam));
     }
 
     @GetMapping("del")
@@ -75,7 +75,7 @@ public class EventController {
     }
 
     @GetMapping("changeStatus")
-    @ApiOperation("处理事件")
+    @ApiOperation(value = "处理事件",hidden = true)
     @ApiImplicitParam(name="eventStatus", value="事件进度:1待定2完成", required=true)
     public ReturnMsg changeStatus(@RequestParam String eventId, String eventStatus,
     		HttpServletRequest request){

@@ -5,14 +5,13 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.EventMapper;
 import com.simon.backstage.dao.ManagerMapper;
 import com.simon.backstage.domain.model.Event;
-import com.simon.backstage.domain.model.Manager;
 import com.simon.backstage.service.EventService;
 import com.simon.dal.util.UUIDUtil;
-import com.simon.dal.vo.BaseClaims;
 
 import java.util.Date;
 
-import com.simon.dal.vo.EventQueryParam;
+import com.simon.backstage.domain.vo.EventQueryParam;
+import com.simon.backstage.domain.vo.EventUpdParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,8 +41,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public int upd(Event event) {
-        return eventMapper.updateByPrimaryKeySelective(event);
+    public int upd(EventUpdParam eventUpdParam) {
+        return eventMapper.updateSelective(eventUpdParam);
     }
 
     @Override
