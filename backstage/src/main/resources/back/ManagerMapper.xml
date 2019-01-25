@@ -223,11 +223,19 @@
     jn_url AS url
     FROM jurisdiction
   </select>
-  <insert id="addJurisdiction">
+  <insert id="addJurisdiction" keyProperty="jnId" useGeneratedKeys="true">
     INSERT INTO jurisdiction (jn_name,jn_url) VALUES
     <foreach collection="list" item="item" separator=",">
       (
         #{item.jnName},#{item.jnUrl}
+      )
+    </foreach>
+  </insert>
+  <insert id="addAdminRoleJn">
+    INSERT INTO role_jn (role_id,jn_id) VALUES
+    <foreach collection="list" item="item" separator=",">
+      (
+        #{item.roleId},#{item.jnId}
       )
     </foreach>
   </insert>

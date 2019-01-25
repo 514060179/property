@@ -28,6 +28,8 @@ public interface ManagerMapper {
 
     int addJurisdiction(List<Jurisdiction> list);
 
+    int addAdminRoleJn(List<Map<String,Long>> list);
+
     int initRole();
 
     Long findAdminRole(String roleName);

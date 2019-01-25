@@ -4,6 +4,8 @@ import com.simon.backstage.dao.ManagerMapper;
 import com.simon.backstage.domain.model.Jurisdiction;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +31,21 @@ public class RoleService {
         return managerMapper.findAllJurisdiction();
     }
 
-    public int addJurisdiction(List<Jurisdiction> jurisdictionList){
-        return managerMapper.addJurisdiction(jurisdictionList);
+    public int addJurisdiction(List<Jurisdiction> jurisdictionList,Long roleId){
+        //初始化admin权限
+        int i = managerMapper.addJurisdiction(jurisdictionList);
+        List<Map<String,Long>> mapList = new ArrayList<>();
+        if (i>0){
+            jurisdictionList.forEach(jurisdiction -> {
+                Map<String,Long> map = new HashMap<>();
+                map.put("roleId",roleId);
+                map.put("jnId",jurisdiction.getJnId());
+                mapList.add(map);
+            });
+            //添加admin权限
+            managerMapper.addAdminRoleJn(mapList);
+        }
+        return i;
     }
 
     public int initRole(){
