@@ -12,6 +12,7 @@ import com.simon.dal.vo.BaseClaims;
 
 import java.util.Date;
 
+import com.simon.dal.vo.EventQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,9 +52,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public PageInfo<Event> list(BaseClaims baseClaims) {
-        PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
-        return new PageInfo<>(eventMapper.selectByCondition(baseClaims));
+    public PageInfo<Event> list(EventQueryParam eventQueryParam) {
+        PageHelper.startPage(eventQueryParam.getPageNo(),eventQueryParam.getPageSize());
+        return new PageInfo<>(eventMapper.selectByCondition(eventQueryParam));
     }
 
 	@Override

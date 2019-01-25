@@ -30,7 +30,7 @@
     from event
     where event_id = #{eventId,jdbcType=VARCHAR}
   </select>
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.EventQueryParam" >
     select
     <include refid="Base_Column_List" />
     from event
@@ -40,6 +40,9 @@
       </if>
       <if test="communityId != null">
       	AND community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
+      <if test="eventType != null">
+      	AND event_type = #{eventType,jdbcType=INTEGER}
       </if>
     </where>
   </select>

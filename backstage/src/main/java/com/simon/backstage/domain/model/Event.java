@@ -22,13 +22,13 @@ public class Event {
     @ApiModelProperty(value = "备注",example = "备注")
     private String eventRemark;
 
-    @ApiModelProperty(value = "事件日期",example = "2018-11-11 10:00:00")
+    @ApiModelProperty(value = "事件日期",example = "2018-11-11")
     private Date eventDate;
 
     @ApiModelProperty(value = "事件类型1采购2保养3其他",example = "1")
     private Integer eventType;
 
-    @ApiModelProperty(value = "完成时间",example = "2018-11-11 12:00:00")
+    @ApiModelProperty(value = "完成时间",example = "2018-11-12")
     private Date eventFinishDate;
 
     @ApiModelProperty(hidden = true)

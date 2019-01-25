@@ -8,6 +8,7 @@ import com.simon.backstage.service.EventService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.vo.BaseClaims;
+import com.simon.dal.vo.EventQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -63,13 +64,14 @@ public class EventController {
 
     @GetMapping("list")
     @ApiOperation("事件列表")
-    public ReturnMsg<PageInfo<Event>> list(BaseClaims baseClaims, HttpServletRequest request){
-    	String communityId = ClaimsUtil.getCommunityId(request);
-		if(!StringUtils.isEmpty(communityId)){
-			baseClaims.setCommunityId(communityId);
-		}
-        logger.info("事件列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
-        return ReturnMsg.success(eventService.list(baseClaims));
+    public ReturnMsg<PageInfo<Event>> list(EventQueryParam eventQueryParam, HttpServletRequest request){
+        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+
+        }else{
+            eventQueryParam.setCommunityId(ClaimsUtil.getCommunityId(request));
+        }
+        logger.info("事件列表eventQueryParam={}", JSONUtil.objectToJson(eventQueryParam));
+        return ReturnMsg.success(eventService.list(eventQueryParam));
     }
 
     @GetMapping("changeStatus")
