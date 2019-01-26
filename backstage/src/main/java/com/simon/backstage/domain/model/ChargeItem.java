@@ -1,31 +1,34 @@
 package com.simon.backstage.domain.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@ApiModel(value = "ChargeItem", description = "收费项目")
 public class ChargeItem {
     private String itemId;
-
+    @ApiModelProperty(value = "收费项目编号",example = "A0001")
     private String itemNo;
-
+    @ApiModelProperty(value = "收费项目名字",example = "物业费")
     private String itemName;
-
+    @ApiModelProperty(value = "收费模式0周期性1临时性",example = "0")
     private Integer billingMode;
-
+    @ApiModelProperty(value = "计算方式0定额1公式",example = "0")
     private Integer alculationMethod;
-
+    @ApiModelProperty(value = "计算单价",example = "11.2")
     private BigDecimal unitPrice;
-
+    @ApiModelProperty(value = "滞纳金率(单位:百分之一)",example = "20")
     private Integer lateFee;
-
+    @ApiModelProperty(value = "滞纳开始天数",example = "20")
     private Integer lateDate;
-
+    @ApiModelProperty(value = "计算公式",example = "11.2")
     private String formula;
-
+    @ApiModelProperty(value = "金额",example = "11.2")
     private String describe;
-
+    @ApiModelProperty(hidden = true)
     private Date createTime;
-
+    @ApiModelProperty(hidden = true)
     private Date updateTime;
 
     public String getItemId() {

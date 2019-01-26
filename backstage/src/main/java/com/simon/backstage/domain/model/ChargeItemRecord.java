@@ -1,33 +1,37 @@
 package com.simon.backstage.domain.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 import java.util.Date;
-
+@ApiModel(value = "ChargeItemRecord", description = "收费项目记录")
 public class ChargeItemRecord {
+
     private String recordId;
-
+    @ApiModelProperty(value = "住户id",example = "0e722e5735b743d98826b5824fade372")
     private String userId;
-
+    @ApiModelProperty(value = "单位收费项目id",example = "er7212e5735b3743d2126b5324fadese2")
     private String unitItemId;
-
+    @ApiModelProperty(value = "收费记录年月份(2019-01)",example = "2019-01")
     private String recordDate;
-
+    @ApiModelProperty(value = "状态0欠费1已付2预支付",example = "0")
     private Integer recordStatus;
-
+    @ApiModelProperty(value = "收费时间",example = "2019-01-11 12:12:00")
     private Date recordTime;
-
+    @ApiModelProperty(value = "实际收取金额",example = "45.2")
     private BigDecimal recordActualAmount;
-
+    @ApiModelProperty(value = "收费金额",example = "112.5")
     private BigDecimal recordAmount;
-
+    @ApiModelProperty(value = "滞纳金额",example = "22.5")
     private Long recordLateFee;
-
+    @ApiModelProperty(value = "滞纳金天数",example = "5")
     private Integer recordLateDate;
-
+    @ApiModelProperty(value = "备注",example = "周期性收款")
     private String recordRemark;
-
+    @ApiModelProperty(hidden = true)
     private Date createTime;
-
+    @ApiModelProperty(hidden = true)
     private Date updateTime;
 
     public String getRecordId() {

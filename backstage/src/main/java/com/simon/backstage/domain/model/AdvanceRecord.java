@@ -1,21 +1,25 @@
 package com.simon.backstage.domain.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+@ApiModel(value = "AdvanceRecord", description = "预付账户记录")
 public class AdvanceRecord {
     private String advanceRecordId;
-
+    @ApiModelProperty(value = "社区id",example = "c123456")
     private String advanceId;
-
+    @ApiModelProperty(value = "金额",example = "11.2")
     private BigDecimal advanceAmount;
-
+    @ApiModelProperty(value = "出入账类型0出账1入账",example = "0")
     private Integer advanceType;
-
+    @ApiModelProperty(value = "描述",example = "11月的物业费支出")
     private String advanceDescribe;
-
+    @ApiModelProperty(hidden = true)
     private Date createTime;
-
+    @ApiModelProperty(hidden = true)
     private Date updateTime;
 
     public String getAdvanceRecordId() {
