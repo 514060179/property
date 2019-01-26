@@ -9,10 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -128,5 +125,22 @@ public class FileController {
 			}
 		}
 		return false;
+	}
+
+	@PostMapping("delFile")
+	@ResponseBody
+	public ReturnMsg delFile(String path){
+		String filePath = resourceConfig.getRootPath(); // 上传后的路径
+		File file = new File(filePath.concat(path));
+		String prefix = path.substring(0,path.indexOf("."));
+		String suffix = path.substring(path.indexOf("."),path.length());
+		File thumbnail = new File(filePath.concat(prefix.concat("-thumbnail").concat(suffix)));
+		if (file.exists()){
+			file.delete();
+		}
+		if (thumbnail.exists()){
+			thumbnail.delete();
+		}
+		return ReturnMsg.success();
 	}
 }

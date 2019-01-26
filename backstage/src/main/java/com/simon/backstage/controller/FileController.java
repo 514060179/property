@@ -109,4 +109,22 @@ public class FileController {
         }
         return false;
     }
+
+    @PostMapping("delFile")
+    @ResponseBody
+    public ReturnMsg delFile(String path){
+        String filePath = resourceConfig.getRootPath(); // 上传后的路径
+        File file = new File(filePath.concat(path));
+        String prefix = path.substring(0,path.indexOf("."));
+        String suffix = path.substring(path.indexOf("."),path.length());
+        File thumbnail = new File(filePath.concat(prefix.concat("-thumbnail").concat(suffix)));
+        if (file.exists()){
+            file.delete();
+        }
+        if (thumbnail.exists()){
+            thumbnail.delete();
+        }
+        return ReturnMsg.success();
+    }
+
 }
