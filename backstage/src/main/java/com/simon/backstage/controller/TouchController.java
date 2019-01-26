@@ -95,8 +95,8 @@ public class TouchController {
 		return ReturnMsg.fail(Code.loginfail, "账号或密码错误");
 	}
 
-	@PostMapping("/touch/logout")
-	@ApiOperation("登陆")
+	@PostMapping("/back/touch/logout")
+	@ApiOperation("登出")
 	public ReturnMsg logout(HttpServletRequest request){
 		String managerId = ClaimsUtil.getManagerId(request);
 		logger.info("touch退出登录managerId={}", managerId);
