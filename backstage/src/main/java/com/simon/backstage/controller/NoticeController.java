@@ -56,8 +56,11 @@ public class NoticeController {
 	
 	@PostMapping("upd")
 	@ApiOperation("修改公告")
-	public ReturnMsg upd(@RequestBody Notice notice){
+	public ReturnMsg upd(@RequestBody Notice notice, HttpServletRequest request){
 		logger.info("修改公告notice={}", JSONUtil.objectToJson(notice));
+		if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+			notice.setCommunityId(null);
+		}
 		return ReturnMsg.success(noticeService.upd(notice));
 	}
 	

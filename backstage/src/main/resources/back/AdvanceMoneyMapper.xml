@@ -17,6 +17,12 @@
     from advance_money
     where advance_id = #{advanceId,jdbcType=VARCHAR}
   </select>
+  <select id="findByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from advance_money
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from advance_money
     where advance_id = #{advanceId,jdbcType=VARCHAR}
@@ -71,7 +77,7 @@
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
       <if test="advanceAmount != null" >
-        advance_amount = #{advanceAmount,jdbcType=DECIMAL},
+        advance_amount = advance_amount + #{advanceAmount,jdbcType=DECIMAL},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},

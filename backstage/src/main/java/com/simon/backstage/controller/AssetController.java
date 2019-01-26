@@ -48,8 +48,11 @@ public class AssetController {
 
     @PostMapping("upd")
     @ApiOperation("修改资源")
-    public ReturnMsg<Asset> upd(@RequestBody Asset asset){
+    public ReturnMsg<Asset> upd(@RequestBody Asset asset, HttpServletRequest request){
         logger.info("修改资源asset={}", JSONUtil.objectToJson(asset));
+        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+            asset.setCommunityId(null);
+        }
         return ReturnMsg.success(assetService.upd(asset));
     }
 

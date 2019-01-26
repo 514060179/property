@@ -11,6 +11,8 @@ public interface AdvanceMoneyMapper {
 
     AdvanceMoney selectByPrimaryKey(String advanceId);
 
+    AdvanceMoney findByUserId(String userId);
+
     int updateByPrimaryKeySelective(AdvanceMoney record);
 
     int updateByPrimaryKey(AdvanceMoney record);

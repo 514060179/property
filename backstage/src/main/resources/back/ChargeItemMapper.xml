@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.ChargeItem" >
     <id column="item_id" property="itemId" jdbcType="VARCHAR" />
     <result column="item_no" property="itemNo" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
     <result column="item_name" property="itemName" jdbcType="VARCHAR" />
     <result column="billing_mode" property="billingMode" jdbcType="INTEGER" />
     <result column="alculation_method" property="alculationMethod" jdbcType="INTEGER" />
@@ -16,8 +17,8 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    item_id, item_no, item_name, billing_mode, alculation_method, unit_price, late_fee, 
-    late_date, formula, describe, create_time, update_time
+    item_id, item_no,community_id, item_name, billing_mode, alculation_method, unit_price, late_fee,
+    late_date, formula, `describe`, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -25,17 +26,30 @@
     from charge_item
     where item_id = #{itemId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+    select
+    <include refid="Base_Column_List" />
+    from charge_item
+    <where>
+      <if test="keyword!=null and keyword!=''">
+        CONCAT(IFNULL(item_no,''),IFNULL(item_name,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+      <if test="communityId != null">
+        AND community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from charge_item
     where item_id = #{itemId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.ChargeItem" >
-    insert into charge_item (item_id, item_no, item_name, 
+    insert into charge_item (item_id, item_no,community_id, item_name,
       billing_mode, alculation_method, unit_price, 
       late_fee, late_date, formula, 
-      describe, create_time, update_time
+      `describe`, create_time, update_time
       )
-    values (#{itemId,jdbcType=VARCHAR}, #{itemNo,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, 
+    values (#{itemId,jdbcType=VARCHAR}, #{itemNo,jdbcType=VARCHAR},#{communityId,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR},
       #{billingMode,jdbcType=INTEGER}, #{alculationMethod,jdbcType=INTEGER}, #{unitPrice,jdbcType=DECIMAL}, 
       #{lateFee,jdbcType=INTEGER}, #{lateDate,jdbcType=INTEGER}, #{formula,jdbcType=VARCHAR}, 
       #{describe,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
@@ -49,6 +63,9 @@
       </if>
       <if test="itemNo != null" >
         item_no,
+      </if>
+      <if test="communityId != null" >
+        community_id,
       </if>
       <if test="itemName != null" >
         item_name,
@@ -72,7 +89,7 @@
         formula,
       </if>
       <if test="describe != null" >
-        describe,
+        `describe`,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -87,6 +104,9 @@
       </if>
       <if test="itemNo != null" >
         #{itemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
       </if>
       <if test="itemName != null" >
         #{itemName,jdbcType=VARCHAR},
@@ -126,6 +146,9 @@
       <if test="itemNo != null" >
         item_no = #{itemNo,jdbcType=VARCHAR},
       </if>
+      <if test="communityId != null" >
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
       <if test="itemName != null" >
         item_name = #{itemName,jdbcType=VARCHAR},
       </if>
@@ -148,7 +171,7 @@
         formula = #{formula,jdbcType=VARCHAR},
       </if>
       <if test="describe != null" >
-        describe = #{describe,jdbcType=VARCHAR},
+        `describe` = #{describe,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -162,6 +185,7 @@
   <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.ChargeItem" >
     update charge_item
     set item_no = #{itemNo,jdbcType=VARCHAR},
+      community_id = #{communityId,jdbcType=VARCHAR},
       item_name = #{itemName,jdbcType=VARCHAR},
       billing_mode = #{billingMode,jdbcType=INTEGER},
       alculation_method = #{alculationMethod,jdbcType=INTEGER},
@@ -169,7 +193,7 @@
       late_fee = #{lateFee,jdbcType=INTEGER},
       late_date = #{lateDate,jdbcType=INTEGER},
       formula = #{formula,jdbcType=VARCHAR},
-      describe = #{describe,jdbcType=VARCHAR},
+      `describe` = #{describe,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where item_id = #{itemId,jdbcType=VARCHAR}

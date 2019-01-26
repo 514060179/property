@@ -49,8 +49,11 @@ public class UserController {
 
     @PostMapping("upd")
     @ApiOperation("修改住户")
-    public ReturnMsg<User> upd(@RequestBody User user){
+    public ReturnMsg<User> upd(@RequestBody User user, HttpServletRequest request){
         logger.info("修改住户user={}", JSONUtil.objectToJson(user));
+        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+            user.setCommunityId(null);
+        }
         return ReturnMsg.success(userService.upd(user));
     }
 

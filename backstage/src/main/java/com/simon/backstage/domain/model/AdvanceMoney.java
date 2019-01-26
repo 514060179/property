@@ -3,6 +3,7 @@ package com.simon.backstage.domain.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -10,8 +11,10 @@ import java.util.Date;
 public class AdvanceMoney {
     private String advanceId;
     @ApiModelProperty(value = "用户id",example = "0e722e5735b743d98826b5824fade372")
+    @NotEmpty(message = "用户userId不能为空")
     private String userId;
-    @ApiModelProperty(value = "账户总额",example = "112.5")
+    @ApiModelProperty(value = "预收总额",example = "112.5")
+    @NotEmpty(message = "预收总额[advanceAmount]不能为空")
     private BigDecimal advanceAmount;
     @ApiModelProperty(hidden = true)
     private Date createTime;

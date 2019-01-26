@@ -47,8 +47,11 @@ public class AdvertisementController {
 
     @PostMapping("upd")
     @ApiOperation("修改广告")
-    public ReturnMsg<Advertisement> upd(@RequestBody Advertisement advertisement){
+    public ReturnMsg<Advertisement> upd(@RequestBody Advertisement advertisement, HttpServletRequest request){
         logger.info("修改广告advertisement={}", JSONUtil.objectToJson(advertisement));
+        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+            advertisement.setCommunityId(null);
+        }
         return ReturnMsg.success(advertisementService.upd(advertisement));
     }
 

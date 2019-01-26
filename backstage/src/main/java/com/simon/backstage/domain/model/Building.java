@@ -14,7 +14,6 @@ public class Building {
     private String buildingId;
 
     @ApiModelProperty(value = "社区id",example = "c123456")
-    @NotEmpty(message = "社区id不能为空")
     private String communityId;
 
     @ApiModelProperty(value = "楼宇名字",example = "生产楼")

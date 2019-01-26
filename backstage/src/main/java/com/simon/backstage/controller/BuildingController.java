@@ -46,8 +46,11 @@ public class BuildingController {
     }
     @PostMapping("upd")
     @ApiOperation("修改建筑")
-    public ReturnMsg<Building> upd(@RequestBody Building building){
+    public ReturnMsg<Building> upd(@RequestBody Building building, HttpServletRequest request){
         logger.info("修改建筑building={}", JSONUtil.objectToJson(building));
+        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+            building.setCommunityId(null);
+        }
         return ReturnMsg.success(buildingService.upd(building));
     }
     @GetMapping("del")

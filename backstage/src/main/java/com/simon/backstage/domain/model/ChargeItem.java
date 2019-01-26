@@ -8,6 +8,8 @@ import java.util.Date;
 @ApiModel(value = "ChargeItem", description = "收费项目")
 public class ChargeItem {
     private String itemId;
+    @ApiModelProperty(value = "社区id",example = "c123456")
+    private String communityId;
     @ApiModelProperty(value = "收费项目编号",example = "A0001")
     private String itemNo;
     @ApiModelProperty(value = "收费项目名字",example = "物业费")
@@ -33,6 +35,14 @@ public class ChargeItem {
 
     public String getItemId() {
         return itemId;
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
     }
 
     public void setItemId(String itemId) {

@@ -45,8 +45,11 @@ public class PlaceController {
 
     @PostMapping("upd")
     @ApiOperation("修改场所")
-    public ReturnMsg<Place> upd(@RequestBody @Validated Place place){
+    public ReturnMsg<Place> upd(@RequestBody @Validated Place place, HttpServletRequest request){
         logger.info("修改场所place={}", JSONUtil.objectToJson(place));
+        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+            place.setCommunityId(null);
+        }
         return ReturnMsg.success(placeService.upd(place));
     }
 
