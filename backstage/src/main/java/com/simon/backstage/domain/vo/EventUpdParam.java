@@ -11,6 +11,9 @@ public class EventUpdParam {
     @NotEmpty(message = "eventId不能为空")
     private String eventId;
 
+    @ApiModelProperty(value = "社区id",example = "12312312")
+    private String communityId;
+
     @ApiModelProperty(value = "事件进度0开始1待定2完成",example = "0")
     private Integer eventStatus;
 
@@ -41,6 +44,14 @@ public class EventUpdParam {
 
     public void setEventId(String eventId) {
         this.eventId = eventId;
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
     }
 
     public Integer getEventStatus() {

@@ -21,4 +21,6 @@ public interface NoticeMapper {
     int updateByPrimaryKey(Notice record);
     
     List<Notice> list(BaseClaims baseClaims);
+
+    List<Notice> touchList(BaseClaims baseClaims);
 }

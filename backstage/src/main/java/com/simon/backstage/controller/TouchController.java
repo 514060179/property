@@ -100,22 +100,22 @@ public class TouchController {
 										 HttpServletRequest request){
 		String communityId = ClaimsUtil.getCommunityId(request);
 		visitor.setCommunityId(communityId);
+		visitor.setBuildingId(ClaimsUtil.getBuildingId(request));
 		logger.info("touch访问者登记visitor={}", JSONUtil.objectToJson(visitor));
 		return ReturnMsg.success(visitorService.add(visitor));
 	}
 
 	@GetMapping("/back/touch/list")
 	@ApiOperation("公告列表")
-	public ReturnMsg<PageInfo<Notice>> noticeList(BaseClaims baseClaims, String buildingId, HttpServletRequest request){
+	public ReturnMsg<PageInfo<Notice>> noticeList(BaseClaims baseClaims, HttpServletRequest request){
 		String communityId = ClaimsUtil.getCommunityId(request);
 		if(!StringUtils.isEmpty(communityId)){
 			baseClaims.setCommunityId(communityId);
 		}
-		if(!StringUtils.isEmpty(buildingId) && buildingId.trim()!=""){
-			baseClaims.setBuildingId(buildingId);
-		}
+		String buildingId = ClaimsUtil.getBuildingId(request);
+		baseClaims.setBuildingId(buildingId);
 		logger.info("公告列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
-		return ReturnMsg.success(new PageInfo<>(noticeService.list(baseClaims)));
+		return ReturnMsg.success(new PageInfo<>(noticeService.touchList(baseClaims)));
 	}
 	@GetMapping("/back/touch/noticeDetail")
 	@ApiOperation("公告详情")

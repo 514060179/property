@@ -50,6 +50,24 @@
     	</if>
     </where>
   </select>
+  <select id="touchList" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims">
+  	select
+    <include refid="Base_Column_List" />
+    from
+    	notice n
+    left join images img on n.notice_id = img.object_id and image_type=2
+    <where>
+    	<if test="keyword != null and keyword!=''" >
+    		CANCAT(IFNULL(notice_title,''),IFNULL(notice_type,'')) LIKE CANCAT('%', #{keyword}, '%')
+    	</if>
+    	<if test="communityId != null">
+    		AND (community_id = #{communityId,jdbcType=VARCHAR} or community_id is null)
+    	</if>
+    	<if test="buildingId != null">
+    		AND (building_id = #{buildingId,jdbcType=VARCHAR} or building_id is null)
+    	</if>
+    </where>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

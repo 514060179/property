@@ -90,6 +90,11 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
+	public List<Notice> touchList(BaseClaims baseClaims) {
+		return noticeMapper.touchList(baseClaims);
+	}
+
+	@Override
 	public Notice findOne(String noticeId) {
 		// TODO Auto-generated method stub
 		return noticeMapper.selectByPrimaryKey(noticeId);

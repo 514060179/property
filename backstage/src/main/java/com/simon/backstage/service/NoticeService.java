@@ -14,6 +14,8 @@ public interface NoticeService {
 	int upd(Notice notice);
 	
 	List<Notice> list(BaseClaims baseClaims);
-	
+
+	List<Notice> touchList(BaseClaims baseClaims);
+
 	Notice findOne(String noticeId);
 }
