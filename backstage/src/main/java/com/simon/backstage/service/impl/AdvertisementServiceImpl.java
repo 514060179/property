@@ -54,4 +54,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public List<Advertisement> touchLlist(String communityId, String buildingId) {
         return advertisementMapper.selectUsable(communityId,buildingId);
     }
+
+    @Override
+    public int publish(String advertisementId, boolean used) {
+        Advertisement advertisement = new Advertisement();
+        advertisement.setAdvId(advertisementId);
+        advertisement.setUsed(used);
+        return advertisementMapper.updateByPrimaryKeySelective(advertisement);
+    }
 }

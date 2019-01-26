@@ -54,4 +54,12 @@ public interface AdvertisementService {
      * @return
      */
     List<Advertisement> touchLlist(String communityId,String buildingId);
+
+    /**
+     * 发布广告
+     * @param advertisementId
+     * @param used
+     * @return
+     */
+    int publish(String advertisementId, boolean used);
 }

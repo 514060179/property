@@ -68,7 +68,7 @@ public class TouchController {
 
 	@GetMapping("touch/building/list")
 	@ApiOperation("建筑列表")
-	public ReturnMsg<PageInfo<Building>> buildingList(BaseClaims baseClaims, String communityId, HttpServletRequest request) {
+	public ReturnMsg<PageInfo<Building>> buildingList(BaseClaims baseClaims,@RequestParam String communityId) {
 		logger.info("建筑列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
 		baseClaims.setCommunityId(communityId);
 		return ReturnMsg.success(buildingService.list(baseClaims));
@@ -81,9 +81,10 @@ public class TouchController {
 		manager.setUsername(username);
 		manager.setPassword(EncryUtil.getMD5(password));
 		Manager result = managerService.findManager(manager);
-		if(result != null){
+		if (result != null && result.getCommunityId().equals(communityId)) {
+			String roles = managerService.findManagerAndRole(result.getManagerId());
 			String token = JwtHelper.issueJwt(UUID.randomUUID().toString(), result.getManagerId(),
-					result.getUsername(), communityId, "1", null, buildingId, null,
+					result.getUsername(), communityId, "1", null, roles, buildingId,
 					audience.getBase64Secret());
 			ManagerWithToken withToken = new ManagerWithToken();
 			withToken.setManager(result);
@@ -94,6 +95,14 @@ public class TouchController {
 		return ReturnMsg.fail(Code.loginfail, "账号或密码错误");
 	}
 
+	@PostMapping("/touch/logout")
+	@ApiOperation("登陆")
+	public ReturnMsg logout(HttpServletRequest request){
+		String managerId = ClaimsUtil.getManagerId(request);
+		logger.info("touch退出登录managerId={}", managerId);
+		redisService.del(managerId);
+		return ReturnMsg.success();
+	}
 	@PostMapping("/back/touch/visitorAdd")
 	@ApiOperation("访问者登记")
 	public ReturnMsg<Visitor> visitorAdd(@RequestBody Visitor visitor,
@@ -105,7 +114,7 @@ public class TouchController {
 		return ReturnMsg.success(visitorService.add(visitor));
 	}
 
-	@GetMapping("/back/touch/list")
+	@GetMapping("/back/touch/noticeList")
 	@ApiOperation("公告列表")
 	public ReturnMsg<PageInfo<Notice>> noticeList(BaseClaims baseClaims, HttpServletRequest request){
 		String communityId = ClaimsUtil.getCommunityId(request);

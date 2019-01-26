@@ -48,7 +48,7 @@ public class JurisdictionInit implements ApplicationRunner {
             for (String url : p.getPatterns()) {
                 jnUrl.append(url);
             }
-            if (jnUrl.indexOf("back")>0&&!list.contains(jnUrl.toString())&&jnUrl.indexOf("touch")<0){
+            if (jnUrl.indexOf("back")>0&&!list.contains(jnUrl.toString())){
                 StringBuffer jnName = new StringBuffer();
                 Jurisdiction jurisdiction = new Jurisdiction();
                 jurisdiction.setJnUrl(jnUrl.toString());

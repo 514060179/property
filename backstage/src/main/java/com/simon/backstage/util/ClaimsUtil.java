@@ -32,7 +32,7 @@ public class ClaimsUtil {
         if (Objects.isNull(claims)){
             return null;
         }
-        return claims.get("roles",String.class);
+        return claims.get("perms",String.class);
     }
 
     public static String getUsername(HttpServletRequest request){

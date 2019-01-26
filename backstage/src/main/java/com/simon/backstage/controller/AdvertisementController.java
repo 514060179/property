@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * @author fengtianying
@@ -68,4 +69,21 @@ public class AdvertisementController {
         logger.info("广告列表baseQueryParam={}", JSONUtil.objectToJson(baseQueryParam));
         return ReturnMsg.success(advertisementService.list(baseQueryParam));
     }
+
+    @GetMapping("publish")
+    @ApiOperation("广告发布/取消")
+    public ReturnMsg publish(@RequestParam String advId){
+        logger.info("广告发布advId={}", advId);
+        Advertisement advertisement = advertisementService.detail(advId);
+        if (Objects.isNull(advertisement)){
+            return ReturnMsg.fail(Code.notfound,"未找到资源!");
+        }
+        boolean used = false;
+        if (!advertisement.getUsed()){
+            used = true;
+        }
+        return ReturnMsg.success(advertisementService.publish(advId,used));
+    }
+
+
 }

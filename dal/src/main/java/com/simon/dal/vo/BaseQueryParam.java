@@ -1,5 +1,7 @@
 package com.simon.dal.vo;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author fengtianying
  * @date 2018/12/8 17:23
@@ -12,6 +14,7 @@ public class BaseQueryParam {
 
     private String keyword;
 
+    @ApiModelProperty(hidden=true)
     private String communityId;
 
     public int getPageNo() {

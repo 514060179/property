@@ -31,6 +31,9 @@ public interface Code {
     //未知文件
     int unknownFile = 203;
 
+    //未找到资源
+    int notfound = 404;
+
     //系统异常
     int error=999;
 
