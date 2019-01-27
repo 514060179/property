@@ -12,6 +12,9 @@ public class Unit {
     @ApiModelProperty("id")
     private String unitId;
 
+    @ApiModelProperty(value = "社区id",example="c123456")
+    private String communityId;
+
     @ApiModelProperty(value = "建筑id",example = "1231das12")
     private String buildingId;
 
@@ -57,6 +60,14 @@ public class Unit {
 
     public void setUnitId(String unitId) {
         this.unitId = unitId == null ? null : unitId.trim();
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
     }
 
     public String getBuildingId() {

@@ -3,6 +3,7 @@ package com.simon.backstage.controller;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.model.UserUnit;
+import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.UnitService;
 import com.simon.backstage.util.ClaimsUtil;
@@ -34,8 +35,16 @@ public class UnitController {
     private UnitService unitService;
     @PostMapping("add")
     @ApiOperation("添加单元")
-    public ReturnMsg<Unit> add(@RequestBody Unit unit){
+    public ReturnMsg<Unit> add(@RequestBody Unit unit, HttpServletRequest request){
         logger.info("添加单元unit={}", JSONUtil.objectToJson(unit));
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (StringUtils.isEmpty(communityId)){//超级管理员
+            if (StringUtils.isEmpty(unit.getCommunityId())){
+                return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
+            }
+        }else{
+            unit.setCommunityId(communityId);
+        }
         return ReturnMsg.success(unitService.add(unit));
     }
 
@@ -55,7 +64,7 @@ public class UnitController {
 
     @GetMapping("list")
     @ApiOperation("单元列表")
-    public ReturnMsg<PageInfo<Unit>> list(BaseClaims baseClaims, String buildingId, HttpServletRequest request){
+    public ReturnMsg<PageInfo<Unit>> list(BaseClaims baseClaims, @RequestParam String buildingId, HttpServletRequest request){
     	String communityId = ClaimsUtil.getCommunityId(request);
 		if(!StringUtils.isEmpty(communityId)){
 			baseClaims.setCommunityId(communityId);

@@ -17,7 +17,6 @@ public class Place {
     private String placeId;
 
     @ApiModelProperty(value = "社区id",example="c123456")
-    @NotEmpty(message="社区id不能为空")
     private String communityId;
 
     @ApiModelProperty(value = "场所名字(简体)",example = "游泳池")

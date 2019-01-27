@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.Unit" >
     <id column="unit_id" property="unitId" jdbcType="VARCHAR" />
     <result column="building_id" property="buildingId" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
     <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
     <result column="unit_no" property="unitNo" jdbcType="VARCHAR" />
     <result column="unit_covered_area" property="unitCoveredArea" jdbcType="DECIMAL" />
@@ -18,7 +19,7 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    unit_id, building_id, unit_name, unit_no, unit_covered_area, unit_relative_proportion, 
+    unit_id, building_id,community_id, unit_name, unit_no, unit_covered_area, unit_relative_proportion,
     unit_child_relative_proportion, unit_purpose, unit_position, unit_type, unit_full_address, 
     unit_status, create_time, update_time
   </sql>
@@ -30,7 +31,7 @@
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
     SELECT	
-		u.unit_id, u.building_id, u.unit_name, u.unit_no, u.unit_covered_area, u.unit_relative_proportion, 
+		u.unit_id, u.building_id,u.community_id, u.unit_name, u.unit_no, u.unit_covered_area, u.unit_relative_proportion,
 	    u.unit_child_relative_proportion, u.unit_purpose, u.unit_position, u.unit_type, u.unit_full_address, 
 	    u.unit_status, u.create_time, u.update_time
 	FROM 
@@ -57,13 +58,13 @@
     where unit_id = #{unitId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.Unit" >
-    insert into unit (unit_id, building_id, unit_name, 
+    insert into unit (unit_id, building_id,community_id, unit_name,
       unit_no, unit_covered_area, unit_relative_proportion, 
       unit_child_relative_proportion, unit_purpose, 
       unit_position, unit_type, unit_full_address, 
       unit_status, create_time, update_time
       )
-    values (#{unitId,jdbcType=VARCHAR}, #{buildingId,jdbcType=VARCHAR}, #{unitName,jdbcType=VARCHAR}, 
+    values (#{unitId,jdbcType=VARCHAR}, #{buildingId,jdbcType=VARCHAR},#{communityId,jdbcType=VARCHAR}, #{unitName,jdbcType=VARCHAR},
       #{unitNo,jdbcType=VARCHAR}, #{unitCoveredArea,jdbcType=DECIMAL}, #{unitRelativeProportion,jdbcType=DECIMAL}, 
       #{unitChildRelativeProportion,jdbcType=DECIMAL}, #{unitPurpose,jdbcType=VARCHAR}, 
       #{unitPosition,jdbcType=VARCHAR}, #{unitType,jdbcType=INTEGER}, #{unitFullAddress,jdbcType=VARCHAR}, 
@@ -78,6 +79,9 @@
       </if>
       <if test="buildingId != null" >
         building_id,
+      </if>
+      <if test="communityId != null" >
+        community_id,
       </if>
       <if test="unitName != null" >
         unit_name,
@@ -123,6 +127,9 @@
       <if test="buildingId != null" >
         #{buildingId,jdbcType=VARCHAR},
       </if>
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
+      </if>
       <if test="unitName != null" >
         #{unitName,jdbcType=VARCHAR},
       </if>
@@ -167,6 +174,9 @@
       <if test="buildingId != null" >
         building_id = #{buildingId,jdbcType=VARCHAR},
       </if>
+      <if test="communityId != null" >
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
       <if test="unitName != null" >
         unit_name = #{unitName,jdbcType=VARCHAR},
       </if>
@@ -209,6 +219,7 @@
   <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.Unit" >
     update unit
     set building_id = #{buildingId,jdbcType=VARCHAR},
+      community_id = #{communityId,jdbcType=VARCHAR},
       unit_name = #{unitName,jdbcType=VARCHAR},
       unit_no = #{unitNo,jdbcType=VARCHAR},
       unit_covered_area = #{unitCoveredArea,jdbcType=DECIMAL},
