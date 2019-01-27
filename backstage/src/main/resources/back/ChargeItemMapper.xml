@@ -198,4 +198,13 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where item_id = #{itemId,jdbcType=VARCHAR}
   </update>
+
+  <insert id="unitAddItem">
+    insert into unit_charge_item(unit_item_id,item_id,unit_id) values
+    <foreach collection="list" item="item" separator=",">
+      (
+      #{item.unitItemId},#{item.itemId},#{item.unitId}
+      )
+    </foreach>
+  </insert>
 </mapper>

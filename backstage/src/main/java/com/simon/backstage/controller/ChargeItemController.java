@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.ChargeItem;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
+import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.backstage.service.ChargeItemService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
@@ -17,6 +18,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author fengtianying
@@ -57,25 +59,33 @@ public class ChargeItemController {
 
     @GetMapping("del")
     @ApiOperation("删除收费项目")
-    public ReturnMsg del(@RequestParam String chargeItemId){
-        logger.info("删除收费项目chargeItemId={}", chargeItemId);
-        return ReturnMsg.success(chargeItemService.del(chargeItemId));
+    public ReturnMsg del(@RequestParam String itemId){
+        logger.info("删除收费项目itemId={}", itemId);
+        return ReturnMsg.success(chargeItemService.del(itemId));
     }
 
     @GetMapping("list")
     @ApiOperation("收费项目列表")
     public ReturnMsg<PageInfo<ChargeItem>> list(BaseQueryParam baseQueryParam, HttpServletRequest request){
         logger.info("收费项目列表baseQueryParam={}",  JSONUtil.objectToJson(baseQueryParam));
-        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))) {//超级管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (!StringUtils.isEmpty(communityId)) {//普通管理员
+            baseQueryParam.setCommunityId(communityId);
         }
         return ReturnMsg.success(chargeItemService.list(baseQueryParam));
     }
 
     @GetMapping("detail")
     @ApiOperation("收费项目详情")
-    public ReturnMsg<ChargeItem> detail(String chargeItemId){
-        logger.info("收费项目列表chargeItemId={}",  JSONUtil.objectToJson(chargeItemId));
-        return ReturnMsg.success(chargeItemService.detail(chargeItemId));
+    public ReturnMsg<ChargeItem> detail(String itemId){
+        logger.info("收费项目列表itemId={}",  JSONUtil.objectToJson(itemId));
+        return ReturnMsg.success(chargeItemService.detail(itemId));
     }
 
+    @PostMapping("unitAddItem")
+    @ApiOperation("单元添加收费项目")
+    public ReturnMsg unitAddItem(@RequestBody List<UnitWithItem> unitWithItemList) {
+        logger.info("单元添加收费项目unitWithItem={}", JSONUtil.objectToJson(unitWithItemList));
+        return ReturnMsg.success(chargeItemService.unitAddItem(unitWithItemList));
+    }
 }

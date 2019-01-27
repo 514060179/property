@@ -2,7 +2,10 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.ChargeItem;
+import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.dal.vo.BaseQueryParam;
+
+import java.util.List;
 
 /**
  * @author fengtianying
@@ -19,10 +22,10 @@ public interface ChargeItemService {
 
     /**
      * 新增
-     * @param chargeItemId
+     * @param itemId
      * @return
      */
-    ChargeItem detail(String chargeItemId);
+    ChargeItem detail(String itemId);
 
     /**
      * 修改
@@ -33,10 +36,10 @@ public interface ChargeItemService {
 
     /**
      * 删除
-     * @param chargeItemId
+     * @param itemId
      * @return
      */
-    int del(String chargeItemId);
+    int del(String itemId);
 
     /**
      * 列表
@@ -44,4 +47,11 @@ public interface ChargeItemService {
      * @return
      */
     PageInfo<ChargeItem> list(BaseQueryParam baseQueryParam);
+
+    /**
+     * 单元添加收费项目
+     * @param unitWithItemList
+     * @return
+     */
+    int unitAddItem(List<UnitWithItem> unitWithItemList);
 }

@@ -68,10 +68,9 @@ public class EventController {
     @GetMapping("list")
     @ApiOperation("事件列表")
     public ReturnMsg<PageInfo<Event>> list(EventQueryParam eventQueryParam, HttpServletRequest request){
-        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
-
-        }else{
-            eventQueryParam.setCommunityId(ClaimsUtil.getCommunityId(request));
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if(!StringUtils.isEmpty(communityId)){
+            eventQueryParam.setCommunityId(communityId);
         }
         logger.info("事件列表eventQueryParam={}", JSONUtil.objectToJson(eventQueryParam));
         return ReturnMsg.success(eventService.list(eventQueryParam));
