@@ -15,7 +15,7 @@ public class AssetStorageRecord {
     @ApiModelProperty(value = "资产id",example = "qe213sg97w5asda")
     private String assetId;
 
-    @ApiModelProperty(value = "出入类型 1入库2出库",example = "1")
+    @ApiModelProperty(value = "出入类型 0入库1出库",example = "0")
     private Integer storageType;
 
     @ApiModelProperty(value = "数量",example = "2")

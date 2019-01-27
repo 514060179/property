@@ -1,5 +1,6 @@
 package com.simon.backstage.service.impl;
 
+import com.simon.backstage.constant.Status;
 import com.simon.backstage.dao.AdvanceMoneyMapper;
 import com.simon.backstage.dao.AdvanceRecordMapper;
 import com.simon.backstage.domain.model.AdvanceMoney;
@@ -52,7 +53,7 @@ public class AdvanceServiceImpl implements AdvanceService {
         advanceRecord.setAdvanceRecordId(UUIDUtil.uidString());
         advanceRecord.setAdvanceId(advanceMoney.getAdvanceId());
         advanceRecord.setAdvanceAmount(advanceMoney.getAdvanceAmount());
-        advanceRecord.setAdvanceType(0);//入账
+        advanceRecord.setAdvanceType(Status.advanceTypeIn);//入账
         advanceRecord.setAdvanceDescribe(describe.toString());
         i += advanceRecordMapper.insertSelective(advanceRecord);
         return i;
