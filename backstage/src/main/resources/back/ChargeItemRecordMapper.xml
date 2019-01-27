@@ -20,11 +20,29 @@
     record_id, user_id, unit_item_id, record_date, record_status, record_time, record_actual_amount, 
     record_amount, record_late_fee, record_late_date, record_remark, create_time, update_time
   </sql>
+  <sql id="With_Other_Column_List" >
+    cir.record_id, cir.user_id, cir.unit_item_id, cir.record_date, cir.record_status, cir.record_time, cir.record_actual_amount,
+    cir.record_amount, cir.record_late_fee, cir.record_late_date, cir.record_remark, cir.create_time, cir.update_time
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from charge_item_record
     where record_id = #{recordId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+    select
+    <include refid="With_Other_Column_List" />
+    from charge_item_record cir
+      inner join unit_charge_item uci
+    <where>
+      <!--<if test="keyword!=null and keyword!=''">-->
+        <!--CONCAT(IFNULL(asset_name,''),IFNULL(asset_position,'')) LIKE CONCAT('%', #{keyword}, '%')-->
+      <!--</if>-->
+      <if test="unitId!=null  and unitId!=''">
+        uci.unit_id = #{unitId,jdbcType=VARCHAR}
+      </if>
+    </where>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from charge_item_record
@@ -130,12 +148,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.simon.backstage.domain.model.ChargeItemRecord" >
     update charge_item_record
     <set >
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="unitItemId != null" >
-        unit_item_id = #{unitItemId,jdbcType=VARCHAR},
-      </if>
       <if test="recordDate != null" >
         record_date = #{recordDate,jdbcType=VARCHAR},
       </if>

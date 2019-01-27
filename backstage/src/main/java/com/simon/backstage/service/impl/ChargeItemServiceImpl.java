@@ -55,6 +55,7 @@ public class ChargeItemServiceImpl implements ChargeItemService {
         unitWithItemList.forEach((unitWithItem)->{
             unitWithItem.setUnitItemId(UUIDUtil.uidString());
         });
+        //TODO 临时收费立即生成收款记录
         return chargeItemMapper.unitAddItem(unitWithItemList);
     }
 }

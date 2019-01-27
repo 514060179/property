@@ -1,6 +1,9 @@
 package com.simon.backstage.dao;
 
 import com.simon.backstage.domain.model.ChargeItemRecord;
+import com.simon.dal.vo.BaseQueryParam;
+
+import java.util.List;
 
 public interface ChargeItemRecordMapper {
     int deleteByPrimaryKey(String recordId);
@@ -10,6 +13,8 @@ public interface ChargeItemRecordMapper {
     int insertSelective(ChargeItemRecord record);
 
     ChargeItemRecord selectByPrimaryKey(String recordId);
+
+    List<ChargeItemRecord> selectByCondition(BaseQueryParam baseQueryParam);
 
     int updateByPrimaryKeySelective(ChargeItemRecord record);
 

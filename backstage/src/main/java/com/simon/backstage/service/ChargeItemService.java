@@ -21,7 +21,7 @@ public interface ChargeItemService {
     ChargeItem add(ChargeItem chargeItem);
 
     /**
-     * 新增
+     * 详情
      * @param itemId
      * @return
      */
