@@ -15,6 +15,27 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <resultMap id="CommunityWithBuildingMap" type="com.simon.backstage.domain.vo.CommunityWithBuilding" >
+    <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+    <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    <result column="community_management_type" property="communityManagementType" jdbcType="TINYINT" />
+    <collection property="buildingWithUnits" ofType="com.simon.backstage.domain.vo.BuildingWithUnit" resultMap="BuildingWithUnitMap">
+    </collection>
+  </resultMap>
+  <resultMap id="BuildingWithUnitMap" type="com.simon.backstage.domain.vo.BuildingWithUnit" >
+    <id column="building_id" property="buildingId" jdbcType="VARCHAR" />
+    <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
+    <result column="building_no" property="buildingNo" jdbcType="VARCHAR" />
+    <result column="full_address" property="fullAddress" jdbcType="VARCHAR" />
+    <collection property="unitList" ofType="com.simon.backstage.domain.vo.Unit">
+      <id column="unit_id" property="unitId" jdbcType="VARCHAR" />
+      <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+      <result column="unit_no" property="unitNo" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     building_id, community_id, building_name, building_no, full_address, building_struct, 
     building_direction, floor_up_num, floor_low_num, deleted, create_time, update_time
@@ -36,6 +57,20 @@
       </if>
       <if test="communityId != null">
       	AND community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="communityWithBuildingAndUnit" resultMap="CommunityWithBuildingMap" parameterType="java.lang.String" >
+    select
+    c.community_id, c.community_no,c.community_name,c.community_management_type,
+    b.building_id, b.building_name, b.building_no, b.full_address,
+    u.unit_id, u.unit_name, u.unit_no
+    from community c
+      left join building b on c.community_id=b.community_id
+      left join unit u on b.building_id=u.building_id
+    <where>
+      <if test="communityId != null">
+        AND c.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
   </select>

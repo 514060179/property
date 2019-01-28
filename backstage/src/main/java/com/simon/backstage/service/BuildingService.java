@@ -2,7 +2,10 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Building;
+import com.simon.backstage.domain.vo.CommunityWithBuilding;
 import com.simon.dal.vo.BaseClaims;
+
+import java.util.List;
 
 /**
  * @author fengtianying
@@ -45,5 +48,11 @@ public interface BuildingService {
      * @return
      */
     PageInfo<Building> list(BaseClaims BaseClaims);
+
+    /**
+     * 获取所有
+     * @return
+     */
+    List<CommunityWithBuilding> communityWithBuildingAndUnit(String communityId);
 
 }

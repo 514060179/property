@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Building;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
+import com.simon.backstage.domain.vo.CommunityWithBuilding;
 import com.simon.backstage.service.BuildingService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
@@ -18,6 +19,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author fengtianying
@@ -68,5 +71,13 @@ public class BuildingController {
 		}
         logger.info("建筑列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
         return ReturnMsg.success(buildingService.list(baseClaims));
+    }
+
+    @GetMapping("communityWithBuildingAndUnit")
+    @ApiOperation("社区+楼宇+单元")
+    public ReturnMsg<List<CommunityWithBuilding>> communityWithBuildingAndUnit(HttpServletRequest request){
+        String communityId = ClaimsUtil.getCommunityId(request);
+        logger.info("社区列表communityId={}",  JSONUtil.objectToJson(communityId));
+        return ReturnMsg.success(buildingService.communityWithBuildingAndUnit(communityId));
     }
 }
