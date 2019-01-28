@@ -3,6 +3,7 @@ package com.simon.backstage.service.impl;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.ChargeItemMapper;
 import com.simon.backstage.domain.model.ChargeItem;
+import com.simon.backstage.domain.vo.QueryWithIdParam;
 import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.backstage.service.ChargeItemService;
 import com.simon.dal.util.UUIDUtil;
@@ -57,5 +58,11 @@ public class ChargeItemServiceImpl implements ChargeItemService {
         });
         //TODO 临时收费立即生成收款记录
         return chargeItemMapper.unitAddItem(unitWithItemList);
+    }
+
+    @Override
+    public PageInfo<ChargeItem> unitItemList(QueryWithIdParam queryWithIdParam) {
+
+        return new PageInfo<>(chargeItemMapper.unitItemList(queryWithIdParam));
     }
 }

@@ -20,6 +20,10 @@
     item_id, item_no,community_id, item_name, billing_mode, alculation_method, unit_price, late_fee,
     late_date, formula, `describe`, create_time, update_time
   </sql>
+  <sql id="With_Other_Column_List" >
+    ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price, ci.late_fee,
+    ci.late_date, ci.formula, ci.`describe`, ci.create_time, ci.update_time
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -207,4 +211,18 @@
       )
     </foreach>
   </insert>
+
+  <select id="unitItemList" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+    select
+    <include refid="With_Other_Column_List" />
+    from unit_charge_item uci inner join charge_item ci on uci.`item_id`=ci.`item_id`
+    <where>
+      <if test="keyword!=null and keyword!=''">
+        CONCAT(IFNULL(ci.item_no,''),IFNULL(ci.item_name,'')) like CONCAT('%', #{keyword}, '%')
+      </if>
+      <if test="unitId != null">
+        AND unit_id = #{unitId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
 </mapper>

@@ -4,12 +4,14 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.ChargeItem;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
+import com.simon.backstage.domain.vo.QueryWithIdParam;
 import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.backstage.service.ChargeItemService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,5 +89,13 @@ public class ChargeItemController {
     public ReturnMsg unitAddItem(@RequestBody List<UnitWithItem> unitWithItemList) {
         logger.info("单元添加收费项目unitWithItem={}", JSONUtil.objectToJson(unitWithItemList));
         return ReturnMsg.success(chargeItemService.unitAddItem(unitWithItemList));
+    }
+
+    @GetMapping("unitItemList")
+    @ApiOperation("单元收费项目列表")
+    @ApiImplicitParam(name="unitId",value="单元id",required=true)
+    public ReturnMsg unitItemList(QueryWithIdParam queryWithIdParam, @RequestParam String unitId) {
+        logger.info("单元收费项目列表unitWithItem={}", JSONUtil.objectToJson(queryWithIdParam));
+        return ReturnMsg.success(chargeItemService.unitItemList(queryWithIdParam));
     }
 }

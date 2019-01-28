@@ -22,4 +22,6 @@ public interface ChargeItemMapper {
     int updateByPrimaryKey(ChargeItem record);
 
     int unitAddItem(List<UnitWithItem> list);
+
+    List<ChargeItem> unitItemList(BaseQueryParam baseQueryParam);
 }

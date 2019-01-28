@@ -2,6 +2,7 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.ChargeItem;
+import com.simon.backstage.domain.vo.QueryWithIdParam;
 import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.dal.vo.BaseQueryParam;
 
@@ -54,4 +55,11 @@ public interface ChargeItemService {
      * @return
      */
     int unitAddItem(List<UnitWithItem> unitWithItemList);
+
+    /**
+     * 单元收费项目列表
+     * @param queryWithIdParam
+     * @return
+     */
+    PageInfo<ChargeItem> unitItemList(QueryWithIdParam queryWithIdParam);
 }
