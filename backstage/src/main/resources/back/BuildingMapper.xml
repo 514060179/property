@@ -36,6 +36,18 @@
     </collection>
   </resultMap>
 
+  <resultMap id="CommunityWithUnitMap" type="com.simon.backstage.domain.vo.CommunityWithBuilding" >
+    <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+    <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    <result column="community_management_type" property="communityManagementType" jdbcType="TINYINT" />
+    <collection property="unitList" ofType="com.simon.backstage.domain.vo.Unit">
+      <id column="unit_id" property="unitId" jdbcType="VARCHAR" />
+      <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+      <result column="unit_no" property="unitNo" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     building_id, community_id, building_name, building_no, full_address, building_struct, 
     building_direction, floor_up_num, floor_low_num, deleted, create_time, update_time
@@ -68,6 +80,18 @@
     from community c
       left join building b on c.community_id=b.community_id
       left join unit u on b.building_id=u.building_id
+    <where>
+      <if test="communityId != null">
+        AND c.community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="communityWithUnit" resultMap="CommunityWithUnitMap" parameterType="java.lang.String" >
+    select
+    c.community_id, c.community_no,c.community_name,c.community_management_type,
+    u.unit_id, u.unit_name, u.unit_no
+    from community c
+      left join unit u on c.community_id = u.community_id AND u.unit_type=3
     <where>
       <if test="communityId != null">
         AND c.community_id = #{communityId,jdbcType=VARCHAR}

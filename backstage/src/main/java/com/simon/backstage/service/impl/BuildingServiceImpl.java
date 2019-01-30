@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.BuildingMapper;
 import com.simon.backstage.domain.model.Building;
+import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.vo.CommunityWithBuilding;
 import com.simon.backstage.service.BuildingService;
 import com.simon.dal.util.UUIDUtil;
@@ -11,7 +12,9 @@ import com.simon.dal.vo.BaseClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 楼宇管理
@@ -54,6 +57,12 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public List<CommunityWithBuilding> communityWithBuildingAndUnit(String communityId) {
-        return buildingMapper.communityWithBuildingAndUnit(communityId);
+        //获取社区下的停车单元
+        List<CommunityWithBuilding> communityWithUnitList = buildingMapper.communityWithUnit(communityId);
+        Map<String,List<com.simon.backstage.domain.vo.Unit>> map = new HashMap<>();
+        communityWithUnitList.forEach(communityWithBuilding -> map.put(communityWithBuilding.getCommunityId(),communityWithBuilding.getUnitList()));
+        List<CommunityWithBuilding> communityWithBuildingList = buildingMapper.communityWithBuildingAndUnit(communityId);
+        communityWithBuildingList.forEach((communityWithBuilding -> communityWithBuilding.setUnitList(map.get(communityWithBuilding.getCommunityId()))));
+        return communityWithBuildingList;
     }
 }

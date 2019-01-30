@@ -26,6 +26,8 @@ public class CommunityWithBuilding {
 
     private List<BuildingWithUnit> buildingWithUnits;
 
+    private List<Unit> unitList;
+
     public String getCommunityId() {
         return communityId;
     }
@@ -64,5 +66,13 @@ public class CommunityWithBuilding {
 
     public void setBuildingWithUnits(List<BuildingWithUnit> buildingWithUnits) {
         this.buildingWithUnits = buildingWithUnits;
+    }
+
+    public List<Unit> getUnitList() {
+        return unitList;
+    }
+
+    public void setUnitList(List<Unit> unitList) {
+        this.unitList = unitList;
     }
 }

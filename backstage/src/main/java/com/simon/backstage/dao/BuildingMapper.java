@@ -21,6 +21,8 @@ public interface BuildingMapper {
 
     List<CommunityWithBuilding> communityWithBuildingAndUnit(@Param("communityId") String communityId);
 
+    List<CommunityWithBuilding> communityWithUnit(@Param("communityId") String communityId);
+
     int updateByPrimaryKeySelective(Building record);
 
     int updateByPrimaryKey(Building record);
