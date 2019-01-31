@@ -31,10 +31,10 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    image_id, image_url, image_thumbnail, object_id, image_type, img.create_time, img.update_time,
-    complain_id, user_id, complain_position, complain_specific_position, complain_type, 
-    complain_class_type, complain_liaisons_name, complain_liaisons_sex, 
-    complain_liaisons_email, complain_status, complain_finish_time, complain_handler,complain_describe, complain_voice,
+    img.image_id, img.image_url, img.image_thumbnail, img.object_id, img.image_type, img.create_time, img.update_time,
+    c.complain_id, c.user_id, c.complain_position, c.complain_specific_position, c.complain_type,
+    c.complain_class_type, c.complain_liaisons_name, c.complain_liaisons_sex,
+    c.complain_liaisons_email, c.complain_status, c.complain_finish_time, c.complain_handler,c.complain_describe, c.complain_voice,
     c.create_time, c.update_time
   </sql>
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims">
