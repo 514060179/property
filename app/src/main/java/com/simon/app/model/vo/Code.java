@@ -7,6 +7,8 @@ package com.simon.app.model.vo;
 public interface Code {
     //操作成功
     String success = "200";
+    //缺少参数
+    String missparam = "201";
     //未登录
     String nologin = "100";
     //登录失败

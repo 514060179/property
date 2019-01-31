@@ -42,7 +42,6 @@
     <include refid="Base_Column_List" />
     from complain c
     left join images img on c.complain_id = img.object_id  and img.object_id=0
-    left join user u on c.user_id = u.user_id
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(complain_position,''),IFNULL(complain_status,''),IFNULL(complain_handler,'')) LIKE CONCAT('%', #{keyword}, '%')

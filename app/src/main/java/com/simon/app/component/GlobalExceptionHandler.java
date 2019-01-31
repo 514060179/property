@@ -1,5 +1,7 @@
 package com.simon.app.component;
 
+import com.simon.app.model.vo.Code;
+import com.simon.app.model.vo.ReturnMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -19,10 +21,16 @@ public class GlobalExceptionHandler {
     private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
-    public String paramExceptionHandler(HttpServletRequest req, MissingServletRequestParameterException e) {
+    public ReturnMsg paramExceptionHandler(HttpServletRequest req, MissingServletRequestParameterException e) {
         e.printStackTrace();
         logger.error(">>>> system error： ", e);
-        return e.getMessage();
+        return ReturnMsg.fail(Code.missparam,"缺少参数："+e.getMessage());
+    }
+    @ExceptionHandler(value = Exception.class)
+    public ReturnMsg exceptionHandler(Exception e) {
+        e.printStackTrace();
+        logger.error(">>>> system error： ", e);
+        return ReturnMsg.fail(Code.systemError,"系统异常："+e.getMessage());
     }
 
 
