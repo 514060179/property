@@ -48,7 +48,7 @@
         CONCAT(IFNULL(complain_position,''),IFNULL(complain_status,''),IFNULL(complain_handler,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="userId != null">
-      	AND user_id = #{userId,jdbcType=VARCHAR}
+      	AND c.user_id = #{userId,jdbcType=VARCHAR}
       </if>
       <if test="communityId != null">
       	AND u.community_id = #{communityId, jdbcType=VARCHAR}
