@@ -37,7 +37,7 @@
     <include refid="Base_Column_List" />
     from 
     	notice n
-    left join images img on n.notice_id = img.object_id
+    left join images img on n.notice_id = img.object_id  and img.object_id=2
     <where>
     	<if test="keyword != null and keyword!=''" >
     		CANCAT(IFNULL(notice_title,''),IFNULL(notice_type,'')) LIKE CANCAT('%', #{keyword}, '%')
@@ -72,7 +72,7 @@
     select 
     <include refid="Base_Column_List" />
     from notice n
-    left join images img on n.notice_id = img.object_id
+    left join images img on n.notice_id = img.object_id  and img.object_id=2
     where notice_id = #{noticeId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
