@@ -41,6 +41,9 @@ public class PlaceRecord {
     @ApiModelProperty(value="更新时间",readOnly=true)
     private Date updateTime;
 
+    @ApiModelProperty(value="场所",readOnly=true)
+    private Place place;
+
     public String getRecordId() {
         return recordId;
     }
@@ -111,5 +114,13 @@ public class PlaceRecord {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
     }
 }

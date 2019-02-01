@@ -11,18 +11,38 @@
     <result column="record_status" property="recordStatus" jdbcType="CHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <association property="place" javaType="com.simon.dal.model.Place">
+      <id column="place_id" property="placeId" jdbcType="VARCHAR" />
+      <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="place_name" property="placeName" jdbcType="VARCHAR" />
+      <result column="place_traditional_name" property="placeTraditionalName" jdbcType="VARCHAR" />
+      <result column="place_english_name" property="placeEnglishName" jdbcType="VARCHAR" />
+      <result column="place_status" property="placeStatus" jdbcType="INTEGER" />
+      <result column="place_start_time" property="placeStartTime" jdbcType="TIME" />
+      <result column="place_end_time" property="placeEndTime" jdbcType="TIME" />
+      <result column="place_need_order" property="placeNeedOrder" jdbcType="INTEGER" />
+      <result column="place_upper_limit" property="placeUpperLimit" jdbcType="INTEGER" />
+      <result column="place_advance_order_day" property="placeAdvanceOrderDay" jdbcType="INTEGER" />
+      <result column="place_farthest_order_day" property="placeFarthestOrderDay" jdbcType="INTEGER" />
+      <result column="place_introduction" property="placeIntroduction" jdbcType="LONGVARCHAR" />
+      <result column="place_traditional_introduction" property="placeTraditionalIntroduction" jdbcType="LONGVARCHAR" />
+      <result column="place_english_introduction" property="placeEnglishIntroduction" jdbcType="LONGVARCHAR" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    record_id, user_id, place_id, order_date, order_start_time, order_end_time, record_status, 
-    update_time, create_time
+    pr.record_id, pr.user_id, pr.place_id, pr.order_date, pr.order_start_time, pr.order_end_time, pr.record_status,
+    pr.update_time, pr.create_time,
+    p.place_id, p.community_id, p.place_name, p.place_traditional_name, p.place_english_name, p.place_status,
+    p.place_start_time, p.place_end_time, p.place_need_order, p.place_upper_limit, p.place_advance_order_day,
+    p.place_farthest_order_day, p.place_introduction, p.place_traditional_introduction, p.place_english_introduction
   </sql>
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.model.PlaceRecord" >
   	select
   	<include refid="Base_Column_List" />
-  	from place_record
+  	from place_record pr inner join place p on pr.place_id=p.place_id
   	<where>
   		<if test="userId != null">
-  			user_Id = #{userId,jdbcType=VARCHAR}
+          pr.user_Id = #{userId,jdbcType=VARCHAR}
   		</if>
   	</where>
   </select>
@@ -47,8 +67,8 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from place_record
-    where record_id = #{recordId,jdbcType=VARCHAR}
+    from place_record pr inner join place p on pr.place_id=p.place_id
+    where pr.record_id = #{recordId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from place_record
