@@ -7,7 +7,7 @@ import java.util.Date;
 
 @ApiModel(value = "UserUnit", description = "用户单元关系")
 public class UserUnit {
-	@ApiModelProperty(value="id", readOnly=true)
+	@ApiModelProperty(value="id")
     private Long userUnitId;
 
     @ApiModelProperty(value="住户id", example="387543cd0f6b48a9a2debae3f82b54b8")

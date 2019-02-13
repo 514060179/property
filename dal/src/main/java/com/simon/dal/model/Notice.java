@@ -8,7 +8,7 @@ import java.util.List;
 
 @ApiModel(value = "Notice", description = "广告/公告/推送")
 public class Notice {
-    @ApiModelProperty(value="id",readOnly=true)
+    @ApiModelProperty(value="id")
     private String noticeId;
 
     @ApiModelProperty(value="社区id", example="c123456")

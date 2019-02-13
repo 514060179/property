@@ -10,7 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 @ApiModel(value = "PlaceRecord", description = "订场记录")
 public class PlaceRecord {
-    @ApiModelProperty(value="id",readOnly=true)
+    @ApiModelProperty(value="id")
     private String recordId;
 
     @ApiModelProperty(value="用户id",readOnly=true)

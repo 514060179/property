@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @ApiModel(value = "User", description = "用户")
 public class User {
 
-    @ApiModelProperty(value="用户id", readOnly=true)
+    @ApiModelProperty(value="用户id")
     private String userId;
 
     @ApiModelProperty(value="社区id", example="c123456")

@@ -9,7 +9,7 @@ import java.util.List;
 @ApiModel(value = "Complain", description = "投诉/保修")
 public class Complain {
 
-    @ApiModelProperty(value="id",readOnly=true)
+    @ApiModelProperty(value="id")
     private String complainId;
 
     @ApiModelProperty(value="用户id",readOnly=true)

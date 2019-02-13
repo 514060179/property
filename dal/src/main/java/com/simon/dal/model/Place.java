@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @ApiModel(value = "Place", description = "场所信息")
 public class Place {
 
-    @ApiModelProperty(value="id",readOnly=true)
+    @ApiModelProperty(value="id")
     private String placeId;
 
     @ApiModelProperty(value = "社区id",example="c123456")

@@ -9,7 +9,7 @@ import java.util.Date;
 @ApiModel(value = "Community", description = "社区")
 public class Community {
 
-    @ApiModelProperty(value="社区id",readOnly=true)
+    @ApiModelProperty(value="社区id")
     private String communityId;
 
     @ApiModelProperty("社区编号")

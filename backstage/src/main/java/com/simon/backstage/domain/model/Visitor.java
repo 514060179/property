@@ -8,7 +8,7 @@ import java.util.Date;
 @ApiModel(value = "Visitor", description = "访客记录")
 public class Visitor {
 
-    @ApiModelProperty(value ="id", readOnly=true)
+    @ApiModelProperty(value ="id")
     private String visitorId;
 
     @ApiModelProperty(value = "社区id", readOnly=true)

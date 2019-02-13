@@ -10,7 +10,7 @@ import java.util.Date;
 @ApiModel(value = "Manager", description = "管理员")
 public class Manager {
 
-    @ApiModelProperty(value ="id",readOnly=true)
+    @ApiModelProperty(value ="id")
     private String managerId;
 
     @ApiModelProperty(value = "社区id",example = "qwe4567saeqw")
