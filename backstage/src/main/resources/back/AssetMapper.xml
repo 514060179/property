@@ -16,37 +16,36 @@
     <result column="asset_english_describe" property="assetEnglishDescribe" jdbcType="LONGVARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <association property="community" javaType="com.simon.backstage.domain.vo.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
 
   <sql id="Base_Column_List" >
-    asset_id, community_id, asset_type, asset_name, asset_traditional_name, asset_english_name, 
-    asset_position, asset_traditional_position, asset_english_position, create_time, 
-    update_time
-  </sql>
-  <sql id="Blob_Column_List" >
-    asset_describe, asset_traditional_describe, asset_english_describe
+    a.asset_id, a.community_id, a.asset_type, a.asset_name, a.asset_traditional_name, a.asset_english_name,
+    a.asset_position, a.asset_traditional_position, a.asset_english_position, a.create_time,
+    a.update_time,a.asset_describe, a.asset_traditional_describe, a.asset_english_describe,
+    c..community_id,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from asset
-    where asset_id = #{assetId,jdbcType=VARCHAR}
+    from asset a inner join community c on a.community_id=c.community_id
+    where a.asset_id = #{assetId,jdbcType=VARCHAR}
   </select>
 
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
     select
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from asset
+    from asset a inner join community c on a.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(asset_name,''),IFNULL(asset_position,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(a.asset_name,''),IFNULL(a.asset_position,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-      	AND community_id = #{communityId,jdbcType=VARCHAR}
+      	AND a.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
   </select>

@@ -21,7 +21,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     a.adv_id, a.community_id, a.building_id, a.title, a.`type`, a.url, a.residence_time, a.`describe`,a.used, a.create_time,
-    a.update_time,c.community_no,c.community_name
+    c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

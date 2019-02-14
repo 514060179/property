@@ -15,7 +15,8 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    manager_id, community_id, NAME, sex,type, email, username, PASSWORD, create_time, update_time
+    manager_id, community_id, NAME, sex,type, email, username, PASSWORD, create_time, update_time,
+    c.community_id,c.community_no,c.community_name
   </sql>
   <select id="findManagerAndRole" resultType="java.lang.String" parameterType="java.lang.String">
   	SELECT
