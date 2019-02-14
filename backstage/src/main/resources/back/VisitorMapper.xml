@@ -11,27 +11,33 @@
     <result column="visitor_cause" property="visitorCause" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <association property="community" javaType="com.simon.backstage.domain.vo.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    visitor_id, community_id,building_id, visitor_name, visitor_sex, visitor_phone, visitor_cause,
-    create_time, update_time
+    v.visitor_id, v.community_id,v.building_id, v.visitor_name, v.visitor_sex, v.visitor_phone, v.visitor_cause,
+    v.create_time, v.update_time,
+    c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from visitor
-    where visitor_id = #{visitorId,jdbcType=VARCHAR}
+    from visitor v inner join community c on v.community_id=c.community_id
+    where v.visitor_id = #{visitorId,jdbcType=VARCHAR}
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
     select
     <include refid="Base_Column_List" />
-    from visitor
+    from visitor v inner join community c on v.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(visitor_name,''),IFNULL(visitor_phone,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(v.visitor_name,''),IFNULL(v.visitor_phone,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-      	AND community_id = #{communityId,jdbcType=VARCHAR}
+      	AND v.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
   </select>

@@ -68,6 +68,8 @@ public class User {
     @ApiModelProperty(value="更新时间",readOnly=true)
     private Date updateTime;
 
+    private Community community;
+
     public String getUserId() {
         return userId;
     }
@@ -210,5 +212,13 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Community getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(Community community) {
+        this.community = community;
     }
 }

@@ -20,31 +20,37 @@
     <result column="deleted" property="deleted" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <association property="community" javaType="com.simon.dal.model.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    user_id, community_id, name, english_name, sex, country_code, tel, email, birthday, 
-    id_card, username, password, portrait, marriage_system, mate_name, deleted, create_time, 
-    update_time
+    u.user_id, u.community_id, u.name, u.english_name, u.sex, u.country_code, u.tel, u.email, u.birthday,
+    u.id_card, u.username, u.password, u.portrait, u.marriage_system, u.mate_name, u.deleted, u.create_time,
+    u.update_time,
+    c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectUser" resultMap="BaseResultMap" parameterType="com.simon.dal.model.User" >
   	select 
     <include refid="Base_Column_List" />
-    from user
+    from user u inner join community c on u.community_id=c.community_id
     <where>
 	    <if test="userId != null" >
-	      user_id = #{userId,jdbcType=VARCHAR}
+	      u.user_id = #{userId,jdbcType=VARCHAR}
 	    </if>
 	    <if test="username != null" >
-	      and username = #{username,jdbcType=VARCHAR}
+	      and u.username = #{username,jdbcType=VARCHAR}
 	    </if>
 	    <if test="password != null" >
-	      and password = #{password,jdbcType=VARCHAR}
+	      and u.password = #{password,jdbcType=VARCHAR}
 	    </if>
 	    <if test="createTime != null" >
-	      and create_time = #{createTime,jdbcType=TIMESTAMP}
+	      and u.create_time = #{createTime,jdbcType=TIMESTAMP}
 	    </if>
 	    <if test="updateTime != null" >
-	      and update_time = #{updateTime,jdbcType=TIMESTAMP}
+	      and u.update_time = #{updateTime,jdbcType=TIMESTAMP}
 	    </if>
     </where>
   </select>
@@ -52,19 +58,19 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from user
-    where user_id = #{userId,jdbcType=VARCHAR}
+    from user u inner join community c on u.community_id=c.community_id
+    where u.user_id = #{userId,jdbcType=VARCHAR}
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
     select
     <include refid="Base_Column_List" />
-    from user
+    from user u inner join community c on u.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(NAME,''),IFNULL(username,''),IFNULL(email,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(u.NAME,''),IFNULL(u.username,''),IFNULL(u.email,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-      	AND community_id = #{communityId, jdbcType=VARCHAR}
+      	AND u.community_id = #{communityId, jdbcType=VARCHAR}
       </if>
     </where>
   </select>
