@@ -13,39 +13,44 @@
     <result column="used" property="used" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <association property="community" javaType="com.simon.backstage.domain.vo.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    adv_id, community_id, building_id, title, `type`, url, residence_time, `describe`,used, create_time,
-    update_time
+    a.adv_id, a.community_id, a.building_id, a.title, a.`type`, a.url, a.residence_time, a.`describe`,a.used, a.create_time,
+    a.update_time,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from advertisement
-    where adv_id = #{advId,jdbcType=VARCHAR}
+    from advertisement a inner join community c on a.community_id=c.community_id
+    where a.adv_id = #{advId,jdbcType=VARCHAR}
   </select>
   <select id="selectByConditon" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
     select
     <include refid="Base_Column_List" />
-    from advertisement
+    from advertisement a inner join community c on a.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(title,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(a.title,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-        AND community_id = #{communityId,jdbcType=VARCHAR}
+        AND a.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
   </select>
   <select id="selectUsable" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from advertisement where used=1
+    from advertisement a inner join community c on a.community_id=c.community_id where a.used=1
     <if test="communityId != null">
-      AND (community_id = #{communityId,jdbcType=VARCHAR} or community_id is null)
+      AND (a.community_id = #{communityId,jdbcType=VARCHAR} or a.community_id is null)
     </if>
     <if test="buildingId != null">
-      AND (building_id = #{buildingId,jdbcType=VARCHAR} or building_id is null)
+      AND (a.building_id = #{buildingId,jdbcType=VARCHAR} or a.building_id is null)
     </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

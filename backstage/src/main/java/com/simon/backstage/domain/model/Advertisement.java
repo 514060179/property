@@ -1,5 +1,6 @@
 package com.simon.backstage.domain.model;
 
+import com.simon.backstage.domain.vo.Community;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -41,6 +42,7 @@ public class Advertisement {
     @ApiModelProperty(value = "是否使用0否1是",example = "0")
     private Boolean used;
 
+    private Community community;
     public String getAdvId() {
         return advId;
     }
@@ -127,5 +129,13 @@ public class Advertisement {
 
     public void setUsed(Boolean used) {
         this.used = used;
+    }
+
+    public Community getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(Community community) {
+        this.community = community;
     }
 }
