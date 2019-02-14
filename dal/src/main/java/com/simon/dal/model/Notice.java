@@ -46,6 +46,8 @@ public class Notice {
     @ApiModelProperty(value="详情（英文）", example="In order to cultivate everyone's awareness of environmental protection, the property now advocates that owners/households classify garbage...")
     private String noticeEnglishDetails;
 
+    private Community community;
+
     public String getNoticeDetails() {
         return noticeDetails;
     }
@@ -148,5 +150,13 @@ public class Notice {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Community getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(Community community) {
+        this.community = community;
     }
 }

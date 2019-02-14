@@ -14,36 +14,36 @@
     <result column="event_content" property="eventContent" jdbcType="LONGVARCHAR" />
     <result column="event_cause" property="eventCause" jdbcType="LONGVARCHAR" />
     <result column="event_solve" property="eventSolve" jdbcType="LONGVARCHAR" />
+    <association property="community" javaType="com.simon.backstage.domain.vo.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    event_id, community_id, event_status, event_remark, event_date, event_type, event_finish_date, 
-    create_time, update_time
-  </sql>
-  <sql id="Blob_Column_List" >
-    event_content, event_cause, event_solve
+    e.event_id, e.community_id, e.event_status, e.event_remark, e.event_date, e.event_type, e.event_finish_date,
+    e.create_time, e.update_time,e.event_content, e.event_cause, e.event_solve,
+    c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from event
-    where event_id = #{eventId,jdbcType=VARCHAR}
+    from event e inner join community c on e.community_id=c.community_id
+    where e.event_id = #{eventId,jdbcType=VARCHAR}
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.backstage.domain.vo.EventQueryParam" >
     select
-    <include refid="Base_Column_List" />,
-    <include refid="Blob_Column_List" />
-    from event
+    <include refid="Base_Column_List" />
+    from event e left join community c on e.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(event_remark,''),IFNULL(event_content,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(e.event_remark,''),IFNULL(e.event_content,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-      	AND community_id = #{communityId,jdbcType=VARCHAR}
+      	AND e.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
       <if test="eventType != null">
-      	AND event_type = #{eventType,jdbcType=INTEGER}
+      	AND e.event_type = #{eventType,jdbcType=INTEGER}
       </if>
     </where>
   </select>

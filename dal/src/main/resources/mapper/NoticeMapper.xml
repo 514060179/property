@@ -14,7 +14,11 @@
     <result column="notice_details" property="noticeDetails" jdbcType="LONGVARCHAR" />
     <result column="notice_traditional_details" property="noticeTraditionalDetails" jdbcType="LONGVARCHAR" />
     <result column="notice_english_details" property="noticeEnglishDetails" jdbcType="LONGVARCHAR" />
-    
+    <association property="community" javaType="com.simon.dal.model.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
     <collection property="noticeImage" ofType="com.simon.dal.model.Images" >
     	<id column="image_id" property="imageId" jdbcType="VARCHAR"/>
     	<result column="object_id" property="objectId" jdbcType="VARCHAR"/>
@@ -27,26 +31,27 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-  	image_id, image_url, image_thumbnail, object_id, image_type, img.create_time, img.update_time,
-    notice_id, community_id,building_id, notice_type, notice_title, notice_traditional_title, notice_english_title,
-    notice_image, n.create_time, n.update_time, notice_details, notice_traditional_details, notice_english_details
+  	img.image_id, img.image_url, img.image_thumbnail, img.object_id, img.image_type, img.create_time, img.update_time,
+    n.notice_id, n.community_id,n.building_id, n.notice_type, n.notice_title, n.notice_traditional_title, n.notice_english_title,
+    n.notice_image, n.create_time, n.update_time, n.notice_details, n.notice_traditional_details, n.notice_english_details,
+    c.community_id,c.community_no,c.community_name
   </sql>
 
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims">
   	select 
     <include refid="Base_Column_List" />
     from 
-    	notice n
+    	notice n inner join community c on n.community_id=c.community_id
     left join images img on n.notice_id = img.object_id  and img.object_id=2
     <where>
     	<if test="keyword != null and keyword!=''" >
-    		CANCAT(IFNULL(notice_title,''),IFNULL(notice_type,'')) LIKE CANCAT('%', #{keyword}, '%')
+    		CANCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CANCAT('%', #{keyword}, '%')
     	</if>
     	<if test="communityId != null">
-    		AND community_id = #{communityId,jdbcType=VARCHAR}
+    		AND n.community_id = #{communityId,jdbcType=VARCHAR}
     	</if>
     	<if test="buildingId != null">
-    		AND building_id = #{buildingId,jdbcType=VARCHAR}
+    		AND n.building_id = #{buildingId,jdbcType=VARCHAR}
     	</if>
     </where>
   </select>
@@ -54,26 +59,26 @@
   	select
     <include refid="Base_Column_List" />
     from
-    	notice n
-    left join images img on n.notice_id = img.object_id and image_type=2
+    	notice n inner join community c on n.community_id=c.community_id
+    left join images img on n.notice_id = img.object_id and image_type=2l
     <where>
     	<if test="keyword != null and keyword!=''" >
-    		CANCAT(IFNULL(notice_title,''),IFNULL(notice_type,'')) LIKE CANCAT('%', #{keyword}, '%')
+    		CANCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CANCAT('%', #{keyword}, '%')
     	</if>
     	<if test="communityId != null">
-    		AND (community_id = #{communityId,jdbcType=VARCHAR} or community_id is null)
+    		AND (n.community_id = #{communityId,jdbcType=VARCHAR} or community_id is null)
     	</if>
     	<if test="buildingId != null">
-    		AND (building_id = #{buildingId,jdbcType=VARCHAR} or building_id is null)
+    		AND (n.building_id = #{buildingId,jdbcType=VARCHAR} or building_id is null)
     	</if>
     </where>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from notice n
+    from notice n inner join community c on n.community_id=c.community_id
     left join images img on n.notice_id = img.object_id  and img.object_id=2
-    where notice_id = #{noticeId,jdbcType=VARCHAR}
+    where n.notice_id = #{noticeId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from notice
