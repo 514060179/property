@@ -76,9 +76,9 @@ public class ManagerController {
     
     @GetMapping("detail")
     @ApiOperation("管理员详情")
-    public ReturnMsg<Manager> detail(HttpServletRequest request){
-    	String managerId = ClaimsUtil.getManagerId(request);
-    	logger.info("管理员详情managerId={}", JSONUtil.objectToJson(managerId));
-    	return ReturnMsg.success(managerService.findOne(managerId));
+    public ReturnMsg<Manager> detail(HttpServletRequest request,String managerId){
+    	String mId = managerId==null?ClaimsUtil.getManagerId(request):managerId;
+    	logger.info("管理员详情managerId={}", JSONUtil.objectToJson(mId));
+    	return ReturnMsg.success(managerService.findOne(mId));
     }
 }

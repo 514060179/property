@@ -1,5 +1,6 @@
 package com.simon.backstage.domain.model;
 
+import com.simon.backstage.domain.vo.Community;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -48,6 +49,8 @@ public class Manager {
 
     @ApiModelProperty(value = "角色id集合",example = "5,6")
     private String roleIds;
+
+    private Community community;
 
     public String getManagerId() {
         return managerId;
@@ -143,5 +146,13 @@ public class Manager {
 
     public void setRoleIds(String roleIds) {
         this.roleIds = roleIds;
+    }
+
+    public Community getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(Community community) {
+        this.community = community;
     }
 }

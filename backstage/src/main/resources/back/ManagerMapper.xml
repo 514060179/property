@@ -13,9 +13,14 @@
     <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <association property="community" javaType="com.simon.backstage.domain.vo.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    manager_id, community_id, NAME, sex,type, email, username, PASSWORD, create_time, update_time,
+    m.manager_id, m.community_id, m.`NAME`, m.sex,m.`type`, m.email, m.username, m.PASSWORD, m.create_time, m.update_time,
     c.community_id,c.community_no,c.community_name
   </sql>
   <select id="findManagerAndRole" resultType="java.lang.String" parameterType="java.lang.String">
@@ -30,55 +35,54 @@
   <select id="findManager" resultMap="BaseResultMap" parameterType="com.simon.backstage.domain.model.Manager">
   	select
   	<include refid="Base_Column_List"/>
-  	from manager
+  	from manager m inner join community c on m.community_id=c.community_id
   	<where>
   	  <if test="managerId != null" >
-        manager_id = #{managerId,jdbcType=VARCHAR}
+        m.manager_id = #{managerId,jdbcType=VARCHAR}
       </if>
       <if test="communityId != null" >
-        and community_id = #{communityId,jdbcType=VARCHAR}
+        and m.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
       <if test="name != null" >
-        and NAME = #{name,jdbcType=VARCHAR}
+        and m.`NAME` = #{name,jdbcType=VARCHAR}
       </if>
       <if test="sex != null" >
-        and sex = #{sex,jdbcType=INTEGER}
+        and m.sex = #{sex,jdbcType=INTEGER}
       </if>
       <if test="type != null" >
-        and type = #{type,jdbcType=INTEGER}
+        and m.`type` = #{type,jdbcType=INTEGER}
       </if>
       <if test="email != null" >
-        and email = #{email,jdbcType=VARCHAR}
+        and m.email = #{email,jdbcType=VARCHAR}
       </if>
       <if test="username != null" >
-        and username = #{username,jdbcType=VARCHAR}
+        and m.username = #{username,jdbcType=VARCHAR}
       </if>
       <if test="password != null" >
-        and PASSWORD = #{password,jdbcType=VARCHAR}
+        and m.PASSWORD = #{password,jdbcType=VARCHAR}
       </if>
       <if test="createTime != null" >
-        and create_time = #{createTime,jdbcType=TIMESTAMP}
+        and m.create_time = #{createTime,jdbcType=TIMESTAMP}
       </if>
       <if test="updateTime != null" >
-        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        and m.update_time = #{updateTime,jdbcType=TIMESTAMP}
       </if>
   	</where>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from manager
-    where manager_id = #{managerId,jdbcType=VARCHAR}
+    from manager m left join community c on m.community_id=c.community_id
+    where m.manager_id = #{managerId,jdbcType=VARCHAR}
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
     select
-    m.community_id, manager_id, community_name, NAME, sex,type, 
-    	email, username, PASSWORD, m.create_time, m.update_time
+    <include refid="Base_Column_List"/>
     from manager m
-    INNER JOIN community c ON m.community_id=c.community_id
+    inner join community c on m.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(NAME,''),IFNULL(username,''),IFNULL(email,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(m.`NAME`,''),IFNULL(m.username,''),IFNULL(m.email,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
     </where>
   </select>
