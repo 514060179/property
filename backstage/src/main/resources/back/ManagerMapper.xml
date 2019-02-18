@@ -85,6 +85,7 @@
         CONCAT(IFNULL(m.`NAME`,''),IFNULL(m.username,''),IFNULL(m.email,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
     </where>
+    order by m.create_time desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from manager

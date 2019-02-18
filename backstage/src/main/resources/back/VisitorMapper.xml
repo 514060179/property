@@ -40,6 +40,7 @@
       	AND v.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
+    order by v.create_time desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from visitor

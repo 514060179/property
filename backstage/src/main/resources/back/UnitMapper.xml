@@ -51,6 +51,7 @@
       	AND b.building_id = #{buildingId, jdbcType=VARCHAR}
       </if>
     </where>
+    order by b.create_time desc
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

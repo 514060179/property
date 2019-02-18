@@ -43,6 +43,7 @@
         uci.unit_id = #{unitId,jdbcType=VARCHAR}
       </if>
     </where>
+    order by cir.create_time desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from charge_item_record

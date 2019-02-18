@@ -46,6 +46,7 @@
       	AND e.event_type = #{eventType,jdbcType=INTEGER}
       </if>
     </where>
+    order by e.create_time desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from event

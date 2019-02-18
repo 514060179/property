@@ -71,6 +71,7 @@
       	AND community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
+    order by create_time desc
   </select>
   <select id="communityWithBuildingAndUnit" resultMap="CommunityWithBuildingMap" parameterType="java.lang.String" >
     select
