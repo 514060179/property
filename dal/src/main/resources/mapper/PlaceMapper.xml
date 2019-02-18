@@ -49,6 +49,7 @@
 	  	AND community_id = #{communityId,jdbcType=VARCHAR}
 	  </if>
     </where>
+    order by p.create_time desc
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

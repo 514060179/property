@@ -45,6 +45,7 @@
           pr.user_Id = #{userId,jdbcType=VARCHAR}
   		</if>
   	</where>
+    order by pr.create_time desc
   </select>
   <select id="findPlaceTime" parameterType="com.simon.dal.model.PlaceRecord" resultType="int">
 	SELECT 

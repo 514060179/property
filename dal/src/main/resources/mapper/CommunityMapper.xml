@@ -305,5 +305,6 @@
         CONCAT(IFNULL(community_name,''),IFNULL(community_no,''),IFNULL(community_address,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
     </where>
+    order by create_time desc
   </select>
 </mapper>

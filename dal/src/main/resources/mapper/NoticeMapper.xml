@@ -54,6 +54,7 @@
     		AND n.building_id = #{buildingId,jdbcType=VARCHAR}
     	</if>
     </where>
+    order by n.create_time desc
   </select>
   <select id="touchList" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims">
   	select
