@@ -49,7 +49,7 @@ public class Manager {
 
     @ApiModelProperty(value = "角色id集合",example = "5,6")
     private String roleIds;
-
+    @ApiModelProperty(hidden = true)
     private Community community;
 
     public String getManagerId() {

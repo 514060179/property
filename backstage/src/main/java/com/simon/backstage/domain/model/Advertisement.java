@@ -41,7 +41,7 @@ public class Advertisement {
 
     @ApiModelProperty(value = "是否使用0否1是",example = "0")
     private Boolean used;
-
+    @ApiModelProperty(hidden = true)
     private Community community;
     public String getAdvId() {
         return advId;

@@ -46,7 +46,7 @@ public class Event {
 
     @ApiModelProperty(value = "解决方案",example = "解决方案")
     private String eventSolve;
-
+    @ApiModelProperty(hidden = true)
     private Community community;
 
     public String getEventContent() {

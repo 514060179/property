@@ -46,6 +46,7 @@ public class Notice {
     @ApiModelProperty(value="详情（英文）", example="In order to cultivate everyone's awareness of environmental protection, the property now advocates that owners/households classify garbage...")
     private String noticeEnglishDetails;
 
+    @ApiModelProperty(hidden = true)
     private Community community;
 
     public String getNoticeDetails() {

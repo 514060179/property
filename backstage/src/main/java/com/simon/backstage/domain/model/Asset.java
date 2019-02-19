@@ -44,7 +44,7 @@ public class Asset {
 
     @ApiModelProperty(hidden = true)
     private Date updateTime;
-
+    @ApiModelProperty(hidden = true)
     private Community community;
 
     @ApiModelProperty(value = "描述",example = "描述信息")

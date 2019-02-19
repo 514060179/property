@@ -35,7 +35,7 @@ public class Visitor {
 
     @ApiModelProperty(value ="更新时间", readOnly=true)
     private Date updateTime;
-
+    @ApiModelProperty(hidden = true)
     private Community community;
 
     public String getBuildingId() {
