@@ -2,6 +2,8 @@ package com.simon.backstage.dao;
 
 import com.simon.backstage.domain.model.AdvanceRecord;
 
+import java.util.List;
+
 public interface AdvanceRecordMapper {
     int deleteByPrimaryKey(String advanceRecordId);
 
@@ -14,4 +16,11 @@ public interface AdvanceRecordMapper {
     int updateByPrimaryKeySelective(AdvanceRecord record);
 
     int updateByPrimaryKey(AdvanceRecord record);
+
+    /**
+     * 批量新增
+     * @param list
+     * @return
+     */
+    int batchAdd(List<AdvanceRecord> list);
 }

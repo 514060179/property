@@ -2,6 +2,8 @@ package com.simon.backstage.dao;
 
 import com.simon.backstage.domain.model.AdvanceMoney;
 
+import java.util.List;
+
 public interface AdvanceMoneyMapper {
     int deleteByPrimaryKey(String advanceId);
 
@@ -16,4 +18,18 @@ public interface AdvanceMoneyMapper {
     int updateByPrimaryKeySelective(AdvanceMoney record);
 
     int updateByPrimaryKey(AdvanceMoney record);
+
+
+    /**
+     * 获取所有账号
+     * @return
+     */
+    List<AdvanceMoney> allAdvanceMoney();
+
+    /**
+     * 批量更新
+     * @param list
+     * @return
+     */
+    int batchUpdate(List<AdvanceMoney> list);
 }

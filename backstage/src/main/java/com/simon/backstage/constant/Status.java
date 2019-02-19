@@ -32,6 +32,14 @@ public interface Status {
         //1临时性收费
         int itemBillingModeTemporary = 1;
 
+        //收费方式0固定收费1公式收费
+        int alculationMethodFixed = 0;
+        int alculationMethodFormula = 1;
+        //收费状态0欠费1已付2预支付
+        int recordStatusOwe = 0;
+        int recordStatusPaid = 1;
+        int recordStatusPre = 2;
+
         //事件进度0开始1待定2完成
         int eventStatusAction = 0;
         int eventStatusStandby = 1;

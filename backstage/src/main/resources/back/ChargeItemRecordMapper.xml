@@ -198,4 +198,17 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where record_id = #{recordId,jdbcType=VARCHAR}
   </update>
+
+  <insert id="addBatch" keyProperty="jnId" useGeneratedKeys="true">
+    insert into charge_item_record (record_id, user_id, unit_item_id,
+    record_date, record_status, record_time,
+    record_actual_amount, record_amount, record_late_fee,
+    record_late_date, record_remark) values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.recordId,jdbcType=VARCHAR}, #{item.userId,jdbcType=VARCHAR}, #{item.unitItemId,jdbcType=VARCHAR},
+      #{item.recordDate,jdbcType=VARCHAR}, #{item.recordStatus,jdbcType=INTEGER}, #{item.recordTime,jdbcType=TIMESTAMP},
+      #{item.recordActualAmount,jdbcType=DECIMAL}, #{item.recordAmount,jdbcType=DECIMAL}, #{item.recordLateFee,jdbcType=DECIMAL},
+      #{item.recordLateDate,jdbcType=INTEGER}, #{item.recordRemark,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
 </mapper>

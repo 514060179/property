@@ -9,6 +9,7 @@
     <result column="billing_mode" property="billingMode" jdbcType="INTEGER" />
     <result column="alculation_method" property="alculationMethod" jdbcType="INTEGER" />
     <result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+    <result column="additional_cost" property="additionalCost" jdbcType="DECIMAL" />
     <result column="late_fee" property="lateFee" jdbcType="INTEGER" />
     <result column="late_date" property="lateDate" jdbcType="INTEGER" />
     <result column="formula" property="formula" jdbcType="VARCHAR" />
@@ -16,13 +17,55 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <resultMap id="WithUserResultMap" type="com.simon.backstage.domain.vo.UnitItemWithUser">
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="unit_item_id" property="unitItemId" jdbcType="VARCHAR" />
+    <association property="chargeItem" javaType="com.simon.backstage.domain.model.ChargeItem">
+      <id column="item_id" property="itemId" jdbcType="VARCHAR" />
+      <result column="item_no" property="itemNo" jdbcType="VARCHAR" />
+      <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+      <result column="billing_mode" property="billingMode" jdbcType="INTEGER" />
+      <result column="alculation_method" property="alculationMethod" jdbcType="INTEGER" />
+      <result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+      <result column="additional_cost" property="additionalCost" jdbcType="DECIMAL" />
+      <result column="late_fee" property="lateFee" jdbcType="INTEGER" />
+      <result column="late_date" property="lateDate" jdbcType="INTEGER" />
+      <result column="formula" property="formula" jdbcType="VARCHAR" />
+      <result column="describe" property="describe" jdbcType="VARCHAR" />
+    </association>
+    <association property="unit" javaType="com.simon.backstage.domain.model.Unit">
+      <id column="unit_id" property="unitId" jdbcType="VARCHAR" />
+      <result column="building_id" property="buildingId" jdbcType="VARCHAR" />
+      <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+      <result column="unit_no" property="unitNo" jdbcType="VARCHAR" />
+      <result column="unit_covered_area" property="unitCoveredArea" jdbcType="DECIMAL" />
+      <result column="unit_relative_proportion" property="unitRelativeProportion" jdbcType="DECIMAL" />
+      <result column="unit_child_relative_proportion" property="unitChildRelativeProportion" jdbcType="DECIMAL" />
+      <result column="unit_purpose" property="unitPurpose" jdbcType="VARCHAR" />
+      <result column="unit_position" property="unitPosition" jdbcType="VARCHAR" />
+      <result column="unit_type" property="unitType" jdbcType="INTEGER" />
+      <result column="unit_full_address" property="unitFullAddress" jdbcType="VARCHAR" />
+      <result column="unit_status" property="unitStatus" jdbcType="INTEGER" />
+    </association>
+  </resultMap>
   <sql id="Base_Column_List" >
-    item_id, item_no,community_id, item_name, billing_mode, alculation_method, unit_price, late_fee,
+    item_id, item_no,community_id, item_name, billing_mode, alculation_method, unit_price,additional_cost, late_fee,
     late_date, formula, `describe`, create_time, update_time
   </sql>
   <sql id="With_Other_Column_List" >
-    ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price, ci.late_fee,
+    ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price,ci.additional_cost, ci.late_fee,
     ci.late_date, ci.formula, ci.`describe`, ci.create_time, ci.update_time
+  </sql>
+  <sql id="With_User_Column_List" >
+    ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price,ci.additional_cost, ci.late_fee,
+    ci.late_date, ci.formula, ci.`describe`,
+    uci.unit_item_id,uu.user_id,
+    u.unit_id, u.building_id,u.community_id, u.unit_name, u.unit_no, u.unit_covered_area, u.unit_relative_proportion,
+    u.unit_child_relative_proportion, u.unit_purpose, u.unit_position, u.unit_type, u.unit_full_address,
+    u.unit_status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -50,12 +93,12 @@
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.ChargeItem" >
     insert into charge_item (item_id, item_no,community_id, item_name,
-      billing_mode, alculation_method, unit_price, 
+      billing_mode, alculation_method, unit_price, additional_cost,
       late_fee, late_date, formula, 
       `describe`, create_time, update_time
       )
     values (#{itemId,jdbcType=VARCHAR}, #{itemNo,jdbcType=VARCHAR},#{communityId,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR},
-      #{billingMode,jdbcType=INTEGER}, #{alculationMethod,jdbcType=INTEGER}, #{unitPrice,jdbcType=DECIMAL}, 
+      #{billingMode,jdbcType=INTEGER}, #{alculationMethod,jdbcType=INTEGER}, #{unitPrice,jdbcType=DECIMAL},#{additionalCost,jdbcType=DECIMAL},
       #{lateFee,jdbcType=INTEGER}, #{lateDate,jdbcType=INTEGER}, #{formula,jdbcType=VARCHAR}, 
       #{describe,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
@@ -83,6 +126,9 @@
       </if>
       <if test="unitPrice != null" >
         unit_price,
+      </if>
+      <if test="additionalCost != null" >
+        additional_cost,
       </if>
       <if test="lateFee != null" >
         late_fee,
@@ -125,6 +171,9 @@
       <if test="unitPrice != null" >
         #{unitPrice,jdbcType=DECIMAL},
       </if>
+      <if test="additionalCost != null" >
+        #{additionalCost,jdbcType=DECIMAL},
+      </if>
       <if test="lateFee != null" >
         #{lateFee,jdbcType=INTEGER},
       </if>
@@ -166,6 +215,9 @@
       <if test="unitPrice != null" >
         unit_price = #{unitPrice,jdbcType=DECIMAL},
       </if>
+      <if test="additionalCost != null" >
+        additional_cost = #{additionalCost,jdbcType=DECIMAL},
+      </if>
       <if test="lateFee != null" >
         late_fee = #{lateFee,jdbcType=INTEGER},
       </if>
@@ -195,6 +247,7 @@
       billing_mode = #{billingMode,jdbcType=INTEGER},
       alculation_method = #{alculationMethod,jdbcType=INTEGER},
       unit_price = #{unitPrice,jdbcType=DECIMAL},
+      additional_cost = #{additionalCost,jdbcType=DECIMAL},
       late_fee = #{lateFee,jdbcType=INTEGER},
       late_date = #{lateDate,jdbcType=INTEGER},
       formula = #{formula,jdbcType=VARCHAR},
@@ -226,5 +279,14 @@
       </if>
     </where>
     order by uci.create_time desc
+  </select>
+
+  <select id="cycleUnitItem" resultMap="WithUserResultMap">
+    select
+    <include refid="With_User_Column_List" />
+    from unit_charge_item uci inner join charge_item ci on uci.`item_id`=ci.`item_id`
+    inner join user_unit uu on uci.unit_id=uu.unit_id and `owner`=1
+    inner join unit u on uu.unit_id=u.unit_id
+    where ci.billing_mode=0
   </select>
 </mapper>

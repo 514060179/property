@@ -3,6 +3,7 @@ package com.simon.backstage.service;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.ChargeItem;
 import com.simon.backstage.domain.vo.QueryWithIdParam;
+import com.simon.backstage.domain.vo.UnitItemWithUser;
 import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.dal.vo.BaseQueryParam;
 
@@ -62,4 +63,10 @@ public interface ChargeItemService {
      * @return
      */
     PageInfo<ChargeItem> unitItemList(QueryWithIdParam queryWithIdParam);
+
+    /**
+     * 获取所有周期性收费项目
+     * @return
+     */
+    List<UnitItemWithUser> cycleUnitItem();
 }

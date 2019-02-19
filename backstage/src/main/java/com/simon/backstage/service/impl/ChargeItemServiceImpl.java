@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.ChargeItemMapper;
 import com.simon.backstage.domain.model.ChargeItem;
 import com.simon.backstage.domain.vo.QueryWithIdParam;
+import com.simon.backstage.domain.vo.UnitItemWithUser;
 import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.backstage.service.ChargeItemService;
 import com.simon.dal.util.UUIDUtil;
@@ -64,5 +65,10 @@ public class ChargeItemServiceImpl implements ChargeItemService {
     public PageInfo<ChargeItem> unitItemList(QueryWithIdParam queryWithIdParam) {
 
         return new PageInfo<>(chargeItemMapper.unitItemList(queryWithIdParam));
+    }
+
+    @Override
+    public List<UnitItemWithUser> cycleUnitItem() {
+        return chargeItemMapper.cycleUnitItem();
     }
 }

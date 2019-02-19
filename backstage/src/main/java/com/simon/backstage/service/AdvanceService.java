@@ -1,6 +1,9 @@
 package com.simon.backstage.service;
 
 import com.simon.backstage.domain.model.AdvanceMoney;
+import com.simon.backstage.domain.model.AdvanceRecord;
+
+import java.util.List;
 
 /**
  * @author fengtianying
@@ -21,6 +24,13 @@ public interface AdvanceService {
      * @return
      */
     int add(AdvanceMoney advanceMoney);
+
+
+    /**
+     * 获取所有账号
+     * @return
+     */
+    List<AdvanceMoney> allAdvanceMoney();
 
 //    /**
 //     * 创建预收账户

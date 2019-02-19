@@ -1,6 +1,7 @@
 package com.simon.backstage.dao;
 
 import com.simon.backstage.domain.model.ChargeItem;
+import com.simon.backstage.domain.vo.UnitItemWithUser;
 import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.dal.vo.BaseQueryParam;
 
@@ -24,4 +25,6 @@ public interface ChargeItemMapper {
     int unitAddItem(List<UnitWithItem> list);
 
     List<ChargeItem> unitItemList(BaseQueryParam baseQueryParam);
+
+    List<UnitItemWithUser> cycleUnitItem();
 }

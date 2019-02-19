@@ -1,13 +1,21 @@
 package com.simon.backstage.service.impl;
 
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.dao.AdvanceMoneyMapper;
+import com.simon.backstage.dao.AdvanceRecordMapper;
 import com.simon.backstage.dao.ChargeItemRecordMapper;
+import com.simon.backstage.domain.model.AdvanceMoney;
+import com.simon.backstage.domain.model.AdvanceRecord;
 import com.simon.backstage.domain.model.ChargeItemRecord;
 import com.simon.backstage.service.ChargeItemRecordService;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author fengtianying
@@ -18,6 +26,10 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
 
     @Autowired
     private ChargeItemRecordMapper chargeItemRecordMapper;
+    @Autowired
+    private AdvanceMoneyMapper advanceMoneyMapper;
+    @Autowired
+    private AdvanceRecordMapper advanceRecordMapper;
     @Override
     public ChargeItemRecord add(ChargeItemRecord chargeItemRecord) {
         chargeItemRecord.setRecordId(UUIDUtil.uidString());
@@ -25,6 +37,20 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
             return chargeItemRecord;
         }
         return null;
+    }
+
+    @Transactional
+    @Override
+    public int addBatch(List<ChargeItemRecord> chargeItemRecordList, List<AdvanceMoney> advanceMonies, List<AdvanceRecord> advanceRecords) {
+        //1.更新账户
+        if (!Objects.isNull(advanceMonies)&&advanceMonies.size()>0)
+            advanceMoneyMapper.batchUpdate(advanceMonies);
+        //2.更新账户记录
+        if (!Objects.isNull(advanceRecords)&&advanceRecords.size()>0)
+            advanceRecordMapper.batchAdd(advanceRecords);
+        //3.批量加入收费记录
+        chargeItemRecordMapper.addBatch(chargeItemRecordList);
+        return 1;
     }
 
     @Override

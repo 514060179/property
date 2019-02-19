@@ -96,4 +96,19 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where advance_id = #{advanceId,jdbcType=VARCHAR}
   </update>
+  <select id="allAdvanceMoney" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from advance_money
+  </select>
+
+  <update id="batchUpdate"  parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+      update advance_money
+      <set>
+        advance_amount=advance_amount-#{item.advanceAmount}
+      </set>
+      where user_id = #{item.userId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
 </mapper>

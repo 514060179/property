@@ -20,6 +20,8 @@ public class ChargeItem {
     private Integer alculationMethod;
     @ApiModelProperty(value = "计算单价",example = "11.2")
     private BigDecimal unitPrice;
+    @ApiModelProperty(value = "额外费用(基金费用)",example = "450")
+    private BigDecimal additionalCost;
     @ApiModelProperty(value = "滞纳金率(单位:百分之一)",example = "20")
     private Integer lateFee;
     @ApiModelProperty(value = "滞纳开始天数",example = "20")
@@ -87,6 +89,14 @@ public class ChargeItem {
 
     public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public BigDecimal getAdditionalCost() {
+        return additionalCost;
+    }
+
+    public void setAdditionalCost(BigDecimal additionalCost) {
+        this.additionalCost = additionalCost;
     }
 
     public Integer getLateFee() {

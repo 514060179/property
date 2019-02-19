@@ -12,6 +12,8 @@ public interface ChargeItemRecordMapper {
 
     int insertSelective(ChargeItemRecord record);
 
+    int addBatch(List<ChargeItemRecord> list);
+
     ChargeItemRecord selectByPrimaryKey(String recordId);
 
     List<ChargeItemRecord> selectByCondition(BaseQueryParam baseQueryParam);

@@ -115,4 +115,13 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where advance_record_id = #{advanceRecordId,jdbcType=VARCHAR}
   </update>
+  <insert id="batchAdd">
+    INSERT INTO advance_record (advance_record_id, advance_id, advance_amount,
+    advance_type, advance_describe) VALUES
+    <foreach collection="list" item="item" separator=",">
+      (
+      #{item.advanceRecordId},#{item.advanceId},#{item.advanceAmount},#{item.advanceType},#{item.advanceDescribe}
+      )
+    </foreach>
+  </insert>
 </mapper>

@@ -1,8 +1,12 @@
 package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.domain.model.AdvanceMoney;
+import com.simon.backstage.domain.model.AdvanceRecord;
 import com.simon.backstage.domain.model.ChargeItemRecord;
 import com.simon.dal.vo.BaseQueryParam;
+
+import java.util.List;
 
 /**
  * @author fengtianying
@@ -16,6 +20,12 @@ public interface ChargeItemRecordService {
      * @return
      */
     ChargeItemRecord add(ChargeItemRecord chargeItemRecord);
+    /**
+     * 批量新增
+     * @param chargeItemRecordList
+     * @return
+     */
+    int addBatch(List<ChargeItemRecord> chargeItemRecordList,List<AdvanceMoney> advanceMonies,List<AdvanceRecord> advanceRecords);
 
     /**
      * 详情
