@@ -27,7 +27,7 @@
     a.asset_id, a.community_id, a.asset_type, a.asset_name, a.asset_traditional_name, a.asset_english_name,
     a.asset_position, a.asset_traditional_position, a.asset_english_position, a.create_time,
     a.update_time,a.asset_describe, a.asset_traditional_describe, a.asset_english_describe,
-    c..community_id,c.community_no,c.community_name
+    c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
