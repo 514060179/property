@@ -55,7 +55,8 @@ public class FileController {
             relativePath = resourceConfig.getNoticePath();
             filePath += relativePath;
         } else if(3 == type){ //广告
-            filePath += resourceConfig.getAdvPath();
+            relativePath += resourceConfig.getAdvPath();
+            filePath += relativePath;
         }else {
             filePath += "/";
         }
