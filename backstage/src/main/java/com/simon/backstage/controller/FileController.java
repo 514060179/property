@@ -46,7 +46,7 @@ public class FileController {
 
         List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
 
-        String relativePath = "/";
+        String relativePath = "";
         String filePath = resourceConfig.getRootPath(); // 上传后的路径
         if (1 == type) {//场所图片
             relativePath = resourceConfig.getPlacePath();
