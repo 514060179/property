@@ -17,7 +17,7 @@ public class Notice {
     @ApiModelProperty(value="建筑id", example="b123456")
     private String buildingId;
 
-    @ApiModelProperty(value="通知类型", example="1")
+    @ApiModelProperty(value="通知类型", example="app")
     private String noticeType;
 
     @ApiModelProperty(value="场所标题(简体)", example="关于垃圾处理问题")

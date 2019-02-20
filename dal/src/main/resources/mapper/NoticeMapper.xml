@@ -61,16 +61,16 @@
     <include refid="Base_Column_List" />
     from
     	notice n inner join community c on n.community_id=c.community_id
-    left join images img on n.notice_id = img.object_id and image_type=2l
+    left join images img on n.notice_id = img.object_id and image_type=2
     <where>
     	<if test="keyword != null and keyword!=''" >
     		CANCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CANCAT('%', #{keyword}, '%')
     	</if>
-    	<if test="communityId != null">
-    		AND (n.community_id = #{communityId,jdbcType=VARCHAR} or community_id is null)
+    	<if test="communityId != null and communityId != ''">
+    		AND (n.community_id = #{communityId,jdbcType=VARCHAR} or n.community_id is null or n.community_id!='')
     	</if>
-    	<if test="buildingId != null">
-    		AND (n.building_id = #{buildingId,jdbcType=VARCHAR} or building_id is null)
+    	<if test="buildingId != null and buildingId != ''">
+    		AND (n.building_id = #{buildingId,jdbcType=VARCHAR} or n.building_id is null or n.building_id!='')
     	</if>
     </where>
   </select>
