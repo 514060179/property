@@ -1,5 +1,6 @@
 package com.simon.app.service;
 
+import com.simon.app.model.vo.Building;
 import com.simon.dal.model.Community;
 import com.simon.dal.vo.BaseQueryParam;
 
@@ -16,4 +17,6 @@ public interface CommunityService  {
      * @return
      */
     List<Community> list(BaseQueryParam baseQueryParam);
+
+    List<Building> buildingList(BaseQueryParam baseQueryParam);
 }

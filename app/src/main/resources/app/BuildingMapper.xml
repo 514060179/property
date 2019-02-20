@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.app.dao.BuildingMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.app.model.vo.Building" >
+    <id column="building_id" property="buildingId" jdbcType="VARCHAR" />
+    <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
+    <result column="building_no" property="buildingNo" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    building_id,  building_name, building_no
+  </sql>
+
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from building
+    where community_id = #{communityId,jdbcType=VARCHAR}
+    order by create_time desc
+  </select>
+
+</mapper>
