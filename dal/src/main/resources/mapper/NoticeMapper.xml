@@ -5,6 +5,7 @@
     <id column="notice_id" property="noticeId" jdbcType="VARCHAR" />
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
     <result column="building_id" property="buildingId" jdbcType="VARCHAR" />
+    <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
     <result column="notice_type" property="noticeType" jdbcType="CHAR" />
     <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
     <result column="notice_traditional_title" property="noticeTraditionalTitle" jdbcType="VARCHAR" />
@@ -39,9 +40,10 @@
 
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims">
   	select 
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,building_name
     from 
     	notice n inner join community c on n.community_id=c.community_id
+    left join building b on n.building_id=b.building_id
     left join images img on n.notice_id = img.object_id  and img.object_id=2
     <where>
     	<if test="keyword != null and keyword!=''" >

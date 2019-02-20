@@ -5,9 +5,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(value = "Advertisement", description = "广告")
-public class Advertisement {
+public class Advertisement implements Cloneable {
 
     @ApiModelProperty(value = "id",example = "1ewq23wqe1dvhjkjk2sdf31ewqe23eeq")
     private String advId;
@@ -15,8 +16,14 @@ public class Advertisement {
     @ApiModelProperty(value = "社区id",example = "05c63989a7344d10940410115aac6214")
     private String communityId;
 
+    @ApiModelProperty(value = "社区id集合")
+    private List<String> communityIds;
+
     @ApiModelProperty(value = "楼宇id",example = "8caf2c8574b640a69044e668526a9ae8")
     private String buildingId;
+
+    @ApiModelProperty(value = "楼宇id集合")
+    private List<String> buildingIds;
 
     @ApiModelProperty(value = "标题",example = "")
     private String title;
@@ -59,12 +66,28 @@ public class Advertisement {
         this.communityId = communityId == null ? null : communityId.trim();
     }
 
+    public List<String> getCommunityIds() {
+        return communityIds;
+    }
+
+    public void setCommunityIds(List<String> communityIds) {
+        this.communityIds = communityIds;
+    }
+
     public String getBuildingId() {
         return buildingId;
     }
 
     public void setBuildingId(String buildingId) {
         this.buildingId = buildingId == null ? null : buildingId.trim();
+    }
+
+    public List<String> getBuildingIds() {
+        return buildingIds;
+    }
+
+    public void setBuildingIds(List<String> buildingIds) {
+        this.buildingIds = buildingIds;
     }
 
     public String getTitle() {
@@ -137,5 +160,15 @@ public class Advertisement {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

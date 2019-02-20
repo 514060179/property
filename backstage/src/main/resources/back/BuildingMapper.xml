@@ -14,6 +14,11 @@
     <result column="deleted" property="deleted" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <association property="community" javaType="com.simon.backstage.domain.vo.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
 
   <resultMap id="CommunityWithBuildingMap" type="com.simon.backstage.domain.vo.CommunityWithBuilding" >
@@ -49,26 +54,27 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    building_id, community_id, building_name, building_no, full_address, building_struct, 
-    building_direction, floor_up_num, floor_low_num, deleted, create_time, update_time
+    b.building_id, b.community_id, b.building_name, b.building_no, b.full_address, b.building_struct,
+    b.building_direction, b.floor_up_num, b.floor_low_num, b.deleted, b.create_time, b.update_time,
+    c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from building
-    where building_id = #{buildingId,jdbcType=VARCHAR}
+    from building b inner join community c on b.community_id=c.community_id
+    where bbuilding_id = #{buildingId,jdbcType=VARCHAR}
   </select>
 
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
     select
     <include refid="Base_Column_List" />
-    from building
+    from building b inner join community c on b.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(building_name,''),IFNULL(building_no,''),IFNULL(full_address,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(b.building_name,''),IFNULL(b.building_no,''),IFNULL(b.full_address,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-      	AND community_id = #{communityId,jdbcType=VARCHAR}
+      	AND b.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
     order by create_time desc

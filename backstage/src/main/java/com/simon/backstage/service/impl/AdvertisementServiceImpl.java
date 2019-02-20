@@ -9,7 +9,9 @@ import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author fengtianying
@@ -23,7 +25,29 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public Advertisement add(Advertisement advertisement) {
         advertisement.setAdvId(UUIDUtil.uidString());
-        int i = advertisementMapper.insertSelective(advertisement);
+        List<Advertisement> advertisements = new ArrayList<>();
+        if (advertisement.getCommunityIds()==null){
+            if (!Objects.isNull(advertisement.getBuildingIds())){
+                advertisement.getBuildingIds().forEach((buildingId)->{
+                    Advertisement copy = (Advertisement)advertisement.clone();
+                    copy.setAdvId(UUIDUtil.uidString());
+                    copy.setBuildingId(buildingId);
+                    advertisements.add(copy);
+                });
+            }
+        }else{
+            advertisement.getCommunityIds().forEach((communityId)->{
+                Advertisement copy = (Advertisement)advertisement.clone();
+                copy.setAdvId(UUIDUtil.uidString());
+                copy.setCommunityId(communityId);
+                copy.setBuildingId(null);
+                advertisements.add(copy);
+            });
+        }
+        if (advertisements.size()==0){
+            advertisements.add(advertisement);
+        }
+        int i = advertisementMapper.insertBatch(advertisements);
         if (i>0){
             return advertisement;
         }

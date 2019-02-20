@@ -72,7 +72,7 @@ public class NoticeController {
 			baseClaims.setCommunityId(communityId);
 		}
 		logger.info("公告列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
-		return ReturnMsg.success(new PageInfo<>(noticeService.list(baseClaims)));
+		return ReturnMsg.success(noticeService.list(baseClaims));
 	}
 	
 	@GetMapping("detail")

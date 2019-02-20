@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,8 +87,9 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<Notice> list(BaseClaims baseClaims) {
-		return noticeMapper.list(baseClaims);
+	public PageInfo<Notice> list(BaseClaims baseClaims) {
+		PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
+		return new PageInfo<>(noticeMapper.list(baseClaims));
 	}
 
 	@Override

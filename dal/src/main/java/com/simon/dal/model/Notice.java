@@ -17,6 +17,9 @@ public class Notice {
     @ApiModelProperty(value="建筑id", example="b123456")
     private String buildingId;
 
+    @ApiModelProperty(value="建筑名字", example="XX大厦")
+    private String buildingName;
+
     @ApiModelProperty(value="通知类型", example="app")
     private String noticeType;
 
@@ -95,6 +98,14 @@ public class Notice {
 
     public void setBuildingId(String buildingId) {
         this.buildingId = buildingId;
+    }
+
+    public String getBuildingName() {
+        return buildingName;
+    }
+
+    public void setBuildingName(String buildingName) {
+        this.buildingName = buildingName;
     }
 
     public String getNoticeType() {

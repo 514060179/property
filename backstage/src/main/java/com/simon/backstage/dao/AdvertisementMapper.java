@@ -13,6 +13,8 @@ public interface AdvertisementMapper {
 
     int insertSelective(Advertisement record);
 
+    int insertBatch(List<Advertisement> list);
+
     Advertisement selectByPrimaryKey(String advId);
 
     List<Advertisement> selectByConditon(BaseQueryParam baseQueryParam);
