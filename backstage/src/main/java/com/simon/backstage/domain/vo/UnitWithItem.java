@@ -19,6 +19,9 @@ public class UnitWithItem {
     @ApiModelProperty(value = "单元id",example = "dae8e4e7d87c416ab0636e1c4f07e87f")
     private String unitId;
 
+    @ApiModelProperty(value = "收费项类型（不用理会）",example = "0")
+    private int type;
+
     public String getUnitItemId() {
         return unitItemId;
     }
@@ -41,5 +44,13 @@ public class UnitWithItem {
 
     public void setUnitId(String unitId) {
         this.unitId = unitId;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

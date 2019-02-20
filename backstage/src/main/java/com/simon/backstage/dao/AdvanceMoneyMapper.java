@@ -27,9 +27,9 @@ public interface AdvanceMoneyMapper {
     List<AdvanceMoney> allAdvanceMoney();
 
     /**
-     * 批量更新
-     * @param list
+     * 更新
+     * @param advanceMoney
      * @return
      */
-    int batchUpdate(List<AdvanceMoney> list);
+    int updateByUserId(AdvanceMoney advanceMoney);
 }

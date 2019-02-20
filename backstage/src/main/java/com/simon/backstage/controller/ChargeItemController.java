@@ -9,6 +9,7 @@ import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.backstage.service.ChargeItemService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
+import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -88,6 +89,12 @@ public class ChargeItemController {
     @ApiOperation("单元添加收费项目")
     public ReturnMsg unitAddItem(@RequestBody List<UnitWithItem> unitWithItemList) {
         logger.info("单元添加收费项目unitWithItem={}", JSONUtil.objectToJson(unitWithItemList));
+        unitWithItemList.forEach((unitWithItem)->{
+            //获取收费项目
+            ChargeItem chargeItem = chargeItemService.detail(unitWithItem.getItemId());
+            unitWithItem.setType(chargeItem.getBillingMode());
+            unitWithItem.setUnitItemId(UUIDUtil.uidString());
+        });
         return ReturnMsg.success(chargeItemService.unitAddItem(unitWithItemList));
     }
 

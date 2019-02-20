@@ -239,6 +239,9 @@
     </set>
     where item_id = #{itemId,jdbcType=VARCHAR}
   </update>
+  <update id="updateAllTemporary">
+    update unit_charge_item set `type`=2 where `type`=1
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.ChargeItem" >
     update charge_item
     set item_no = #{itemNo,jdbcType=VARCHAR},
@@ -258,10 +261,10 @@
   </update>
 
   <insert id="unitAddItem">
-    insert into unit_charge_item(unit_item_id,item_id,unit_id) values
+    insert into unit_charge_item(unit_item_id,item_id,unit_id,`type`) values
     <foreach collection="list" item="item" separator=",">
       (
-      #{item.unitItemId},#{item.itemId},#{item.unitId}
+      #{item.unitItemId},#{item.itemId},#{item.unitId},#{item.type}
       )
     </foreach>
   </insert>
@@ -284,9 +287,8 @@
   <select id="cycleUnitItem" resultMap="WithUserResultMap">
     select
     <include refid="With_User_Column_List" />
-    from unit_charge_item uci inner join charge_item ci on uci.`item_id`=ci.`item_id`
+    from unit_charge_item uci inner join charge_item ci on uci.`item_id`=ci.`item_id` and uci.`type`!=2
     inner join user_unit uu on uci.unit_id=uu.unit_id and `owner`=1
     inner join unit u on uu.unit_id=u.unit_id
-    where ci.billing_mode=0
   </select>
 </mapper>

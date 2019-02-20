@@ -20,6 +20,8 @@ public interface ChargeItemMapper {
 
     int updateByPrimaryKeySelective(ChargeItem record);
 
+    int updateAllTemporary();
+
     int updateByPrimaryKey(ChargeItem record);
 
     int unitAddItem(List<UnitWithItem> list);

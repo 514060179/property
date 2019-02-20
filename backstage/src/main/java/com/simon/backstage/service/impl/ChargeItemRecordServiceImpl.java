@@ -3,6 +3,7 @@ package com.simon.backstage.service.impl;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.AdvanceMoneyMapper;
 import com.simon.backstage.dao.AdvanceRecordMapper;
+import com.simon.backstage.dao.ChargeItemMapper;
 import com.simon.backstage.dao.ChargeItemRecordMapper;
 import com.simon.backstage.domain.model.AdvanceMoney;
 import com.simon.backstage.domain.model.AdvanceRecord;
@@ -27,6 +28,8 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
     @Autowired
     private ChargeItemRecordMapper chargeItemRecordMapper;
     @Autowired
+    private ChargeItemMapper chargeItemMapper;
+    @Autowired
     private AdvanceMoneyMapper advanceMoneyMapper;
     @Autowired
     private AdvanceRecordMapper advanceRecordMapper;
@@ -44,12 +47,14 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
     public int addBatch(List<ChargeItemRecord> chargeItemRecordList, List<AdvanceMoney> advanceMonies, List<AdvanceRecord> advanceRecords) {
         //1.更新账户
         if (!Objects.isNull(advanceMonies)&&advanceMonies.size()>0)
-            advanceMoneyMapper.batchUpdate(advanceMonies);
+            advanceMonies.forEach(advanceMoney -> advanceMoneyMapper.updateByUserId(advanceMoney));
         //2.更新账户记录
         if (!Objects.isNull(advanceRecords)&&advanceRecords.size()>0)
             advanceRecordMapper.batchAdd(advanceRecords);
         //3.批量加入收费记录
         chargeItemRecordMapper.addBatch(chargeItemRecordList);
+        //4.更新所有临时订单
+        chargeItemMapper.updateAllTemporary();
         return 1;
     }
 
