@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "UnitWithItem", description = "单元&收费项目")
 public class UnitWithItem {
 
-    @ApiModelProperty(value = "id",example = "21b7acqwe1514q2397083afsag278f34")
+    @ApiModelProperty(hidden = true,value = "id",example = "21b7acqwe1514q2397083afsag278f34")
     private String unitItemId;
 
     @ApiModelProperty(value = "收费项目id",example = "38b7ac8b91514f5797083af4d3231cfd")
