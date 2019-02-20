@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.app.model.vo.Building;
 import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.service.CommunityService;
+import com.simon.app.util.ClaimsUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,8 @@ public class BuildingController {
     @PostMapping("list")
     @ApiOperation("建筑列表")
     public ReturnMsg<PageInfo<Building>> list(BaseQueryParam baseQueryParam,HttpServletRequest request){
+        String communityId = ClaimsUtil.getCommunityId(request);
+        baseQueryParam.setCommunityId(communityId);
         return ReturnMsg.success(new PageInfo<>(communityService.buildingList(baseQueryParam)));
     }
 }
