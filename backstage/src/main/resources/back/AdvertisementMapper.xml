@@ -51,7 +51,7 @@
       AND (a.community_id = #{communityId,jdbcType=VARCHAR} or a.community_id is null)
     </if>
     <if test="buildingId != null and buildingId != ''">
-      AND (a.building_id = #{buildingId,jdbcType=VARCHAR} or a.building_id is null)
+      AND (a.building_id = #{buildingId,jdbcType=VARCHAR} or a.building_id is null or a.building_id='')
     </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
