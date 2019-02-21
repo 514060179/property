@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simon.backstage.dao.ExcelUserMapper" >
+  <resultMap id="BaseResultMap" type="com.simon.backstage.domain.vo.ExcelUser" >
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="english_name" property="englishName" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="country_code" property="countryCode" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <association property="community" javaType="com.simon.backstage.domain.vo.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
+    <collection property="excelChargeList" ofType="com.simon.backstage.domain.vo.ExcelCharge">
+      <result column="record_date" property="recordDate" jdbcType="VARCHAR" />
+      <result column="amount" property="amount" jdbcType="DECIMAL" />
+      <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    u.user_id, u.community_id, u.name, u.english_name, u.sex, u.country_code, u.tel,
+    c.community_id,c.community_no,c.community_name,
+    cir.record_date,SUM(record_amount) as amount,GROUP_CONCAT(record_remark) as remark
+  </sql>
+  <select id="execlUser" resultMap="BaseResultMap" parameterType="com.simon.dal.model.User" >
+  	select 
+    <include refid="Base_Column_List" />
+    from charge_item_record cir
+      inner join unit_charge_item uci on uci.`unit_item_id` = cir.`unit_item_id`
+      inner join `user` u on u.`user_id` = cir.`user_id`
+      inner join community c on u.community_id=c.community_id
+      group by u.`user_id`,record_date
+    <where>
+        <if test="communityId != null">
+            AND u.community_id = #{communityId, jdbcType=VARCHAR}
+        </if>
+    </where>
+  </select>
+
+</mapper>
