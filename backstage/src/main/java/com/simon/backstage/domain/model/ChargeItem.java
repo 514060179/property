@@ -1,5 +1,6 @@
 package com.simon.backstage.domain.model;
 
+import com.simon.backstage.domain.vo.Community;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
@@ -34,6 +35,9 @@ public class ChargeItem {
     private Date createTime;
     @ApiModelProperty(hidden = true)
     private Date updateTime;
+
+    @ApiModelProperty(hidden = true)
+    private Community community;
 
     public String getItemId() {
         return itemId;
@@ -145,5 +149,13 @@ public class ChargeItem {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Community getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(Community community) {
+        this.community = community;
     }
 }

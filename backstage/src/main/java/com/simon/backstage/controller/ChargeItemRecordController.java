@@ -50,9 +50,11 @@ public class ChargeItemRecordController {
 
     @GetMapping("list")
     @ApiOperation("收费记录")
-    @ApiImplicitParam(name="unitId",value="单元id",required=true)
-    public ReturnMsg<PageInfo<ChargeItemRecord>> list(QueryWithIdParam queryWithIdParam, @RequestParam String unitId, HttpServletRequest request){
+    public ReturnMsg<PageInfo<ChargeItemRecord>> list(QueryWithIdParam queryWithIdParam, HttpServletRequest request){
         logger.info("收费记录列表baseQueryParam={}",  JSONUtil.objectToJson(queryWithIdParam));
+        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+            queryWithIdParam.setCommunityId(ClaimsUtil.getCommunityId(request));
+        }
         return ReturnMsg.success(chargeItemRecordService.list(queryWithIdParam));
     }
 

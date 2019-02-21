@@ -15,6 +15,11 @@
     <result column="record_remark" property="recordRemark" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <association property="community" javaType="com.simon.backstage.domain.vo.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
     record_id, user_id, unit_item_id, record_date, record_status, record_time, record_actual_amount, 
@@ -22,7 +27,8 @@
   </sql>
   <sql id="With_Other_Column_List" >
     cir.record_id, cir.user_id, cir.unit_item_id, cir.record_date, cir.record_status, cir.record_time, cir.record_actual_amount,
-    cir.record_amount, cir.record_late_fee, cir.record_late_date, cir.record_remark, cir.create_time, cir.update_time
+    cir.record_amount, cir.record_late_fee, cir.record_late_date, cir.record_remark, cir.create_time, cir.update_time,
+    c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -34,13 +40,21 @@
     select
     <include refid="With_Other_Column_List" />
     from charge_item_record cir
-      inner join unit_charge_item uci
+      inner join unit_charge_item uci on cir.unit_item_id=uci.unit_item_id
+      inner join unit u on uci.unit_id=u.unit_id
+      inner join community c on u.community_id=c.community_id
     <where>
       <!--<if test="keyword!=null and keyword!=''">-->
         <!--CONCAT(IFNULL(asset_name,''),IFNULL(asset_position,'')) LIKE CONCAT('%', #{keyword}, '%')-->
       <!--</if>-->
-      <if test="unitId!=null  and unitId!=''">
+      <if test="unitId!=null and unitId!=''">
         uci.unit_id = #{unitId,jdbcType=VARCHAR}
+      </if>
+      <if test="recordStatus!=null">
+        cir.record_status = #{recordStatus,jdbcType=INTEGER}
+      </if>
+      <if test="communityId!=null and communityId!=''">
+        u.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
     order by cir.create_time desc

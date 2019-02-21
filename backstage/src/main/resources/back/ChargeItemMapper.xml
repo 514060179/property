@@ -16,6 +16,11 @@
     <result column="describe" property="describe" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <association property="community" javaType="com.simon.backstage.domain.vo.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
 
   <resultMap id="WithUserResultMap" type="com.simon.backstage.domain.vo.UnitItemWithUser">
@@ -52,8 +57,9 @@
     </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    item_id, item_no,community_id, item_name, billing_mode, alculation_method, unit_price,additional_cost, late_fee,
-    late_date, formula, `describe`, create_time, update_time
+    ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price,ci.additional_cost, ci.late_fee,
+    ci.late_date, ci.formula, ci.`describe`, ci.create_time, ci.update_time,
+    c.community_id,c.community_no,c.community_name
   </sql>
   <sql id="With_Other_Column_List" >
     ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price,ci.additional_cost, ci.late_fee,
@@ -70,19 +76,19 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from charge_item
-    where item_id = #{itemId,jdbcType=VARCHAR}
+    from charge_item ci inner join community c on ci.community_id=c.community_id
+    where ci.item_id = #{itemId,jdbcType=VARCHAR}
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
     select
     <include refid="Base_Column_List" />
-    from charge_item
+    from charge_item ci inner join community c on ci.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(item_no,''),IFNULL(item_name,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(ci.item_no,''),IFNULL(ci.item_name,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-        AND community_id = #{communityId,jdbcType=VARCHAR}
+        AND ci.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
     order by create_time desc
