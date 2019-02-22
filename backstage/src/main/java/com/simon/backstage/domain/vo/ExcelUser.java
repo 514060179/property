@@ -1,9 +1,9 @@
 package com.simon.backstage.domain.vo;
 
-import io.swagger.annotations.ApiModel;
+import com.simon.backstage.domain.model.AdvanceMoney;
 import io.swagger.annotations.ApiModelProperty;
-
 import javax.validation.constraints.NotEmpty;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -34,9 +34,15 @@ public class ExcelUser {
     @ApiModelProperty(value = "手机号",example = "13421266955")
     private String tel;
 
+    private BigDecimal advanceAmount;
+
     private List<ExcelCharge> excelChargeList;
 
     private Community community;
+
+    private AdvanceMoney advanceMoney;
+
+    private Unit unit;
 
     public String getUserId() {
         return userId;
@@ -98,6 +104,14 @@ public class ExcelUser {
         return excelChargeList;
     }
 
+    public BigDecimal getAdvanceAmount() {
+        return advanceAmount;
+    }
+
+    public void setAdvanceAmount(BigDecimal advanceAmount) {
+        this.advanceAmount = advanceAmount;
+    }
+
     public void setExcelChargeList(List<ExcelCharge> excelChargeList) {
         this.excelChargeList = excelChargeList;
     }
@@ -108,5 +122,21 @@ public class ExcelUser {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public AdvanceMoney getAdvanceMoney() {
+        return advanceMoney;
+    }
+
+    public void setAdvanceMoney(AdvanceMoney advanceMoney) {
+        this.advanceMoney = advanceMoney;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 }

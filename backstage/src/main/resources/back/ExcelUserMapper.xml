@@ -9,6 +9,7 @@
     <result column="sex" property="sex" jdbcType="INTEGER" />
     <result column="country_code" property="countryCode" jdbcType="VARCHAR" />
     <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="advance_amount" property="advanceAmount" jdbcType="DECIMAL" />
     <association property="community" javaType="com.simon.backstage.domain.vo.Community">
       <id column="community_id" property="communityId" jdbcType="VARCHAR" />
       <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
@@ -21,7 +22,7 @@
     </collection>
   </resultMap>
   <sql id="Base_Column_List" >
-    u.user_id, u.community_id, u.name, u.english_name, u.sex, u.country_code, u.tel,
+    u.user_id, u.community_id, u.name, u.english_name, u.sex, u.country_code, u.tel,am.advance_amount,
     c.community_id,c.community_no,c.community_name,
     cir.record_date,SUM(record_amount) as amount,GROUP_CONCAT(record_remark) as remark
   </sql>
@@ -32,6 +33,7 @@
       inner join unit_charge_item uci on uci.`unit_item_id` = cir.`unit_item_id`
       inner join `user` u on u.`user_id` = cir.`user_id`
       inner join community c on u.community_id=c.community_id
+      inner join advance_money am on u.`user_id` = am.`user_id`
       group by u.`user_id`,record_date
     <where>
         <if test="communityId != null">
