@@ -16,10 +16,16 @@
       <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
       <result column="community_name" property="communityName" jdbcType="VARCHAR" />
     </association>
+    <association property="building" javaType="com.simon.backstage.domain.model.Building">
+      <id column="building_id" property="buildingId" jdbcType="VARCHAR" />
+      <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
+      <result column="building_no" property="buildingNo" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
     v.visitor_id, v.community_id,v.building_id, v.visitor_name, v.visitor_sex, v.visitor_phone, v.visitor_cause,
     v.create_time, v.update_time,
+    b.building_id,b.building_name, b.building_no,
     c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -32,6 +38,7 @@
     select
     <include refid="Base_Column_List" />
     from visitor v inner join community c on v.community_id=c.community_id
+    inner join building b on b.building_id=v.building_id
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(v.visitor_name,''),IFNULL(v.visitor_phone,'')) LIKE CONCAT('%', #{keyword}, '%')

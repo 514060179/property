@@ -37,7 +37,8 @@ public class Visitor {
     private Date updateTime;
     @ApiModelProperty(hidden = true)
     private Community community;
-
+    @ApiModelProperty(hidden = true)
+    private Building building;
     public String getBuildingId() {
         return buildingId;
     }
@@ -116,5 +117,13 @@ public class Visitor {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 }
