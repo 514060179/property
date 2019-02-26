@@ -33,7 +33,7 @@
   </sql>
   <select id="findId" resultType="java.lang.String">
   	select
-  		concat(group_concat(community_id,'') AS communityId)
+  		concat(group_concat(community_id,'') AS communityId
   	from
   		community
   </select>

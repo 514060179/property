@@ -107,7 +107,7 @@ public class JPushUtil {
         try {
             PushResult result = jpushClient.sendPush(payload);
             if (result.isResultOK()){
-                logger.debug("推送response:"+result);
+                logger.info("推送response:"+result);
                 return true;
             }
             logger.error("推送失败response:"+result);
