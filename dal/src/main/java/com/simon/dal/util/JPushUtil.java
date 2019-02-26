@@ -40,13 +40,13 @@ public class JPushUtil {
         try {
             Set<String> tagsToAdd = new HashSet<>();
             tagsToAdd.add(tag);
-            logger.debug("给设备{}添加标签{}",registrationId,tag);
+            logger.info("给设备{}添加标签{}",registrationId,tag);
             DefaultResult defaultResult = jpushClient.updateDeviceTagAlias(registrationId,null,tagsToAdd,null);
             if (defaultResult.isResultOK()){
-                logger.debug("给设备添加标签response:"+defaultResult);
+                logger.info("给设备添加标签response:"+defaultResult);
                 return true;
             }
-            logger.debug("添加标签返回结果===>{}",defaultResult);
+            logger.info("添加标签返回结果===>{}",defaultResult);
         } catch (Exception e) {
             logger.error("添加标签异常", e);
             e.printStackTrace();
@@ -62,13 +62,13 @@ public class JPushUtil {
      */
     public static boolean addDeviceAlias(String registrationId, String alias) {
         try {
-            logger.debug("给设备{}添加别名{}",registrationId,alias);
+            logger.info("给设备{}添加别名{}",registrationId,alias);
             DefaultResult defaultResult = jpushClient.updateDeviceTagAlias(registrationId,alias,null,null);
             if (defaultResult.isResultOK()){
-                logger.debug("给设备添加别名response:"+defaultResult);
+                logger.info("给设备添加别名response:"+defaultResult);
                 return true;
             }
-            logger.debug("添加别名返回结果===>{}",defaultResult);
+            logger.info("添加别名返回结果===>{}",defaultResult);
         } catch (Exception e) {
             logger.error("添加别名异常", e);
             e.printStackTrace();
@@ -83,13 +83,13 @@ public class JPushUtil {
      */
     public static boolean delDeviceAlias(String registrationId) {
         try {
-            logger.debug("给设备{}删除所有别名",registrationId);
+            logger.info("给设备{}删除所有别名",registrationId);
             DefaultResult defaultResult = jpushClient.updateDeviceTagAlias(registrationId,true,false);
             if (defaultResult.isResultOK()){
-                logger.debug("给设备删除所有别名response:"+defaultResult);
+                logger.info("给设备删除所有别名response:"+defaultResult);
                 return true;
             }
-            logger.debug("删除所有别名返回结果===>{}",defaultResult);
+            logger.info("删除所有别名返回结果===>{}",defaultResult);
         } catch (Exception e) {
             logger.error("删除所有别名异常", e);
             e.printStackTrace();
