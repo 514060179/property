@@ -25,17 +25,17 @@
     	<result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
     	<result column="image_thumbnail" property="imageThumbnail" jdbcType="VARCHAR"/>
     	<result column="image_type" property="imageType" jdbcType="INTEGER"/>
-    	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    	<result column="img_create_time" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="img_update_time" property="updateTime" jdbcType="TIMESTAMP" />
     </collection>
   </resultMap>
 
   <sql id="Base_Column_List" >
-    img.image_id, img.image_url, img.image_thumbnail, img.object_id, img.image_type, img.create_time, img.update_time,
     c.complain_id, c.user_id, c.complain_position, c.complain_specific_position, c.complain_type,
     c.complain_class_type, c.complain_liaisons_name, c.complain_liaisons_sex,
     c.complain_liaisons_email, c.complain_status, c.complain_finish_time, c.complain_handler,c.complain_describe, c.complain_voice,
-    c.create_time, c.update_time
+    c.create_time, c.update_time,
+    img.image_id, img.image_url, img.image_thumbnail, img.object_id, img.image_type, img.create_time as img_create_time, img.update_time as img_update_time
   </sql>
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims">
   	select 
