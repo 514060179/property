@@ -15,7 +15,11 @@ public interface Code {
     String loginfail = "105";
     //密码错误
     String wrongPassword = "106";
-    
+    //账户不存在
+    String accountNoExit = "107";
+
+    String noSetEmail = "108";
+
     //非法文件
     String illegalFile = "301";
     

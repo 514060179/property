@@ -42,9 +42,16 @@ public class ReturnMsg<T> implements Code {
     }
     
     public static ReturnMsg loginFail(){
-    	return new ReturnMsg(Boolean.FALSE,Code.loginfail,"账号或密码错误",null);
+    	return new ReturnMsg(Boolean.FALSE,Code.loginfail,"账号不存在或密码错误!",null);
     }
-    
+
+    public static ReturnMsg accountNoExit(){
+    	return new ReturnMsg(Boolean.FALSE,Code.accountNoExit,"账号不存在!",null);
+    }
+    public static ReturnMsg noSetEmail(){
+    	return new ReturnMsg(Boolean.FALSE,Code.noSetEmail,"邮箱地址未设置!",null);
+    }
+
     public static ReturnMsg wrongPassword(){
     	return new ReturnMsg(Boolean.FALSE,Code.loginfail,"旧密码不正确",null);
     }
