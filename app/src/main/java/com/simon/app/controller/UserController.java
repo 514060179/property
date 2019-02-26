@@ -3,6 +3,7 @@ package com.simon.app.controller;
 import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.service.UserService;
 import com.simon.app.util.ClaimsUtil;
+import com.simon.dal.config.RedisService;
 import com.simon.dal.model.User;
 import com.simon.dal.util.EncryUtil;
 
@@ -32,7 +33,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    
+
+	@Autowired
+	private RedisService redisService;
     @PostMapping("update")
     @ApiOperation("用户修改")
     public ReturnMsg<User> update(@RequestBody User user, HttpServletRequest request){
@@ -62,7 +65,10 @@ public class UserController {
     	User result = userService.findUser(user);
     	if(result != null){
     		result.setPassword(EncryUtil.getMD5(newpassword));
-    		userService.updateByPrimaryKeySelective(result);
+    		if(userService.updateByPrimaryKeySelective(result)>0){
+    			//移除redis
+				redisService.del(userId);
+			}
     	}else{
     		return ReturnMsg.wrongPassword();
     	}
