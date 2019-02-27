@@ -17,29 +17,39 @@
     <result column="unit_status" property="unitStatus" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <association property="community" javaType="com.simon.backstage.domain.vo.Community">
+      <id column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
+      <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
+    <association property="building" javaType="com.simon.backstage.domain.model.Building">
+      <id column="building_id" property="buildingId" jdbcType="VARCHAR" />
+      <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
+      <result column="building_no" property="buildingNo" jdbcType="VARCHAR" />
+    </association>
+
   </resultMap>
   <sql id="Base_Column_List" >
     unit_id, building_id,community_id, unit_name, unit_no, unit_covered_area, unit_relative_proportion,
     unit_child_relative_proportion, unit_purpose, unit_position, unit_type, unit_full_address, 
-    unit_status, create_time, update_time
+    unit_status, create_time, update_time,
+    c.community_id,c.community_no,c.community_name,
+    b.building_id, b.building_name, b.building_no
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from unit
-    where unit_id = #{unitId,jdbcType=VARCHAR}
+    from unit u
+    inner join building b on b.building_id=u.building_id
+    inner join community c on c.community_id=b.community_id
+    where u.unit_id = #{unitId,jdbcType=VARCHAR}
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
-    SELECT	
-		u.unit_id, u.building_id,u.community_id, u.unit_name, u.unit_no, u.unit_covered_area, u.unit_relative_proportion,
-	    u.unit_child_relative_proportion, u.unit_purpose, u.unit_position, u.unit_type, u.unit_full_address, 
-	    u.unit_status, u.create_time, u.update_time
-	FROM 
-		building b 
-	INNER JOIN 
-		community c ON c.community_id=b.community_id
-	INNER JOIN 
-		unit u ON b.building_id=u.building_id
+    SELECT
+    <include refid="Base_Column_List" />
+    from unit u
+    inner join building b on b.building_id=u.building_id
+    inner join community c on c.community_id=b.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(u.unit_name,''),IFNULL(u.unit_no,''),IFNULL(u.unit_full_address,'')) LIKE CONCAT('%', #{keyword}, '%')

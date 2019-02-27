@@ -64,14 +64,16 @@ public class UnitController {
 
     @GetMapping("list")
     @ApiOperation("单元列表")
-    public ReturnMsg<PageInfo<Unit>> list(BaseClaims baseClaims, @RequestParam String buildingId, HttpServletRequest request){
+    public ReturnMsg<PageInfo<Unit>> list(BaseClaims baseClaims,
+//                                          @RequestParam String buildingId,
+                                          HttpServletRequest request){
     	String communityId = ClaimsUtil.getCommunityId(request);
 		if(!StringUtils.isEmpty(communityId)){
 			baseClaims.setCommunityId(communityId);
 		}
-		if(!StringUtils.isEmpty(buildingId) && buildingId.trim()!=""){
-			baseClaims.setBuildingId(buildingId);
-		}
+//		if(!StringUtils.isEmpty(buildingId) && buildingId.trim()!=""){
+//			baseClaims.setBuildingId(buildingId);
+//		}
         logger.info("单元列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
         return ReturnMsg.success(unitService.list(baseClaims));
     }

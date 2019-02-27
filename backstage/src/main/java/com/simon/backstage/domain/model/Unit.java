@@ -1,5 +1,6 @@
 package com.simon.backstage.domain.model;
 
+import com.simon.backstage.domain.vo.Community;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -53,6 +54,12 @@ public class Unit {
 
     @ApiModelProperty(hidden = true)
     private Date updateTime;
+
+    @ApiModelProperty(hidden = true)
+    private Building building;
+
+    @ApiModelProperty(hidden = true)
+    private Community community;
 
     public String getUnitId() {
         return unitId;
@@ -172,5 +179,21 @@ public class Unit {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public Community getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(Community community) {
+        this.community = community;
     }
 }
