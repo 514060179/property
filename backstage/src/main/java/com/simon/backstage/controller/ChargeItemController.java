@@ -101,7 +101,7 @@ public class ChargeItemController {
     @GetMapping("unitItemList")
     @ApiOperation("单元收费项目列表")
     @ApiImplicitParam(name="unitId",value="单元id",required=true)
-    public ReturnMsg unitItemList(QueryWithIdParam queryWithIdParam, @RequestParam String unitId) {
+    public ReturnMsg<ChargeItem> unitItemList(QueryWithIdParam queryWithIdParam, @RequestParam String unitId) {
         logger.info("单元收费项目列表unitWithItem={}", JSONUtil.objectToJson(queryWithIdParam));
         return ReturnMsg.success(chargeItemService.unitItemList(queryWithIdParam));
     }
