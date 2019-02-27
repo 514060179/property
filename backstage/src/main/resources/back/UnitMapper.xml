@@ -30,9 +30,9 @@
 
   </resultMap>
   <sql id="Base_Column_List" >
-    unit_id, building_id,community_id, unit_name, unit_no, unit_covered_area, unit_relative_proportion,
-    unit_child_relative_proportion, unit_purpose, unit_position, unit_type, unit_full_address, 
-    unit_status, create_time, update_time,
+    u.unit_id, u.building_id,u.community_id, u.unit_name, u.unit_no, u.unit_covered_area, u.unit_relative_proportion,
+    u.unit_child_relative_proportion, u.unit_purpose, u.unit_position, u.unit_type, u.unit_full_address,
+    u.unit_status, u.create_time, u.update_time,
     c.community_id,c.community_no,c.community_name,
     b.building_id, b.building_name, b.building_no
   </sql>
