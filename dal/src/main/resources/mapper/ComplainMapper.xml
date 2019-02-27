@@ -41,7 +41,7 @@
   	select 
     <include refid="Base_Column_List" />
     from complain c
-    left join images img on c.complain_id = img.object_id  and img.object_id=0
+    left join images img on c.complain_id = img.object_id  and img.image_type=0
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(complain_position,''),IFNULL(complain_status,''),IFNULL(complain_handler,'')) LIKE CONCAT('%', #{keyword}, '%')
@@ -59,7 +59,7 @@
     select 
     <include refid="Base_Column_List" />
     from complain c
-    left join images img on c.complain_id = img.object_id  and img.object_id=0
+    left join images img on c.complain_id = img.object_id  and img.image_type=0
     where complain_id = #{complainId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

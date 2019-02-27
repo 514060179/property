@@ -40,7 +40,7 @@
   	select 
   	<include refid="Base_Column_List" />
   	from place p
-  	left join images img on p.place_id = img.object_id and img.object_id=1
+  	left join images img on p.place_id = img.object_id and img.image_type=1
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(place_name,'')) LIKE CONCAT('%', #{keyword}, '%')
@@ -55,7 +55,7 @@
     select 
     <include refid="Base_Column_List" />
     from place p
-  	left join images img on p.place_id = img.object_id and img.object_id=1
+  	left join images img on p.place_id = img.object_id and img.image_type=1
     where place_id = #{placeId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
