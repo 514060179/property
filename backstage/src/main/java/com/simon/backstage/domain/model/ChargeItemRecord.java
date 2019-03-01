@@ -36,6 +36,10 @@ public class ChargeItemRecord {
     private Date updateTime;
     @ApiModelProperty(hidden = true)
     private Community community;
+
+    @ApiModelProperty(hidden = true)
+    private ChargeItem chargeItem;
+
     public String getRecordId() {
         return recordId;
     }
@@ -146,5 +150,13 @@ public class ChargeItemRecord {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public ChargeItem getChargeItem() {
+        return chargeItem;
+    }
+
+    public void setChargeItem(ChargeItem chargeItem) {
+        this.chargeItem = chargeItem;
     }
 }

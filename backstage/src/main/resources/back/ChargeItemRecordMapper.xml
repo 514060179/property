@@ -20,6 +20,20 @@
       <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
       <result column="community_name" property="communityName" jdbcType="VARCHAR" />
     </association>
+    <association property="chargeItem" javaType="com.simon.backstage.domain.model.ChargeItem">
+      <id column="item_id" property="itemId" jdbcType="VARCHAR" />
+      <result column="item_no" property="itemNo" jdbcType="VARCHAR" />
+      <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+      <result column="billing_mode" property="billingMode" jdbcType="INTEGER" />
+      <result column="alculation_method" property="alculationMethod" jdbcType="INTEGER" />
+      <result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+      <result column="additional_cost" property="additionalCost" jdbcType="DECIMAL" />
+      <result column="late_fee" property="lateFee" jdbcType="INTEGER" />
+      <result column="late_date" property="lateDate" jdbcType="INTEGER" />
+      <result column="formula" property="formula" jdbcType="VARCHAR" />
+      <result column="describe" property="describe" jdbcType="VARCHAR" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
     record_id, user_id, unit_item_id, record_date, record_status, record_time, record_actual_amount, 
@@ -28,6 +42,8 @@
   <sql id="With_Other_Column_List" >
     cir.record_id, cir.user_id, cir.unit_item_id, cir.record_date, cir.record_status, cir.record_time, cir.record_actual_amount,
     cir.record_amount, cir.record_late_fee, cir.record_late_date, cir.record_remark, cir.create_time, cir.update_time,
+    ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price,ci.additional_cost, ci.late_fee,
+    ci.late_date, ci.formula, ci.`describe`,
     c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -41,6 +57,7 @@
     <include refid="With_Other_Column_List" />
     from charge_item_record cir
       inner join unit_charge_item uci on cir.unit_item_id=uci.unit_item_id
+      inner join charge_item ci on uci.item_id=ci.item_id
       inner join unit u on uci.unit_id=u.unit_id
       inner join community c on u.community_id=c.community_id
     <where>
