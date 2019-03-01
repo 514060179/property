@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 /**
  * @author fengtianying
  * @date 2018/12/10 16:43
@@ -82,7 +84,11 @@ public class UnitController {
     @ApiOperation("房间住户添加")
     public ReturnMsg<UserUnit> addUser(@RequestBody UserUnit userUnit){
     	logger.info("房间住户添加userUnit={}", JSONUtil.objectToJson(userUnit));
-    	return ReturnMsg.success(unitService.addUser(userUnit));
+        //查询存在业主
+        if (userUnit.getOwner() && !Objects.isNull(unitService.findUserUnitByUnitId(userUnit.getUnitId()))) {//业主
+            return ReturnMsg.fail(Code.ownerExist,"业主已存在!");
+        }
+        return ReturnMsg.success(unitService.addUser(userUnit));
     }
     
     @GetMapping("delUser")

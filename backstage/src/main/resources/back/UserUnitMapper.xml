@@ -18,6 +18,12 @@
     from user_unit
     where user_unit_id = #{userUnitId,jdbcType=BIGINT}
   </select>
+  <select id="selectByUnitId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_unit
+    where unit_id = #{unitId,jdbcType=VARCHAR} and owner=1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from user_unit
     where user_unit_id = #{userUnitId,jdbcType=BIGINT}

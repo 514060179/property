@@ -16,7 +16,7 @@ public interface UnitService {
     Unit add(Unit unit);
 
     /**
-     * 新增
+     * 详情
      * @param unitId
      * @return
      */
@@ -49,6 +49,13 @@ public interface UnitService {
      * @return
      */
     UserUnit addUser(UserUnit userUnit);
+
+    /**
+     * 房间住户添加
+     * @param unitId
+     * @return
+     */
+    UserUnit findUserUnitByUnitId(String unitId);
 
     /**
      * 房间住户删除

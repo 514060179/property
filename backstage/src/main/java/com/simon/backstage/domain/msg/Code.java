@@ -31,6 +31,9 @@ public interface Code {
     //未知文件
     int unknownFile = 203;
 
+    //业主存在
+    int ownerExist = 204;
+
     //未找到资源
     int notfound = 404;
 

@@ -58,7 +58,12 @@ public class UnitServiceImpl implements UnitService {
 		return null;
 	}
 
-	@Override
+    @Override
+    public UserUnit findUserUnitByUnitId(String unitId) {
+        return userUnitMapper.selectByUnitId(unitId);
+    }
+
+    @Override
 	public int delUser(String unitId, String userId) {
 		// TODO Auto-generated method stub
 		return userUnitMapper.deleteByUser(unitId, userId);

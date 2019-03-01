@@ -13,6 +13,8 @@ public interface UserUnitMapper {
 
     UserUnit selectByPrimaryKey(Long userUnitId);
 
+    UserUnit selectByUnitId(String unitId);
+
     int updateByPrimaryKeySelective(UserUnit record);
 
     int updateByPrimaryKey(UserUnit record);
