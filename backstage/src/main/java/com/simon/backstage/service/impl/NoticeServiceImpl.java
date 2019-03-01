@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.constant.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,9 +69,16 @@ public class NoticeServiceImpl implements NoticeService {
 				target = communityMapper.findId();
 			}
 			Map<String, String> map = new HashMap<>();
+			map.put("noticeId", notice.getNoticeId());
 			map.put("detail", notice.getNoticeDetails());
-			PushPayload pu = JPushUtil.buildPushObjectByAlias(notice.getNoticeTitle(), true, target, map, 1);
-			JPushUtil.push(pu);
+			final String t = target;
+			//app推送
+			if (notice.getNoticeType()== Status.noticeTypeApp){
+				new Thread(()->{
+					PushPayload pu = JPushUtil.buildPushObjectByAlias(notice.getNoticeTitle(), true, t, map, 1);
+					JPushUtil.push(pu);
+				}).start();
+			}
 			return notice;
 		}
 		return null;
@@ -89,7 +97,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public PageInfo<Notice> list(BaseClaims baseClaims) {
 		PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
-		return new PageInfo<>(noticeMapper.list(baseClaims));
+		return new PageInfo<>(noticeMapper.list(baseClaims,null));
 	}
 
 	@Override

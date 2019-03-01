@@ -6,7 +6,7 @@
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
     <result column="building_id" property="buildingId" jdbcType="VARCHAR" />
     <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
-    <result column="notice_type" property="noticeType" jdbcType="CHAR" />
+    <result column="notice_type" property="noticeType" jdbcType="INTEGER" />
     <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
     <result column="notice_traditional_title" property="noticeTraditionalTitle" jdbcType="VARCHAR" />
     <result column="notice_english_title" property="noticeEnglishTitle" jdbcType="VARCHAR" />
@@ -46,14 +46,17 @@
     left join building b on n.building_id=b.building_id
     left join images img on n.notice_id = img.object_id  and img.image_type=2
     <where>
-    	<if test="keyword != null and keyword!=''" >
-    		CANCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CANCAT('%', #{keyword}, '%')
+    	<if test="baseClaims.keyword != null and baseClaims.keyword!=''" >
+          CONCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CONCAT('%', #{baseClaims.keyword}, '%')
     	</if>
-    	<if test="communityId != null">
-    		AND n.community_id = #{communityId,jdbcType=VARCHAR}
+    	<if test="baseClaims.communityId != null">
+    		AND n.community_id = #{baseClaims.communityId,jdbcType=VARCHAR}
     	</if>
-    	<if test="buildingId != null">
-    		AND n.building_id = #{buildingId,jdbcType=VARCHAR}
+    	<if test="baseClaims.buildingId != null">
+    		AND n.building_id = #{baseClaims.buildingId,jdbcType=VARCHAR}
+    	</if>
+    	<if test="noticeType != null">
+    		AND n.notice_type = #{noticeType,jdbcType=INTEGER}
     	</if>
     </where>
     order by n.create_time desc
@@ -65,8 +68,9 @@
     	notice n inner join community c on n.community_id=c.community_id
     left join images img on n.notice_id = img.object_id and image_type=2
     <where>
+        n.notice_type=0
     	<if test="keyword != null and keyword!=''" >
-    		CANCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CANCAT('%', #{keyword}, '%')
+    		CANCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CONCAT('%', #{keyword}, '%')
     	</if>
     	<if test="communityId != null and communityId != ''">
     		AND (n.community_id = #{communityId,jdbcType=VARCHAR} or n.community_id is null or n.community_id!='')
@@ -93,7 +97,7 @@
       create_time, update_time, 
       notice_details, notice_traditional_details, 
       notice_english_details)
-    values (#{noticeId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR},#{buildingId,jdbcType=VARCHAR}, #{noticeType,jdbcType=CHAR},
+    values (#{noticeId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR},#{buildingId,jdbcType=VARCHAR}, #{noticeType,jdbcType=INTEGER},
       #{noticeTitle,jdbcType=VARCHAR}, #{noticeTraditionalTitle,jdbcType=VARCHAR}, 
       #{noticeEnglishTitle,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{noticeDetails,jdbcType=LONGVARCHAR}, #{noticeTraditionalDetails,jdbcType=LONGVARCHAR}, 
@@ -150,7 +154,7 @@
         #{buildingId,jdbcType=VARCHAR},
       </if>
       <if test="noticeType != null" >
-        #{noticeType,jdbcType=CHAR},
+        #{noticeType,jdbcType=INTEGER},
       </if>
       <if test="noticeTitle != null" >
         #{noticeTitle,jdbcType=VARCHAR},
@@ -188,7 +192,7 @@
         building_id = #{buildingId,jdbcType=VARCHAR},
       </if>
       <if test="noticeType != null" >
-        notice_type = #{noticeType,jdbcType=CHAR},
+        notice_type = #{noticeType,jdbcType=INTEGER},
       </if>
       <if test="noticeTitle != null" >
         notice_title = #{noticeTitle,jdbcType=VARCHAR},
@@ -220,7 +224,7 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simon.dal.model.Notice" >
     update notice
     set community_id = #{communityId,jdbcType=VARCHAR},building_id = #{buildingId,jdbcType=VARCHAR},
-      notice_type = #{noticeType,jdbcType=CHAR},
+      notice_type = #{noticeType,jdbcType=INTEGER},
       notice_title = #{noticeTitle,jdbcType=VARCHAR},
       notice_traditional_title = #{noticeTraditionalTitle,jdbcType=VARCHAR},
       notice_english_title = #{noticeEnglishTitle,jdbcType=VARCHAR},
@@ -234,7 +238,7 @@
   <update id="updateByPrimaryKey" parameterType="com.simon.dal.model.Notice" >
     update notice
     set community_id = #{communityId,jdbcType=VARCHAR},building_id = #{buildingId,jdbcType=VARCHAR},
-      notice_type = #{noticeType,jdbcType=CHAR},
+      notice_type = #{noticeType,jdbcType=INTEGER},
       notice_title = #{noticeTitle,jdbcType=VARCHAR},
       notice_traditional_title = #{noticeTraditionalTitle,jdbcType=VARCHAR},
       notice_english_title = #{noticeEnglishTitle,jdbcType=VARCHAR},

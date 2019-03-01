@@ -51,4 +51,7 @@ public interface Status {
         int unitStatusDecoration = 2;
         int unitStatusUsed = 3;
 
+        //通告类型0触摸板1app
+        int noticeTypeTouch = 0;
+        int noticeTypeApp = 1;
 }

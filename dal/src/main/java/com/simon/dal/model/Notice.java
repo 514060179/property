@@ -20,8 +20,8 @@ public class Notice {
     @ApiModelProperty(value="建筑名字", example="XX大厦")
     private String buildingName;
 
-    @ApiModelProperty(value="通知类型", example="app")
-    private String noticeType;
+    @ApiModelProperty(value="通知类型", example="0触摸板1app")
+    private Integer noticeType;
 
     @ApiModelProperty(value="场所标题(简体)", example="关于垃圾处理问题")
     private String noticeTitle;
@@ -108,12 +108,12 @@ public class Notice {
         this.buildingName = buildingName;
     }
 
-    public String getNoticeType() {
+    public Integer getNoticeType() {
         return noticeType;
     }
 
-    public void setNoticeType(String noticeType) {
-        this.noticeType = noticeType == null ? null : noticeType.trim();
+    public void setNoticeType(Integer noticeType) {
+        this.noticeType = noticeType;
     }
 
     public String getNoticeTitle() {
