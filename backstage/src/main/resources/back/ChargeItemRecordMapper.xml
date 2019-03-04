@@ -34,6 +34,12 @@
       <result column="formula" property="formula" jdbcType="VARCHAR" />
       <result column="describe" property="describe" jdbcType="VARCHAR" />
     </association>
+    <association property="user" javaType="com.simon.dal.model.User">
+      <id column="user_id" property="userId" jdbcType="VARCHAR" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+      <result column="english_name" property="englishName" jdbcType="VARCHAR" />
+      <result column="sex" property="sex" jdbcType="INTEGER" />
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
     record_id, user_id, unit_item_id, record_date, record_status, record_time, record_actual_amount, 
@@ -42,6 +48,7 @@
   <sql id="With_Other_Column_List" >
     cir.record_id, cir.user_id, cir.unit_item_id, cir.record_date, cir.record_status, cir.record_time, cir.record_actual_amount,
     cir.record_amount, cir.record_late_fee, cir.record_late_date, cir.record_remark, cir.create_time, cir.update_time,
+    uu.user_id, uu.name, uu.english_name, uu.sex,
     ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price,ci.additional_cost, ci.late_fee,
     ci.late_date, ci.formula, ci.`describe`,
     c.community_id,c.community_no,c.community_name
@@ -56,6 +63,7 @@
     select
     <include refid="With_Other_Column_List" />
     from charge_item_record cir
+      inner join `user` uu on cir.user_id=uu.user_id
       inner join unit_charge_item uci on cir.unit_item_id=uci.unit_item_id
       inner join charge_item ci on uci.item_id=ci.item_id
       inner join unit u on uci.unit_id=u.unit_id
@@ -68,10 +76,10 @@
         uci.unit_id = #{unitId,jdbcType=VARCHAR}
       </if>
       <if test="recordStatus!=null">
-        cir.record_status = #{recordStatus,jdbcType=INTEGER}
+        and cir.record_status = #{recordStatus,jdbcType=INTEGER}
       </if>
       <if test="communityId!=null and communityId!=''">
-        u.community_id = #{communityId,jdbcType=VARCHAR}
+        and u.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
     order by cir.create_time desc

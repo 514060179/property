@@ -1,6 +1,7 @@
 package com.simon.backstage.domain.model;
 
 import com.simon.backstage.domain.vo.Community;
+import com.simon.dal.model.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -36,6 +37,8 @@ public class ChargeItemRecord {
     private Date updateTime;
     @ApiModelProperty(hidden = true)
     private Community community;
+    @ApiModelProperty(hidden = true)
+    private User user;
 
     @ApiModelProperty(hidden = true)
     private ChargeItem chargeItem;
@@ -158,5 +161,13 @@ public class ChargeItemRecord {
 
     public void setChargeItem(ChargeItem chargeItem) {
         this.chargeItem = chargeItem;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
