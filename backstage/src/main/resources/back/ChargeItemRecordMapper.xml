@@ -55,9 +55,14 @@
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    <include refid="Base_Column_List" />
-    from charge_item_record
-    where record_id = #{recordId,jdbcType=VARCHAR}
+    <include refid="With_Other_Column_List" />
+    from charge_item_record cir
+      inner join `user` uu on cir.user_id=uu.user_id
+      inner join unit_charge_item uci on cir.unit_item_id=uci.unit_item_id
+      inner join charge_item ci on uci.item_id=ci.item_id
+      inner join unit u on uci.unit_id=u.unit_id
+      inner join community c on u.community_id=c.community_id
+    where cir.record_id = #{recordId,jdbcType=VARCHAR}
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
     select
