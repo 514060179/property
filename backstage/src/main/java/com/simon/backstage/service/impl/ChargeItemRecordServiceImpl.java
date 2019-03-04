@@ -1,5 +1,6 @@
 package com.simon.backstage.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.AdvanceMoneyMapper;
 import com.simon.backstage.dao.AdvanceRecordMapper;
@@ -75,6 +76,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
 
     @Override
     public PageInfo<ChargeItemRecord> list(BaseQueryParam baseQueryParam) {
+        PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
         return new PageInfo<>(chargeItemRecordMapper.selectByCondition(baseQueryParam));
     }
 }
