@@ -32,7 +32,7 @@
   <select id="selectByConditon" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
     select
     <include refid="Base_Column_List" />
-    from advertisement a inner join community c on a.community_id=c.community_id
+    from advertisement a left join community c on a.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(a.title,'')) LIKE CONCAT('%', #{keyword}, '%')
