@@ -65,7 +65,10 @@ public class Place {
 
     @ApiModelProperty(value = "简介(英文)",example = "The deepest swimming in the world")
     private String placeEnglishIntroduction;
-    
+
+    @ApiModelProperty(hidden = true)
+    private Community community;
+
     private List<Images> images;
 
     public String getPlaceIntroduction() {
@@ -204,7 +207,15 @@ public class Place {
         this.updateTime = updateTime;
     }
 
-	public List<Images> getImages() {
+    public Community getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(Community community) {
+        this.community = community;
+    }
+
+    public List<Images> getImages() {
 		return images;
 	}
 
