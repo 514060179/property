@@ -74,9 +74,9 @@
       inner join unit u on uci.unit_id=u.unit_id
       inner join community c on u.community_id=c.community_id
     <where>
-      <!--<if test="keyword!=null and keyword!=''">-->
-        <!--CONCAT(IFNULL(asset_name,''),IFNULL(asset_position,'')) LIKE CONCAT('%', #{keyword}, '%')-->
-      <!--</if>-->
+      <if test="keyword!=null and keyword!=''">
+        CONCAT(IFNULL(ci.item_no,''),IFNULL(ci.item_name,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
       <if test="unitId!=null and unitId!=''">
         uci.unit_id = #{unitId,jdbcType=VARCHAR}
       </if>
