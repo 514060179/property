@@ -37,9 +37,9 @@
     <result column="img_update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    place_id, community_id, place_name, place_traditional_name, place_english_name, place_status,
-    place_start_time, place_end_time, place_need_order, place_upper_limit, place_advance_order_day, 
-    place_farthest_order_day, p.create_time, p.update_time, place_introduction, place_traditional_introduction, place_english_introduction,
+    p.place_id, p.community_id, p.place_name, p.place_traditional_name, p.place_english_name, p.place_status,
+    p.place_start_time, p.place_end_time, p.place_need_order, p.place_upper_limit, p.place_advance_order_day,
+    p.place_farthest_order_day, p.create_time, p.update_time, p.place_introduction, p.place_traditional_introduction, p.place_english_introduction,
     c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectImages" parameterType="string" resultMap="Image_Result_Map" >
