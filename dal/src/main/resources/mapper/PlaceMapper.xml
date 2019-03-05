@@ -19,28 +19,33 @@
     <result column="place_introduction" property="placeIntroduction" jdbcType="LONGVARCHAR" />
     <result column="place_traditional_introduction" property="placeTraditionalIntroduction" jdbcType="LONGVARCHAR" />
     <result column="place_english_introduction" property="placeEnglishIntroduction" jdbcType="LONGVARCHAR" />
-    
-    <collection property="images" ofType="com.simon.dal.model.Images" >
-    	<id column="image_id" property="imageId" jdbcType="VARCHAR"/>
-    	<result column="object_id" property="objectId" jdbcType="VARCHAR"/>
-    	<result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
-    	<result column="image_thumbnail" property="imageThumbnail" jdbcType="VARCHAR"/>
-    	<result column="image_type" property="imageType" jdbcType="INTEGER"/>
-    	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+
+    <collection property="images" ofType="com.simon.dal.model.Images" javaType="java.util.List" select="selectImages" column="place_id">
     </collection>
   </resultMap>
+  <resultMap id="Image_Result_Map" type="com.simon.dal.model.Images" >
+    <id column="image_id" property="imageId" jdbcType="VARCHAR"/>
+    <result column="object_id" property="objectId" jdbcType="VARCHAR"/>
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
+    <result column="image_thumbnail" property="imageThumbnail" jdbcType="VARCHAR"/>
+    <result column="image_type" property="imageType" jdbcType="INTEGER"/>
+    <result column="img_create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="img_update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
   <sql id="Base_Column_List" >
-  	image_id, image_url, image_thumbnail, object_id, image_type, img.create_time, img.update_time,
     place_id, community_id, place_name, place_traditional_name, place_english_name, place_status,
     place_start_time, place_end_time, place_need_order, place_upper_limit, place_advance_order_day, 
     place_farthest_order_day, p.create_time, p.update_time, place_introduction, place_traditional_introduction, place_english_introduction
   </sql>
+  <select id="selectImages" parameterType="string" resultMap="Image_Result_Map" >
+    select img.image_id, img.image_url, img.image_thumbnail, img.object_id, img.image_type, img.create_time as img_create_time, img.update_time as img_update_time
+    from images img
+    where img.object_id=#{placeId} and img.image_type=1
+  </select>
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
   	select 
   	<include refid="Base_Column_List" />
   	from place p
-  	left join images img on p.place_id = img.object_id and img.image_type=1
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(place_name,'')) LIKE CONCAT('%', #{keyword}, '%')
@@ -55,7 +60,6 @@
     select 
     <include refid="Base_Column_List" />
     from place p
-  	left join images img on p.place_id = img.object_id and img.image_type=1
     where place_id = #{placeId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
