@@ -44,18 +44,16 @@ public class NoticeServiceImpl implements NoticeService {
 	public Notice add(Notice notice) {
 		notice.setNoticeId(UUIDUtil.uidString());
 		if(!notice.getNoticeImage().isEmpty() && notice.getNoticeImage().get(0)!=null){
-			String[] imageUrl = notice.getNoticeImage().get(0).getImageUrl().split(",");
-			String[] imageThumbnail = notice.getNoticeImage().get(0).getImageThumbnail().split(",");
 			List<Images> list = new ArrayList<>();
-			for(int i = 0; i < imageUrl.length; i++){
+			notice.getNoticeImage().forEach(images -> {
 				Images image = new Images();
 				image.setImageId(UUIDUtil.uidString());
-				image.setImageUrl(imageUrl[i]);
-				image.setImageThumbnail(imageThumbnail[i]);
+				image.setImageUrl(images.getImageUrl());
+				image.setImageThumbnail(images.getImageThumbnail());
 				image.setImageType(Type.IMAGE_TYPE_NOTICE);
 				image.setObjectId(notice.getNoticeId());
 				list.add(image);
-			}
+			});
 			imageMapper.insertBatch(list);
 			notice.setNoticeImage(list);
 		}

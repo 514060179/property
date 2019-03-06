@@ -32,24 +32,21 @@ public class PlaceServiceImpl implements PlaceService {
         place.setPlaceId(UUIDUtil.uidString());
         int i = placeMapper.insertSelective(place);
         //存在图片
-        if (!place.getImages().isEmpty() && place.getImages().get(0)!=null){
-        	Images images = place.getImages().get(0);
-            List<Images> list = new ArrayList<>();
-            List<String> imagesList = Arrays.asList(images.getImageUrl().split(","));
-            List<String> thumbnailList = Arrays.asList(images.getImageThumbnail().split(","));
-            for (int j = 0 ; j<imagesList.size();j++){
+        List<Images> list = new ArrayList<>();
+        if (!place.getImages().isEmpty() && place.getImages().get(0) != null) {
+            place.getImages().forEach(images -> {
                 Images image = new Images();
                 image.setImageId(UUIDUtil.uidString());
                 image.setObjectId(place.getPlaceId());
-                image.setImageUrl(imagesList.get(j));
-                image.setImageThumbnail(thumbnailList.get(j));
+                image.setImageUrl(images.getImageUrl());
+                image.setImageThumbnail(images.getImageThumbnail());
                 image.setImageType(Type.IMAGE_TYPE_PLACE);
                 list.add(image);
-            }
+            });
             imageMapper.insertBatch(list);
-            place.setImages(list);
         }
         if (i>0){
+            place.setImages(list);
             return place;
         }else{
             return null;
