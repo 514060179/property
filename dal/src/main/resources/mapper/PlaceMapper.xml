@@ -57,7 +57,7 @@
         CONCAT(IFNULL(place_name,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
 	  <if test="communityId != null">
-	  	AND community_id = #{communityId,jdbcType=VARCHAR}
+	  	AND p.community_id = #{communityId,jdbcType=VARCHAR}
 	  </if>
     </where>
     order by p.create_time desc
