@@ -53,7 +53,7 @@
 	FROM 
 	  	place_record
 	WHERE
-	  	order_date = #{orderDate,jdbcType=DATE}
+	  	order_date = #{orderDate,jdbcType=DATE} AND user_id=#{userId,jdbcType=VARCHAR}
 	AND
 		(( #{orderStartTime, jdbcType=TIME} &lt; order_start_time 
 			AND  order_start_time  &lt;= #{orderEndTime,jdbcType=TIME})
