@@ -66,7 +66,8 @@
     select 
     <include refid="Base_Column_List" />
     from place p
-    where place_id = #{placeId,jdbcType=VARCHAR}
+    inner join community c on p.community_id=c.community_id
+    where p.place_id = #{placeId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from place
