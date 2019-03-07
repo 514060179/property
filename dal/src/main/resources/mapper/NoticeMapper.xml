@@ -70,17 +70,17 @@
   	select
     <include refid="Base_Column_List" />
     from
-    	notice n inner join community c on n.community_id=c.community_id
+    	notice n left join community c on n.community_id=c.community_id
     <where>
         n.notice_type=0
     	<if test="keyword != null and keyword!=''" >
     		CANCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CONCAT('%', #{keyword}, '%')
     	</if>
     	<if test="communityId != null and communityId != ''">
-    		AND (n.community_id = #{communityId,jdbcType=VARCHAR} or n.community_id is null or n.community_id!='')
+    		AND (n.community_id = #{communityId,jdbcType=VARCHAR} or n.community_id is null or n.community_id='')
     	</if>
     	<if test="buildingId != null and buildingId != ''">
-    		AND (n.building_id = #{buildingId,jdbcType=VARCHAR} or n.building_id is null or n.building_id!='')
+    		AND (n.building_id = #{buildingId,jdbcType=VARCHAR} or n.building_id is null or n.building_id='')
     	</if>
     </where>
   </select>

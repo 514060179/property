@@ -46,9 +46,9 @@
   <select id="selectUsable" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from advertisement a inner join community c on a.community_id=c.community_id where a.used=1
+    from advertisement a left join community c on a.community_id=c.community_id where a.used=1
     <if test="communityId != null">
-      AND (a.community_id = #{communityId,jdbcType=VARCHAR} or a.community_id is null)
+      AND (a.community_id = #{communityId,jdbcType=VARCHAR} or a.community_id is null or a.community_id='')
     </if>
     <if test="buildingId != null and buildingId != ''">
       AND (a.building_id = #{buildingId,jdbcType=VARCHAR} or a.building_id is null or a.building_id='')
