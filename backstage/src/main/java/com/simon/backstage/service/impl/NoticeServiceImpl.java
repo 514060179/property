@@ -68,7 +68,8 @@ public class NoticeServiceImpl implements NoticeService {
 			}
 			Map<String, String> map = new HashMap<>();
 			map.put("noticeId", notice.getNoticeId());
-			map.put("detail", notice.getNoticeDetails());
+			map.put("noticeType", notice.getNoticeType()+"");
+			map.put("noticeTitle", notice.getNoticeTitle());
 			final String t = target;
 			//app推送
 			if (notice.getNoticeType()== Status.noticeTypeApp){
