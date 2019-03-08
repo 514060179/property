@@ -78,6 +78,7 @@ public class JwtHelper {
         if (Strings.isNotBlank(deviceType)){
         	jwt.claim("device", deviceType);//登录终端
         }
+        jwt.claim("random",System.currentTimeMillis()+"");
         jwt.compressWith(CompressionCodecs.DEFLATE);//压缩，可选GZIP
         jwt.signWith(SignatureAlgorithm.HS256, secretKeyBytes);//加密设置
         return jwt.compact();
