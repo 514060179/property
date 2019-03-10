@@ -51,6 +51,9 @@ public class Place {
     @ApiModelProperty(value = "最大天数",example = "30")
     private Integer placeFarthestOrderDay;
 
+    @ApiModelProperty(value = "图标类型",example = "0篮球场1羽毛球馆2KTV3足球馆4高尔夫馆")
+    private Integer placeIconType;
+
     @ApiModelProperty(value="创建时间",readOnly=true)
     private Date createTime;
 
@@ -189,6 +192,14 @@ public class Place {
 
     public void setPlaceFarthestOrderDay(Integer placeFarthestOrderDay) {
         this.placeFarthestOrderDay = placeFarthestOrderDay;
+    }
+
+    public Integer getPlaceIconType() {
+        return placeIconType;
+    }
+
+    public void setPlaceIconType(Integer placeIconType) {
+        this.placeIconType = placeIconType;
     }
 
     public Date getCreateTime() {
