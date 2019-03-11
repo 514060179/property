@@ -56,7 +56,6 @@
 	WHERE
 	  	order_date = #{orderDate,jdbcType=DATE} AND user_id=#{userId,jdbcType=VARCHAR}
 	AND
-	  #{orderStartTime, jdbcType=TIME}>order_end_time and #{orderEndTime,jdbcType=TIME} &lt; order_start_time
     (#{orderStartTime, jdbcType=TIME}>order_end_time OR #{orderEndTime,jdbcType=TIME} &lt; order_start_time  OR (#{orderStartTime, jdbcType=TIME}>order_start_time AND #{orderEndTime,jdbcType=TIME}&lt; order_end_time))
 -- 		(( #{orderStartTime, jdbcType=TIME} &lt; order_start_time
 -- 			AND  order_start_time  &lt;= #{orderEndTime,jdbcType=TIME})
