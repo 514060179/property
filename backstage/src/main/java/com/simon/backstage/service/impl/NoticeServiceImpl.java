@@ -74,7 +74,7 @@ public class NoticeServiceImpl implements NoticeService {
 			//app推送
 			if (notice.getNoticeType()== Status.noticeTypeApp){
 				new Thread(()->{
-					PushPayload pu = JPushUtil.buildPushObjectByAlias(notice.getNoticeTitle(), false, t, map, 1);
+					PushPayload pu = JPushUtil.buildPushObjectByAlias(notice.getNoticeTitle(),true, t, map, 1);
 					JPushUtil.push(pu);
 				}).start();
 			}
