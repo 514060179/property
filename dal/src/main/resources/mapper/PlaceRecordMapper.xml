@@ -24,6 +24,7 @@
       <result column="place_upper_limit" property="placeUpperLimit" jdbcType="INTEGER" />
       <result column="place_advance_order_day" property="placeAdvanceOrderDay" jdbcType="INTEGER" />
       <result column="place_farthest_order_day" property="placeFarthestOrderDay" jdbcType="INTEGER" />
+      <result column="place_icon_type" property="placeIconType" jdbcType="INTEGER" />
       <result column="place_introduction" property="placeIntroduction" jdbcType="LONGVARCHAR" />
       <result column="place_traditional_introduction" property="placeTraditionalIntroduction" jdbcType="LONGVARCHAR" />
       <result column="place_english_introduction" property="placeEnglishIntroduction" jdbcType="LONGVARCHAR" />
@@ -34,7 +35,7 @@
     pr.update_time, pr.create_time,
     p.place_id, p.community_id, p.place_name, p.place_traditional_name, p.place_english_name, p.place_status,
     p.place_start_time, p.place_end_time, p.place_need_order, p.place_upper_limit, p.place_advance_order_day,
-    p.place_farthest_order_day, p.place_introduction, p.place_traditional_introduction, p.place_english_introduction
+    p.place_farthest_order_day,p.place_icon_type, p.place_introduction, p.place_traditional_introduction, p.place_english_introduction
   </sql>
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.model.PlaceRecord" >
   	select
@@ -55,15 +56,17 @@
 	WHERE
 	  	order_date = #{orderDate,jdbcType=DATE} AND user_id=#{userId,jdbcType=VARCHAR}
 	AND
-		(( #{orderStartTime, jdbcType=TIME} &lt; order_start_time 
-			AND  order_start_time  &lt;= #{orderEndTime,jdbcType=TIME})
-		OR ( #{orderStartTime, jdbcType=TIME} &lt; order_end_time 
-			AND order_end_time &lt;= #{orderEndTime,jdbcType=TIME}))
-		OR
-		(( order_start_time &lt; #{orderStartTime, jdbcType=TIME}  
-			AND  #{orderStartTime, jdbcType=TIME} &lt;= order_end_time) 
-		OR ( order_start_time &lt; #{orderEndTime,jdbcType=TIME}  
-			AND #{orderEndTime,jdbcType=TIME} &lt;= order_end_time))
+	  #{orderStartTime, jdbcType=TIME}>order_end_time and #{orderEndTime,jdbcType=TIME} &lt; order_start_time
+    (#{orderStartTime, jdbcType=TIME}>order_end_time OR #{orderEndTime,jdbcType=TIME} &lt; order_start_time  OR (#{orderStartTime, jdbcType=TIME}>order_start_time AND #{orderEndTime,jdbcType=TIME}&lt; order_end_time))
+-- 		(( #{orderStartTime, jdbcType=TIME} &lt; order_start_time
+-- 			AND  order_start_time  &lt;= #{orderEndTime,jdbcType=TIME})
+-- 		OR ( #{orderStartTime, jdbcType=TIME} &lt; order_end_time
+-- 			AND order_end_time &lt;= #{orderEndTime,jdbcType=TIME}))
+-- 		OR
+-- 		(( order_start_time &lt; #{orderStartTime, jdbcType=TIME}
+-- 			AND  #{orderStartTime, jdbcType=TIME} &lt;= order_end_time)
+-- 		OR ( order_start_time &lt; #{orderEndTime,jdbcType=TIME}
+-- 			AND #{orderEndTime,jdbcType=TIME} &lt;= order_end_time))
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
