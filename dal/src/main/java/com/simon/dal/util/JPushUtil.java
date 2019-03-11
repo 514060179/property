@@ -14,6 +14,7 @@ import cn.jpush.api.push.model.notification.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -133,7 +134,7 @@ public class JPushUtil {
         if (type == 0) {
             audienceTarget = AudienceTarget.alias(target);
         } else {
-            audienceTarget = AudienceTarget.tag(target);
+            audienceTarget = AudienceTarget.tag(target.split(","));
         }
         return PushPayload
                 .newBuilder()
