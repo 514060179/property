@@ -24,12 +24,11 @@ public class PlaceRecord {
     private Date orderDate;
 
     @ApiModelProperty(value="开始时间",example="08:00:00")
-    
-    @JsonFormat(pattern="hh:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="HH:mm:ss",timezone="GMT+8")
     private Date orderStartTime;
 
     @ApiModelProperty(value="结束时间",example="18:00:00")
-    @JsonFormat(pattern="hh:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="HH:mm:ss",timezone="GMT+8")
     private Date orderEndTime;
 
     @ApiModelProperty(value="预定状态(-1预约取消0开始发起1预约成功2预约失败)",readOnly=true)
