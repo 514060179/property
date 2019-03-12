@@ -68,7 +68,7 @@ public class PlaceRecordController {
     	
     	//查询当天该时间段有没有被预约
     	int count = placeRecordService.findPlaceTime(placeRecord);
-    	if(count <= 0){
+    	if(count > 0){
     		return ReturnMsg.fail("该时间段已被预约",Code.orderFail);
     	}
     	
