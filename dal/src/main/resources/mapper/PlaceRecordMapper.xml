@@ -56,12 +56,13 @@
 	WHERE
 	  	order_date = #{orderDate,jdbcType=DATE} AND place_id=#{placeId,jdbcType=VARCHAR}
 	AND
-    ((#{orderStartTime, jdbcType=TIME}&lt;=order_end_time AND #{orderStartTime, jdbcType=TIME}>order_start_time AND #{orderEndTime,jdbcType=TIME} >=order_end_time) OR
-
-    (#{orderEndTime,jdbcType=TIME}&lt;=order_end_time AND #{orderEndTime,jdbcType=TIME}>order_start_time AND #{orderStartTime, jdbcType=TIME} &lt;=order_start_time) OR
-
-    (#{orderStartTime, jdbcType=TIME}>order_start_time AND #{orderEndTime,jdbcType=TIME} &lt;order_end_time) OR (#{orderStartTime, jdbcType=TIME}&lt;order_start_time AND #{orderEndTime,jdbcType=TIME} >order_end_time))
-  </select>
+    (
+    (#{orderStartTime, jdbcType=TIME}&lt;order_end_time AND #{orderStartTime, jdbcType=TIME}>=order_start_time AND #{orderEndTime, jdbcType=TIME} >=order_end_time)
+    OR (#{orderEndTime, jdbcType=TIME}&lt;order_end_time AND #{orderEndTime, jdbcType=TIME}>order_start_time AND #{orderStartTime, jdbcType=TIME} &lt;order_start_time)
+    OR (#{orderStartTime, jdbcType=TIME}>=order_start_time AND #{orderEndTime, jdbcType=TIME} &lt;order_end_time) OR (#{orderStartTime, jdbcType=TIME}&lt;=order_start_time AND #{orderEndTime, jdbcType=TIME} >order_end_time)
+    OR (#{orderStartTime, jdbcType=TIME}=order_start_time AND #{orderEndTime, jdbcType=TIME} =order_end_time)
+    )
+    </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
