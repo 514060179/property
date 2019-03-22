@@ -65,13 +65,6 @@ public class PlaceRecordController {
     	if(place==null || place.getPlaceStatus()==0){
     		return ReturnMsg.fail("该场地暂未开放",Code.orderFail);
     	}
-    	
-    	//查询当天该时间段有没有被预约
-    	int count = placeRecordService.findPlaceTime(placeRecord);
-    	if(count > 0){
-    		return ReturnMsg.fail("该时间段已被预约",Code.orderFail);
-    	}
-    	
     	//场地需要提前多少天
     	Integer advance = place.getPlaceAdvanceOrderDay();
     	int day = DateUtil.getDifferentMillisecond(new Date(),
@@ -90,6 +83,13 @@ public class PlaceRecordController {
     	if(limit < hour){
     		return ReturnMsg.fail("该场地预约时间最大"+limit+"小时",Code.orderFail);
     	}
+
+		//查询当天该时间段有没有被预约
+		int count = placeRecordService.findPlaceTime(placeRecord);
+		if(count > 0){
+			return ReturnMsg.fail("该时间段已被预约",Code.orderFail);
+		}
+
         return ReturnMsg.success(placeRecordService.addPlaceRecord(placeRecord));
     }
 }

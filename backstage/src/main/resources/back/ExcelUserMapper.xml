@@ -26,20 +26,23 @@
     c.community_id,c.community_no,c.community_name,
     cir.record_date,SUM(record_amount) as amount,GROUP_CONCAT(record_remark) as remark
   </sql>
-  <select id="execlUser" resultMap="BaseResultMap" parameterType="com.simon.dal.model.User" >
+  <select id="execlUser" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
   	select 
     <include refid="Base_Column_List" />
     from charge_item_record cir
       inner join unit_charge_item uci on uci.`unit_item_id` = cir.`unit_item_id`
       inner join `user` u on u.`user_id` = cir.`user_id`
       inner join community c on u.community_id=c.community_id
-      inner join advance_money am on u.`user_id` = am.`user_id`
-      group by u.`user_id`,record_date
+      left join advance_money am on u.`user_id` = am.`user_id`
     <where>
         <if test="communityId != null">
             AND u.community_id = #{communityId, jdbcType=VARCHAR}
         </if>
+        <if test="recordStatus !=null">
+            AND cir.record_status = #{recordStatus, jdbcType=INTEGER}
+        </if>
     </where>
+    group by u.`user_id`,record_date
   </select>
 
 </mapper>

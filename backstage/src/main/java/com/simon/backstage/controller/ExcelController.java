@@ -40,17 +40,28 @@ public class ExcelController {
     private ExcelUserService excelUserService;
 
     @GetMapping("/chargeExport")
-    @ApiOperation("费用导出")
+    @ApiOperation("费用导出（未交/已收/预收）")
     public void chargeExport(HttpServletResponse response, HttpServletRequest request, ExcelQueryParam excelQueryParam){
 
         String communityId = ClaimsUtil.getCommunityId(request);
         if(!StringUtils.isEmpty(communityId)){
             excelQueryParam.setCommunityId(communityId);
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/ss HH:mm:ss");
         List<ExcelUser> excelUserList = excelUserService.execlUser(excelQueryParam);
+        String name = "";
+        switch (excelQueryParam.getRecordStatus()) {
+            case 0:
+                name = "(未交)";
+                break;
+            case 1:
+                name = "(已交)";
+                break;
+            case 2:
+                name = "（预交）";
+                break;
+        }
         ExcelData data = new ExcelData();
-        data.setName("物业费"+sdf.format(new Date()));
+        data.setName("物业费"+name);
         List<String> titles = new ArrayList();
         titles.add("名字");
         List monthList = getMonthStr();
@@ -70,14 +81,14 @@ public class ExcelController {
                 }
                 row.add(amount);
             });
-            row.add(excelUser.getAdvanceAmount());
+            row.add(excelUser.getAdvanceAmount()==null?0:excelUser.getAdvanceAmount());
             rows.add(row);
         });
         titles.add("预收剩余费用");
         data.setTitles(titles);
         data.setRows(rows);
         try{
-            ExcelUtils.exportExcel(response,"test2",data);
+            ExcelUtils.exportExcel(response,"bms费用收取",data);
         }catch (Exception e){
             e.printStackTrace();
         }
