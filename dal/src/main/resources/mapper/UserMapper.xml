@@ -243,7 +243,7 @@
       <if test="username != null" >
         username = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
+      <if test="password != null and password != ''" >
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="portrait != null" >

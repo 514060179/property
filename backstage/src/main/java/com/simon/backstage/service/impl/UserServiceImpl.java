@@ -10,6 +10,7 @@ import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * @author fengtianying
@@ -38,6 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int upd(User user) {
+        if (!StringUtils.isEmpty(user.getPassword())){
+            user.setPassword(EncryUtil.getMD5(user.getPassword()));
+        }
         return userMapper.updateByPrimaryKeySelective(user);
     }
 
