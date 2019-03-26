@@ -84,6 +84,9 @@
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(m.`NAME`,''),IFNULL(m.username,''),IFNULL(m.email,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
+      <if test="communityId != null" >
+        and m.community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
     </where>
     order by m.create_time desc
   </select>

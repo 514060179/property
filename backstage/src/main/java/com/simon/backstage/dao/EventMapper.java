@@ -17,6 +17,8 @@ public interface EventMapper {
 
     List<Event> selectByCondition(EventQueryParam eventQueryParam);
 
+    List<Event> selectRemindEvent();
+
     int updateByPrimaryKeySelective(Event record);
 
     int updateSelective(EventUpdParam eventUpdParam);

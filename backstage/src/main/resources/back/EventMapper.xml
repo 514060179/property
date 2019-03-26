@@ -52,6 +52,12 @@
     </where>
     order by e.create_time desc
   </select>
+  <select id="selectRemindEvent" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from event e  join community c on e.community_id=c.community_id
+    where e.event_type=2
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from event
     where event_id = #{eventId,jdbcType=VARCHAR}
