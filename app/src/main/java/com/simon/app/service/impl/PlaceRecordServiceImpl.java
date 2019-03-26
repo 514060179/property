@@ -2,7 +2,11 @@ package com.simon.app.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
+import com.simon.dal.constant.Type;
+import com.simon.dal.dao.ImageMapper;
+import com.simon.dal.model.Images;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,9 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
 	@Autowired
 	private PlaceRecordMapper placeRecordMapper;
 
+	@Autowired
+	private ImageMapper imageMapper;
+
 	@Override
 	public List<PlaceRecord> selfList(PlaceRecord placeRecord) {
 		return placeRecordMapper.list(placeRecord);
@@ -24,7 +31,12 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
 	@Override
 	public PlaceRecord findOne(String placeRecordId) {
 		// TODO Auto-generated method stub
-		return placeRecordMapper.selectByPrimaryKey(placeRecordId);
+		PlaceRecord placeRecord = placeRecordMapper.selectByPrimaryKey(placeRecordId);
+		if (!Objects.isNull(placeRecord)){
+			List<Images> imagesList = imageMapper.findListById(placeRecord.getPlaceId(), Type.IMAGE_TYPE_PLACE);
+			placeRecord.getPlace().setImages(imagesList);
+		}
+		return placeRecord;
 	}
 
 	@Override
