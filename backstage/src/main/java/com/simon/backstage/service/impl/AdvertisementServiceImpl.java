@@ -1,5 +1,6 @@
 package com.simon.backstage.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.AdvertisementMapper;
 import com.simon.backstage.domain.model.Advertisement;
@@ -71,6 +72,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public PageInfo<Advertisement> list(BaseQueryParam baseQueryParam) {
+        PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
         return new PageInfo<>(advertisementMapper.selectByConditon(baseQueryParam));
     }
 
