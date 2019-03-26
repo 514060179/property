@@ -8,6 +8,7 @@
     <result column="event_remark" property="eventRemark" jdbcType="VARCHAR" />
     <result column="event_date" property="eventDate" jdbcType="DATE" />
     <result column="event_type" property="eventType" jdbcType="INTEGER" />
+    <result column="event_remind_cycle" property="eventRemindCycle" jdbcType="INTEGER" />
     <result column="event_finish_date" property="eventFinishDate" jdbcType="DATE" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -21,7 +22,7 @@
     </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    e.event_id, e.community_id, e.event_status, e.event_remark, e.event_date, e.event_type, e.event_finish_date,
+    e.event_id, e.community_id, e.event_status, e.event_remark, e.event_date, e.event_type, e.event_remind_cycle, e.event_finish_date,
     e.create_time, e.update_time,e.event_content, e.event_cause, e.event_solve,
     c.community_id,c.community_no,c.community_name
   </sql>
@@ -45,6 +46,9 @@
       <if test="eventType != null">
       	AND e.event_type = #{eventType,jdbcType=INTEGER}
       </if>
+      <if test="eventRemindCycle != null">
+      	AND e.event_remind_cycle = #{eventRemindCycle,jdbcType=INTEGER}
+      </if>
     </where>
     order by e.create_time desc
   </select>
@@ -54,12 +58,12 @@
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.Event" >
     insert into event (event_id, community_id, event_status, 
-      event_remark, event_date, event_type, 
+      event_remark, event_date, event_type, event_remind_cycle,
       event_finish_date, create_time, update_time, 
       event_content, event_cause, event_solve
       )
     values (#{eventId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{eventStatus,jdbcType=INTEGER}, 
-      #{eventRemark,jdbcType=VARCHAR}, #{eventDate,jdbcType=DATE}, #{eventType,jdbcType=INTEGER}, 
+      #{eventRemark,jdbcType=VARCHAR}, #{eventDate,jdbcType=DATE}, #{eventType,jdbcType=INTEGER}, #{eventRemindCycle,jdbcType=INTEGER},
       #{eventFinishDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{eventContent,jdbcType=LONGVARCHAR}, #{eventCause,jdbcType=LONGVARCHAR}, #{eventSolve,jdbcType=LONGVARCHAR}
       )
@@ -84,6 +88,9 @@
       </if>
       <if test="eventType != null" >
         event_type,
+      </if>
+      <if test="eventRemindCycle != null" >
+        event_remind_cycle,
       </if>
       <if test="eventFinishDate != null" >
         event_finish_date,
@@ -123,6 +130,9 @@
       <if test="eventType != null" >
         #{eventType,jdbcType=INTEGER},
       </if>
+      <if test="eventRemindCycle != null" >
+        #{eventRemindCycle,jdbcType=INTEGER},
+      </if>
       <if test="eventFinishDate != null" >
         #{eventFinishDate,jdbcType=DATE},
       </if>
@@ -158,6 +168,9 @@
       <if test="eventType != null" >
         event_type = #{eventType,jdbcType=INTEGER},
       </if>
+      <if test="eventRemindCycle != null" >
+        event_remind_cycle = #{eventRemindCycle,jdbcType=INTEGER},
+      </if>
       <if test="eventFinishDate != null" >
         event_finish_date = #{eventFinishDate,jdbcType=DATE},
       </if>
@@ -191,6 +204,9 @@
       <if test="eventType != null" >
         event_type = #{eventType,jdbcType=INTEGER},
       </if>
+      <if test="eventRemindCycle != null" >
+        event_remind_cycle = #{eventRemindCycle,jdbcType=INTEGER},
+      </if>
       <if test="eventFinishDate != null" >
         event_finish_date = #{eventFinishDate,jdbcType=DATE},
       </if>
@@ -219,6 +235,7 @@
       event_remark = #{eventRemark,jdbcType=VARCHAR},
       event_date = #{eventDate,jdbcType=DATE},
       event_type = #{eventType,jdbcType=INTEGER},
+      event_remind_cycle = #{eventRemindCycle,jdbcType=INTEGER},
       event_finish_date = #{eventFinishDate,jdbcType=DATE},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -234,6 +251,7 @@
       event_remark = #{eventRemark,jdbcType=VARCHAR},
       event_date = #{eventDate,jdbcType=DATE},
       event_type = #{eventType,jdbcType=INTEGER},
+      event_remind_cycle = #{eventRemindCycle,jdbcType=INTEGER},
       event_finish_date = #{eventFinishDate,jdbcType=DATE},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}

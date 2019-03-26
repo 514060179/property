@@ -29,6 +29,9 @@ public class Event {
     @ApiModelProperty(value = "事件类型1采购2保养3其他",example = "1")
     private Integer eventType;
 
+    @ApiModelProperty(value = "提醒周期（单位：天）默认15",example = "15")
+    private Integer eventRemindCycle;
+
     @ApiModelProperty(value = "完成时间",example = "2018-11-12")
     private Date eventFinishDate;
 
@@ -119,6 +122,14 @@ public class Event {
 
     public void setEventType(Integer eventType) {
         this.eventType = eventType;
+    }
+
+    public Integer getEventRemindCycle() {
+        return eventRemindCycle;
+    }
+
+    public void setEventRemindCycle(Integer eventRemindCycle) {
+        this.eventRemindCycle = eventRemindCycle;
     }
 
     public Date getEventFinishDate() {
