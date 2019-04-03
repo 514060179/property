@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Objects;
 
@@ -24,6 +25,9 @@ import java.util.Objects;
 public class PermitController {
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @RequestMapping("list.html")
     public String list(){
@@ -55,7 +59,10 @@ public class PermitController {
     @ResponseBody
     public String add(String params){
         Role role = JSONUtil.jsonToObject(params,Role.class);
-        return JSONUtil.objectToJson(ReturnMsg.success(roleService.add(role)));
+        if (roleService.add(role)!=null){
+            restTemplate.getForObject("http://localhost:8089/backstage/role/refresh",String.class);
+        }
+        return JSONUtil.objectToJson(ReturnMsg.success(role));
     }
     @RequestMapping("/roleDel")
     @ResponseBody
@@ -76,13 +83,17 @@ public class PermitController {
         RoleJn roleJn = new RoleJn();
         roleJn.setRoleId(roleId);
         roleJn.setJnId(jnId);
-        return JSONUtil.objectToJson(ReturnMsg.success(roleService.roleJnAdd(roleJn)));
+        if (roleService.roleJnAdd(roleJn)!=null){
+            restTemplate.getForObject("http://localhost:8089/backstage/role/refresh",String.class);
+        }
+        return JSONUtil.objectToJson(ReturnMsg.success(roleJn));
     }
 
     @RequestMapping("/roleJnDel")
     @ResponseBody
     public String roleJnDel(@RequestParam Long roleJnId){
         if (roleService.roleJnDel(roleJnId)>0){
+            restTemplate.getForObject("http://localhost:8089/backstage/role/refresh",String.class);
             return JSONUtil.objectToJson(ReturnMsg.success());
         }else{
             return JSONUtil.objectToJson(ReturnMsg.fail("删除失败!"));
