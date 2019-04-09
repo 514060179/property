@@ -7,7 +7,7 @@ package com.simon.dal.constant;
 public class Type {
 
     /**
-     * 其他文件
+     * 物业资产
      */
     public static final int IMAGE_TYPE_OTHER = 3;
 

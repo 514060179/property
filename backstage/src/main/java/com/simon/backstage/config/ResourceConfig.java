@@ -18,6 +18,9 @@ public class ResourceConfig {
 	@Value("${resource.imagePath.advImgPath}")
 	private String advPath;
 
+	@Value("${resource.imagePath.assetImgPath}")
+	private String assetImgPath;
+
 
 	public String getRootPath() {
 		return rootPath;
@@ -49,5 +52,13 @@ public class ResourceConfig {
 
 	public void setAdvPath(String advPath) {
 		this.advPath = advPath;
+	}
+
+	public String getAssetImgPath() {
+		return assetImgPath;
+	}
+
+	public void setAssetImgPath(String assetImgPath) {
+		this.assetImgPath = assetImgPath;
 	}
 }

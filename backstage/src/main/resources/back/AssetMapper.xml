@@ -21,6 +21,18 @@
       <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
       <result column="community_name" property="communityName" jdbcType="VARCHAR" />
     </association>
+    <collection property="assetImage" ofType="com.simon.dal.model.Images" javaType="java.util.List" select="selectImages" column="asset_id">
+    </collection>
+  </resultMap>
+
+  <resultMap id="Image_Result_Map" type="com.simon.dal.model.Images" >
+    <id column="image_id" property="imageId" jdbcType="VARCHAR"/>
+    <result column="object_id" property="objectId" jdbcType="VARCHAR"/>
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
+    <result column="image_thumbnail" property="imageThumbnail" jdbcType="VARCHAR"/>
+    <result column="image_type" property="imageType" jdbcType="INTEGER"/>
+    <result column="img_create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="img_update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -29,6 +41,12 @@
     a.update_time,a.asset_describe, a.asset_traditional_describe, a.asset_english_describe,
     c.community_id,c.community_no,c.community_name
   </sql>
+
+  <select id="selectImages" parameterType="string" resultMap="Image_Result_Map" >
+    select img.image_id, img.image_url, img.image_thumbnail, img.object_id, img.image_type, img.create_time as img_create_time, img.update_time as img_update_time
+    from images img
+    where img.object_id=#{noticeId} and img.image_type=3
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

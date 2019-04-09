@@ -42,7 +42,7 @@ public class FileController {
     @PostMapping("upload")
     @ResponseBody
     @ApiImplicitParam(name = "file",value = "资源文件(字节码)",paramType = "payload")
-    public ReturnMsg<ImagesUrl> upload(HttpServletRequest request,@ApiParam(name = "type",value = "图片类型：1场所2公告3广告4其他",defaultValue = "1")@RequestParam Integer type) throws IOException {
+    public ReturnMsg<ImagesUrl> upload(HttpServletRequest request,@ApiParam(name = "type",value = "图片类型：1场所2公告3广告4物业资产",defaultValue = "1")@RequestParam Integer type) throws IOException {
 
         List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
 
@@ -50,16 +50,16 @@ public class FileController {
         String filePath = resourceConfig.getRootPath(); // 上传后的路径
         if (1 == type) {//场所图片
             relativePath = resourceConfig.getPlacePath();
-            filePath += relativePath;
         } else if (2 == type) {//公告
             relativePath = resourceConfig.getNoticePath();
-            filePath += relativePath;
         } else if(3 == type){ //广告
             relativePath += resourceConfig.getAdvPath();
-            filePath += relativePath;
+        }else if(4 == type){ //物业资产
+            relativePath += resourceConfig.getAssetImgPath();
         }else {
             filePath += "/";
         }
+        filePath += relativePath;
         StringBuffer stringBuffer = new StringBuffer();
         StringBuffer thumbnail = new StringBuffer();
         for (int i =0 ; i<files.size() ; i++){

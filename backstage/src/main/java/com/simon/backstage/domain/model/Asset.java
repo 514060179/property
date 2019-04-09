@@ -1,10 +1,12 @@
 package com.simon.backstage.domain.model;
 
 import com.simon.backstage.domain.vo.Community;
+import com.simon.dal.model.Images;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -55,6 +57,8 @@ public class Asset {
 
     @ApiModelProperty(value = "描述(英文)",example = "Descriptive information")
     private String assetEnglishDescribe;
+
+    private List<Images> assetImage;
 
     public String getAssetDescribe() {
         return assetDescribe;
@@ -174,5 +178,13 @@ public class Asset {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public List<Images> getAssetImage() {
+        return assetImage;
+    }
+
+    public void setAssetImage(List<Images> assetImage) {
+        this.assetImage = assetImage;
     }
 }
