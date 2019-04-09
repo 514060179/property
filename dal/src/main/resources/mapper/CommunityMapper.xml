@@ -302,7 +302,7 @@
     from community
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(community_name,''),IFNULL(community_no,''),IFNULL(community_address,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(community_name,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
     </where>
     order by create_time desc

@@ -1,7 +1,7 @@
 package com.simon.backstage.dao;
 
 import com.simon.backstage.domain.model.Unit;
-import com.simon.dal.vo.BaseClaims;
+import com.simon.dal.vo.BaseQueryParam;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface UnitMapper {
 
     Unit selectByPrimaryKey(String unitId);
 
-    List<Unit> selectByCondition(BaseClaims baseClaims);
+    List<Unit> selectByCondition(BaseQueryParam baseQueryParam);
 
     int updateByPrimaryKeySelective(Unit record);
 

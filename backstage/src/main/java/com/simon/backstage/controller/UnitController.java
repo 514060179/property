@@ -5,6 +5,7 @@ import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.model.UserUnit;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
+import com.simon.backstage.domain.vo.UnitQueryParam;
 import com.simon.backstage.service.UnitService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
@@ -66,18 +67,14 @@ public class UnitController {
 
     @GetMapping("list")
     @ApiOperation("单元列表")
-    public ReturnMsg<PageInfo<Unit>> list(BaseClaims baseClaims,
-                                          String buildingId,
+    public ReturnMsg<PageInfo<Unit>> list(UnitQueryParam unitQueryParam,
                                           HttpServletRequest request){
     	String communityId = ClaimsUtil.getCommunityId(request);
 		if(!StringUtils.isEmpty(communityId)){
-			baseClaims.setCommunityId(communityId);
+            unitQueryParam.setCommunityId(communityId);
 		}
-		if(!StringUtils.isEmpty(buildingId) && buildingId.trim()!=""){
-			baseClaims.setBuildingId(buildingId);
-		}
-        logger.info("单元列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
-        return ReturnMsg.success(unitService.list(baseClaims));
+        logger.info("单元列表baseClaims={}", JSONUtil.objectToJson(unitQueryParam));
+        return ReturnMsg.success(unitService.list(unitQueryParam));
     }
 
     @PostMapping("addUser")

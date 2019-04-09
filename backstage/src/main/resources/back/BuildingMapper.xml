@@ -71,7 +71,7 @@
     from building b inner join community c on b.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(b.building_name,''),IFNULL(b.building_no,''),IFNULL(b.full_address,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(b.building_name,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
       	AND b.community_id = #{communityId,jdbcType=VARCHAR}

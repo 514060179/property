@@ -9,6 +9,7 @@ import com.simon.backstage.domain.model.UserUnit;
 import com.simon.backstage.service.UnitService;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseClaims;
+import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +44,9 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
-    public PageInfo<Unit> list(BaseClaims baseClaims) {
-        PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
-        return new PageInfo<>(unitMapper.selectByCondition(baseClaims));
+    public PageInfo<Unit> list(BaseQueryParam baseQueryParam) {
+        PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
+        return new PageInfo<>(unitMapper.selectByCondition(baseQueryParam));
     }
     
 

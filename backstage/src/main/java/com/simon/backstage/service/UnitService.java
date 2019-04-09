@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.model.UserUnit;
 import com.simon.dal.vo.BaseClaims;
+import com.simon.dal.vo.BaseQueryParam;
 
 public interface UnitService {
 
@@ -38,10 +39,10 @@ public interface UnitService {
 
     /**
      * 列表
-     * @param baseClaims
+     * @param baseQueryParam
      * @return
      */
-    PageInfo<Unit> list(BaseClaims baseClaims);
+    PageInfo<Unit> list(BaseQueryParam baseQueryParam);
     
     /**
      * 房间住户添加

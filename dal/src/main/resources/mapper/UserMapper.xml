@@ -67,7 +67,7 @@
     from user u inner join community c on u.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(u.NAME,''),IFNULL(u.username,''),IFNULL(u.email,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(u.NAME,''),IFNULL(u.username,''),IFNULL(u.tel,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
       	AND u.community_id = #{communityId, jdbcType=VARCHAR}

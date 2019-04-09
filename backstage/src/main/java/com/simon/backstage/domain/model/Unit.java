@@ -40,7 +40,7 @@ public class Unit {
     @ApiModelProperty(value = "位置(地下,一楼,二楼,三楼,户外.)",example = "三楼")
     private String unitPosition;
 
-    @ApiModelProperty(value = "单位类型1商铺2住宅3停车场",example = "2")
+    @ApiModelProperty(value = "单位用途1商业2轻型汽车/电单车3住宅",example = "1")
     private Integer unitType;
 
     @ApiModelProperty(value = "全址",example = "三楼A001")
@@ -48,6 +48,9 @@ public class Unit {
 
     @ApiModelProperty(value = "单元状态0空置1租赁2装修中3入住",example = "3")
     private Integer unitStatus;
+
+    @ApiModelProperty(value = "单位业权",example = "10")
+    private Integer unitTitle;
 
     @ApiModelProperty(hidden = true)
     private Date createTime;
@@ -195,5 +198,13 @@ public class Unit {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public Integer getUnitTitle() {
+        return unitTitle;
+    }
+
+    public void setUnitTitle(Integer unitTitle) {
+        this.unitTitle = unitTitle;
     }
 }

@@ -53,7 +53,7 @@ public class User {
     @ApiModelProperty(value = "用户头像",example = "/a/b/c.jpg")
     private String portrait;
 
-    @ApiModelProperty(value = "婚姻制度",example = "未婚")
+    @ApiModelProperty(value = "婚姻制度：未婚、离婚、A、G、C、S、M、I、P、J",example = "未婚")
     private String marriageSystem;
 
     @ApiModelProperty(value = "配偶名字",example = "nimei")
