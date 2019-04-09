@@ -21,6 +21,22 @@ public class ResourceConfig {
 	@Value("${resource.imagePath.assetImgPath}")
 	private String assetImgPath;
 
+	@Value("${resource.imagePath.eventPath}")
+	private String eventPath;
+
+	@Value("${resource.filePath.buildingPdfPath}")
+	private String buildingPdfPath;
+
+	@Value("${resource.filePath.buildingOrderPath}")
+	private String buildingOrderPath;
+
+	@Value("${resource.filePath.eventPdfPath}")
+	private String eventPdfPath;
+
+	@Value("${resource.filePath.communityPdfPath}")
+	private String communityPdfPath;
+
+
 
 	public String getRootPath() {
 		return rootPath;
@@ -60,5 +76,45 @@ public class ResourceConfig {
 
 	public void setAssetImgPath(String assetImgPath) {
 		this.assetImgPath = assetImgPath;
+	}
+
+	public String getEventPath() {
+		return eventPath;
+	}
+
+	public void setEventPath(String eventPath) {
+		this.eventPath = eventPath;
+	}
+
+	public String getBuildingPdfPath() {
+		return buildingPdfPath;
+	}
+
+	public void setBuildingPdfPath(String buildingPdfPath) {
+		this.buildingPdfPath = buildingPdfPath;
+	}
+
+	public String getBuildingOrderPath() {
+		return buildingOrderPath;
+	}
+
+	public void setBuildingOrderPath(String buildingOrderPath) {
+		this.buildingOrderPath = buildingOrderPath;
+	}
+
+	public String getEventPdfPath() {
+		return eventPdfPath;
+	}
+
+	public void setEventPdfPath(String eventPdfPath) {
+		this.eventPdfPath = eventPdfPath;
+	}
+
+	public String getCommunityPdfPath() {
+		return communityPdfPath;
+	}
+
+	public void setCommunityPdfPath(String communityPdfPath) {
+		this.communityPdfPath = communityPdfPath;
 	}
 }

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class FileController {
     @PostMapping("upload")
     @ResponseBody
     @ApiImplicitParam(name = "file",value = "资源文件(字节码)",paramType = "payload")
-    public ReturnMsg<ImagesUrl> upload(HttpServletRequest request,@ApiParam(name = "type",value = "图片类型：1场所2公告3广告4物业资产",defaultValue = "1")@RequestParam Integer type) throws IOException {
+    public ReturnMsg<ImagesUrl> upload(HttpServletRequest request,@ApiParam(name = "type",value = "图片类型：1场所2公告3广告4物业资产5事件",defaultValue = "1")@RequestParam Integer type) throws IOException {
 
         List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
 
@@ -56,6 +57,8 @@ public class FileController {
             relativePath += resourceConfig.getAdvPath();
         }else if(4 == type){ //物业资产
             relativePath += resourceConfig.getAssetImgPath();
+        }else if(5 == type){ //事件
+            relativePath += resourceConfig.getEventPath();
         }else {
             filePath += "/";
         }
@@ -128,4 +131,44 @@ public class FileController {
         return ReturnMsg.success();
     }
 
+    @PostMapping("uploadFile")
+    @ResponseBody
+    @ApiImplicitParam(name = "file", value = "资源文件(字节码)", paramType = "payload")
+    public ReturnMsg<String> uploadFile(HttpServletRequest request, @ApiParam(name = "type", value = "文件类型：0社区pdf 1事件pdf 2楼宇pdf  3楼宇业主名册", defaultValue = "1") @RequestParam Integer type) throws IOException {
+        List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
+        String relativePath = "";
+        StringBuffer stringBuffer = new StringBuffer();
+        String filePath = resourceConfig.getRootPath(); // 上传后的路径
+        if (0 == type) {//社区pdf
+            relativePath = resourceConfig.getCommunityPdfPath();
+        } else if (1 == type) {//事件pdf
+            relativePath = resourceConfig.getEventPdfPath();
+        } else if(2 == type){ //楼宇pdf
+            relativePath += resourceConfig.getBuildingPdfPath();
+        }else if(3 == type){ //楼宇业主名册
+            relativePath += resourceConfig.getBuildingOrderPath();
+        }else {
+            filePath += "/";
+        }
+        filePath += relativePath;
+        for (int i =0 ; i<files.size() ; i++){
+            String fileName = files.get(i).getOriginalFilename();  // 文件名
+            String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
+            fileName = System.currentTimeMillis() + suffixName; // 新文件名
+            File dest = new File(filePath + fileName);
+            if (!dest.getParentFile().exists()) {
+                dest.getParentFile().mkdirs();
+            }
+            try {
+                files.get(i).transferTo(dest);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stringBuffer.append(relativePath).append(fileName);
+            if (i<files.size()-1){
+                stringBuffer.append(",");
+            }
+        }
+        return ReturnMsg.success(stringBuffer.toString());
+    }
 }
