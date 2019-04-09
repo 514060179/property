@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.Asset" >
     <id column="asset_id" property="assetId" jdbcType="VARCHAR" />
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="asset_no" property="assetNo" jdbcType="VARCHAR" />
     <result column="asset_type" property="assetType" jdbcType="VARCHAR" />
     <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
     <result column="asset_traditional_name" property="assetTraditionalName" jdbcType="VARCHAR" />
@@ -11,6 +12,8 @@
     <result column="asset_position" property="assetPosition" jdbcType="VARCHAR" />
     <result column="asset_traditional_position" property="assetTraditionalPosition" jdbcType="VARCHAR" />
     <result column="asset_english_position" property="assetEnglishPosition" jdbcType="VARCHAR" />
+    <result column="asset_maintain" property="assetMaintain" jdbcType="BIT" />
+    <result column="asset_maintain_remind_cycle" property="assetMaintainRemindCycle" jdbcType="INTEGER" />
     <result column="asset_describe" property="assetDescribe" jdbcType="LONGVARCHAR" />
     <result column="asset_traditional_describe" property="assetTraditionalDescribe" jdbcType="LONGVARCHAR" />
     <result column="asset_english_describe" property="assetEnglishDescribe" jdbcType="LONGVARCHAR" />
@@ -36,8 +39,8 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    a.asset_id, a.community_id, a.asset_type, a.asset_name, a.asset_traditional_name, a.asset_english_name,
-    a.asset_position, a.asset_traditional_position, a.asset_english_position, a.create_time,
+    a.asset_id, a.community_id, a.asset_no, a.asset_type, a.asset_name, a.asset_traditional_name, a.asset_english_name,
+    a.asset_position, a.asset_traditional_position, a.asset_english_position,a.asset_maintain,a.asset_maintain_remind_cycle, a.create_time,
     a.update_time,a.asset_describe, a.asset_traditional_describe, a.asset_english_describe,
     c.community_id,c.community_no,c.community_name
   </sql>
@@ -73,16 +76,16 @@
     where asset_id = #{assetId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.Asset" >
-    insert into asset (asset_id, community_id, asset_type, 
+    insert into asset (asset_id, community_id,asset_no, asset_type,
       asset_name, asset_traditional_name, asset_english_name, 
       asset_position, asset_traditional_position, 
-      asset_english_position, create_time, update_time, 
+      asset_english_position,asset_maintain, asset_maintain_remind_cycle, create_time, update_time,
       asset_describe, asset_traditional_describe, 
       asset_english_describe)
-    values (#{assetId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{assetType,jdbcType=VARCHAR}, 
+    values (#{assetId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR},#{assetNo,jdbcType=VARCHAR}, #{assetType,jdbcType=VARCHAR},
       #{assetName,jdbcType=VARCHAR}, #{assetTraditionalName,jdbcType=VARCHAR}, #{assetEnglishName,jdbcType=VARCHAR}, 
       #{assetPosition,jdbcType=VARCHAR}, #{assetTraditionalPosition,jdbcType=VARCHAR}, 
-      #{assetEnglishPosition,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{assetEnglishPosition,jdbcType=VARCHAR},#{assetMaintain,jdbcType=BIT},#{assetMaintainRemindCycle,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
       #{assetDescribe,jdbcType=LONGVARCHAR}, #{assetTraditionalDescribe,jdbcType=LONGVARCHAR}, 
       #{assetEnglishDescribe,jdbcType=LONGVARCHAR})
   </insert>
@@ -94,6 +97,9 @@
       </if>
       <if test="communityId != null" >
         community_id,
+      </if>
+      <if test="assetNo != null" >
+        asset_no,
       </if>
       <if test="assetType != null" >
         asset_type,
@@ -115,6 +121,12 @@
       </if>
       <if test="assetEnglishPosition != null" >
         asset_english_position,
+      </if>
+      <if test="assetMaintain != null" >
+        asset_maintain,
+      </if>
+      <if test="assetMaintainRemindCycle != null" >
+        asset_maintain_remind_cycle,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -139,6 +151,9 @@
       <if test="communityId != null" >
         #{communityId,jdbcType=VARCHAR},
       </if>
+      <if test="assetNo != null" >
+        #{assetNo,jdbcType=VARCHAR},
+      </if>
       <if test="assetType != null" >
         #{assetType,jdbcType=VARCHAR},
       </if>
@@ -159,6 +174,12 @@
       </if>
       <if test="assetEnglishPosition != null" >
         #{assetEnglishPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="assetMaintain != null" >
+        #{assetMaintain,jdbcType=BIT},
+      </if>
+      <if test="assetMaintainRemindCycle != null" >
+        #{assetMaintainRemindCycle,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -183,6 +204,9 @@
       <if test="communityId != null" >
         community_id = #{communityId,jdbcType=VARCHAR},
       </if>
+      <if test="assetNo != null" >
+        asset_no = #{assetNo,jdbcType=VARCHAR},
+      </if>
       <if test="assetType != null" >
         asset_type = #{assetType,jdbcType=VARCHAR},
       </if>
@@ -204,6 +228,12 @@
       <if test="assetEnglishPosition != null" >
         asset_english_position = #{assetEnglishPosition,jdbcType=VARCHAR},
       </if>
+      <if test="assetMaintain != null" >
+        asset_maintain = #{assetMaintain,jdbcType=BIT},
+      </if>
+      <if test="assetMaintainRemindCycle != null" >
+        asset_maintain_remind_cycle = #{assetMaintainRemindCycle,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -224,7 +254,9 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simon.backstage.domain.model.Asset" >
     update asset
-    set community_id = #{communityId,jdbcType=VARCHAR},
+    set
+      community_id = #{communityId,jdbcType=VARCHAR},
+      asset_no = #{assetNo,jdbcType=VARCHAR},
       asset_type = #{assetType,jdbcType=VARCHAR},
       asset_name = #{assetName,jdbcType=VARCHAR},
       asset_traditional_name = #{assetTraditionalName,jdbcType=VARCHAR},
@@ -232,6 +264,8 @@
       asset_position = #{assetPosition,jdbcType=VARCHAR},
       asset_traditional_position = #{assetTraditionalPosition,jdbcType=VARCHAR},
       asset_english_position = #{assetEnglishPosition,jdbcType=VARCHAR},
+      asset_maintain = #{assetMaintain,jdbcType=BIT},
+      asset_maintain_remind_cycle = #{assetMaintainRemindCycle,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       asset_describe = #{assetDescribe,jdbcType=LONGVARCHAR},
@@ -241,7 +275,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.Asset" >
     update asset
-    set community_id = #{communityId,jdbcType=VARCHAR},
+    set
+      community_id = #{communityId,jdbcType=VARCHAR},
+      asset_no = #{assetNo,jdbcType=VARCHAR},
       asset_type = #{assetType,jdbcType=VARCHAR},
       asset_name = #{assetName,jdbcType=VARCHAR},
       asset_traditional_name = #{assetTraditionalName,jdbcType=VARCHAR},
@@ -249,6 +285,8 @@
       asset_position = #{assetPosition,jdbcType=VARCHAR},
       asset_traditional_position = #{assetTraditionalPosition,jdbcType=VARCHAR},
       asset_english_position = #{assetEnglishPosition,jdbcType=VARCHAR},
+      asset_maintain = #{assetMaintain,jdbcType=BIT},
+      asset_maintain_remind_cycle = #{assetMaintainRemindCycle,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where asset_id = #{assetId,jdbcType=VARCHAR}

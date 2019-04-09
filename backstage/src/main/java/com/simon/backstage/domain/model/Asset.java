@@ -20,6 +20,9 @@ public class Asset {
     @NotEmpty(message = "社区id不能为空")
     private String communityId;
 
+    @ApiModelProperty(value = "资产编号",example = "ZC001")
+    private String assetNo;
+
     @ApiModelProperty(value = "资产类型：电器、公共设备",example = "电器")
     private String assetType;
 
@@ -40,6 +43,12 @@ public class Asset {
 
     @ApiModelProperty(value = "位置信息(英文)",example = "Front gate")
     private String assetEnglishPosition;
+
+    @ApiModelProperty(value = "保养？",example = "true")
+    private Boolean assetMaintain;
+
+    @ApiModelProperty(value = "保养周期（天数）",example = "15")
+    private Integer assetMaintainRemindCycle;
 
     @ApiModelProperty(hidden = true)
     private Date createTime;
@@ -98,6 +107,14 @@ public class Asset {
 
     public void setCommunityId(String communityId) {
         this.communityId = communityId == null ? null : communityId.trim();
+    }
+
+    public String getAssetNo() {
+        return assetNo;
+    }
+
+    public void setAssetNo(String assetNo) {
+        this.assetNo = assetNo;
     }
 
     public String getAssetType() {
@@ -186,5 +203,21 @@ public class Asset {
 
     public void setAssetImage(List<Images> assetImage) {
         this.assetImage = assetImage;
+    }
+
+    public Boolean getAssetMaintain() {
+        return assetMaintain;
+    }
+
+    public void setAssetMaintain(Boolean assetMaintain) {
+        this.assetMaintain = assetMaintain;
+    }
+
+    public Integer getAssetMaintainRemindCycle() {
+        return assetMaintainRemindCycle;
+    }
+
+    public void setAssetMaintainRemindCycle(Integer assetMaintainRemindCycle) {
+        this.assetMaintainRemindCycle = assetMaintainRemindCycle;
     }
 }
