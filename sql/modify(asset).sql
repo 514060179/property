@@ -5,3 +5,6 @@
 ALTER TABLE `bms`.`asset`
   ADD COLUMN `asset_no` VARCHAR(50) NULL COMMENT '资产编号' AFTER `community_id`,
   ADD  UNIQUE INDEX `UNIQUE_ASSET_NO` (`community_id`, `asset_no`);
+
+ALTER TABLE `bms`.`asset`
+  ADD COLUMN `asset_buy_date` DATE NULL COMMENT '购买日期' AFTER `asset_maintain_remind_cycle`;

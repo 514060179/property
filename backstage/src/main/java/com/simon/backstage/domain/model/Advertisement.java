@@ -37,6 +37,9 @@ public class Advertisement implements Cloneable {
     @ApiModelProperty(value = "播放时间（单位秒）",example = "10")
     private Integer residenceTime;
 
+    @ApiModelProperty(value = "播放时间（单位秒）",example = "10")
+    private Integer purpose;
+
     @ApiModelProperty(value = "描述",example = "这是普通广告")
     private String describe;
 
@@ -45,6 +48,12 @@ public class Advertisement implements Cloneable {
 
     @ApiModelProperty(hidden = true)
     private Date updateTime;
+
+    @ApiModelProperty(value = "开始日期",example = "2018-11-11")
+    private Date startTime;
+
+    @ApiModelProperty(value = "结束日期",example = "2019-11-11")
+    private Date endTime;
 
     @ApiModelProperty(value = "是否使用0否1是",example = "0")
     private Boolean used;
@@ -160,6 +169,30 @@ public class Advertisement implements Cloneable {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public Integer getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(Integer purpose) {
+        this.purpose = purpose;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     @Override

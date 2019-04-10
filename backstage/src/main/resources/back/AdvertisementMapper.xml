@@ -9,10 +9,13 @@
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="residence_time" property="residenceTime" jdbcType="INTEGER" />
+    <result column="purpose" property="purpose" jdbcType="INTEGER" />
     <result column="describe" property="describe" jdbcType="VARCHAR" />
     <result column="used" property="used" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <association property="community" javaType="com.simon.backstage.domain.vo.Community">
       <id column="community_id" property="communityId" jdbcType="VARCHAR" />
       <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
@@ -20,7 +23,7 @@
     </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    a.adv_id, a.community_id, a.building_id, a.title, a.`type`, a.url, a.residence_time, a.`describe`,a.used, a.create_time,
+    a.adv_id, a.community_id, a.building_id, a.title, a.`type`, a.url, a.residence_time, a.purpose, a.`describe`,a.used, a.create_time,
     c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -60,12 +63,12 @@
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.Advertisement" >
     insert into advertisement (adv_id, community_id, building_id,
-      title, `type`, url, residence_time,
-      `describe`,used, create_time, update_time
+      title, `type`, url, residence_time,purpose,
+      `describe`,used, create_time, update_time, start_time, end_time
       )
     values (#{advId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{buildingId,jdbcType=VARCHAR},
-      #{title,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{residenceTime,jdbcType=INTEGER}, 
-      #{describe,jdbcType=VARCHAR},#{used,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      #{title,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{residenceTime,jdbcType=INTEGER}, #{purpose,jdbcType=INTEGER},
+      #{describe,jdbcType=VARCHAR},#{used,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.simon.backstage.domain.model.Advertisement" >
@@ -92,6 +95,9 @@
       <if test="residenceTime != null" >
         residence_time,
       </if>
+      <if test="purpose != null" >
+        purpose,
+      </if>
       <if test="describe != null" >
         `describe`,
       </if>
@@ -103,6 +109,12 @@
       </if>
       <if test="updateTime != null" >
         update_time,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -127,6 +139,9 @@
       <if test="residenceTime != null" >
         #{residenceTime,jdbcType=INTEGER},
       </if>
+      <if test="purpose != null" >
+        #{purpose,jdbcType=INTEGER},
+      </if>
       <if test="describe != null" >
         #{describe,jdbcType=VARCHAR},
       </if>
@@ -139,11 +154,17 @@
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <insert id="insertBatch">
     insert into advertisement (adv_id, community_id, building_id,
-          title, url, residence_time,
+          title, url, residence_time,purpose,
           `describe`,used
           ) values
     <foreach collection="list" item="item" index="index" separator=",">
@@ -174,6 +195,9 @@
       <if test="residenceTime != null" >
         residence_time = #{residenceTime,jdbcType=INTEGER},
       </if>
+      <if test="purpose != null" >
+        purpose = #{purpose,jdbcType=INTEGER},
+      </if>
       <if test="describe != null" >
         `describe` = #{describe,jdbcType=VARCHAR},
       </if>
@@ -186,6 +210,12 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where adv_id = #{advId,jdbcType=VARCHAR}
   </update>
@@ -197,10 +227,13 @@
       `type` = #{type,jdbcType=INTEGER},
       url = #{url,jdbcType=VARCHAR},
       residence_time = #{residenceTime,jdbcType=INTEGER},
+      purpose = #{purpose,jdbcType=INTEGER},
       `describe` = #{describe,jdbcType=VARCHAR},
       used = #{used,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
+      start_time = #{startTime,jdbcType=TIMESTAMP}
+      end_time = #{endTime,jdbcType=TIMESTAMP}
     where adv_id = #{advId,jdbcType=VARCHAR}
   </update>
 </mapper>

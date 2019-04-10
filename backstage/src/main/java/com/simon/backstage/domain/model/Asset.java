@@ -50,6 +50,9 @@ public class Asset {
     @ApiModelProperty(value = "保养周期（天数）",example = "15")
     private Integer assetMaintainRemindCycle;
 
+    @ApiModelProperty(value = "购买日期",example = "2018-11-11")
+    private Date assetBuyDate;
+
     @ApiModelProperty(hidden = true)
     private Date createTime;
 
@@ -219,5 +222,13 @@ public class Asset {
 
     public void setAssetMaintainRemindCycle(Integer assetMaintainRemindCycle) {
         this.assetMaintainRemindCycle = assetMaintainRemindCycle;
+    }
+
+    public Date getAssetBuyDate() {
+        return assetBuyDate;
+    }
+
+    public void setAssetBuyDate(Date assetBuyDate) {
+        this.assetBuyDate = assetBuyDate;
     }
 }

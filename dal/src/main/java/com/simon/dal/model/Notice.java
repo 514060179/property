@@ -20,7 +20,7 @@ public class Notice {
     @ApiModelProperty(value="建筑名字", example="XX大厦")
     private String buildingName;
 
-    @ApiModelProperty(value="通知类型", example="0触摸板1app")
+    @ApiModelProperty(value="公告类型0通告1节日提醒2注意事项3政府文件4外判公司须知5工程6办理手续", example="0")
     private Integer noticeType;
 
     @ApiModelProperty(value="场所标题(简体)", example="关于垃圾处理问题")
@@ -39,6 +39,12 @@ public class Notice {
 
     @ApiModelProperty(value="更新时间",readOnly=true)
     private Date updateTime;
+
+    @ApiModelProperty(value = "开始日期",example = "2018-11-11")
+    private Date startTime;
+
+    @ApiModelProperty(value = "结束日期",example = "2019-11-11")
+    private Date endTime;
 
     @ApiModelProperty(value="详情", example="为了培养大家的环保意识，现物业主张各位业主/住户分类垃圾......")
     private String noticeDetails;
@@ -170,5 +176,21 @@ public class Notice {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 }
