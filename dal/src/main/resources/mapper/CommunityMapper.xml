@@ -8,7 +8,20 @@
     <result column="community_loc_x" property="communityLocX" jdbcType="DECIMAL" />
     <result column="community_loc_y" property="communityLocY" jdbcType="DECIMAL" />
     <result column="community_address" property="communityAddress" jdbcType="VARCHAR" />
+    <result column="community_address_direction_first_tips" property="communityAddressDirectionFirstTips" jdbcType="VARCHAR" />
+    <result column="community_address_direction_first_value" property="communityAddressDirectionFirstValue" jdbcType="VARCHAR" />
+    <result column="community_address_direction_second_tips" property="communityAddressDirectionSecondTips" jdbcType="VARCHAR" />
+    <result column="community_address_direction_second_value" property="communityAddressDirectionSecondValue" jdbcType="VARCHAR" />
+    <result column="community_address_direction_third_tips" property="communityAddressDirectionThirdTips" jdbcType="VARCHAR" />
+    <result column="community_address_direction_third_value" property="communityAddressDirectionThirdValue" jdbcType="VARCHAR" />
+    <result column="community_address_direction_fourth_tips" property="communityAddressDirectionFourthTips" jdbcType="VARCHAR" />
+    <result column="community_address_direction_fourth_value" property="communityAddressDirectionFourthValue" jdbcType="VARCHAR" />
     <result column="community_area" property="communityArea" jdbcType="DECIMAL" />
+    <result column="community_cover_area" property="communityCoverArea" jdbcType="DECIMAL" />
+    <result column="community_no_cover_area" property="communityNoCoverArea" jdbcType="DECIMAL" />
+    <result column="community_vertical_area" property="communityVerticalArea" jdbcType="DECIMAL" />
+    <result column="community_shops_area" property="communityShopsArea" jdbcType="DECIMAL" />
+    <result column="community_house_area" property="communityHouseArea" jdbcType="DECIMAL" />
     <result column="community_building_area" property="communityBuildingArea" jdbcType="DECIMAL" />
     <result column="community_road_area" property="communityRoadArea" jdbcType="DECIMAL" />
     <result column="community_greenarea" property="communityGreenarea" jdbcType="DECIMAL" />
@@ -16,6 +29,7 @@
     <result column="community_garage_area" property="communityGarageArea" jdbcType="DECIMAL" />
     <result column="community_garage_count" property="communityGarageCount" jdbcType="INTEGER" />
     <result column="community_room_count" property="communityRoomCount" jdbcType="INTEGER" />
+    <result column="community_shops_count" property="communityShopsCount" jdbcType="INTEGER" />
     <result column="community_management_type" property="communityManagementType" jdbcType="TINYINT" />
     <result column="community_contacts" property="communityContacts" jdbcType="VARCHAR" />
     <result column="community_contacts_phone" property="communityContactsPhone" jdbcType="VARCHAR" />
@@ -25,9 +39,10 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    community_id, community_no, community_name, community_loc_x, community_loc_y, community_address, 
-    community_area, community_building_area, community_road_area, community_greenarea,
-    community_common_area, community_garage_area, community_garage_count, community_room_count,
+    community_id, community_no, community_name, community_loc_x, community_loc_y, community_address,
+    community_address_direction_first_tips,community_address_direction_first_value,community_address_direction_second_tips,community_address_direction_second_value,community_address_direction_third_tips,community_address_direction_third_value,community_address_direction_fourth_tips,community_address_direction_fourth_value,
+    community_area,community_cover_area,community_no_cover_area,community_vertical_area,community_shops_area,community_house_area, community_building_area, community_road_area, community_greenarea,
+    community_common_area, community_garage_area, community_garage_count, community_room_count,community_shops_count,
     community_management_type, community_contacts, community_contacts_phone, community_remark,
     community_deleted, create_time, update_time
   </sql>
@@ -55,20 +70,25 @@
   </delete>
   <insert id="insert" parameterType="com.simon.dal.model.Community" >
     insert into community (community_id, community_no, community_name, 
-      community_loc_x, community_loc_y, community_address, 
-      community_area, community_building_area, community_road_area,
+      community_loc_x, community_loc_y, community_address,
+      community_address_direction_first_tips, community_address_direction_first_value,community_address_direction_second_tips, community_address_direction_second_value,community_address_direction_third_tips, community_address_direction_third_value,community_address_direction_fourth_tips, community_address_direction_fourth_value,
+      community_area,community_cover_area,community_no_cover_area,community_vertical_area,community_shops_area,community_house_area, community_building_area, community_road_area,
       community_greenarea, community_common_area,
       community_garage_area, community_garage_count,
-      community_room_count, community_management_type,
+      community_room_count,community_shops_count, community_management_type,
       community_contacts, community_contacts_phone,
       community_remark, community_deleted, create_time,
       update_time)
     values (#{communityId,jdbcType=VARCHAR}, #{communityNo,jdbcType=VARCHAR}, #{communityName,jdbcType=VARCHAR},
       #{communityLocX,jdbcType=DECIMAL}, #{communityLocY,jdbcType=DECIMAL}, #{communityAddress,jdbcType=VARCHAR},
-      #{communityArea,jdbcType=DECIMAL}, #{communityBuildingArea,jdbcType=DECIMAL}, #{communityRoadArea,jdbcType=DECIMAL},
+      #{communityAddressDirectionFirstTips,jdbcType=VARCHAR},#{communityAddressDirectionFirstValue,jdbcType=VARCHAR},
+      #{communityAddressDirectionSecondTips,jdbcType=VARCHAR},#{communityAddressDirectionSecondValue,jdbcType=VARCHAR},
+      #{communityAddressDirectionThirdTips,jdbcType=VARCHAR},#{communityAddressDirectionThirdValue,jdbcType=VARCHAR},
+      #{communityAddressDirectionFourthTips,jdbcType=VARCHAR},#{communityAddressDirectionFourthValue,jdbcType=VARCHAR},
+      #{communityArea,jdbcType=DECIMAL},#{communityCoverArea,jdbcType=DECIMAL},#{communityNoCoverArea,jdbcType=DECIMAL},#{communityVerticalArea,jdbcType=DECIMAL},#{communityShopsArea,jdbcType=DECIMAL},#{communityHouseArea,jdbcType=DECIMAL}, #{communityBuildingArea,jdbcType=DECIMAL}, #{communityRoadArea,jdbcType=DECIMAL},
       #{communityGreenarea,jdbcType=DECIMAL}, #{communityCommonArea,jdbcType=DECIMAL},
       #{communityGarageArea,jdbcType=DECIMAL}, #{communityGarageCount,jdbcType=INTEGER},
-      #{communityRoomCount,jdbcType=INTEGER}, #{communityManagementType,jdbcType=TINYINT},
+      #{communityRoomCount,jdbcType=INTEGER},#{communityShopsCount,jdbcType=INTEGER}, #{communityManagementType,jdbcType=TINYINT},
       #{communityContacts,jdbcType=VARCHAR}, #{communityContactsPhone,jdbcType=VARCHAR},
       #{communityRemark,jdbcType=VARCHAR}, #{communityDeleted,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP})
@@ -94,8 +114,47 @@
       <if test="communityAddress != null" >
         community_address,
       </if>
+      <if test="communityAddressDirectionFirstTips != null" >
+        community_address_direction_first_tips,
+      </if>
+      <if test="communityAddressDirectionFirstValue != null" >
+        community_address_direction_first_value,
+      </if>
+      <if test="communityAddressDirectionSecondTips != null" >
+        community_address_direction_second_tips,
+      </if>
+      <if test="communityAddressDirectionSecondValue != null" >
+        community_address_direction_second_value,
+      </if>
+      <if test="communityAddressDirectionThirdTips != null" >
+        community_address_direction_third_tips,
+      </if>
+      <if test="communityAddressDirectionThirdValue != null" >
+        community_address_direction_third_value,
+      </if>
+      <if test="communityAddressDirectionFourthTips != null" >
+        community_address_direction_fourth_tips,
+      </if>
+      <if test="communityAddressDirectionFourthValue != null" >
+        community_address_direction_fourth_value,
+      </if>
       <if test="communityArea != null" >
         community_area,
+      </if>
+      <if test="communityCoverArea != null" >
+        community_cover_area,
+      </if>
+      <if test="communityNoCoverArea != null" >
+        community_no_cover_area,
+      </if>
+      <if test="communityVerticalArea != null" >
+        community_vertical_area,
+      </if>
+      <if test="communityShopsArea != null" >
+        community_shops_area,
+      </if>
+      <if test="communityHouseArea != null" >
+        community_house_area,
       </if>
       <if test="communityBuildingArea != null" >
         community_building_area,
@@ -117,6 +176,9 @@
       </if>
       <if test="communityRoomCount != null" >
         community_room_count,
+      </if>
+      <if test="communityShopsCount != null" >
+        community_shops_count,
       </if>
       <if test="communityManagementType != null" >
         community_management_type,
@@ -159,8 +221,47 @@
       <if test="communityAddress != null" >
         #{communityAddress,jdbcType=VARCHAR},
       </if>
+      <if test="communityAddressDirectionFirstTips != null" >
+        #{communityAddressDirectionFirstTips,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionFirstValue != null" >
+        #{communityAddressDirectionFirstValue,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionSecondTips != null" >
+        #{communityAddressDirectionSecondTips,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionSecondValue != null" >
+        #{communityAddressDirectionSecondValue,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionThirdTips != null" >
+        #{communityAddressDirectionThirdTips,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionThirdValue != null" >
+        #{communityAddressDirectionThirdValue,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionFourthTips != null" >
+        #{communityAddressDirectionFourthTips,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionFourthValue != null" >
+        #{communityAddressDirectionFourthValue,jdbcType=VARCHAR},
+      </if>
       <if test="communityArea != null" >
         #{communityArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityCoverArea != null" >
+        #{communityCoverArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityNoCoverArea != null" >
+        #{communityNoCoverArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityVerticalArea != null" >
+        #{communityVerticalArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityShopsArea != null" >
+        #{communityShopsArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityHouseArea != null" >
+        #{communityHouseArea,jdbcType=DECIMAL},
       </if>
       <if test="communityBuildingArea != null" >
         #{communityBuildingArea,jdbcType=DECIMAL},
@@ -182,6 +283,9 @@
       </if>
       <if test="communityRoomCount != null" >
         #{communityRoomCount,jdbcType=INTEGER},
+      </if>
+      <if test="communityShopsCount != null" >
+        #{communityShopsCount,jdbcType=INTEGER},
       </if>
       <if test="communityManagementType != null" >
         #{communityManagementType,jdbcType=TINYINT},
@@ -224,8 +328,47 @@
       <if test="communityAddress != null" >
         community_address = #{communityAddress,jdbcType=VARCHAR},
       </if>
+      <if test="communityAddressDirectionFirstTips != null" >
+        community_address_direction_first_tips = #{communityAddressDirectionFirstTips,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionFirstValue != null" >
+        community_address_direction_first_value = #{communityAddressDirectionFirstValue,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionSecondTips != null" >
+        community_address_direction_second_tips = #{communityAddressDirectionSecondTips,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionSecondValue != null" >
+        community_address_direction_second_value = #{communityAddressDirectionSecondValue,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionThirdTips != null" >
+        community_address_direction_third_tips = #{communityAddressDirectionThirdTips,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionThirdValue != null" >
+        community_address_direction_third_value = #{communityAddressDirectionThirdValue,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionFourthTips != null" >
+        community_address_direction_fourth_tips = #{communityAddressDirectionFourthTips,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddressDirectionFourthValue != null" >
+        community_address_direction_fourth_value = #{communityAddressDirectionFourthValue,jdbcType=VARCHAR},
+      </if>
       <if test="communityArea != null" >
         community_area = #{communityArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityCoverArea != null" >
+        community_cover_area = #{communityCoverArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityNoCoverArea != null" >
+        community_no_cover_area = #{communityNoCoverArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityVerticalArea != null" >
+        community_vertical_area = #{communityVerticalArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityShopsArea != null" >
+        community_shops_area = #{communityShopsArea,jdbcType=DECIMAL},
+      </if>
+      <if test="communityHouseArea != null" >
+        community_house_area = #{communityHouseArea,jdbcType=DECIMAL},
       </if>
       <if test="communityBuildingArea != null" >
         community_building_area = #{communityBuildingArea,jdbcType=DECIMAL},
@@ -247,6 +390,9 @@
       </if>
       <if test="communityRoomCount != null" >
         community_room_count = #{communityRoomCount,jdbcType=INTEGER},
+      </if>
+      <if test="communityShopsCount != null" >
+        community_shops_count = #{communityShopsCount,jdbcType=INTEGER},
       </if>
       <if test="communityManagementType != null" >
         community_management_type = #{communityManagementType,jdbcType=TINYINT},
@@ -279,7 +425,20 @@
       community_loc_x = #{communityLocX,jdbcType=DECIMAL},
       community_loc_y = #{communityLocY,jdbcType=DECIMAL},
       community_address = #{communityAddress,jdbcType=VARCHAR},
+      community_address_direction_first_tips = #{communityAddressDirectionFirstTips,jdbcType=VARCHAR},
+      community_address_direction_first_value = #{communityAddressDirectionFirstValue,jdbcType=VARCHAR},
+      community_address_direction_second_tips = #{communityAddressDirectionSecondTips,jdbcType=VARCHAR},
+      community_address_direction_second_value = #{communityAddressDirectionSecondValue,jdbcType=VARCHAR},
+      community_address_direction_third_tips = #{communityAddressDirectionThirdTips,jdbcType=VARCHAR},
+      community_address_direction_third_value = #{communityAddressDirectionThirdValue,jdbcType=VARCHAR},
+      community_address_direction_fourth_tips = #{communityAddressDirectionFourthTips,jdbcType=VARCHAR},
+      community_address_direction_fourth_value = #{communityAddressDirectionFourthValue,jdbcType=VARCHAR},
       community_area = #{communityArea,jdbcType=DECIMAL},
+      community_cover_area = #{communityCoverArea,jdbcType=DECIMAL},
+      community_no_cover_area = #{communityNoCoverArea,jdbcType=DECIMAL},
+      community_vertical_area = #{communityVerticalArea,jdbcType=DECIMAL},
+      community_shops_area = #{communityShopsArea,jdbcType=DECIMAL},
+      community_house_area = #{communityHouseArea,jdbcType=DECIMAL},
       community_building_area = #{communityBuildingArea,jdbcType=DECIMAL},
       community_road_area = #{communityRoadArea,jdbcType=DECIMAL},
       community_greenarea = #{communityGreenarea,jdbcType=DECIMAL},
@@ -287,6 +446,7 @@
       community_garage_area = #{communityGarageArea,jdbcType=DECIMAL},
       community_garage_count = #{communityGarageCount,jdbcType=INTEGER},
       community_room_count = #{communityRoomCount,jdbcType=INTEGER},
+      community_shops_count = #{communityShopsCount,jdbcType=INTEGER},
       community_management_type = #{communityManagementType,jdbcType=TINYINT},
       community_contacts = #{communityContacts,jdbcType=VARCHAR},
       community_contacts_phone = #{communityContactsPhone,jdbcType=VARCHAR},

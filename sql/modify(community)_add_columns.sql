@@ -15,5 +15,4 @@ ALTER TABLE `bms`.`community`
   ADD COLUMN `community_vertical_area` DECIMAL(12,2) NULL COMMENT '垂直占用空间面积' AFTER `community_no_cover_area`,
   ADD COLUMN `community_shops_area` DECIMAL(12,2) NULL COMMENT '商铺面积' AFTER `community_vertical_area`,
   ADD COLUMN `community_house_area` DECIMAL(12,2) NULL COMMENT '住宅面积' AFTER `community_shops_area`,
-  ADD COLUMN `community_shops_count` INT(11) DEFAULT 0 NULL COMMENT '商铺数量' AFTER `community_room_count`,
-  ADD COLUMN `community_house_count` INT(11) DEFAULT 0 NULL COMMENT '住宅数量' AFTER `community_shops_count`;
+  ADD COLUMN `community_shops_count` INT(11) DEFAULT 0 NULL COMMENT '商铺数量' AFTER `community_room_count`;
