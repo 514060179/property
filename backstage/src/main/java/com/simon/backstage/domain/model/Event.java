@@ -17,7 +17,27 @@ public class Event {
     @NotEmpty(message = "社区id不能为空")
     private String communityId;
 
-    @ApiModelProperty(value = "事件进度0开始1待定2完成",example = "0")
+    @ApiModelProperty(value = "资产编号",example = "ZC001")
+    private String assetNo;
+    @ApiModelProperty(value = "业主id",example = "7194fd60598740ed878b89aff67738f4")
+    private String userId;
+    @ApiModelProperty(value = "投诉位置",example = "界涌广场")
+    private String complainPosition;
+    @ApiModelProperty(value = "具体位置",example = "广东珠海界涌广场")
+    private String complainSpecificPosition;
+    @ApiModelProperty(value = "投诉类型",example = "设备更换")
+    private String complainType;
+    @ApiModelProperty(value = "投诉标题",example = "报修")
+    private String complainClassType;
+    @ApiModelProperty(value = "投诉声音",example = "/app/videos/1552818817017.amr")
+    private String complainVoice;
+    @ApiModelProperty(value = "投诉进度回复",example = "现在正在处理中,预计5个工作日可以完成")
+    private String complainReply;
+
+    @ApiModelProperty(value = "接收渠道0公司1app2业主口头投诉",example = "0")
+    private Integer eventChannel;
+
+    @ApiModelProperty(value = "事件进度0跟进中1报价中2接获投诉3与管理机关讨论中4待定5工程进行中6待开大会表决7完成",example = "0")
     private Integer eventStatus;
 
     @ApiModelProperty(value = "备注",example = "备注")
@@ -26,7 +46,7 @@ public class Event {
     @ApiModelProperty(value = "事件日期",example = "2018-11-11")
     private Date eventDate;
 
-    @ApiModelProperty(value = "事件类型1采购2保养3其他",example = "1")
+    @ApiModelProperty(value = "事件类型1采购2保养3投诉4损坏",example = "1")
     private Integer eventType;
 
     @ApiModelProperty(value = "提醒周期（单位：天）默认15",example = "15")
@@ -162,5 +182,77 @@ public class Event {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public String getAssetNo() {
+        return assetNo;
+    }
+
+    public void setAssetNo(String assetNo) {
+        this.assetNo = assetNo;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getComplainPosition() {
+        return complainPosition;
+    }
+
+    public void setComplainPosition(String complainPosition) {
+        this.complainPosition = complainPosition;
+    }
+
+    public String getComplainSpecificPosition() {
+        return complainSpecificPosition;
+    }
+
+    public void setComplainSpecificPosition(String complainSpecificPosition) {
+        this.complainSpecificPosition = complainSpecificPosition;
+    }
+
+    public String getComplainType() {
+        return complainType;
+    }
+
+    public void setComplainType(String complainType) {
+        this.complainType = complainType;
+    }
+
+    public String getComplainClassType() {
+        return complainClassType;
+    }
+
+    public void setComplainClassType(String complainClassType) {
+        this.complainClassType = complainClassType;
+    }
+
+    public String getComplainVoice() {
+        return complainVoice;
+    }
+
+    public void setComplainVoice(String complainVoice) {
+        this.complainVoice = complainVoice;
+    }
+
+    public String getComplainReply() {
+        return complainReply;
+    }
+
+    public void setComplainReply(String complainReply) {
+        this.complainReply = complainReply;
+    }
+
+    public Integer getEventChannel() {
+        return eventChannel;
+    }
+
+    public void setEventChannel(Integer eventChannel) {
+        this.eventChannel = eventChannel;
     }
 }

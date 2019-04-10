@@ -4,7 +4,16 @@
   <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.Event" >
     <id column="event_id" property="eventId" jdbcType="VARCHAR" />
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="asset_no" property="assetNo" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="complain_position" property="complainPosition" jdbcType="VARCHAR" />
+    <result column="complain_specific_position" property="complainSpecificPosition" jdbcType="VARCHAR" />
+    <result column="complain_type" property="complainType" jdbcType="VARCHAR" />
+    <result column="complain_class_type" property="complainClassType" jdbcType="VARCHAR" />
+    <result column="complain_voice" property="complainVoice" jdbcType="VARCHAR" />
+    <result column="complain_reply" property="complainReply" jdbcType="VARCHAR" />
     <result column="event_status" property="eventStatus" jdbcType="INTEGER" />
+    <result column="event_channel" property="eventChannel" jdbcType="INTEGER" />
     <result column="event_remark" property="eventRemark" jdbcType="VARCHAR" />
     <result column="event_date" property="eventDate" jdbcType="DATE" />
     <result column="event_type" property="eventType" jdbcType="INTEGER" />
@@ -22,7 +31,10 @@
     </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    e.event_id, e.community_id, e.event_status, e.event_remark, e.event_date, e.event_type, e.event_remind_cycle, e.event_finish_date,
+    e.event_id, e.community_id,
+    e.asset_no,e.user_id,e.complain_position,e.complain_specific_position,
+    e.complain_type,e.complain_class_type,e.complain_voice,e.complain_reply,
+    e.event_status,e.event_channel, e.event_remark, e.event_date, e.event_type, e.event_remind_cycle, e.event_finish_date,
     e.create_time, e.update_time,e.event_content, e.event_cause, e.event_solve,
     c.community_id,c.community_no,c.community_name
   </sql>
@@ -63,12 +75,18 @@
     where event_id = #{eventId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.Event" >
-    insert into event (event_id, community_id, event_status, 
+    insert into event (event_id, community_id,
+      asset_no,user_id,complain_position,complain_specific_position,
+      complain_type,complain_class_type,complain_voice,complain_reply,
+      event_status,event_channel,
       event_remark, event_date, event_type, event_remind_cycle,
       event_finish_date, create_time, update_time, 
       event_content, event_cause, event_solve
       )
-    values (#{eventId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{eventStatus,jdbcType=INTEGER}, 
+    values (#{eventId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR},
+      #{assetNo,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{complainPosition,jdbcType=VARCHAR},
+      #{complainSpecificPosition,jdbcType=VARCHAR},#{complainType,jdbcType=VARCHAR},#{complainClassType,jdbcType=VARCHAR},
+      #{complainVoice,jdbcType=VARCHAR},#{complainReply,jdbcType=VARCHAR},#{eventStatus,jdbcType=INTEGER},#{eventChannel,jdbcType=INTEGER},
       #{eventRemark,jdbcType=VARCHAR}, #{eventDate,jdbcType=DATE}, #{eventType,jdbcType=INTEGER}, #{eventRemindCycle,jdbcType=INTEGER},
       #{eventFinishDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{eventContent,jdbcType=LONGVARCHAR}, #{eventCause,jdbcType=LONGVARCHAR}, #{eventSolve,jdbcType=LONGVARCHAR}
@@ -83,8 +101,35 @@
       <if test="communityId != null" >
         community_id,
       </if>
+      <if test="assetNo != null" >
+        asset_no,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="complainPosition != null" >
+        complain_position,
+      </if>
+      <if test="complainSpecificPosition != null" >
+        complain_specific_position,
+      </if>
+      <if test="complainType != null" >
+        complain_type,
+      </if>
+      <if test="complainClassType != null" >
+        complain_class_type,
+      </if>
+      <if test="complainVoice != null" >
+        complain_voice,
+      </if>
+      <if test="complainReply != null" >
+        complain_reply,
+      </if>
       <if test="eventStatus != null" >
         event_status,
+      </if>
+      <if test="eventChannel != null" >
+        event_channel,
       </if>
       <if test="eventRemark != null" >
         event_remark,
@@ -124,8 +169,35 @@
       <if test="communityId != null" >
         #{communityId,jdbcType=VARCHAR},
       </if>
+      <if test="assetNo != null" >
+        #{assetNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="complainPosition != null" >
+        #{complainPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="complainSpecificPosition != null" >
+        #{complainSpecificPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="complainType != null" >
+        #{complainType,jdbcType=VARCHAR},
+      </if>
+      <if test="complainClassType != null" >
+        #{complainClassType,jdbcType=VARCHAR},
+      </if>
+      <if test="complainVoice != null" >
+        #{complainVoice,jdbcType=VARCHAR},
+      </if>
+      <if test="complainReply != null" >
+        #{complainReply,jdbcType=VARCHAR},
+      </if>
       <if test="eventStatus != null" >
         #{eventStatus,jdbcType=INTEGER},
+      </if>
+      <if test="eventChannel != null" >
+        #{eventChannel,jdbcType=INTEGER},
       </if>
       <if test="eventRemark != null" >
         #{eventRemark,jdbcType=VARCHAR},
@@ -165,6 +237,33 @@
       <if test="eventStatus != null" >
         event_status = #{eventStatus,jdbcType=INTEGER},
       </if>
+      <if test="eventChannel != null" >
+        event_channel = #{eventChannel,jdbcType=INTEGER},
+      </if>
+      <if test="assetNo != null" >
+        asset_no = #{assetNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="complainPosition != null" >
+        complain_position = #{complainPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="complainSpecificPosition != null" >
+        complain_specific_position = #{complainSpecificPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="complainType != null" >
+        complain_type = #{complainType,jdbcType=VARCHAR},
+      </if>
+      <if test="complainClassType != null" >
+        complain_class_type = #{complainClassType,jdbcType=VARCHAR},
+      </if>
+      <if test="complainVoice != null" >
+        complain_voice = #{complainVoice,jdbcType=VARCHAR},
+      </if>
+      <if test="complainReply != null" >
+        complain_reply = #{complainReply,jdbcType=VARCHAR},
+      </if>
       <if test="eventRemark != null" >
         event_remark = #{eventRemark,jdbcType=VARCHAR},
       </if>
@@ -198,8 +297,35 @@
       <if test="communityId != null" >
         community_id = #{communityId,jdbcType=VARCHAR},
       </if>
+      <if test="assetNo != null" >
+        asset_no = #{assetNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="complainPosition != null" >
+        complain_position = #{complainPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="complainSpecificPosition != null" >
+        complain_specific_position = #{complainSpecificPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="complainType != null" >
+        complain_type = #{complainType,jdbcType=VARCHAR},
+      </if>
+      <if test="complainClassType != null" >
+        complain_class_type = #{complainClassType,jdbcType=VARCHAR},
+      </if>
+      <if test="complainVoice != null" >
+        complain_voice = #{complainVoice,jdbcType=VARCHAR},
+      </if>
+      <if test="complainReply != null" >
+        complain_reply = #{complainReply,jdbcType=VARCHAR},
+      </if>
       <if test="eventStatus != null" >
         event_status = #{eventStatus,jdbcType=INTEGER},
+      </if>
+      <if test="eventChannel != null" >
+        event_channel = #{eventChannel,jdbcType=INTEGER},
       </if>
       <if test="eventRemark != null" >
         event_remark = #{eventRemark,jdbcType=VARCHAR},
@@ -236,8 +362,18 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simon.backstage.domain.model.Event" >
     update event
-    set community_id = #{communityId,jdbcType=VARCHAR},
+    set
+      community_id = #{communityId,jdbcType=VARCHAR},
+      asset_no = #{assetNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      complain_position = #{complainPosition,jdbcType=VARCHAR},
+      complain_specific_position = #{complainSpecificPosition,jdbcType=VARCHAR},
+      complain_type = #{complainType,jdbcType=VARCHAR},
+      complain_class_type = #{complainClassType,jdbcType=VARCHAR},
+      complain_voice = #{complainVoice,jdbcType=VARCHAR},
+      complain_reply = #{complainReply,jdbcType=VARCHAR},
       event_status = #{eventStatus,jdbcType=INTEGER},
+      event_channel = #{eventChannel,jdbcType=INTEGER},
       event_remark = #{eventRemark,jdbcType=VARCHAR},
       event_date = #{eventDate,jdbcType=DATE},
       event_type = #{eventType,jdbcType=INTEGER},
@@ -252,8 +388,18 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.Event" >
     update event
-    set community_id = #{communityId,jdbcType=VARCHAR},
+    set
+      community_id = #{communityId,jdbcType=VARCHAR},
+      asset_no = #{assetNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      complain_position = #{complainPosition,jdbcType=VARCHAR},
+      complain_specific_position = #{complainSpecificPosition,jdbcType=VARCHAR},
+      complain_type = #{complainType,jdbcType=VARCHAR},
+      complain_class_type = #{complainClassType,jdbcType=VARCHAR},
+      complain_voice = #{complainVoice,jdbcType=VARCHAR},
+      complain_reply = #{complainReply,jdbcType=VARCHAR},
       event_status = #{eventStatus,jdbcType=INTEGER},
+      event_channel = #{eventChannel,jdbcType=INTEGER},
       event_remark = #{eventRemark,jdbcType=VARCHAR},
       event_date = #{eventDate,jdbcType=DATE},
       event_type = #{eventType,jdbcType=INTEGER},
