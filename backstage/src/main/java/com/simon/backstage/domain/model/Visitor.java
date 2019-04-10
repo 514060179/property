@@ -1,10 +1,12 @@
 package com.simon.backstage.domain.model;
 
 import com.simon.backstage.domain.vo.Community;
+import com.simon.dal.model.Images;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(value = "Visitor", description = "访客记录")
 public class Visitor {
@@ -39,6 +41,9 @@ public class Visitor {
     private Community community;
     @ApiModelProperty(hidden = true)
     private Building building;
+
+    private List<Images> visitorImage;
+
     public String getBuildingId() {
         return buildingId;
     }
@@ -125,5 +130,13 @@ public class Visitor {
 
     public void setBuilding(Building building) {
         this.building = building;
+    }
+
+    public List<Images> getVisitorImage() {
+        return visitorImage;
+    }
+
+    public void setVisitorImage(List<Images> visitorImage) {
+        this.visitorImage = visitorImage;
     }
 }

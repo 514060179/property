@@ -24,6 +24,9 @@ public class ResourceConfig {
 	@Value("${resource.imagePath.eventPath}")
 	private String eventPath;
 
+	@Value("${resource.imagePath.visitorPath}")
+	private String visitorPath;
+
 	@Value("${resource.filePath.buildingPdfPath}")
 	private String buildingPdfPath;
 
@@ -84,6 +87,14 @@ public class ResourceConfig {
 
 	public void setEventPath(String eventPath) {
 		this.eventPath = eventPath;
+	}
+
+	public String getVisitorPath() {
+		return visitorPath;
+	}
+
+	public void setVisitorPath(String visitorPath) {
+		this.visitorPath = visitorPath;
 	}
 
 	public String getBuildingPdfPath() {

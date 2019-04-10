@@ -7,9 +7,14 @@ package com.simon.dal.constant;
 public class Type {
 
     /**
+     * 访客拍照
+     */
+    public static final int IMAGE_TYPE_VISITOR = 4;
+
+    /**
      * 物业资产
      */
-    public static final int IMAGE_TYPE_OTHER = 3;
+    public static final int IMAGE_TYPE_ASSET = 3;
 
     /**
      * 公告图片

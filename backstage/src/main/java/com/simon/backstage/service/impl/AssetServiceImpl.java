@@ -40,7 +40,7 @@ public class AssetServiceImpl implements AssetService {
                 image.setImageId(UUIDUtil.uidString());
                 image.setImageUrl(images.getImageUrl());
                 image.setImageThumbnail(images.getImageThumbnail());
-                image.setImageType(Type.IMAGE_TYPE_OTHER);
+                image.setImageType(Type.IMAGE_TYPE_ASSET);
                 image.setObjectId(asset.getAssetId());
                 list.add(image);
             });
