@@ -1,6 +1,9 @@
 package com.simon.backstage.dao;
 
 import com.simon.backstage.domain.model.Building;
+import com.simon.backstage.domain.model.BuildingChild;
+import com.simon.backstage.domain.model.Enclosure;
+import com.simon.backstage.domain.model.Floor;
 import com.simon.backstage.domain.vo.BuildingWithUnit;
 import com.simon.backstage.domain.vo.CommunityWithBuilding;
 import com.simon.dal.vo.BaseClaims;
@@ -15,6 +18,14 @@ public interface BuildingMapper {
 
     int insertSelective(Building record);
 
+    int insertFloorSelective(List<Floor> list);
+
+    int insertBuildingChildSelective(List<BuildingChild> list);
+
+    List<Floor> selectFloorListByBuildingId(String buildingId);
+
+    List<BuildingChild> selectBuildingChildListByBuildingId(String buildingId);
+
     Building selectByPrimaryKey(String buildingId);
 
     List<Building> selectByCondition(BaseClaims baseClaims);
@@ -25,5 +36,15 @@ public interface BuildingMapper {
 
     int updateByPrimaryKeySelective(Building record);
 
+    int updateFloorByPrimaryKeySelective(Floor floor);
+
+    int updateBuildingChildByPrimaryKeySelective(BuildingChild buildingChild);
+
     int updateByPrimaryKey(Building record);
+
+    int insertEnclosures(List<Enclosure> list);
+
+    List<String> findUrlFromEnclosure(Enclosure enclosure);
+
+    int delEnclosure(@Param("objectId") String objectId, @Param("enclosureObjectType") Integer enclosureObjectType);
 }

@@ -27,6 +27,9 @@ public class ResourceConfig {
 	@Value("${resource.imagePath.visitorPath}")
 	private String visitorPath;
 
+	@Value("${resource.imagePath.floorPath}")
+	private String floorPath;
+
 	@Value("${resource.filePath.buildingPdfPath}")
 	private String buildingPdfPath;
 
@@ -95,6 +98,14 @@ public class ResourceConfig {
 
 	public void setVisitorPath(String visitorPath) {
 		this.visitorPath = visitorPath;
+	}
+
+	public String getFloorPath() {
+		return floorPath;
+	}
+
+	public void setFloorPath(String floorPath) {
+		this.floorPath = floorPath;
 	}
 
 	public String getBuildingPdfPath() {

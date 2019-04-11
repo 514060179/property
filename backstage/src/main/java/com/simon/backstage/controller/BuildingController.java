@@ -2,6 +2,8 @@ package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Building;
+import com.simon.backstage.domain.model.BuildingChild;
+import com.simon.backstage.domain.model.Floor;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.domain.vo.CommunityWithBuilding;
@@ -56,11 +58,29 @@ public class BuildingController {
         }
         return ReturnMsg.success(buildingService.upd(building));
     }
+    @PostMapping("updFloor")
+    @ApiOperation("修改建筑楼层")
+    public ReturnMsg<Building> updFloor(@RequestBody Floor floor){
+        logger.info("修改建筑楼层floor={}", JSONUtil.objectToJson(floor));
+        return ReturnMsg.success(buildingService.updFloor(floor));
+    }
+    @PostMapping("updBuildingChild")
+    @ApiOperation("修改建筑子部分")
+    public ReturnMsg<Building> updBuildingChild(@RequestBody BuildingChild buildingChild){
+        logger.info("修改建筑子部分buildingChild={}", JSONUtil.objectToJson(buildingChild));
+        return ReturnMsg.success(buildingService.updBuildingChild(buildingChild));
+    }
     @GetMapping("del")
     @ApiOperation("删除建筑")
     public ReturnMsg<Building> del(@RequestParam String buildingId){
         logger.info("删除建筑buildingId={}",buildingId);
         return ReturnMsg.success(buildingService.del(buildingId));
+    }
+    @GetMapping("detail")
+    @ApiOperation("建筑详情")
+    public ReturnMsg<Building> detail(@RequestParam String buildingId){
+        logger.info("建筑详情buildingId={}",buildingId);
+        return ReturnMsg.success(buildingService.detail(buildingId));
     }
     @GetMapping("list")
     @ApiOperation("建筑列表")

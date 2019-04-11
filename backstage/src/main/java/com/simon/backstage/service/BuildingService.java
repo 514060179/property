@@ -2,6 +2,8 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Building;
+import com.simon.backstage.domain.model.BuildingChild;
+import com.simon.backstage.domain.model.Floor;
 import com.simon.backstage.domain.vo.CommunityWithBuilding;
 import com.simon.dal.vo.BaseClaims;
 
@@ -34,6 +36,18 @@ public interface BuildingService {
      * @return
      */
     int upd(Building building);
+    /**
+     * 修改楼层子部分
+     * @param floor
+     * @return
+     */
+    int updFloor(Floor floor);
+    /**
+     * 修改楼宇子部分
+     * @param buildingChild
+     * @return
+     */
+    int updBuildingChild(BuildingChild buildingChild);
 
     /**
      * 删除

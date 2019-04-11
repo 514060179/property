@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -49,6 +50,18 @@ public class Building {
 
     @ApiModelProperty(hidden = true)
     private Community community;
+
+    @ApiModelProperty(value = "楼宇子部分")
+    private List<BuildingChild> buildingChildList;
+
+    @ApiModelProperty(value = "楼宇楼层")
+    private List<Floor> floorList;
+
+    @ApiModelProperty(value = "楼宇之共同部分")
+    private List<String> commonPdf;
+
+    @ApiModelProperty(value = "业主花名册文件")
+    private List<String> rosterPdf;
 
     public String getBuildingId() {
         return buildingId;
@@ -152,5 +165,37 @@ public class Building {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public List<BuildingChild> getBuildingChildList() {
+        return buildingChildList;
+    }
+
+    public void setBuildingChildList(List<BuildingChild> buildingChildList) {
+        this.buildingChildList = buildingChildList;
+    }
+
+    public List<Floor> getFloorList() {
+        return floorList;
+    }
+
+    public void setFloorList(List<Floor> floorList) {
+        this.floorList = floorList;
+    }
+
+    public List<String> getCommonPdf() {
+        return commonPdf;
+    }
+
+    public void setCommonPdf(List<String> commonPdf) {
+        this.commonPdf = commonPdf;
+    }
+
+    public List<String> getRosterPdf() {
+        return rosterPdf;
+    }
+
+    public void setRosterPdf(List<String> rosterPdf) {
+        this.rosterPdf = rosterPdf;
     }
 }

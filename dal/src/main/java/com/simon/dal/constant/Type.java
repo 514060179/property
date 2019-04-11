@@ -30,4 +30,31 @@ public class Type {
      * 投诉/报修图片
      */
     public static final int IMAGE_TYPE_COMPLAIN = 0;
+
+    /**
+     * 文件类型 子部分之共同部分PDF
+     */
+    public static final int ENCLOSURE_TYPE_PDF = 0;
+
+    /**
+     * 花名册
+     */
+    public static final int ENCLOSURE_TYPE_ROSTER = 1;
+
+    /**
+     * 文件对象类型 社区
+     */
+    public static final int ENCLOSURE_OBJECT_TYPE_COMMUNITY = 0;
+
+    /**
+     * 文件对象类型 楼宇
+     */
+    public static final int ENCLOSURE_OBJECT_TYPE_BUILDING = 1;
+
+    /**
+     * 文件对象类型 事件
+     */
+    public static final int ENCLOSURE_OBJECT_TYPE_EVENT = 2;
+
+
 }
