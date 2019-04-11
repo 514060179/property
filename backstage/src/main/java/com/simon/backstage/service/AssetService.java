@@ -2,6 +2,7 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Asset;
+import com.simon.backstage.domain.vo.AssetQueryParam;
 import com.simon.dal.vo.BaseClaims;
 
 /**
@@ -39,8 +40,8 @@ public interface AssetService {
 
     /**
      * 列表
-     * @param baseClaims
+     * @param assetQueryParam
      * @return
      */
-    PageInfo<Asset> list(BaseClaims baseClaims);
+    PageInfo<Asset> list(AssetQueryParam assetQueryParam);
 }

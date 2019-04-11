@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.AssetMapper;
 import com.simon.backstage.domain.model.Asset;
+import com.simon.backstage.domain.vo.AssetQueryParam;
 import com.simon.backstage.service.AssetService;
 import com.simon.dal.constant.Type;
 import com.simon.dal.dao.ImageMapper;
@@ -67,8 +68,8 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public PageInfo<Asset> list(BaseClaims baseClaims) {
-        PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
-        return new PageInfo<>(assetMapper.selectByCondition(baseClaims));
+    public PageInfo<Asset> list(AssetQueryParam assetQueryParam) {
+        PageHelper.startPage(assetQueryParam.getPageNo(),assetQueryParam.getPageSize());
+        return new PageInfo<>(assetMapper.selectByCondition(assetQueryParam));
     }
 }

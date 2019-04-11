@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Asset;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
+import com.simon.backstage.domain.vo.AssetQueryParam;
 import com.simon.backstage.service.AssetService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
@@ -65,12 +66,12 @@ public class AssetController {
 
     @GetMapping("list")
     @ApiOperation("资源列表")
-    public ReturnMsg<PageInfo<Asset>> list(BaseClaims baseClaims, HttpServletRequest request){
+    public ReturnMsg<PageInfo<Asset>> list(AssetQueryParam assetQueryParam, HttpServletRequest request){
         String communityId = ClaimsUtil.getCommunityId(request);
 		if(!StringUtils.isEmpty(communityId)){
-			baseClaims.setCommunityId(communityId);
+            assetQueryParam.setCommunityId(communityId);
 		}
-        logger.info("资源列表baseClaims={}", JSONUtil.objectToJson(baseClaims));
-        return ReturnMsg.success(assetService.list(baseClaims));
+        logger.info("资源列表baseClaims={}", JSONUtil.objectToJson(assetQueryParam));
+        return ReturnMsg.success(assetService.list(assetQueryParam));
     }
 }

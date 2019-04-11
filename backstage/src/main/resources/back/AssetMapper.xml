@@ -14,10 +14,12 @@
     <result column="asset_english_position" property="assetEnglishPosition" jdbcType="VARCHAR" />
     <result column="asset_maintain" property="assetMaintain" jdbcType="BIT" />
     <result column="asset_maintain_remind_cycle" property="assetMaintainRemindCycle" jdbcType="INTEGER" />
+    <result column="asset_status" property="assetStatus" jdbcType="INTEGER" />
     <result column="asset_describe" property="assetDescribe" jdbcType="LONGVARCHAR" />
     <result column="asset_traditional_describe" property="assetTraditionalDescribe" jdbcType="LONGVARCHAR" />
     <result column="asset_english_describe" property="assetEnglishDescribe" jdbcType="LONGVARCHAR" />
     <result column="asset_buy_date" property="assetBuyDate" jdbcType="TIMESTAMP" />
+    <result column="asset_overdue_date" property="assetOverdueDate" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <association property="community" javaType="com.simon.backstage.domain.vo.Community">
@@ -41,7 +43,7 @@
 
   <sql id="Base_Column_List" >
     a.asset_id, a.community_id, a.asset_no, a.asset_type, a.asset_name, a.asset_traditional_name, a.asset_english_name,
-    a.asset_position, a.asset_traditional_position, a.asset_english_position,a.asset_maintain,a.asset_maintain_remind_cycle, a.asset_buy_date,a.create_time,
+    a.asset_position, a.asset_traditional_position, a.asset_english_position,a.asset_maintain,a.asset_maintain_remind_cycle,a.asset_status, a.asset_buy_date,a.asset_overdue_date,a.create_time,
     a.update_time,a.asset_describe, a.asset_traditional_describe, a.asset_english_describe,
     c.community_id,c.community_no,c.community_name
   </sql>
@@ -58,16 +60,26 @@
     where a.asset_id = #{assetId,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
     select
     <include refid="Base_Column_List" />
     from asset a inner join community c on a.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(a.asset_name,''),IFNULL(a.asset_position,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(a.asset_no,''),IFNULL(a.asset_name,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
       	AND a.community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
+      <if test="assetMaintainRemindCycle != null">
+      	AND a.asset_maintain_remind_cycle = #{assetMaintainRemindCycle,jdbcType=VARCHAR}
+      </if>
+      <if test="assetOverdueDate != null">
+      	-- AND  UNIX_TIMESTAMP(assetOverdueDate) > UNIX_TIMESTAMP(NOW())
+      	AND  DATE_FORMAT(NOW(),'%Y%m%d') = DATE_FORMAT(asset_overdue_date,'%Y%m%d')
+      </if>
+      <if test="assetStatus != null">
+      	AND a.asset_status = #{assetStatus,jdbcType=VARCHAR}
       </if>
     </where>
     order by a.create_time desc
@@ -80,13 +92,13 @@
     insert into asset (asset_id, community_id,asset_no, asset_type,
       asset_name, asset_traditional_name, asset_english_name, 
       asset_position, asset_traditional_position, 
-      asset_english_position,asset_maintain, asset_maintain_remind_cycle, asset_buy_date,create_time, update_time,
+      asset_english_position,asset_maintain, asset_maintain_remind_cycle,asset_status, asset_buy_date,asset_overdue_date,create_time, update_time,
       asset_describe, asset_traditional_describe, 
       asset_english_describe)
     values (#{assetId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR},#{assetNo,jdbcType=VARCHAR}, #{assetType,jdbcType=VARCHAR},
       #{assetName,jdbcType=VARCHAR}, #{assetTraditionalName,jdbcType=VARCHAR}, #{assetEnglishName,jdbcType=VARCHAR}, 
       #{assetPosition,jdbcType=VARCHAR}, #{assetTraditionalPosition,jdbcType=VARCHAR}, 
-      #{assetEnglishPosition,jdbcType=VARCHAR},#{assetMaintain,jdbcType=BIT},#{assetMaintainRemindCycle,jdbcType=INTEGER}, #{assetBuyDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{assetEnglishPosition,jdbcType=VARCHAR},#{assetMaintain,jdbcType=BIT},#{assetMaintainRemindCycle,jdbcType=INTEGER},#{assetStatus,jdbcType=INTEGER}, #{assetBuyDate,jdbcType=TIMESTAMP},#{assetOverdueDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
       #{assetDescribe,jdbcType=LONGVARCHAR}, #{assetTraditionalDescribe,jdbcType=LONGVARCHAR}, 
       #{assetEnglishDescribe,jdbcType=LONGVARCHAR})
   </insert>
@@ -129,8 +141,14 @@
       <if test="assetMaintainRemindCycle != null" >
         asset_maintain_remind_cycle,
       </if>
+      <if test="assetStatus != null" >
+        asset_status,
+      </if>
       <if test="assetBuyDate != null" >
         asset_buy_date,
+      </if>
+      <if test="assetOverdueDate != null" >
+        asset_overdue_date,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -185,8 +203,14 @@
       <if test="assetMaintainRemindCycle != null" >
         #{assetMaintainRemindCycle,jdbcType=INTEGER},
       </if>
+      <if test="assetStatus != null" >
+        #{assetStatus,jdbcType=INTEGER},
+      </if>
       <if test="assetBuyDate != null" >
         #{assetBuyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="assetOverdueDate != null" >
+        #{assetOverdueDate,jdbcType=TIMESTAMP},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -241,8 +265,14 @@
       <if test="assetMaintainRemindCycle != null" >
         asset_maintain_remind_cycle = #{assetMaintainRemindCycle,jdbcType=INTEGER},
       </if>
+      <if test="assetStatus != null" >
+        asset_status = #{assetStatus,jdbcType=INTEGER},
+      </if>
       <if test="assetBuyDate != null" >
         asset_buy_date = #{assetBuyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="assetOverdueDate != null" >
+        asset_overdue_date = #{assetOverdueDate,jdbcType=TIMESTAMP},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -276,7 +306,9 @@
       asset_english_position = #{assetEnglishPosition,jdbcType=VARCHAR},
       asset_maintain = #{assetMaintain,jdbcType=BIT},
       asset_maintain_remind_cycle = #{assetMaintainRemindCycle,jdbcType=INTEGER},
+      asset_status = #{assetStatus,jdbcType=INTEGER},
       asset_buy_date = #{assetBuyDate,jdbcType=TIMESTAMP},
+      asset_overdue_date = #{assetOverdueDate,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       asset_describe = #{assetDescribe,jdbcType=LONGVARCHAR},
@@ -298,7 +330,9 @@
       asset_english_position = #{assetEnglishPosition,jdbcType=VARCHAR},
       asset_maintain = #{assetMaintain,jdbcType=BIT},
       asset_maintain_remind_cycle = #{assetMaintainRemindCycle,jdbcType=INTEGER},
+      asset_status = #{assetStatus,jdbcType=INTEGER},
       asset_buy_date = #{assetBuyDate,jdbcType=TIMESTAMP},
+      asset_overdue_date = #{assetOverdueDate,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where asset_id = #{assetId,jdbcType=VARCHAR}

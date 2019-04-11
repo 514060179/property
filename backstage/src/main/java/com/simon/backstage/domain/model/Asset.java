@@ -50,8 +50,17 @@ public class Asset {
     @ApiModelProperty(value = "保养周期（天数）",example = "15")
     private Integer assetMaintainRemindCycle;
 
+    @ApiModelProperty(value = "状态0使用中1货存2损坏3弃置",example = "0")
+    private Integer assetStatus;
+
     @ApiModelProperty(value = "购买日期",example = "2018-11-11")
     private Date assetBuyDate;
+
+    @ApiModelProperty(value = "保固日期",example = "2020-11-11")
+    private Date assetOverdueDate;
+
+    @ApiModelProperty(value = "是否过期",example = "true")
+    private Boolean isOverdue;
 
     @ApiModelProperty(hidden = true)
     private Date createTime;
@@ -224,11 +233,38 @@ public class Asset {
         this.assetMaintainRemindCycle = assetMaintainRemindCycle;
     }
 
+    public Integer getAssetStatus() {
+        return assetStatus;
+    }
+
+    public void setAssetStatus(Integer assetStatus) {
+        this.assetStatus = assetStatus;
+    }
+
     public Date getAssetBuyDate() {
         return assetBuyDate;
     }
 
     public void setAssetBuyDate(Date assetBuyDate) {
         this.assetBuyDate = assetBuyDate;
+    }
+
+    public Date getAssetOverdueDate() {
+        return assetOverdueDate;
+    }
+
+    public void setAssetOverdueDate(Date assetOverdueDate) {
+        this.assetOverdueDate = assetOverdueDate;
+    }
+
+    public Boolean getOverdue() {
+        if (assetOverdueDate!=null&&assetOverdueDate.getTime()<new Date().getTime()){
+            isOverdue = true;
+        }
+        return isOverdue==null?false:true;
+    }
+
+    public void setOverdue(Boolean overdue) {
+        isOverdue = overdue;
     }
 }
