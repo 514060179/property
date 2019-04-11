@@ -50,7 +50,7 @@
     from event e left join community c on e.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(e.event_remark,''),IFNULL(e.event_content,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(e.event_remark,''),IFNULL(e.event_channel,''),IFNULL(e.complain_reply,''),IFNULL(e.complain_class_type,''),IFNULL(e.event_content,''),IFNULL(e.complain_position,''),IFNULL(e.complain_specific_position,''),IFNULL(e.complain_type,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
       	AND e.community_id = #{communityId,jdbcType=VARCHAR}
