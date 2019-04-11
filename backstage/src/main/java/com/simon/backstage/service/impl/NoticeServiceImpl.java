@@ -71,13 +71,14 @@ public class NoticeServiceImpl implements NoticeService {
 			map.put("noticeType", notice.getNoticeType()+"");
 			map.put("noticeTitle", notice.getNoticeTitle());
 			final String t = target;
-			//app推送
-			if (notice.getNoticeType()== Status.noticeTypeApp){
+			//app推送(所有公告都需要推送)
+			// TODO 是否所有公告推送
+//			if (notice.getNoticeType()== Status.noticeTypeApp){
 				new Thread(()->{
 					PushPayload pu = JPushUtil.buildPushObjectByAlias(notice.getNoticeTitle(),true, t, map, 1);
 					JPushUtil.push(pu);
 				}).start();
-			}
+//			}
 			return notice;
 		}
 		return null;

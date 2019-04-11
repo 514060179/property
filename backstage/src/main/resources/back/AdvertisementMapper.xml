@@ -50,6 +50,7 @@
     select
     <include refid="Base_Column_List" />
     from advertisement a left join community c on a.community_id=c.community_id where a.used=1
+    and UNIX_TIMESTAMP(NOW()) BETWEEN UNIX_TIMESTAMP(start_time) AND UNIX_TIMESTAMP(end_time)
     <if test="communityId != null">
       AND (a.community_id = #{communityId,jdbcType=VARCHAR} or a.community_id is null or a.community_id='')
     </if>
@@ -165,12 +166,12 @@
   <insert id="insertBatch">
     insert into advertisement (adv_id, community_id, building_id,
           title, url, residence_time,purpose,
-          `describe`,used
+          `describe`,used,start_time,end_time
           ) values
     <foreach collection="list" item="item" index="index" separator=",">
       (#{item.advId,jdbcType=VARCHAR}, #{item.communityId,jdbcType=VARCHAR}, #{item.buildingId,jdbcType=VARCHAR},
-      #{item.title,jdbcType=VARCHAR},  #{item.url,jdbcType=VARCHAR}, 10,
-      #{item.describe,jdbcType=VARCHAR},#{item.used,jdbcType=BIT}
+      #{item.title,jdbcType=VARCHAR},  #{item.url,jdbcType=VARCHAR}, 10,#{item.purpose,jdbcType=VARCHAR},
+      #{item.describe,jdbcType=VARCHAR},#{item.used,jdbcType=BIT},#{item.startTime,jdbcType=TIMESTAMP},#{item.endTime,jdbcType=TIMESTAMP}
       )
     </foreach>
   </insert>
