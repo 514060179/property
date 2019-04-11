@@ -2,13 +2,19 @@ package com.simon.backstage.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.dao.BuildingMapper;
+import com.simon.backstage.domain.model.Enclosure;
 import com.simon.backstage.service.CommunityService;
+import com.simon.dal.constant.Type;
 import com.simon.dal.dao.CommunityMapper;
 import com.simon.dal.model.Community;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CommunityServiceImpl implements CommunityService {
@@ -17,13 +23,25 @@ public class CommunityServiceImpl implements CommunityService {
     @Autowired
     private CommunityMapper communityMapper;
 
+    @Autowired
+    private BuildingMapper buildingMapper;
     @Override
     public Community add(Community community) {
         community.setCommunityId(UUIDUtil.uidString());
         if (communityMapper.insertSelective(community)>0){
-            return community;
+            List<Enclosure> enclosureList = new ArrayList<>();
+            community.getCommonPdf().forEach(s -> {
+                Enclosure enclosure = new Enclosure();
+                enclosure.setEnclosureUrl(s);
+                enclosure.setEnclosureId(UUIDUtil.uidString());
+                enclosure.setObjectId(community.getCommunityId());
+                enclosure.setEnclosureObjectType(Type.ENCLOSURE_OBJECT_TYPE_COMMUNITY);
+                enclosure.setEnclosureType(Type.ENCLOSURE_TYPE_PDF);
+                enclosureList.add(enclosure);
+            });
+            buildingMapper.insertEnclosures(enclosureList);
         }
-        return null;
+        return community;
     }
 
     @Override
@@ -33,7 +51,22 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public int upd(Community community) {
-        return communityMapper.updateByPrimaryKeySelective(community);
+        int i = 0 ;
+        if ( (i = communityMapper.updateByPrimaryKeySelective(community))>0){
+            List<Enclosure> enclosureList = new ArrayList<>();
+            community.getCommonPdf().forEach(s -> {
+                Enclosure enclosure = new Enclosure();
+                enclosure.setEnclosureId(UUIDUtil.uidString());
+                enclosure.setEnclosureUrl(s);
+                enclosure.setObjectId(community.getCommunityId());
+                enclosure.setEnclosureObjectType(Type.ENCLOSURE_OBJECT_TYPE_COMMUNITY);
+                enclosure.setEnclosureType(Type.ENCLOSURE_TYPE_PDF);
+                enclosureList.add(enclosure);
+            });
+            buildingMapper.delEnclosure(community.getCommunityId(),Type.ENCLOSURE_OBJECT_TYPE_COMMUNITY);
+            buildingMapper.insertEnclosures(enclosureList);
+        }
+        return i;
     }
 
     @Override

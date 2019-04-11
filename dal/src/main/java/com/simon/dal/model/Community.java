@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(value = "Community", description = "社区")
 public class Community {
@@ -95,13 +96,16 @@ public class Community {
     private Boolean communityDeleted;
 
     @ApiModelProperty("管理类型(0简单管理1综合管理)")
-    private String communityManagementType;
+    private Integer communityManagementType;
 
     @ApiModelProperty(value="创建时间",readOnly=true)
     private Date createTime;
 
     @ApiModelProperty(value="更新时间",readOnly=true)
     private Date updateTime;
+
+    @ApiModelProperty(value = "楼宇之共同部分")
+    private List<String> commonPdf;
 
     public String getCommunityId() {
         return communityId;
@@ -247,12 +251,12 @@ public class Community {
         this.communityDeleted = communityDeleted;
     }
 
-    public String getCommunityManagementType() {
+    public Integer getCommunityManagementType() {
         return communityManagementType;
     }
 
-    public void setCommunityManagementType(String communityManagementType) {
-        this.communityManagementType = communityManagementType == null ? null : communityManagementType.trim();
+    public void setCommunityManagementType(Integer communityManagementType) {
+        this.communityManagementType = communityManagementType;
     }
 
     public Date getCreateTime() {
@@ -381,5 +385,13 @@ public class Community {
 
     public void setCommunityShopsCount(Integer communityShopsCount) {
         this.communityShopsCount = communityShopsCount;
+    }
+
+    public List<String> getCommonPdf() {
+        return commonPdf;
+    }
+
+    public void setCommonPdf(List<String> commonPdf) {
+        this.commonPdf = commonPdf;
     }
 }
