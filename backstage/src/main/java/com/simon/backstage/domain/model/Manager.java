@@ -41,6 +41,9 @@ public class Manager {
     @ApiModelProperty(value = "密码",example = "123456")
     private String password;
 
+    @ApiModelProperty(value = "头像",example = "/app/images/1551197614222.png")
+    private String portrait;
+
     @ApiModelProperty(hidden = true)
     private Date createTime;
 
@@ -122,6 +125,14 @@ public class Manager {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(String portrait) {
+        this.portrait = portrait;
     }
 
     public Date getCreateTime() {

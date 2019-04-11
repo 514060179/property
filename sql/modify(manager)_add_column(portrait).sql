@@ -1,0 +1,2 @@
+ALTER TABLE `bms`.`manager`
+  ADD COLUMN `portrait` VARCHAR(100) NULL COMMENT '头像' AFTER `PASSWORD`;

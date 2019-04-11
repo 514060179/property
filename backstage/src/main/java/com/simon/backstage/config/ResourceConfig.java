@@ -30,6 +30,9 @@ public class ResourceConfig {
 	@Value("${resource.imagePath.floorPath}")
 	private String floorPath;
 
+	@Value("${resource.imagePath.managerPath}")
+	private String managerPath;
+
 	@Value("${resource.filePath.buildingPdfPath}")
 	private String buildingPdfPath;
 
@@ -106,6 +109,14 @@ public class ResourceConfig {
 
 	public void setFloorPath(String floorPath) {
 		this.floorPath = floorPath;
+	}
+
+	public String getManagerPath() {
+		return managerPath;
+	}
+
+	public void setManagerPath(String managerPath) {
+		this.managerPath = managerPath;
 	}
 
 	public String getBuildingPdfPath() {
