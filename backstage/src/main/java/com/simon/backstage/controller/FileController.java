@@ -140,7 +140,7 @@ public class FileController {
     @PostMapping("uploadFile")
     @ResponseBody
     @ApiImplicitParam(name = "file", value = "资源文件(字节码)", paramType = "payload")
-    public ReturnMsg<String> uploadFile(HttpServletRequest request, @ApiParam(name = "type", value = "文件类型：0社区pdf 1事件pdf 2楼宇pdf  3楼宇业主名册", defaultValue = "1") @RequestParam Integer type) throws IOException {
+    public ReturnMsg<String> uploadFile(HttpServletRequest request, @ApiParam(name = "type", value = "文件类型：0社区pdf 1事件pdf 2楼宇pdf  3楼宇业主名册 4视频广告文件", defaultValue = "1") @RequestParam Integer type) throws IOException {
         List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
         String relativePath = "";
         StringBuffer stringBuffer = new StringBuffer();
@@ -153,6 +153,8 @@ public class FileController {
             relativePath += resourceConfig.getBuildingPdfPath();
         }else if(3 == type){ //楼宇业主名册
             relativePath += resourceConfig.getBuildingOrderPath();
+        }else if(4 == type){ //视频文件
+            relativePath += resourceConfig.getAdvVideoPath();
         }else {
             filePath += "/";
         }
