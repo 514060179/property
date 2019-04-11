@@ -2,6 +2,7 @@ package com.simon.backstage.service;
 
 import com.simon.backstage.dao.ManagerMapper;
 import com.simon.backstage.domain.model.Jurisdiction;
+import com.simon.backstage.domain.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class RoleService {
         return managerMapper.findCustomRolesAuthorization();
     }
 
+    public List<Role> findAllRole(){
+        return managerMapper.findAllRole();
+    }
     public List<String> findAllJurisdiction(){
         return managerMapper.findAllJurisdiction();
     }

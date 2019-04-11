@@ -282,4 +282,9 @@
     )
   </foreach>
   </insert>
+
+  <select id="findAllRole" resultType="com.simon.backstage.domain.model.Role">
+    SELECT role_id as roleId,role_default as roleDefault, role_name as roleName,role_description as roleDescription
+    FROM role
+  </select>
 </mapper>

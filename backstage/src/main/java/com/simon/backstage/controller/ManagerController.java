@@ -2,6 +2,7 @@ package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Manager;
+import com.simon.backstage.domain.model.Role;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.ManagerService;
 import com.simon.backstage.service.RoleService;
@@ -18,6 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +39,11 @@ public class ManagerController {
     private ManagerService managerService;
     @Autowired
     private RoleService roleService;
+    @PostMapping("getRoleList")
+    @ApiOperation("获取角色列表")
+    public ReturnMsg<List<Role>> getRoleList(){
+        return ReturnMsg.success(roleService.findAllRole());
+    }
     @PostMapping("add")
     @ApiOperation("添加管理员")
     public ReturnMsg<Manager> add(@RequestBody @Validated Manager manager){
