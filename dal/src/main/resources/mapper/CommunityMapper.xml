@@ -37,6 +37,8 @@
     <result column="community_deleted" property="communityDeleted" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <collection property="commonPdf" ofType="string" javaType="java.util.List" select="selectPdf" column="community_id">
+    </collection>
   </resultMap>
   <sql id="Base_Column_List" >
     community_id, community_no, community_name, community_loc_x, community_loc_y, community_address,
@@ -46,6 +48,13 @@
     community_management_type, community_contacts, community_contacts_phone, community_remark,
     community_deleted, create_time, update_time
   </sql>
+  <select id="selectPdf" parameterType="string" resultType="string" >
+    select
+    enclosure_url as url
+    from enclosure
+    where object_id=#{communityId} and enclosure_object_type=0
+</select>
+
   <select id="findId" resultType="java.lang.String">
   	select
   		group_concat(community_id,'') AS communityId
