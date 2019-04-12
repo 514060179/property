@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -71,6 +72,9 @@ public class Event {
     private String eventSolve;
     @ApiModelProperty(hidden = true)
     private Community community;
+
+    @ApiModelProperty(value = "事件报告文件")
+    private List<String> reports;
 
     public String getEventContent() {
         return eventContent;
@@ -254,5 +258,13 @@ public class Event {
 
     public void setEventChannel(Integer eventChannel) {
         this.eventChannel = eventChannel;
+    }
+
+    public List<String> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<String> reports) {
+        this.reports = reports;
     }
 }

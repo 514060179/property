@@ -72,8 +72,8 @@ public class BuildingServiceImpl implements BuildingService {
                 enclosure.setEnclosureType(Type.ENCLOSURE_TYPE_ROSTER);
                 enclosureList.add(enclosure);
             });
+            buildingMapper.insertEnclosures(enclosureList);
         }
-        buildingMapper.insertEnclosures(enclosureList);
         return building;
     }
 
@@ -123,10 +123,10 @@ public class BuildingServiceImpl implements BuildingService {
                 enclosure.setEnclosureType(Type.ENCLOSURE_TYPE_ROSTER);
                 enclosureList.add(enclosure);
             });
+            //删除之前的
+            buildingMapper.delEnclosure(building.getBuildingId(),Type.ENCLOSURE_OBJECT_TYPE_BUILDING);
+            buildingMapper.insertEnclosures(enclosureList);
         }
-        //删除之前的
-        buildingMapper.delEnclosure(building.getBuildingId(),Type.ENCLOSURE_OBJECT_TYPE_BUILDING);
-        buildingMapper.insertEnclosures(enclosureList);
         return buildingMapper.updateByPrimaryKeySelective(building);
     }
 
