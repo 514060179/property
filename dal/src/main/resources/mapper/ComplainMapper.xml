@@ -123,7 +123,7 @@
         complain_class_type,
       </if>
       <if test="complainStatus != null" >
-        complain_status,
+        event_status,
       </if>
       <if test="complainFinishTime != null" >
         complain_finish_time,

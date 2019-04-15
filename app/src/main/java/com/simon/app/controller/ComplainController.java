@@ -51,6 +51,7 @@ public class ComplainController {
     	complain.setComplainId(UUIDUtil.uidString());
     	complain.setUserId(ClaimsUtil.getUserId(request));
     	complain.setCommunityId(ClaimsUtil.getCommunityId(request));
+        complain.setComplainStatus("2");
     	complainService.addComplain(complain);
     	return ReturnMsg.success(complainService.findOne(complain.getComplainId()));
     }
