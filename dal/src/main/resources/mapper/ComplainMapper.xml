@@ -35,10 +35,6 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
---     c.complain_id, c.user_id,c.community_id, c.complain_position, c.complain_specific_position, c.complain_type,
---     c.complain_class_type, c.complain_liaisons_name, c.complain_liaisons_sex,
---     c.complain_liaisons_email, c.complain_status, c.complain_finish_time, c.complain_handler,c.complain_describe, c.complain_voice,
---     c.create_time, c.update_time
     c.user_id,
     c.community_id,
     c.complain_position,
