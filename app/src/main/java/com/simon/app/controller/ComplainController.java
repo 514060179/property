@@ -50,6 +50,7 @@ public class ComplainController {
     public ReturnMsg<Complain> add(@RequestBody Complain complain,HttpServletRequest request){
     	complain.setComplainId(UUIDUtil.uidString());
     	complain.setUserId(ClaimsUtil.getUserId(request));
+    	complain.setCommunityId(ClaimsUtil.getCommunityId(request));
     	complainService.addComplain(complain);
     	return ReturnMsg.success(complainService.findOne(complain.getComplainId()));
     }

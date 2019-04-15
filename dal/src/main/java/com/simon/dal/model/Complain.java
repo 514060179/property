@@ -15,6 +15,9 @@ public class Complain {
     @ApiModelProperty(value="用户id",readOnly=true)
     private String userId;
 
+    @ApiModelProperty(value="社区id",readOnly=true)
+    private String communityId;
+
     @ApiModelProperty(value="位置(XX大厦)",example="平安大厦")
     private String complainPosition;
 
@@ -73,6 +76,14 @@ public class Complain {
 
     public void setUserId(String userId) {
         this.userId = userId == null ? null : userId.trim();
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
     }
 
     public String getComplainPosition() {

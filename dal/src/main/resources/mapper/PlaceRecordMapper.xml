@@ -9,6 +9,10 @@
     <result column="order_start_time" property="orderStartTime" jdbcType="TIME" />
     <result column="order_end_time" property="orderEndTime" jdbcType="TIME" />
     <result column="record_status" property="recordStatus" jdbcType="CHAR" />
+    <result column="total_hour" property="totalHour" jdbcType="INTEGER" />
+    <result column="average_charge" property="averageCharge" jdbcType="DECIMAL" />
+    <result column="attach_charge" property="attachCharge" jdbcType="DECIMAL" />
+    <result column="total_charge" property="totalCharge" jdbcType="DECIMAL" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <association property="place" javaType="com.simon.dal.model.Place">
@@ -28,14 +32,16 @@
       <result column="place_introduction" property="placeIntroduction" jdbcType="LONGVARCHAR" />
       <result column="place_traditional_introduction" property="placeTraditionalIntroduction" jdbcType="LONGVARCHAR" />
       <result column="place_english_introduction" property="placeEnglishIntroduction" jdbcType="LONGVARCHAR" />
+      <result column="place_charge" property="placeCharge" jdbcType="DECIMAL" />
+      <result column="place_attach_charge" property="placeAttachCharge" jdbcType="DECIMAL" />
     </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    pr.record_id, pr.user_id, pr.place_id, pr.order_date, pr.order_start_time, pr.order_end_time, pr.record_status,
+    pr.record_id, pr.user_id, pr.place_id, pr.order_date, pr.order_start_time, pr.order_end_time, pr.record_status,pr.total_hour,pr.average_charge,pr.attach_charge,pr.total_charge,
     pr.update_time, pr.create_time,
     p.place_id, p.community_id, p.place_name, p.place_traditional_name, p.place_english_name, p.place_status,
     p.place_start_time, p.place_end_time, p.place_need_order, p.place_upper_limit, p.place_advance_order_day,
-    p.place_farthest_order_day,p.place_icon_type, p.place_introduction, p.place_traditional_introduction, p.place_english_introduction
+    p.place_farthest_order_day,p.place_icon_type, p.place_introduction, p.place_traditional_introduction, p.place_english_introduction, p.place_charge, p.place_attach_charge
   </sql>
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.model.PlaceRecord" >
   	select
@@ -76,11 +82,11 @@
   <insert id="insert" parameterType="com.simon.dal.model.PlaceRecord" >
     insert into place_record (record_id, user_id, place_id, 
       order_date, order_start_time, order_end_time, 
-      record_status, update_time, create_time
+      record_status,total_hour,average_charge,attach_charge,total_charge, update_time, create_time
       )
     values (#{recordId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{placeId,jdbcType=VARCHAR}, 
       #{orderDate,jdbcType=DATE}, #{orderStartTime,jdbcType=TIME}, #{orderEndTime,jdbcType=TIME}, 
-      #{recordStatus,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      #{recordStatus,jdbcType=CHAR},#{totalHour,jdbcType=INTEGER},#{averageCharge,jdbcType=DECIMAL},#{attachCharge,jdbcType=DECIMAL},#{totalCharge,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.simon.dal.model.PlaceRecord" >
@@ -106,6 +112,18 @@
       </if>
       <if test="recordStatus != null" >
         record_status,
+      </if>
+      <if test="totalHour != null" >
+        total_hour,
+      </if>
+      <if test="averageCharge != null" >
+        average_charge,
+      </if>
+      <if test="attachCharge != null" >
+        attach_charge,
+      </if>
+      <if test="totalCharge != null" >
+        total_charge,
       </if>
       <if test="updateTime != null" >
         update_time,
@@ -136,6 +154,18 @@
       <if test="recordStatus != null" >
         #{recordStatus,jdbcType=CHAR},
       </if>
+      <if test="totalHour != null" >
+        #{totalHour,jdbcType=INTEGER},
+      </if>
+      <if test="averageCharge != null" >
+        #{averageCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="attachCharge != null" >
+        #{attachCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="totalCharge != null" >
+        #{totalCharge,jdbcType=DECIMAL},
+      </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
@@ -165,6 +195,18 @@
       <if test="recordStatus != null" >
         record_status = #{recordStatus,jdbcType=CHAR},
       </if>
+      <if test="totalHour != null" >
+        total_hour = #{totalHour,jdbcType=INTEGER},
+      </if>
+      <if test="averageCharge != null" >
+        average_charge = #{averageCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="attachCharge != null" >
+        attach_charge = #{attachCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="totalCharge != null" >
+        total_charge = #{totalCharge,jdbcType=DECIMAL},
+      </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
@@ -182,6 +224,10 @@
       order_start_time = #{orderStartTime,jdbcType=TIME},
       order_end_time = #{orderEndTime,jdbcType=TIME},
       record_status = #{recordStatus,jdbcType=CHAR},
+      total_hour = #{totalHour,jdbcType=INTEGER},
+      average_charge = #{averageCharge,jdbcType=DECIMAL},
+      attach_charge = #{attachCharge,jdbcType=DECIMAL},
+      total_charge = #{totalCharge,jdbcType=DECIMAL},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where record_id = #{recordId,jdbcType=VARCHAR}

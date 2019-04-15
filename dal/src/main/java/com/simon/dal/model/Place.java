@@ -3,6 +3,7 @@ package com.simon.dal.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -68,6 +69,10 @@ public class Place {
 
     @ApiModelProperty(value = "简介(英文)",example = "The deepest swimming in the world")
     private String placeEnglishIntroduction;
+
+    private BigDecimal placeCharge;
+
+    private BigDecimal placeAttachCharge;
 
     @ApiModelProperty(hidden = true)
     private Community community;
@@ -233,4 +238,20 @@ public class Place {
 	public void setImages(List<Images> images) {
 		this.images = images;
 	}
+
+    public BigDecimal getPlaceCharge() {
+        return placeCharge;
+    }
+
+    public void setPlaceCharge(BigDecimal placeCharge) {
+        this.placeCharge = placeCharge;
+    }
+
+    public BigDecimal getPlaceAttachCharge() {
+        return placeAttachCharge;
+    }
+
+    public void setPlaceAttachCharge(BigDecimal placeAttachCharge) {
+        this.placeAttachCharge = placeAttachCharge;
+    }
 }

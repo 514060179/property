@@ -3,6 +3,7 @@ package com.simon.dal.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,6 +34,15 @@ public class PlaceRecord {
 
     @ApiModelProperty(value="预定状态(-1预约取消0开始发起1预约成功2预约失败)",readOnly=true)
     private String recordStatus;
+
+    @ApiModelProperty(value="总时间",example="5")
+    private Integer totalHour;
+    @ApiModelProperty(value="每小时费用",example="30")
+    private BigDecimal averageCharge;
+    @ApiModelProperty(value="附加费用",example="30")
+    private BigDecimal attachCharge;
+    @ApiModelProperty(value="总费用",example="180")
+    private BigDecimal totalCharge;
 
     @ApiModelProperty(value="创建时间",readOnly=true)
     private Date createTime;
@@ -121,5 +131,37 @@ public class PlaceRecord {
 
     public void setPlace(Place place) {
         this.place = place;
+    }
+
+    public Integer getTotalHour() {
+        return totalHour;
+    }
+
+    public void setTotalHour(Integer totalHour) {
+        this.totalHour = totalHour;
+    }
+
+    public BigDecimal getAverageCharge() {
+        return averageCharge;
+    }
+
+    public void setAverageCharge(BigDecimal averageCharge) {
+        this.averageCharge = averageCharge;
+    }
+
+    public BigDecimal getAttachCharge() {
+        return attachCharge;
+    }
+
+    public void setAttachCharge(BigDecimal attachCharge) {
+        this.attachCharge = attachCharge;
+    }
+
+    public BigDecimal getTotalCharge() {
+        return totalCharge;
+    }
+
+    public void setTotalCharge(BigDecimal totalCharge) {
+        this.totalCharge = totalCharge;
     }
 }

@@ -14,6 +14,7 @@ import com.simon.dal.util.UUIDUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -89,7 +90,10 @@ public class PlaceRecordController {
 		if(count > 0){
 			return ReturnMsg.fail("该时间段已被预约",Code.orderFail);
 		}
-
+		placeRecord.setAttachCharge(place.getPlaceAttachCharge());
+		placeRecord.setAverageCharge(place.getPlaceCharge());
+		placeRecord.setTotalHour(hour);
+		placeRecord.setTotalCharge(new BigDecimal(hour).multiply(place.getPlaceCharge()).add(place.getPlaceAttachCharge()));
         return ReturnMsg.success(placeRecordService.addPlaceRecord(placeRecord));
     }
 }

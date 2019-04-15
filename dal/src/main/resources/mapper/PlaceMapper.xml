@@ -14,7 +14,8 @@
     <result column="place_upper_limit" property="placeUpperLimit" jdbcType="INTEGER" />
     <result column="place_advance_order_day" property="placeAdvanceOrderDay" jdbcType="INTEGER" />
     <result column="place_farthest_order_day" property="placeFarthestOrderDay" jdbcType="INTEGER" />
-    <result column="place_icon_type" property="placeIconType" jdbcType="INTEGER" />
+    <result column="place_charge" property="placeCharge" jdbcType="DECIMAL" />
+    <result column="place_attach_charge" property="placeAttachCharge" jdbcType="DECIMAL" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="place_introduction" property="placeIntroduction" jdbcType="LONGVARCHAR" />
@@ -40,7 +41,7 @@
   <sql id="Base_Column_List" >
     p.place_id, p.community_id, p.place_name, p.place_traditional_name, p.place_english_name, p.place_status,
     p.place_start_time, p.place_end_time, p.place_need_order, p.place_upper_limit, p.place_advance_order_day,
-    p.place_farthest_order_day,p.place_icon_type, p.create_time, p.update_time, p.place_introduction, p.place_traditional_introduction, p.place_english_introduction,
+    p.place_farthest_order_day,p.place_charge,p.place_attach_charge,p.place_icon_type, p.create_time, p.update_time, p.place_introduction, p.place_traditional_introduction, p.place_english_introduction,
     c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectImages" parameterType="string" resultMap="Image_Result_Map" >
@@ -79,14 +80,14 @@
       place_traditional_name, place_english_name, 
       place_status, place_start_time, place_end_time, 
       place_need_order, place_upper_limit, place_advance_order_day, 
-      place_farthest_order_day,place_icon_type, create_time, update_time,
+      place_farthest_order_day,place_charge,place_attach_charge,place_icon_type, create_time, update_time,
       place_introduction, place_traditional_introduction, 
       place_english_introduction)
     values (#{placeId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{placeName,jdbcType=VARCHAR}, 
       #{placeTraditionalName,jdbcType=VARCHAR}, #{placeEnglishName,jdbcType=VARCHAR}, 
       #{placeStatus,jdbcType=INTEGER} #{placeStartTime,jdbcType=TIME}, #{placeEndTime,jdbcType=TIME}, 
       #{placeNeedOrder,jdbcType=INTEGER}, #{placeUpperLimit,jdbcType=INTEGER}, #{placeAdvanceOrderDay,jdbcType=INTEGER}, 
-      #{placeFarthestOrderDay,jdbcType=INTEGER},#{placeIconType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{placeFarthestOrderDay,jdbcType=INTEGER},#{placeCharge,jdbcType=DECIMAL},#{placeAttachCharge,jdbcType=DECIMAL},#{placeIconType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
       #{placeIntroduction,jdbcType=LONGVARCHAR}, #{placeTraditionalIntroduction,jdbcType=LONGVARCHAR}, 
       #{placeEnglishIntroduction,jdbcType=LONGVARCHAR})
   </insert>
@@ -128,6 +129,12 @@
       </if>
       <if test="placeFarthestOrderDay != null" >
         place_farthest_order_day,
+      </if>
+      <if test="placeCharge != null" >
+        place_charge,
+      </if>
+      <if test="placeAttachCharge != null" >
+        place_attach_charge,
       </if>
       <if test="placeIconType != null" >
         place_icon_type,
@@ -185,6 +192,12 @@
       <if test="placeFarthestOrderDay != null" >
         #{placeFarthestOrderDay,jdbcType=INTEGER},
       </if>
+      <if test="placeCharge != null" >
+        #{placeCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="placeAttachCharge != null" >
+        #{placeAttachCharge,jdbcType=DECIMAL},
+      </if>
       <if test="placeIconType != null" >
         #{placeIconType,jdbcType=INTEGER},
       </if>
@@ -241,6 +254,12 @@
       <if test="placeFarthestOrderDay != null" >
         place_farthest_order_day = #{placeFarthestOrderDay,jdbcType=INTEGER},
       </if>
+      <if test="placeCharge != null" >
+        place_charge = #{placeCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="placeAttachCharge != null" >
+        place_attach_charge = #{placeAttachCharge,jdbcType=DECIMAL},
+      </if>
       <if test="placeIconType != null" >
         place_icon_type = #{placeIconType,jdbcType=INTEGER},
       </if>
@@ -275,6 +294,8 @@
       place_upper_limit = #{placeUpperLimit,jdbcType=INTEGER},
       place_advance_order_day = #{placeAdvanceOrderDay,jdbcType=INTEGER},
       place_farthest_order_day = #{placeFarthestOrderDay,jdbcType=INTEGER},
+      place_charge = #{placeCharge,jdbcType=DECIMAL},
+      place_attach_charge = #{placeAttachCharge,jdbcType=DECIMAL},
       place_icon_type = #{placeIconType,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -296,6 +317,8 @@
       place_upper_limit = #{placeUpperLimit,jdbcType=INTEGER},
       place_advance_order_day = #{placeAdvanceOrderDay,jdbcType=INTEGER},
       place_farthest_order_day = #{placeFarthestOrderDay,jdbcType=INTEGER},
+      place_charge = #{placeCharge,jdbcType=DECIMAL},
+      place_attach_charge = #{placeAttachCharge,jdbcType=DECIMAL},
       place_icon_type = #{placeIconType,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}

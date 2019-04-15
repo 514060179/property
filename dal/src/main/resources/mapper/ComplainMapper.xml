@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.simon.dal.model.Complain" >
     <id column="complain_id" property="complainId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
     <result column="complain_position" property="complainPosition" jdbcType="VARCHAR" />
     <result column="complain_specific_position" property="complainSpecificPosition" jdbcType="VARCHAR" />
     <result column="complain_type" property="complainType" jdbcType="VARCHAR" />
@@ -19,7 +20,7 @@
     <result column="complain_describe" property="complainDescribe" jdbcType="LONGVARCHAR" />
     <result column="complain_voice" property="complainVoice" jdbcType="LONGVARBINARY" />
     
-    <collection property="images" ofType="com.simon.dal.model.Images" javaType="java.util.List" select="selectImages" column="complain_id">
+    <collection property="images" ofType="com.simon.dal.model.Images" javaType="java.util.List" select="selectImages" column="event_id">
     </collection>
   </resultMap>
 
@@ -34,24 +35,33 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    c.complain_id, c.user_id, c.complain_position, c.complain_specific_position, c.complain_type,
-    c.complain_class_type, c.complain_liaisons_name, c.complain_liaisons_sex,
-    c.complain_liaisons_email, c.complain_status, c.complain_finish_time, c.complain_handler,c.complain_describe, c.complain_voice,
-    c.create_time, c.update_time
+--     c.complain_id, c.user_id,c.community_id, c.complain_position, c.complain_specific_position, c.complain_type,
+--     c.complain_class_type, c.complain_liaisons_name, c.complain_liaisons_sex,
+--     c.complain_liaisons_email, c.complain_status, c.complain_finish_time, c.complain_handler,c.complain_describe, c.complain_voice,
+--     c.create_time, c.update_time
+    c.user_id,
+    c.community_id,
+    c.complain_position,
+    c.complain_specific_position,
+    c.complain_type,
+    c.complain_class_type,
+    c.event_content AS complain_describe,
+    c.complain_voice
   </sql>
 
   <select id="selectImages" parameterType="string" resultMap="Image_Result_Map" >
     select img.image_id, img.image_url, img.image_thumbnail, img.object_id, img.image_type, img.create_time as img_create_time, img.update_time as img_update_time
     from images img
-    where img.object_id=#{placeId} and img.image_type=0
+    where img.object_id=#{eventId} and img.image_type=0
   </select>
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims">
   	select 
     <include refid="Base_Column_List" />
-    from complain c
+    from `event` c
     <where>
+      c.event_type=3
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(complain_position,''),IFNULL(complain_status,''),IFNULL(complain_handler,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(complain_position,''),IFNULL(complain_type,''),IFNULL(complain_class_type,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="userId != null">
       	AND c.user_id = #{userId,jdbcType=VARCHAR}
@@ -65,22 +75,22 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from complain c
-    where complain_id = #{complainId,jdbcType=VARCHAR}
+    from `event` c
+    where event_id = #{complainId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from complain
-    where complain_id = #{complainId,jdbcType=VARCHAR}
+    delete from `event`
+    where event_id = #{complainId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.dal.model.Complain" >
-    insert into complain (complain_id, user_id, complain_position, 
+    insert into complain (complain_id, user_id,community_id, complain_position,
       complain_specific_position, complain_type, 
       complain_class_type, complain_liaisons_name, 
       complain_liaisons_sex, complain_liaisons_email, 
       complain_status, complain_finish_time, complain_handler, 
       create_time, update_time, complain_describe, 
       complain_voice)
-    values (#{complainId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{complainPosition,jdbcType=VARCHAR}, 
+    values (#{complainId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},#{communityId,jdbcType=VARCHAR}, #{complainPosition,jdbcType=VARCHAR},
       #{complainSpecificPosition,jdbcType=VARCHAR}, #{complainType,jdbcType=VARCHAR}, 
       #{complainClassType,jdbcType=VARCHAR}, #{complainLiaisonsName,jdbcType=VARCHAR}, 
       #{complainLiaisonsSex,jdbcType=CHAR}, #{complainLiaisonsEmail,jdbcType=VARCHAR}, 
@@ -89,13 +99,16 @@
       #{complainVoice,jdbcType=LONGVARBINARY})
   </insert>
   <insert id="insertSelective" parameterType="com.simon.dal.model.Complain" useGeneratedKeys="true">
-    insert into complain
+    insert into `event`
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="complainId != null" >
         complain_id,
       </if>
       <if test="userId != null" >
         user_id,
+      </if>
+      <if test="communityId != null" >
+        community_id,
       </if>
       <if test="complainPosition != null" >
         complain_position,
@@ -133,8 +146,8 @@
       <if test="updateTime != null" >
         update_time,
       </if>
-      <if test="complainDescribe != null" >
-        complain_describe,
+      <if test="eventContent != null" >
+        event_content,
       </if>
       <if test="complainVoice != null" >
         complain_voice,
@@ -146,6 +159,9 @@
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
       </if>
       <if test="complainPosition != null" >
         #{complainPosition,jdbcType=VARCHAR},
@@ -192,10 +208,13 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.simon.dal.model.Complain" >
-    update complain
+    update `event`
     <set >
       <if test="userId != null" >
         user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null" >
+        community_id = #{communityId,jdbcType=VARCHAR},
       </if>
       <if test="complainPosition != null" >
         complain_position = #{complainPosition,jdbcType=VARCHAR},
@@ -209,9 +228,6 @@
       <if test="complainClassType != null" >
         complain_class_type = #{complainClassType,jdbcType=VARCHAR},
       </if>
-      <if test="complainLiaisonsName != null" >
-        complain_liaisons_name = #{complainLiaisonsName,jdbcType=VARCHAR},
-      </if>
       <if test="complainLiaisonsSex != null" >
         complain_liaisons_sex = #{complainLiaisonsSex,jdbcType=CHAR},
       </if>
@@ -222,7 +238,7 @@
         complain_status = #{complainStatus,jdbcType=CHAR},
       </if>
       <if test="complainFinishTime != null" >
-        complain_finish_time = #{complainFinishTime,jdbcType=TIMESTAMP},
+        event_finish_date = #{complainFinishTime,jdbcType=TIMESTAMP},
       </if>
       <if test="complainHandler != null" >
         complain_handler = #{complainHandler,jdbcType=VARCHAR},
@@ -244,7 +260,9 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.simon.dal.model.Complain" >
     update complain
-    set user_id = #{userId,jdbcType=VARCHAR},
+    set
+      user_id = #{userId,jdbcType=VARCHAR},
+      community_id = #{communityId,jdbcType=VARCHAR},
       complain_position = #{complainPosition,jdbcType=VARCHAR},
       complain_specific_position = #{complainSpecificPosition,jdbcType=VARCHAR},
       complain_type = #{complainType,jdbcType=VARCHAR},
@@ -263,7 +281,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.simon.dal.model.Complain" >
     update complain
-    set user_id = #{userId,jdbcType=VARCHAR},
+    set
+      user_id = #{userId,jdbcType=VARCHAR},
+      community_id = #{communityId,jdbcType=VARCHAR},
       complain_position = #{complainPosition,jdbcType=VARCHAR},
       complain_specific_position = #{complainSpecificPosition,jdbcType=VARCHAR},
       complain_type = #{complainType,jdbcType=VARCHAR},
