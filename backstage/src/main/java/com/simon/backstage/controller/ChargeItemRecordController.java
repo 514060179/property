@@ -1,6 +1,8 @@
 package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.annotation.Log;
+import com.simon.backstage.annotation.OperateType;
 import com.simon.backstage.domain.model.ChargeItemRecord;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
@@ -36,6 +38,7 @@ public class ChargeItemRecordController {
 
     @PostMapping("upd")
     @ApiOperation("修改收费记录")
+    @Log(description = "修改收费记录",operateType = OperateType.modify)
     public ReturnMsg upd(@RequestBody ChargeItemRecord chargeItemRecord, HttpServletRequest request){
         logger.info("修改收费记录chargeItem={}", JSONUtil.objectToJson(chargeItemRecord));
         return ReturnMsg.success(chargeItemRecordService.upd(chargeItemRecord));
@@ -43,6 +46,7 @@ public class ChargeItemRecordController {
 
     @GetMapping("del")
     @ApiOperation("删除收费记录")
+    @Log(description = "删除收费记录",operateType = OperateType.del)
     public ReturnMsg del(@RequestParam String itemId){
         logger.info("删除收费记录itemId={}", itemId);
         return ReturnMsg.success(chargeItemRecordService.del(itemId));

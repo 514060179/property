@@ -1,5 +1,7 @@
 package com.simon.backstage.controller;
 
+import com.simon.backstage.annotation.Log;
+import com.simon.backstage.annotation.OperateType;
 import com.simon.backstage.domain.model.AdvanceMoney;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.AdvanceService;
@@ -28,6 +30,7 @@ public class AdvanceController {
     private AdvanceService advanceService;
     @PostMapping("add")
     @ApiOperation("预收")
+    @Log(description = "业主预收",operateType = OperateType.add)
     public ReturnMsg<AdvanceMoney> add(@RequestBody AdvanceMoney advanceMoney){
         logger.info("添加预收记录请求参数advanceMoney={}", JSONUtil.objectToJson(advanceMoney));
         AdvanceMoney findAdvance = advanceService.findByUserId(advanceMoney.getUserId());//是否存在账户

@@ -1,6 +1,8 @@
 package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.annotation.Log;
+import com.simon.backstage.annotation.OperateType;
 import com.simon.backstage.domain.model.ChargeItem;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
@@ -52,6 +54,7 @@ public class ChargeItemController {
 
     @PostMapping("upd")
     @ApiOperation("修改收费项目")
+    @Log(description = "修改收费项目",operateType = OperateType.modify)
     public ReturnMsg upd(@RequestBody ChargeItem chargeItem, HttpServletRequest request){
         logger.info("添加收费项目chargeItem={}", JSONUtil.objectToJson(chargeItem));
         if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
@@ -62,6 +65,7 @@ public class ChargeItemController {
 
     @GetMapping("del")
     @ApiOperation("删除收费项目")
+    @Log(description = "删除收费项目",operateType = OperateType.del)
     public ReturnMsg del(@RequestParam String itemId){
         logger.info("删除收费项目itemId={}", itemId);
         return ReturnMsg.success(chargeItemService.del(itemId));
@@ -87,6 +91,7 @@ public class ChargeItemController {
 
     @PostMapping("unitAddItem")
     @ApiOperation("单元添加收费项目")
+    @Log(description = "单元添加收费项目",operateType = OperateType.add)
     public ReturnMsg unitAddItem(@RequestBody List<UnitWithItem> unitWithItemList) {
         logger.info("单元添加收费项目unitWithItem={}", JSONUtil.objectToJson(unitWithItemList));
         unitWithItemList.forEach((unitWithItem)->{
