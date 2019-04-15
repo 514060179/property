@@ -39,7 +39,7 @@ public class Complain {
     @ApiModelProperty(value="联络人电邮",example="120212485@gmail.com")
     private String complainLiaisonsEmail;
 
-    @ApiModelProperty(value="状态:0发起1收到2处理中3处理完成",readOnly=true)
+    @ApiModelProperty(value="0跟进中1报价中2接获投诉3与管理机关讨论中4待定5工程进行中6待开大会表决7完成",readOnly=true)
     private String complainStatus;
 
     @ApiModelProperty(value="完成时间",readOnly=true)

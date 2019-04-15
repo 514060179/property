@@ -42,8 +42,9 @@
     c.complain_specific_position,
     c.complain_type,
     c.complain_class_type,
-    c.event_content AS complain_describe,
+    c.event_content as complain_describe,
     c.complain_voice,
+    c.event_status as complain_status,
     c.create_time,
     c.update_time
   </sql>
