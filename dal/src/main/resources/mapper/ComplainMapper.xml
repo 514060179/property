@@ -35,7 +35,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    c.event_id as complain_id
+    c.event_id as complain_id,
     c.user_id,
     c.community_id,
     c.complain_position,
