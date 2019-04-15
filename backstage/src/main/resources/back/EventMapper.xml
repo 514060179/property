@@ -55,6 +55,9 @@
       <if test="communityId != null">
       	AND e.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
+      <if test="assetNo != null">
+      	AND e.asset_no = #{assetNo,jdbcType=VARCHAR}
+      </if>
       <if test="eventType != null">
       	AND e.event_type = #{eventType,jdbcType=INTEGER}
       </if>

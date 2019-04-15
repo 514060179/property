@@ -13,6 +13,9 @@ public class UnitQueryParam extends BaseQueryParam {
     @ApiModelProperty(value = "建筑id",example = "eab24245e0d0479fad34a5973644e691")
     private String buildingId;
 
+    @ApiModelProperty(value = "業主id",example = "eab24245e0d0479fad34a5973644e691")
+    private String userId;
+
     public Integer getUnitType() {
         return unitType;
     }
@@ -27,5 +30,13 @@ public class UnitQueryParam extends BaseQueryParam {
 
     public void setBuildingId(String buildingId) {
         this.buildingId = buildingId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

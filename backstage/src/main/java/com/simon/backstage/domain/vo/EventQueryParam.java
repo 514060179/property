@@ -17,6 +17,9 @@ public class EventQueryParam extends BaseQueryParam {
     @ApiModelProperty(value = "事件类型",example = "1采购2保养3其他")
     private Integer eventType;
 
+    @ApiModelProperty(value = "物业资产编号",example = "ZC001")
+    private String assetNo;
+
     @ApiModelProperty(value = "提醒周期（单位：天）默认15",example = "15")
     private Integer eventRemindCycle;
 
@@ -34,6 +37,14 @@ public class EventQueryParam extends BaseQueryParam {
 
     public void setEventType(Integer eventType) {
         this.eventType = eventType;
+    }
+
+    public String getAssetNo() {
+        return assetNo;
+    }
+
+    public void setAssetNo(String assetNo) {
+        this.assetNo = assetNo;
     }
 
     public Integer getEventRemindCycle() {
