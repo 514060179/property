@@ -67,7 +67,7 @@ public class Complain {
     }
 
     public void setComplainId(String complainId) {
-        this.complainId = complainId == null ? null : complainId.trim();
+        this.complainId = complainId == null ? "" : complainId.trim();
     }
 
     public String getUserId() {
@@ -75,7 +75,7 @@ public class Complain {
     }
 
     public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+        this.userId = userId == null ? "" : userId.trim();
     }
 
     public String getCommunityId() {
@@ -91,7 +91,7 @@ public class Complain {
     }
 
     public void setComplainPosition(String complainPosition) {
-        this.complainPosition = complainPosition == null ? null : complainPosition.trim();
+        this.complainPosition = complainPosition == null ? "" : complainPosition.trim();
     }
 
     public String getComplainSpecificPosition() {
@@ -99,7 +99,7 @@ public class Complain {
     }
 
     public void setComplainSpecificPosition(String complainSpecificPosition) {
-        this.complainSpecificPosition = complainSpecificPosition == null ? null : complainSpecificPosition.trim();
+        this.complainSpecificPosition = complainSpecificPosition == null ? "" : complainSpecificPosition.trim();
     }
 
     public String getComplainType() {
@@ -107,7 +107,7 @@ public class Complain {
     }
 
     public void setComplainType(String complainType) {
-        this.complainType = complainType == null ? null : complainType.trim();
+        this.complainType = complainType == null ? "" : complainType.trim();
     }
 
     public String getComplainClassType() {
@@ -115,7 +115,7 @@ public class Complain {
     }
 
     public void setComplainClassType(String complainClassType) {
-        this.complainClassType = complainClassType == null ? null : complainClassType.trim();
+        this.complainClassType = complainClassType == null ? "" : complainClassType.trim();
     }
 
 	public String getComplainLiaisonsName() {
@@ -123,7 +123,7 @@ public class Complain {
     }
 
     public void setComplainLiaisonsName(String complainLiaisonsName) {
-        this.complainLiaisonsName = complainLiaisonsName == null ? null : complainLiaisonsName.trim();
+        this.complainLiaisonsName = complainLiaisonsName == null ? "" : complainLiaisonsName.trim();
     }
 
     public String getComplainLiaisonsSex() {
@@ -131,7 +131,7 @@ public class Complain {
     }
 
     public void setComplainLiaisonsSex(String complainLiaisonsSex) {
-        this.complainLiaisonsSex = complainLiaisonsSex == null ? null : complainLiaisonsSex.trim();
+        this.complainLiaisonsSex = complainLiaisonsSex == null ? "0" : complainLiaisonsSex.trim();
     }
 
     public String getComplainLiaisonsEmail() {
@@ -139,7 +139,7 @@ public class Complain {
     }
 
     public void setComplainLiaisonsEmail(String complainLiaisonsEmail) {
-        this.complainLiaisonsEmail = complainLiaisonsEmail == null ? null : complainLiaisonsEmail.trim();
+        this.complainLiaisonsEmail = complainLiaisonsEmail == null ? "" : complainLiaisonsEmail.trim();
     }
 
     public String getComplainStatus() {
@@ -147,7 +147,7 @@ public class Complain {
     }
 
     public void setComplainStatus(String complainStatus) {
-        this.complainStatus = complainStatus == null ? null : complainStatus.trim();
+        this.complainStatus = complainStatus == null ? "0" : complainStatus.trim();
     }
 
     public Date getComplainFinishTime() {
@@ -163,7 +163,7 @@ public class Complain {
     }
 
     public void setComplainHandler(String complainHandler) {
-        this.complainHandler = complainHandler == null ? null : complainHandler.trim();
+        this.complainHandler = complainHandler == null ? "" : complainHandler.trim();
     }
 
     public String getComplainDescribe() {
@@ -171,7 +171,7 @@ public class Complain {
     }
 
     public void setComplainDescribe(String complainDescribe) {
-        this.complainDescribe = complainDescribe == null ? null : complainDescribe.trim();
+        this.complainDescribe = complainDescribe == null ? "" : complainDescribe.trim();
     }
 
     public String getComplainVoice() {

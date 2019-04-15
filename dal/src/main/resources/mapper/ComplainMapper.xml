@@ -43,7 +43,9 @@
     c.complain_type,
     c.complain_class_type,
     c.event_content AS complain_describe,
-    c.complain_voice
+    c.complain_voice,
+    c.create_time,
+    c.update_time
   </sql>
 
   <select id="selectImages" parameterType="string" resultMap="Image_Result_Map" >
