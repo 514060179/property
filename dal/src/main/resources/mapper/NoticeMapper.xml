@@ -90,7 +90,7 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from notice n inner join community c on n.community_id=c.community_id
+    from notice n left join community c on n.community_id=c.community_id
     where n.notice_id = #{noticeId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

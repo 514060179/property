@@ -29,7 +29,7 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from advertisement a inner join community c on a.community_id=c.community_id
+    from advertisement a left join community c on a.community_id=c.community_id
     where a.adv_id = #{advId,jdbcType=VARCHAR}
   </select>
   <select id="selectByConditon" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
