@@ -166,15 +166,6 @@
       <if test="complainClassType != null" >
         #{complainClassType,jdbcType=VARCHAR},
       </if>
-      <if test="complainLiaisonsName != null" >
-        #{complainLiaisonsName,jdbcType=VARCHAR},
-      </if>
-      <if test="complainLiaisonsSex != null" >
-        #{complainLiaisonsSex,jdbcType=CHAR},
-      </if>
-      <if test="complainLiaisonsEmail != null" >
-        #{complainLiaisonsEmail,jdbcType=VARCHAR},
-      </if>
       <if test="complainStatus != null" >
         #{complainStatus,jdbcType=CHAR},
       </if>
