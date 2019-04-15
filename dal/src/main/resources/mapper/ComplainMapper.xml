@@ -102,7 +102,7 @@
     insert into `event`
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="complainId != null" >
-        complain_id,
+        event_id,
       </if>
       <if test="userId != null" >
         user_id,
@@ -121,15 +121,6 @@
       </if>
       <if test="complainClassType != null" >
         complain_class_type,
-      </if>
-      <if test="complainLiaisonsName != null" >
-        complain_liaisons_name,
-      </if>
-      <if test="complainLiaisonsSex != null" >
-        complain_liaisons_sex,
-      </if>
-      <if test="complainLiaisonsEmail != null" >
-        complain_liaisons_email,
       </if>
       <if test="complainStatus != null" >
         complain_status,
