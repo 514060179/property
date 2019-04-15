@@ -146,7 +146,7 @@
       <if test="updateTime != null" >
         update_time,
       </if>
-      <if test="eventContent != null" >
+      <if test="complainDescribe != null" >
         event_content,
       </if>
       <if test="complainVoice != null" >
