@@ -17,6 +17,8 @@ public interface AssetMapper {
 
     List<Asset> selectByCondition(BaseQueryParam baseQueryParam);
 
+    List<Asset> findAllRemindList();
+
     int updateByPrimaryKeySelective(Asset record);
 
     int updateByPrimaryKeyWithBLOBs(Asset record);

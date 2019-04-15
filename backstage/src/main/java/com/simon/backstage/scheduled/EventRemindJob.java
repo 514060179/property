@@ -1,8 +1,8 @@
 package com.simon.backstage.scheduled;
 
-import com.simon.backstage.dao.EventMapper;
+import com.simon.backstage.dao.AssetMapper;
 import com.simon.backstage.dao.ManagerMapper;
-import com.simon.backstage.domain.model.Event;
+import com.simon.backstage.domain.model.Asset;
 import com.simon.backstage.domain.model.Manager;
 import com.simon.dal.vo.BaseQueryParam;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class EventRemindJob {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private EventMapper eventMapper;
+    private AssetMapper assetMapper;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -41,20 +41,20 @@ public class EventRemindJob {
     @Autowired
     private ManagerMapper managerMapper;
 
-    @Scheduled(cron = "0 0 10 * * ?")
+    @Scheduled(cron = "1/10 * * * * ?")
     public void job(){
         logger.info("======事件邮件提醒======");
-        List<Event> eventList = eventMapper.selectRemindEvent();
-        eventList.forEach(event -> {
-            long day = differDay(event.getCreateTime());
-            if (day%event.getEventRemindCycle()==0){
+        List<Asset> assetList = assetMapper.findAllRemindList();
+        assetList.forEach(asset -> {
+            long day = differDay(asset.getCreateTime());
+            if (day%asset.getAssetMaintainRemindCycle()==0){
                 //查询所有的社区的管理员的email
                 BaseQueryParam baseQueryParam = new BaseQueryParam();
-                baseQueryParam.setCommunityId(event.getCommunityId());
+                baseQueryParam.setCommunityId(asset.getCommunityId());
                 List<Manager> managerList = managerMapper.selectByCondition(baseQueryParam);
                 managerList.forEach(manager -> {
                     new Thread(()->{
-                        emialSendHtml("定期維護提醒",manager.getEmail(),event.getEventContent());
+                        emialSendHtml("定期維護提醒",manager.getEmail(),asset.getAssetNo()+"/"+asset.getAssetName());
                     }).start();
                 });
             }

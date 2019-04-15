@@ -84,6 +84,12 @@
     </where>
     order by a.create_time desc
   </select>
+  <select id="findAllRemindList" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from asset a inner join community c on a.community_id=c.community_id
+    where a.asset_maintain=1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from asset
     where asset_id = #{assetId,jdbcType=VARCHAR}
