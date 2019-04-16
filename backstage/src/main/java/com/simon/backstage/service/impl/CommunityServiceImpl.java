@@ -12,6 +12,7 @@ import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,20 +27,24 @@ public class CommunityServiceImpl implements CommunityService {
     @Autowired
     private BuildingMapper buildingMapper;
     @Override
+    @Transactional
     public Community add(Community community) {
         community.setCommunityId(UUIDUtil.uidString());
         if (communityMapper.insertSelective(community)>0){
             List<Enclosure> enclosureList = new ArrayList<>();
-            community.getCommonPdf().forEach(s -> {
-                Enclosure enclosure = new Enclosure();
-                enclosure.setEnclosureUrl(s);
-                enclosure.setEnclosureId(UUIDUtil.uidString());
-                enclosure.setObjectId(community.getCommunityId());
-                enclosure.setEnclosureObjectType(Type.ENCLOSURE_OBJECT_TYPE_COMMUNITY);
-                enclosure.setEnclosureType(Type.ENCLOSURE_TYPE_PDF);
-                enclosureList.add(enclosure);
-            });
-            buildingMapper.insertEnclosures(enclosureList);
+            List<String> pdfList = community.getCommonPdf();
+            if (pdfList!=null&&pdfList.size()>0){
+                community.getCommonPdf().forEach(s -> {
+                    Enclosure enclosure = new Enclosure();
+                    enclosure.setEnclosureUrl(s);
+                    enclosure.setEnclosureId(UUIDUtil.uidString());
+                    enclosure.setObjectId(community.getCommunityId());
+                    enclosure.setEnclosureObjectType(Type.ENCLOSURE_OBJECT_TYPE_COMMUNITY);
+                    enclosure.setEnclosureType(Type.ENCLOSURE_TYPE_PDF);
+                    enclosureList.add(enclosure);
+                });
+                buildingMapper.insertEnclosures(enclosureList);
+            }
         }
         return community;
     }
@@ -50,21 +55,25 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
+    @Transactional
     public int upd(Community community) {
         int i = 0 ;
         if ( (i = communityMapper.updateByPrimaryKeySelective(community))>0){
             List<Enclosure> enclosureList = new ArrayList<>();
-            community.getCommonPdf().forEach(s -> {
-                Enclosure enclosure = new Enclosure();
-                enclosure.setEnclosureId(UUIDUtil.uidString());
-                enclosure.setEnclosureUrl(s);
-                enclosure.setObjectId(community.getCommunityId());
-                enclosure.setEnclosureObjectType(Type.ENCLOSURE_OBJECT_TYPE_COMMUNITY);
-                enclosure.setEnclosureType(Type.ENCLOSURE_TYPE_PDF);
-                enclosureList.add(enclosure);
-            });
-            buildingMapper.delEnclosure(community.getCommunityId(),Type.ENCLOSURE_OBJECT_TYPE_COMMUNITY);
-            buildingMapper.insertEnclosures(enclosureList);
+            List<String> pdfList = community.getCommonPdf();
+            if (pdfList!=null&&pdfList.size()>0){
+                pdfList.forEach(s -> {
+                    Enclosure enclosure = new Enclosure();
+                    enclosure.setEnclosureId(UUIDUtil.uidString());
+                    enclosure.setEnclosureUrl(s);
+                    enclosure.setObjectId(community.getCommunityId());
+                    enclosure.setEnclosureObjectType(Type.ENCLOSURE_OBJECT_TYPE_COMMUNITY);
+                    enclosure.setEnclosureType(Type.ENCLOSURE_TYPE_PDF);
+                    enclosureList.add(enclosure);
+                });
+                buildingMapper.delEnclosure(community.getCommunityId(),Type.ENCLOSURE_OBJECT_TYPE_COMMUNITY);
+                buildingMapper.insertEnclosures(enclosureList);
+            }
         }
         return i;
     }
