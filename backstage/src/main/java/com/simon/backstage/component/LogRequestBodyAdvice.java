@@ -44,9 +44,9 @@ public class LogRequestBodyAdvice implements RequestBodyAdvice {
     @Override
     public Object afterBodyRead(Object o, HttpInputMessage httpInputMessage, MethodParameter methodParameter, Type type, Class<? extends HttpMessageConverter<?>> aClass) {
         Log log = methodParameter.getMethod().getAnnotation(Log.class);
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = requestAttributes.getRequest();
         if (log!=null){
-            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = requestAttributes.getRequest();
             OperateLog operateLog = new OperateLog();
             operateLog.setManagerId(ClaimsUtil.getManagerId(request));
             operateLog.setOperateType(log.operateType().toString());
@@ -55,6 +55,7 @@ public class LogRequestBodyAdvice implements RequestBodyAdvice {
             operateLog.setRequestUrl(request.getRequestURI());
             operateLogPool.addLog(operateLog);
         }
+        logger.info("request url={},request param ={},request body={}",request.getRequestURI(),JSONUtil.objectToJson(request.getParameterMap()),JSONUtil.objectToJson(o));
         return o;
     }
 
