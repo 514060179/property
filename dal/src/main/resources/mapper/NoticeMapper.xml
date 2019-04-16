@@ -77,7 +77,7 @@
     <where>
         UNIX_TIMESTAMP(NOW()) BETWEEN UNIX_TIMESTAMP(start_time) AND UNIX_TIMESTAMP(end_time)
     	<if test="keyword != null and keyword!=''" >
-    		CANCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CONCAT('%', #{keyword}, '%')
+          CONCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CONCAT('%', #{keyword}, '%')
     	</if>
     	<if test="communityId != null and communityId != ''">
     		AND (n.community_id = #{communityId,jdbcType=VARCHAR} or n.community_id is null or n.community_id='')

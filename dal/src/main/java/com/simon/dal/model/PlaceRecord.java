@@ -17,6 +17,9 @@ public class PlaceRecord {
     @ApiModelProperty(value="用户id",readOnly=true)
     private String userId;
 
+    @ApiModelProperty(value = "社区id",example="c123456")
+    private String communityId;
+
     @ApiModelProperty("场所id")
     private String placeId;
 
@@ -32,7 +35,7 @@ public class PlaceRecord {
     @JsonFormat(pattern="HH:mm:ss",timezone="GMT+8")
     private Date orderEndTime;
 
-    @ApiModelProperty(value="预定状态(-1预约取消0开始发起1预约成功2预约失败)",readOnly=true)
+    @ApiModelProperty(value="预定状态(-1预约取消0开始发起1预约成功(收费)2预约失败)")
     private String recordStatus;
 
     @ApiModelProperty(value="总时间",example="5")
@@ -67,6 +70,14 @@ public class PlaceRecord {
 
     public void setUserId(String userId) {
         this.userId = userId == null ? null : userId.trim();
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
     }
 
     public String getPlaceId() {

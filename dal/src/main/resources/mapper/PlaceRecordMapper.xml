@@ -43,6 +43,13 @@
     p.place_start_time, p.place_end_time, p.place_need_order, p.place_upper_limit, p.place_advance_order_day,
     p.place_farthest_order_day,p.place_icon_type, p.place_introduction, p.place_traditional_introduction, p.place_english_introduction, p.place_charge, p.place_attach_charge
   </sql>
+  <sql id="Other_Column_List" >
+    pr.record_id, pr.user_id, pr.place_id, pr.order_date, pr.order_start_time, pr.order_end_time, pr.record_status,pr.total_hour,pr.average_charge,pr.attach_charge,pr.total_charge,
+    pr.update_time, pr.create_time,
+    p.place_id, p.community_id, p.place_name, p.place_traditional_name, p.place_english_name, p.place_status,
+    p.place_start_time, p.place_end_time, p.place_need_order, p.place_upper_limit, p.place_advance_order_day,
+    p.place_farthest_order_day,p.place_icon_type, p.place_introduction, p.place_traditional_introduction, p.place_english_introduction, p.place_charge, p.place_attach_charge
+  </sql>
   <select id="list" resultMap="BaseResultMap" parameterType="com.simon.dal.model.PlaceRecord" >
   	select
   	<include refid="Base_Column_List" />
@@ -54,6 +61,29 @@
   	</where>
     order by pr.create_time desc
   </select>
+
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
+  	select
+  	<include refid="Base_Column_List" />
+  	from place_record pr inner join place p on pr.place_id=p.place_id
+    inner join community c on p.community_id=c.community_id
+  	<where>
+      <if test="keyword != null and keyword!=''" >
+        CONCAT(IFNULL(c.community_name,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+      <if test="communityId != null">
+        pr.community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
+      <if test="communityNo != null">
+        c.community_no = #{communityNo,jdbcType=VARCHAR}
+      </if>
+      <if test="orderDate != null">
+        pr.order_date = #{orderDate,jdbcType=DATE}
+      </if>
+  	</where>
+    order by pr.create_time desc
+  </select>
+
   <select id="findPlaceTime" parameterType="com.simon.dal.model.PlaceRecord" resultType="int">
 	SELECT 
 		COUNT(*)	

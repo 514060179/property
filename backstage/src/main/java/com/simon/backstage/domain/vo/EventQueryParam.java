@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author fengtianying
  * @date 2019/1/25 9:17
  */
-@ApiModel(value = "EventQueryParam", description = "时间查询条件")
+@ApiModel(value = "EventQueryParam", description = "事件查询条件")
 public class EventQueryParam extends BaseQueryParam {
 
     @ApiModelProperty(value = "社区id",example = "")

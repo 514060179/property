@@ -12,6 +12,7 @@
     <result column="place_end_time" property="placeEndTime" jdbcType="TIME" />
     <result column="place_need_order" property="placeNeedOrder" jdbcType="INTEGER" />
     <result column="place_upper_limit" property="placeUpperLimit" jdbcType="INTEGER" />
+    <result column="place_icon_type" property="placeIconType" jdbcType="INTEGER" />
     <result column="place_advance_order_day" property="placeAdvanceOrderDay" jdbcType="INTEGER" />
     <result column="place_farthest_order_day" property="placeFarthestOrderDay" jdbcType="INTEGER" />
     <result column="place_charge" property="placeCharge" jdbcType="DECIMAL" />
