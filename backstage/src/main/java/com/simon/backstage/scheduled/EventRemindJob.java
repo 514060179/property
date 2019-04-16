@@ -41,7 +41,7 @@ public class EventRemindJob {
     @Autowired
     private ManagerMapper managerMapper;
 
-    @Scheduled(cron = "1/10 * * * * ?")
+    @Scheduled(cron = "0 0 9 * * ?")
     public void job(){
         logger.info("======事件邮件提醒======");
         List<Asset> assetList = assetMapper.findAllRemindList();
