@@ -62,6 +62,26 @@
     order by pr.create_time desc
   </select>
 
+  <select id="statis" resultType="com.simon.dal.vo.PlaceRecordStatisData" parameterType="com.simon.dal.vo.PlaceRecordStatisQuery" >
+      SELECT
+        pr.place_id as placeId,
+        p.place_name as placeName,
+        DATE_FORMAT(order_date, '%Y-%m') as yearMonth,
+        SUM(total_hour) as hours
+      FROM
+        place_record pr
+        INNER JOIN place p
+          ON pr.place_id = p.place_id
+      <where>
+        <if test="yearMonth != null and yearMonth != ''">
+          DATE_FORMAT(order_date, '%Y-%m') = #{yearMonth}
+        </if>
+        <if test="communityId != null and communityId != ''">
+          p.community_id = #{communityId}
+        </if>
+      </where>
+      GROUP BY pr.place_id
+  </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
   	select
   	<include refid="Base_Column_List" />

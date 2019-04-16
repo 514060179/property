@@ -3,6 +3,10 @@ package com.simon.backstage.service;
 import com.github.pagehelper.PageInfo;
 import com.simon.dal.model.PlaceRecord;
 import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.PlaceRecordStatisData;
+import com.simon.dal.vo.PlaceRecordStatisQuery;
+
+import java.util.List;
 
 /**
  * @author fengtianying
@@ -44,5 +48,12 @@ public interface PlaceRecordService {
      * @return
      */
     PageInfo<PlaceRecord> list(BaseQueryParam baseQueryParam);
+
+    /**
+     * 统计场所使用率
+     * @param placeRecordStatisQuery
+     * @return
+     */
+    List<PlaceRecordStatisData> statis(PlaceRecordStatisQuery placeRecordStatisQuery);
 
 }

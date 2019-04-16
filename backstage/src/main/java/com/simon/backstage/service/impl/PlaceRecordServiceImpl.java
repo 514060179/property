@@ -6,8 +6,12 @@ import com.simon.backstage.service.PlaceRecordService;
 import com.simon.dal.dao.PlaceRecordMapper;
 import com.simon.dal.model.PlaceRecord;
 import com.simon.dal.vo.BaseQueryParam;
+import com.simon.dal.vo.PlaceRecordStatisData;
+import com.simon.dal.vo.PlaceRecordStatisQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author fengtianying
@@ -42,5 +46,10 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
     public PageInfo<PlaceRecord> list(BaseQueryParam baseQueryParam) {
         PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
         return new PageInfo<>(placeRecordMapper.selectByCondition(baseQueryParam));
+    }
+
+    @Override
+    public List<PlaceRecordStatisData> statis(PlaceRecordStatisQuery placeRecordStatisQuery) {
+        return placeRecordMapper.statis(placeRecordStatisQuery);
     }
 }
