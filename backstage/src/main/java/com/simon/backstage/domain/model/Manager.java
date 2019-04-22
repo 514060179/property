@@ -30,6 +30,9 @@ public class Manager {
     @ApiModelProperty(value = "类型0普通管理员1超级管理员",example = "0")
     private Integer type;
 
+    @ApiModelProperty(value = "管理类型(0简单管理1综合管理)",example = "0")
+    private Integer managementType;
+
     @ApiModelProperty(value = "邮箱",example = "15487845@qq.com")
     @Email(message = "非法邮箱！")
     private String email;
@@ -93,6 +96,14 @@ public class Manager {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Integer getManagementType() {
+        return managementType;
+    }
+
+    public void setManagementType(Integer managementType) {
+        this.managementType = managementType;
     }
 
     public Integer getSex() {

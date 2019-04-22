@@ -14,7 +14,7 @@ public class EventQueryParam extends BaseQueryParam {
     @ApiModelProperty(value = "社区id",example = "")
     private String communityId;
 
-    @ApiModelProperty(value = "事件类型",example = "1采购2保养3其他")
+    @ApiModelProperty(value = "事件类型1采购2保养3其他",example = "1")
     private Integer eventType;
 
     @ApiModelProperty(value = "物业资产编号",example = "ZC001")

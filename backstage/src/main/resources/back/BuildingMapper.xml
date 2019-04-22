@@ -11,6 +11,7 @@
     <result column="building_direction" property="buildingDirection" jdbcType="VARCHAR" />
     <result column="floor_up_num" property="floorUpNum" jdbcType="INTEGER" />
     <result column="floor_low_num" property="floorLowNum" jdbcType="INTEGER" />
+    <result column="management_type" property="managementType" jdbcType="INTEGER" />
     <result column="deleted" property="deleted" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -19,6 +20,8 @@
       <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
       <result column="community_name" property="communityName" jdbcType="VARCHAR" />
     </association>
+    <collection property="commonPdf" ofType="string" javaType="java.util.List" select="selectPdf" column="building_id">
+    </collection>
   </resultMap>
 
   <resultMap id="CommunityWithBuildingMap" type="com.simon.backstage.domain.vo.CommunityWithBuilding" >
@@ -55,9 +58,15 @@
 
   <sql id="Base_Column_List" >
     b.building_id, b.community_id, b.building_name, b.building_no, b.full_address, b.building_struct,
-    b.building_direction, b.floor_up_num, b.floor_low_num, b.deleted, b.create_time, b.update_time,
+    b.building_direction, b.floor_up_num, b.floor_low_num, c.community_management_type as management_type, b.deleted, b.create_time, b.update_time,
     c.community_id,c.community_no,c.community_name
   </sql>
+  <select id="selectPdf" parameterType="string" resultType="string" >
+    select
+    enclosure_url as url
+    from enclosure
+    where object_id=#{buildingId} and enclosure_object_type=2
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

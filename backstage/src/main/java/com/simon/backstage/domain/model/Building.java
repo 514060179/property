@@ -39,6 +39,9 @@ public class Building {
     @ApiModelProperty(value = "楼下几层",example = "4")
     private Integer floorLowNum;
 
+    @ApiModelProperty("管理类型(0简单管理1综合管理)")
+    private Integer managementType;
+
     @ApiModelProperty(value = "是否注销")
     private Boolean deleted;
 
@@ -133,6 +136,14 @@ public class Building {
 
     public void setFloorLowNum(Integer floorLowNum) {
         this.floorLowNum = floorLowNum;
+    }
+
+    public Integer getManagementType() {
+        return managementType;
+    }
+
+    public void setManagementType(Integer managementType) {
+        this.managementType = managementType;
     }
 
     public Boolean getDeleted() {

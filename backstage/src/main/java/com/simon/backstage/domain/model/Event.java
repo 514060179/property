@@ -70,6 +70,10 @@ public class Event {
 
     @ApiModelProperty(value = "解决方案",example = "解决方案")
     private String eventSolve;
+
+    @ApiModelProperty(value = "事件报告文件")
+    private List<String> reportPdf;
+
     @ApiModelProperty(hidden = true)
     private Community community;
 
@@ -106,6 +110,14 @@ public class Event {
 
     public void setEventId(String eventId) {
         this.eventId = eventId == null ? null : eventId.trim();
+    }
+
+    public List<String> getReportPdf() {
+        return reportPdf;
+    }
+
+    public void setReportPdf(List<String> reportPdf) {
+        this.reportPdf = reportPdf;
     }
 
     public String getCommunityId() {

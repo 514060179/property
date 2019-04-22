@@ -77,7 +77,7 @@ public class JwtFilter extends AccessControlFilter {
                 }
                 String deviceType = claims.get("device", String.class);//PC端每次刷新15分钟
                 if(deviceType==null || !deviceType.equals("1")){
-                	redisService.set(userId, jwt, 15*60);
+                	redisService.set(userId, jwt, 60*60);
                 }
                 request.setAttribute("claims", claims);
                 return true;

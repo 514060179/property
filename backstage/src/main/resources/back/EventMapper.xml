@@ -29,6 +29,8 @@
       <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
       <result column="community_name" property="communityName" jdbcType="VARCHAR" />
     </association>
+    <collection property="reportPdf" ofType="string" javaType="java.util.List" select="selectPdf" column="event_id">
+    </collection>
   </resultMap>
   <sql id="Base_Column_List" >
     e.event_id, e.community_id,
@@ -38,6 +40,14 @@
     e.create_time, e.update_time,e.event_content, e.event_cause, e.event_solve,
     c.community_id,c.community_no,c.community_name
   </sql>
+
+  <select id="selectPdf" parameterType="string" resultType="string" >
+    select
+    enclosure_url as url
+    from enclosure
+    where object_id=#{eventId} and enclosure_object_type=1
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
