@@ -33,8 +33,8 @@ public class PlaceController {
     @PostMapping("list")
     @ApiOperation("场所列表")
     public ReturnMsg<PageInfo<Place>> list(BaseClaims baseClaims,HttpServletRequest request){
-    	String communityId = ClaimsUtil.getCommunityId(request);
-    	baseClaims.setCommunityId(communityId);
+    	String userId = ClaimsUtil.getUserId(request);
+        baseClaims.setUserId(userId);
         return ReturnMsg.success(new PageInfo<>(placeService.list(baseClaims)));
     }
     @PostMapping("detail")

@@ -20,7 +20,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public List<Notice> list(BaseClaims baseClaims) {
 		PageHelper.startPage(baseClaims.getPageNo(), baseClaims.getPageSize());
-		return noticeMapper.list(baseClaims,1);
+		return noticeMapper.list(baseClaims,null);
 	}
 	
 	@Override

@@ -34,8 +34,8 @@ public class NoticeController {
     @PostMapping("list")
     @ApiOperation("公告列表")
     public ReturnMsg<PageInfo<Notice>> list(BaseClaims baseClaims, HttpServletRequest request){
-    	String communityId = ClaimsUtil.getCommunityId(request);
-    	baseClaims.setCommunityId(communityId);
+    	String userId = ClaimsUtil.getUserId(request);
+    	baseClaims.setUserId(userId);
         return ReturnMsg.success(new PageInfo<>(noticeSercice.list(baseClaims)));
     }
     @PostMapping("detail")

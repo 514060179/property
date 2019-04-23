@@ -55,6 +55,10 @@
   	<include refid="Base_Column_List" />
   	from place p
     inner join community c on p.community_id=c.community_id
+    <if test="userId!=null and userId!=''">
+      inner join user_community uc
+      on c.community_id = uc.community_id and uc.user_id=#{userId,jdbcType=VARCHAR}
+    </if>
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(place_name,'')) LIKE CONCAT('%', #{keyword}, '%')

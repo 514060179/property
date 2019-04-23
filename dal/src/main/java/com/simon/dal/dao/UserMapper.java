@@ -13,6 +13,8 @@ public interface UserMapper {
 
     int insertSelective(User record);
 
+    int insertUserCommunity(User record);
+
     User selectByPrimaryKey(String userId);
 
     List<User> selectByCondition(BaseClaims baseClaims);

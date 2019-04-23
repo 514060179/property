@@ -10,6 +10,7 @@ import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 /**
@@ -23,10 +24,12 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
+    @Transactional
     public User add(User user) {
         user.setUserId(UUIDUtil.uidString());
         user.setPassword(EncryUtil.getMD5(user.getPassword()));
         if(userMapper.insertSelective(user)>0){
+            userMapper.insertUserCommunity(user);
             return user;
         }
         return null;
