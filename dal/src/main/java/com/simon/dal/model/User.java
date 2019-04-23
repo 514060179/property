@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -69,6 +70,8 @@ public class User {
     private Date updateTime;
     @ApiModelProperty(hidden = true)
     private Community community;
+
+     private List<UserWithCommunity> userWithCommunities;
 
     public String getUserId() {
         return userId;
@@ -220,5 +223,13 @@ public class User {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public List<UserWithCommunity> getUserWithCommunities() {
+        return userWithCommunities;
+    }
+
+    public void setUserWithCommunities(List<UserWithCommunity> userWithCommunities) {
+        this.userWithCommunities = userWithCommunities;
     }
 }

@@ -7,6 +7,7 @@ import com.simon.backstage.service.UserService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.User;
+import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.vo.BaseClaims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -63,6 +64,25 @@ public class UserController {
         logger.info("删除住户userId={}", userId);
         return ReturnMsg.success(userService.del(userId));
     }
+
+    @GetMapping("detail")
+    @ApiOperation("住户详情")
+    public ReturnMsg<User> detail(@RequestParam String userId){
+        return ReturnMsg.success(userService.detail(userId));
+    }
+
+    @GetMapping("delUserCommunity")
+    @ApiOperation("删除用户社区")
+    public ReturnMsg<User> delUserCommunity(@RequestParam String userId,@RequestParam String communityId){
+        return ReturnMsg.success(userService.delUserCommunity(userId,communityId));
+    }
+
+    @PostMapping("addUserCommunity")
+    @ApiOperation("添加绑定用户社区")
+    public ReturnMsg<User> addUserCommunity(@RequestBody UserWithCommunity userWithCommunity){
+        return ReturnMsg.success(userService.addUserCommunity(userWithCommunity));
+    }
+
 
     @GetMapping("list")
     @ApiOperation("住户列表")

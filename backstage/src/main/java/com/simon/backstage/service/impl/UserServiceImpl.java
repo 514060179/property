@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.service.UserService;
 import com.simon.dal.dao.UserMapper;
 import com.simon.dal.model.User;
+import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.util.EncryUtil;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseClaims;
@@ -37,7 +38,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User detail(String userId) {
-        return userMapper.selectByPrimaryKey(userId);
+        User user = userMapper.selectByPrimaryKey(userId);
+        user.setUserWithCommunities(userMapper.selectUserCommunitys(userId));
+        return user;
+    }
+
+    @Override
+    public int delUserCommunity(String userId, String communityId) {
+        return userMapper.deleteUserCommunity(userId,communityId);
+    }
+
+    @Override
+    public int addUserCommunity(UserWithCommunity userWithCommunity) {
+        User user = new User();
+        user.setUserId(userWithCommunity.getUserId());
+        user.setCommunityId(userWithCommunity.getCommunityId());
+        return userMapper.insertUserCommunity(user);
     }
 
     @Override

@@ -61,6 +61,12 @@
     from user u inner join community c on u.community_id=c.community_id
     where u.user_id = #{userId,jdbcType=VARCHAR}
   </select>
+  <select id="selectUserCommunitys" resultType="com.simon.dal.model.UserWithCommunity" parameterType="java.lang.String" >
+    select
+    uc.user_id as userId,c.community_id as communityId,c.community_name as communityName
+    from user_community uc inner join community c on uc.community_id=c.community_id
+    where uc.user_id = #{userId,jdbcType=VARCHAR}
+  </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
     select
     <include refid="Base_Column_List" />
@@ -80,6 +86,10 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from user
     where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteUserCommunity" parameterType="java.lang.String" >
+    delete from user_community
+    where user_id = #{userId,jdbcType=VARCHAR} and community_id = #{communityId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.dal.model.User" >
     insert into user (user_id, community_id, name, 

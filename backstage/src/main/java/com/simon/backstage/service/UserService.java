@@ -2,6 +2,7 @@ package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.dal.model.User;
+import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.vo.BaseClaims;
 
 /**
@@ -24,6 +25,21 @@ public interface UserService {
      * @return
      */
     User detail(String userId);
+
+    /**
+     * 删除绑定的社区
+     * @param userId
+     * @param communityId
+     * @return
+     */
+    int delUserCommunity(String userId,String communityId);
+
+    /**
+     * 添加绑定社区
+     * @param userWithCommunity
+     * @return
+     */
+    int addUserCommunity(UserWithCommunity userWithCommunity);
 
     /**
      * 修改
