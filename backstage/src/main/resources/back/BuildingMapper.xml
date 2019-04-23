@@ -65,7 +65,7 @@
     select
     enclosure_url as url
     from enclosure
-    where object_id=#{buildingId} and enclosure_object_type=2
+    where object_id=#{buildingId} and enclosure_object_type=1
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
