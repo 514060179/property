@@ -92,7 +92,7 @@ public class BuildingServiceImpl implements BuildingService {
             find.setEnclosureType(Type.ENCLOSURE_TYPE_PDF);
             building.setCommonPdf(buildingMapper.findUrlFromEnclosure(find));
             //花名册
-            find.setEnclosureType(Type.ENCLOSURE_TYPE_PDF);
+            find.setEnclosureType(Type.ENCLOSURE_TYPE_ROSTER);
             building.setRosterPdf(buildingMapper.findUrlFromEnclosure(find));
         }
         return building;

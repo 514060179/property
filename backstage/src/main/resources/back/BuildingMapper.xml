@@ -20,8 +20,6 @@
       <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
       <result column="community_name" property="communityName" jdbcType="VARCHAR" />
     </association>
-    <collection property="commonPdf" ofType="string" javaType="java.util.List" select="selectPdf" column="building_id">
-    </collection>
   </resultMap>
 
   <resultMap id="CommunityWithBuildingMap" type="com.simon.backstage.domain.vo.CommunityWithBuilding" >
@@ -61,12 +59,6 @@
     b.building_direction, b.floor_up_num, b.floor_low_num, c.community_management_type as management_type, b.deleted, b.create_time, b.update_time,
     c.community_id,c.community_no,c.community_name
   </sql>
-  <select id="selectPdf" parameterType="string" resultType="string" >
-    select
-    enclosure_url as url
-    from enclosure
-    where object_id=#{buildingId} and enclosure_object_type=1
-  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
