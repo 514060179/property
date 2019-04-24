@@ -102,6 +102,16 @@ public class BuildingServiceImpl implements BuildingService {
     @Transactional
     public int upd(Building building) {
         List<Enclosure> enclosureList = new ArrayList<>();
+        if (building.getBuildingChildList()!=null&&building.getBuildingChildList().size()>0){
+            building.getBuildingChildList().forEach(buildingChild -> {
+                buildingChild.setChildId(UUIDUtil.uidString());
+                buildingChild.setBuildingId(building.getBuildingId());
+            });
+            if (buildingMapper.delBuildingChilds(building.getBuildingId())>=0){
+                buildingMapper.insertBuildingChildSelective(building.getBuildingChildList());
+                building.setBuildingChildList(building.getBuildingChildList());
+            }
+        }
         if (building.getCommonPdf()!=null&&building.getCommonPdf().size()>0){
             building.getCommonPdf().forEach(s -> {
                 Enclosure enclosure = new Enclosure();

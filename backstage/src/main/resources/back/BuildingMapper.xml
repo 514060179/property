@@ -219,6 +219,9 @@
       )
     </foreach>
   </insert>
+  <delete id="delBuildingChilds" parameterType="string">
+    delete from building_child where building_id=#{buildingId}
+  </delete>
   <select id="selectFloorListByBuildingId" resultType="com.simon.backstage.domain.model.Floor" parameterType="java.lang.String" >
     select
     floor_id as floorId,building_id as buildingId, floor_name as floorName, floor_purpose as floorPurpose,floor_ichnography as floorIchnography, floor_sort as floorSort

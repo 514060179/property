@@ -22,6 +22,8 @@ public interface BuildingMapper {
 
     int insertBuildingChildSelective(List<BuildingChild> list);
 
+    int delBuildingChilds(String buildingId);
+
     List<Floor> selectFloorListByBuildingId(String buildingId);
 
     List<BuildingChild> selectBuildingChildListByBuildingId(String buildingId);
