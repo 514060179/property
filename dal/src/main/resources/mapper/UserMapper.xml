@@ -30,7 +30,7 @@
     u.user_id, u.community_id, u.name, u.english_name, u.sex, u.country_code, u.tel, u.email, u.birthday,
     u.id_card, u.username, u.password, u.portrait, u.marriage_system, u.mate_name, u.deleted, u.create_time,
     u.update_time,
-    c.community_no,GROUP_CONCAT(c.community_name) as community_name
+    GROUP_CONCAT(c.community_no) as community_no,GROUP_CONCAT(c.community_name) as community_name
   </sql>
   <select id="selectUser" resultMap="BaseResultMap" parameterType="com.simon.dal.model.User" >
   	select 
