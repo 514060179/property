@@ -63,6 +63,9 @@ public class User {
     @ApiModelProperty(value="是否删除",readOnly=true)
     private Boolean deleted;
 
+    @ApiModelProperty(value="预收金额")
+    private double advanceAmount;
+
     @ApiModelProperty(value="创建时间",readOnly=true)
     private Date createTime;
 
@@ -191,6 +194,14 @@ public class User {
 
     public void setMateName(String mateName) {
         this.mateName = mateName == null ? null : mateName.trim();
+    }
+
+    public double getAdvanceAmount() {
+        return advanceAmount;
+    }
+
+    public void setAdvanceAmount(double advanceAmount) {
+        this.advanceAmount = advanceAmount;
     }
 
     public Boolean getDeleted() {
