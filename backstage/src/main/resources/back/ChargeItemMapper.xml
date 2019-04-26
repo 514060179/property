@@ -298,7 +298,7 @@
     select
     <include refid="With_User_Column_List" />
     from unit_charge_item uci inner join charge_item ci on uci.`item_id`=ci.`item_id` and uci.`type`!=2
-    inner join user_unit uu on uci.unit_id=uu.unit_id and `owner`=1
+    inner join user_unit uu on uci.unit_id=uu.unit_id and `owner`=1 and `convincing`=1
     inner join unit u on uu.unit_id=u.unit_id
   </select>
 </mapper>

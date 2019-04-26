@@ -82,8 +82,11 @@ public class UnitController {
     public ReturnMsg<UserUnit> addUser(@RequestBody UserUnit userUnit){
     	logger.info("房间住户添加userUnit={}", JSONUtil.objectToJson(userUnit));
         //查询存在业主
-        if (userUnit.getOwner() && !Objects.isNull(unitService.findUserUnitByUnitId(userUnit.getUnitId()))) {//业主
-            return ReturnMsg.fail(Code.ownerExist,"业主已存在!");
+        if (userUnit.getOwner()) {//业主
+            if (Objects.isNull(unitService.findUserUnitByUnitId(userUnit.getUnitId()))){
+                userUnit.setConvincing(true);
+            }
+//            return ReturnMsg.fail(Code.ownerExist,"业主已存在!");
         }
         return ReturnMsg.success(unitService.addUser(userUnit));
     }

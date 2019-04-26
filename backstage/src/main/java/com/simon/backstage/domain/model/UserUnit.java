@@ -18,6 +18,9 @@ public class UserUnit {
 
     @ApiModelProperty(value="是否为业主)", example="true")
     private Boolean owner;
+
+    @ApiModelProperty(value="出头的业主/首个业主/收费title使用的业主)", readOnly=true)
+    private Boolean convincing;
     
     @ApiModelProperty(value="创建时间", readOnly=true)
     private Date createTime;
@@ -55,6 +58,14 @@ public class UserUnit {
 
     public void setOwner(Boolean owner) {
         this.owner = owner;
+    }
+
+    public Boolean getConvincing() {
+        return convincing;
+    }
+
+    public void setConvincing(Boolean convincing) {
+        this.convincing = convincing;
     }
 
     public Date getCreateTime() {
