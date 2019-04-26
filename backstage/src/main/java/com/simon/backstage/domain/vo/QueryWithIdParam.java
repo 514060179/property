@@ -14,6 +14,9 @@ public class QueryWithIdParam extends BaseQueryParam{
     @ApiModelProperty(value = "单元id",example = "2xzc3ty31u3xchiyt12sadkhg4sa0")
     private String unitId;
 
+    @ApiModelProperty(value = "单元编号",example = "UNIT001")
+    private String unitNo;
+
     @ApiModelProperty(value = "状态0欠费1已付2预支付",example = "0")
     private Integer recordStatus;
 
@@ -23,6 +26,14 @@ public class QueryWithIdParam extends BaseQueryParam{
 
     public void setUnitId(String unitId) {
         this.unitId = unitId;
+    }
+
+    public String getUnitNo() {
+        return unitNo;
+    }
+
+    public void setUnitNo(String unitNo) {
+        this.unitNo = unitNo;
     }
 
     public Integer getRecordStatus() {

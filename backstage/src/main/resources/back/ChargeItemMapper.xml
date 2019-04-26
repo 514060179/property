@@ -279,12 +279,16 @@
     select
     <include refid="With_Other_Column_List" />
     from unit_charge_item uci inner join charge_item ci on uci.`item_id`=ci.`item_id`
+    inner join unit u on uci.unit_id = u.unit_id
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(ci.item_no,''),IFNULL(ci.item_name,'')) like CONCAT('%', #{keyword}, '%')
       </if>
       <if test="unitId != null">
-        AND unit_id = #{unitId,jdbcType=VARCHAR}
+        AND uci.unit_id = #{unitId,jdbcType=VARCHAR}
+      </if>
+      <if test="unitNo != null">
+        AND u.unit_no = #{unitNo,jdbcType=VARCHAR}
       </if>
     </where>
     order by uci.create_time desc
