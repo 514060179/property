@@ -51,7 +51,7 @@
   <select id="selectImages" parameterType="string" resultMap="Image_Result_Map" >
     select img.image_id, img.image_url, img.image_thumbnail, img.object_id, img.image_type, img.create_time as img_create_time, img.update_time as img_update_time
     from images img
-    where img.object_id=#{noticeId} and img.image_type=3
+    where img.object_id=#{assetId} and img.image_type=3
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
