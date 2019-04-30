@@ -54,6 +54,7 @@ public class ChargeRecordJob {
         List<AdvanceRecord> advanceRecords = new ArrayList<>();//账户记录
         unitItemWithUsers.forEach((unitItemWithUser)->{
             ChargeItemRecord chargeItemRecord = new ChargeItemRecord();
+            chargeItemRecord.setRecordItemName(unitItemWithUser.getChargeItem().getItemName());
             AdvanceMoney advanceMoney = new AdvanceMoney();
             advanceMoney.setUserId(unitItemWithUser.getUserId());
             AdvanceRecord advanceRecord = new AdvanceRecord();
