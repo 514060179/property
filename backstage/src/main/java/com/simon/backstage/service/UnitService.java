@@ -3,8 +3,11 @@ package com.simon.backstage.service;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.model.UserUnit;
+import com.simon.dal.model.User;
 import com.simon.dal.vo.BaseClaims;
 import com.simon.dal.vo.BaseQueryParam;
+
+import java.util.List;
 
 public interface UnitService {
 
@@ -31,6 +34,13 @@ public interface UnitService {
     int upd(Unit unit);
 
     /**
+     * 更改用户绑定单元信息
+     * @param userUnit
+     * @return
+     */
+    int updUserUnit(UserUnit userUnit);
+
+    /**
      * 删除
      * @param unitId
      * @return
@@ -50,6 +60,12 @@ public interface UnitService {
      * @return
      */
     UserUnit addUser(UserUnit userUnit);
+    /**
+     * 批量房间住户绑定
+     * @param userUnitList
+     * @return
+     */
+    int batchAddUser(List<UserUnit> userUnitList);
 
     /**
      * 房间住户添加
@@ -65,4 +81,10 @@ public interface UnitService {
      * @return
      */
 	int delUser(String unitId, String userId);
+    /**
+     * 单元住户列表
+     * @param unitId
+     * @return
+     */
+	List<User> unitUserList(String unitId);
 }

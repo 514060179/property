@@ -9,6 +9,7 @@ import com.simon.backstage.domain.vo.UnitQueryParam;
 import com.simon.backstage.service.UnitService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
+import com.simon.dal.model.User;
 import com.simon.dal.vo.BaseClaims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -86,9 +88,25 @@ public class UnitController {
             if (Objects.isNull(unitService.findUserUnitByUnitId(userUnit.getUnitId()))){
                 userUnit.setConvincing(true);
             }
-//            return ReturnMsg.fail(Code.ownerExist,"业主已存在!");
         }
         return ReturnMsg.success(unitService.addUser(userUnit));
+    }
+
+//    @PostMapping("updUnitUser")
+//    @ApiOperation("修改单元的用户信息")
+//    public ReturnMsg updUnitUser(@RequestBody UserUnit userUnit){
+//        if (userUnit.getOwner()) {//业主
+//            if (!Objects.isNull(unitService.findUserUnitByUnitId(userUnit.getUnitId()))){
+//                userUnit.setConvincing(false);
+//            }
+//        }
+//        return ReturnMsg.success(unitService.updUserUnit(userUnit));
+//    }
+
+    @PostMapping("batchAddUser")
+    @ApiOperation("批量房间住户绑定(只需要设定userId以及unitId)")
+    public ReturnMsg batchAddUser(@RequestBody List<UserUnit> userUnitList){
+        return ReturnMsg.success(unitService.batchAddUser(userUnitList));
     }
     
     @GetMapping("delUser")
@@ -96,5 +114,11 @@ public class UnitController {
     public ReturnMsg delUser(@RequestParam String userId, @RequestParam String unitId){
     	logger.info("房间住户删除unitId={}", JSONUtil.objectToJson(unitId));
     	return ReturnMsg.success(unitService.delUser(unitId, userId));
+    }
+
+    @GetMapping("unitUserList")
+    @ApiOperation("单元住户列表")
+    public ReturnMsg<List<User>> unitUserList(@RequestParam String unitId){
+        return ReturnMsg.success(unitService.unitUserList(unitId));
     }
 }

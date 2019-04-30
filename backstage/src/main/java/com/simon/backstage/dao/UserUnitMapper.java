@@ -1,8 +1,11 @@
 package com.simon.backstage.dao;
 
+import com.simon.dal.model.User;
 import org.apache.ibatis.annotations.Param;
 
 import com.simon.backstage.domain.model.UserUnit;
+
+import java.util.List;
 
 public interface UserUnitMapper {
     int deleteByPrimaryKey(Long userUnitId);
@@ -10,6 +13,8 @@ public interface UserUnitMapper {
     int insert(UserUnit record);
 
     int insertSelective(UserUnit record);
+
+    int batchAddUser(List<UserUnit> userUnitList);
 
     UserUnit selectByPrimaryKey(Long userUnitId);
 
@@ -20,4 +25,6 @@ public interface UserUnitMapper {
     int updateByPrimaryKey(UserUnit record);
 
 	int deleteByUser(@Param("unitId") String unitId,@Param("userId") String userId);
+
+	List<User> unitUserList(@Param("unitId") String unitId);
 }

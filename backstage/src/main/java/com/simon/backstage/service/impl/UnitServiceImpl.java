@@ -7,11 +7,14 @@ import com.simon.backstage.dao.UserUnitMapper;
 import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.model.UserUnit;
 import com.simon.backstage.service.UnitService;
+import com.simon.dal.model.User;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseClaims;
 import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UnitServiceImpl implements UnitService {
@@ -39,6 +42,11 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
+    public int updUserUnit(UserUnit userUnit) {
+        return userUnitMapper.updateByPrimaryKeySelective(userUnit);
+    }
+
+    @Override
     public int del(String unitId) {
         return unitMapper.deleteByPrimaryKey(unitId);
     }
@@ -60,6 +68,11 @@ public class UnitServiceImpl implements UnitService {
 	}
 
     @Override
+    public int batchAddUser(List<UserUnit> userUnitList) {
+        return userUnitMapper.batchAddUser(userUnitList);
+    }
+
+    @Override
     public UserUnit findUserUnitByUnitId(String unitId) {
         return userUnitMapper.selectByUnitId(unitId);
     }
@@ -69,4 +82,9 @@ public class UnitServiceImpl implements UnitService {
 		// TODO Auto-generated method stub
 		return userUnitMapper.deleteByUser(unitId, userId);
 	}
+
+    @Override
+    public List<User> unitUserList(String unitId) {
+        return userUnitMapper.unitUserList(unitId);
+    }
 }

@@ -23,7 +23,7 @@
     select
     <include refid="Base_Column_List" />
     from user_unit
-    where unit_id = #{unitId,jdbcType=VARCHAR} and owner=1
+    where unit_id = #{unitId,jdbcType=VARCHAR} and owner=1 and convincing=1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from user_unit
@@ -38,6 +38,14 @@
       create_time, update_time)
     values (#{userUnitId,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{unitId,jdbcType=VARCHAR},#{owner,jdbcType=BIT},#{convincing,jdbcType=BIT},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="batchAddUser">
+    insert into user_unit(user_id, unit_id) values
+    <foreach collection="list" item="item" separator=",">
+      (
+      #{item.userId},#{item.unitId}
+      )
+    </foreach>
   </insert>
   <insert id="insertSelective" parameterType="com.simon.backstage.domain.model.UserUnit" >
     insert into user_unit
@@ -122,4 +130,31 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where user_unit_id = #{userUnitId,jdbcType=BIGINT}
   </update>
+
+  <resultMap id="UserResultMap" type="com.simon.dal.model.User" >
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="english_name" property="englishName" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="country_code" property="countryCode" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="portrait" property="portrait" jdbcType="VARCHAR" />
+    <result column="marriage_system" property="marriageSystem" jdbcType="VARCHAR" />
+    <result column="mate_name" property="mateName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="unitUserList" resultMap="UserResultMap" parameterType="java.lang.String" >
+    select
+    u.user_id , u.community_id, u.name, u.english_name, u.sex, u.country_code, u.tel, u.email, u.birthday,
+    u.id_card, u.username,  u.portrait, u.marriage_system, u.mate_name, u.deleted, u.create_time,
+    u.update_time
+    from user_unit uu inner join `user` u on u.user_id=uu.user_id
+    where uu.unit_id=#{unitId,jdbcType=VARCHAR}
+  </select>
 </mapper>
