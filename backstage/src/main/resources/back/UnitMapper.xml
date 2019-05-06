@@ -52,7 +52,7 @@
     inner join building b on b.building_id=u.building_id
     inner join community c on c.community_id=b.community_id
     <if test="userId != null">
-      inner join user_unit uu on uu.unit_id=u.unit_id inner join USER u2 on uu.user_id=u2.user_id
+      inner join user_unit uu on uu.unit_id=u.unit_id inner join `user` u2 on uu.user_id=u2.user_id
     </if>
     <where>
       <if test="keyword!=null and keyword!=''">
