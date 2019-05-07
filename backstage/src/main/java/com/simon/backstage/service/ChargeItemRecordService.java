@@ -49,6 +49,13 @@ public interface ChargeItemRecordService {
     int del(String recordId);
 
     /**
+     * 设置成为已收费
+     * @param recordIdList
+     * @return
+     */
+    int charge(List<String> recordIdList);
+
+    /**
      * 列表
      * @param baseQueryParam
      * @return

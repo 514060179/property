@@ -254,6 +254,18 @@
     where record_id = #{recordId,jdbcType=VARCHAR}
   </update>
 
+  <update id="charge" >
+    update charge_item_record
+    set
+      record_status = 1,
+      record_time = NOW(),
+      record_actual_amount = record_amount
+    where record_id in
+      <foreach collection="list" item="item" separator="," open="(" close=")">
+        #{item}
+      </foreach>
+  </update>
+
   <insert id="addBatch" keyProperty="jnId" useGeneratedKeys="true">
     insert into charge_item_record (record_id, user_id, unit_item_id,record_item_name,
     record_date, record_status, record_time,

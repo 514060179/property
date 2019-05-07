@@ -21,6 +21,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author fengtianying
@@ -67,5 +68,11 @@ public class ChargeItemRecordController {
     public ReturnMsg<ChargeItemRecord> detail(String itemId){
         logger.info("收费记录列表itemId={}",  JSONUtil.objectToJson(itemId));
         return ReturnMsg.success(chargeItemRecordService.detail(itemId));
+    }
+
+    @PostMapping("charge")
+    @ApiOperation("设置为已收费")
+    public ReturnMsg<ChargeItemRecord> charge(@RequestBody List<String> recordIdList){
+        return ReturnMsg.success(chargeItemRecordService.charge(recordIdList));
     }
 }

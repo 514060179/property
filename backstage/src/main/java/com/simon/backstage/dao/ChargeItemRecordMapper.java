@@ -21,4 +21,6 @@ public interface ChargeItemRecordMapper {
     int updateByPrimaryKeySelective(ChargeItemRecord record);
 
     int updateByPrimaryKey(ChargeItemRecord record);
+
+    int charge(List<String> list);
 }

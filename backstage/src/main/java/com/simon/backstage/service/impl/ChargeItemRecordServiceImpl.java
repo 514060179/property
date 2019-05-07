@@ -75,6 +75,14 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
     }
 
     @Override
+    public int charge(List<String> recordIdList) {
+        if (recordIdList == null || recordIdList.size() <= 0) {
+            return 0;
+        }
+        return chargeItemRecordMapper.charge(recordIdList);
+    }
+
+    @Override
     public PageInfo<ChargeItemRecord> list(BaseQueryParam baseQueryParam) {
         PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
         return new PageInfo<>(chargeItemRecordMapper.selectByCondition(baseQueryParam));
