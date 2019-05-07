@@ -27,10 +27,10 @@ public interface EventService {
 
     /**
      * 修改
-     * @param eventUpdParam
+     * @param event
      * @return
      */
-    int upd(EventUpdParam eventUpdParam);
+    int upd(Event event);
 
     /**
      * 删除

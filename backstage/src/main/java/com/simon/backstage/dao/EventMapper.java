@@ -21,7 +21,7 @@ public interface EventMapper {
 
     int updateByPrimaryKeySelective(Event record);
 
-    int updateSelective(EventUpdParam eventUpdParam);
+    int updateSelective(Event event);
 
     int updateByPrimaryKeyWithBLOBs(Event record);
 

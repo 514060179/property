@@ -50,12 +50,11 @@ public class EventController {
 
     @PostMapping("upd")
     @ApiOperation("修改事件")
-    public ReturnMsg<Event> upd(@RequestBody EventUpdParam eventUpdParam, HttpServletRequest request){
-        logger.info("修改事件event={}", JSONUtil.objectToJson(eventUpdParam));
+    public ReturnMsg<Event> upd(@RequestBody Event event, HttpServletRequest request){
         if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
-            eventUpdParam.setCommunityId(null);
+            event.setCommunityId(null);
         }
-        return ReturnMsg.success(eventService.upd(eventUpdParam));
+        return ReturnMsg.success(eventService.upd(event));
     }
 
     @GetMapping("del")

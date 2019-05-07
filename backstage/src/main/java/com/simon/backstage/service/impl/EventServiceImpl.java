@@ -59,7 +59,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public int upd(EventUpdParam eventUpdParam) {
+    public int upd(Event eventUpdParam) {
         List<Enclosure> enclosureList = new ArrayList<>();
         if (eventUpdParam.getReports()!=null&&eventUpdParam.getReports().size()>0){
             eventUpdParam.getReports().forEach(s -> {
