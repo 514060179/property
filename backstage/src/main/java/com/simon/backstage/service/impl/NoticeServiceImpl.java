@@ -43,7 +43,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Transactional
 	public Notice add(Notice notice) {
 		notice.setNoticeId(UUIDUtil.uidString());
-		if(!notice.getNoticeImage().isEmpty() && notice.getNoticeImage().get(0)!=null){
+		if(notice.getNoticeImage()!=null && notice.getNoticeImage().size()>0){
 			List<Images> list = new ArrayList<>();
 			notice.getNoticeImage().forEach(images -> {
 				Images image = new Images();
@@ -90,7 +90,23 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
+	@Transactional
 	public int upd(Notice notice) {
+		if(notice.getNoticeImage()!=null && notice.getNoticeImage().size()>0){
+			imageMapper.deleteByObjectIdAndType(notice.getNoticeId(),Type.IMAGE_TYPE_NOTICE);
+			List<Images> list = new ArrayList<>();
+			notice.getNoticeImage().forEach(images -> {
+				Images image = new Images();
+				image.setImageId(UUIDUtil.uidString());
+				image.setImageUrl(images.getImageUrl());
+				image.setImageThumbnail(images.getImageThumbnail());
+				image.setImageType(Type.IMAGE_TYPE_NOTICE);
+				image.setObjectId(notice.getNoticeId());
+				list.add(image);
+			});
+			imageMapper.insertBatch(list);
+			notice.setNoticeImage(list);
+		}
 		return noticeMapper.updateByPrimaryKeySelective(notice);
 	}
 
