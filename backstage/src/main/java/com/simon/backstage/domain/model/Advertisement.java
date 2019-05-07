@@ -37,7 +37,7 @@ public class Advertisement implements Cloneable {
     @ApiModelProperty(value = "播放时间（单位秒）",example = "10")
     private Integer residenceTime;
 
-    @ApiModelProperty(value = "播放时间（单位秒）",example = "10")
+    @ApiModelProperty(value = "用途:0通告1节日提醒2注意事项3政府文件4外判公司须知5工程6办理手续",example = "0")
     private Integer purpose;
 
     @ApiModelProperty(value = "描述",example = "这是普通广告")
