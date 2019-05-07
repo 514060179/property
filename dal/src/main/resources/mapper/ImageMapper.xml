@@ -60,4 +60,8 @@
 		FROM images
 		WHERE object_id=#{id,jdbcType=VARCHAR} AND image_type=#{type}
 	</select>
+
+	<delete id="deleteByObjectIdAndType">
+		DELETE FROM images WHERE object_id=#{objectId,jdbcType=VARCHAR} AND image_type=#{imageType}
+	</delete>
 </mapper>

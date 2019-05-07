@@ -58,7 +58,23 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
+    @Transactional
     public int upd(Asset asset) {
+        if(asset.getAssetImage()!=null && asset.getAssetImage().size()>0){
+            imageMapper.deleteByObjectIdAndType(asset.getAssetId(),Type.IMAGE_TYPE_ASSET);
+            List<Images> list = new ArrayList<>();
+            asset.getAssetImage().forEach(images -> {
+                Images image = new Images();
+                image.setImageId(UUIDUtil.uidString());
+                image.setImageUrl(images.getImageUrl());
+                image.setImageThumbnail(images.getImageThumbnail());
+                image.setImageType(Type.IMAGE_TYPE_ASSET);
+                image.setObjectId(asset.getAssetId());
+                list.add(image);
+            });
+            imageMapper.insertBatch(list);
+            asset.setAssetImage(list);
+        }
         return assetMapper.updateByPrimaryKeySelective(asset);
     }
 

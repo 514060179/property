@@ -12,4 +12,6 @@ public interface ImageMapper {
 	int insertBatch(List<Images> list);
 
 	List<Images> findListById(@Param("id") String id, @Param("type")int type);
+
+	int deleteByObjectIdAndType(@Param("objectId") String objectId, @Param("imageType") int imageType);
 }

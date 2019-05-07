@@ -3,6 +3,7 @@ package com.simon.backstage.dao;
 import com.simon.backstage.domain.model.Asset;
 import com.simon.dal.vo.BaseClaims;
 import com.simon.dal.vo.BaseQueryParam;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
