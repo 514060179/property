@@ -33,7 +33,7 @@ public class PlaceServiceImpl implements PlaceService {
         int i = placeMapper.insertSelective(place);
         //存在图片
         List<Images> list = new ArrayList<>();
-        if (!place.getImages().isEmpty() && place.getImages().get(0) != null) {
+        if (place.getImages() != null && place.getImages().size() > 0) {
             place.getImages().forEach(images -> {
                 Images image = new Images();
                 image.setImageId(UUIDUtil.uidString());
@@ -59,7 +59,22 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
+    @Transactional
     public int upd(Place place) {
+        if (place.getImages() != null && place.getImages().size() > 0) {
+            List<Images> list = new ArrayList<>();
+            imageMapper.deleteByObjectIdAndType(place.getPlaceId(), Type.IMAGE_TYPE_PLACE);
+            place.getImages().forEach(images -> {
+                Images image = new Images();
+                image.setImageId(UUIDUtil.uidString());
+                image.setObjectId(place.getPlaceId());
+                image.setImageUrl(images.getImageUrl());
+                image.setImageThumbnail(images.getImageThumbnail());
+                image.setImageType(Type.IMAGE_TYPE_PLACE);
+                list.add(image);
+            });
+            imageMapper.insertBatch(list);
+        }
         return placeMapper.updateByPrimaryKeySelective(place);
     }
 
