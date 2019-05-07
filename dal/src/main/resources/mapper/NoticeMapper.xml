@@ -58,7 +58,6 @@
     left join community c on n.community_id=c.community_id
     left join building b on n.building_id=b.building_id
     <where>
-       UNIX_TIMESTAMP(NOW()) BETWEEN UNIX_TIMESTAMP(start_time) AND UNIX_TIMESTAMP(end_time)
       <if test="baseClaims.keyword != null and baseClaims.keyword!=''" >
           CONCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CONCAT('%', #{baseClaims.keyword}, '%')
     	</if>
@@ -70,6 +69,7 @@
     	</if>
         <if test="baseClaims.userId!=null and baseClaims.userId!=''">
             AND (uc.user_id=#{baseClaims.userId,jdbcType=VARCHAR} OR n.community_id IS NULL OR n.community_id='')
+            AND  UNIX_TIMESTAMP(NOW()) BETWEEN UNIX_TIMESTAMP(start_time) AND UNIX_TIMESTAMP(end_time)
         </if>
     	<if test="noticeType != null">
     		AND n.notice_type = #{noticeType,jdbcType=INTEGER}
