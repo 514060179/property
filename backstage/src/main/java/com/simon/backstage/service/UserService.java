@@ -5,6 +5,8 @@ import com.simon.dal.model.User;
 import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.vo.BaseClaims;
 
+import java.util.List;
+
 /**
  * 用户管理
  * @author fengtianying
@@ -36,10 +38,10 @@ public interface UserService {
 
     /**
      * 添加绑定社区
-     * @param userWithCommunity
+     * @param userWithCommunityList
      * @return
      */
-    int addUserCommunity(UserWithCommunity userWithCommunity);
+    int addUserCommunity(List<UserWithCommunity> userWithCommunityList);
 
     /**
      * 修改

@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author fengtianying
  * @date 2018/12/11 14:31
@@ -79,8 +81,11 @@ public class UserController {
 
     @PostMapping("addUserCommunity")
     @ApiOperation("添加绑定用户社区")
-    public ReturnMsg<User> addUserCommunity(@RequestBody UserWithCommunity userWithCommunity){
-        return ReturnMsg.success(userService.addUserCommunity(userWithCommunity));
+    public ReturnMsg<User> addUserCommunity(@RequestBody List<UserWithCommunity> userWithCommunityList){
+        if (userWithCommunityList != null && userWithCommunityList.size() > 0) {
+            return ReturnMsg.success(userService.addUserCommunity(userWithCommunityList));
+        }
+        return ReturnMsg.fail(Code.missingParameter, "userWithCommunityList参数为空");
     }
 
 

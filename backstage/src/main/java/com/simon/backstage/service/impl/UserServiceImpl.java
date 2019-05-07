@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * @author fengtianying
  * @date 2018/11/7 13:32
@@ -49,11 +51,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int addUserCommunity(UserWithCommunity userWithCommunity) {
-        User user = new User();
-        user.setUserId(userWithCommunity.getUserId());
-        user.setCommunityId(userWithCommunity.getCommunityId());
-        return userMapper.insertUserCommunity(user);
+    @Transactional
+    public int addUserCommunity(List<UserWithCommunity> userWithCommunityList) {
+        userWithCommunityList.forEach(userWithCommunity -> {
+            User user = new User();
+            user.setUserId(userWithCommunity.getUserId());
+            user.setCommunityId(userWithCommunity.getCommunityId());
+            userMapper.insertUserCommunity(user);
+        });
+        return userWithCommunityList.size();
     }
 
     @Override
