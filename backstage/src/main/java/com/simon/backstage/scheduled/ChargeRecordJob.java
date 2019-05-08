@@ -81,18 +81,18 @@ public class ChargeRecordJob {
                     advanceRecord.setAdvanceAmount(recordAmount.add(additionalCost == null ? new BigDecimal(0) : additionalCost));
                     chargeItemRecord.setRecordActualAmount(recordAmount.add(additionalCost));//实际收取金额
                     am.setAdvanceAmount(am.getAdvanceAmount().subtract(recordAmount.add(additionalCost == null ? new BigDecimal(0) : additionalCost)));
-                    remarkSb.append("【"+unitItemWithUser.getChargeItem().getItemName()+"】:"+""+recordAmount+"-【预收金额】:"+recordAmount.add(additionalCost == null ? new BigDecimal(0) : additionalCost));
+                    remarkSb.append("【"+unitItemWithUser.getChargeItem().getItemName()+"】:"+""+recordAmount+"-【預收金額】:"+recordAmount.add(additionalCost == null ? new BigDecimal(0) : additionalCost));
                 }else{//不足
                     chargeItemRecord.setRecordStatus(Status.recordStatusOwe);//欠费
                     //费用减免
-                    remarkSb.append("【"+unitItemWithUser.getChargeItem().getItemName()+"】:"+recordAmount+(maps.get(unitItemWithUser.getUserId()).getAdvanceAmount().compareTo(new BigDecimal(0))==0?"":"-"+"【预收金额】:"+maps.get(unitItemWithUser.getUserId()).getAdvanceAmount()));
+                    remarkSb.append("【"+unitItemWithUser.getChargeItem().getItemName()+"】:"+recordAmount+(maps.get(unitItemWithUser.getUserId()).getAdvanceAmount().compareTo(new BigDecimal(0))==0?"":"-"+"【預收金額】:"+maps.get(unitItemWithUser.getUserId()).getAdvanceAmount()));
                     recordAmount=recordAmount.subtract(maps.get(unitItemWithUser.getUserId()).getAdvanceAmount());
                     advanceMoney.setAdvanceAmount(maps.get(unitItemWithUser.getUserId()).getAdvanceAmount());
                     advanceRecord.setAdvanceAmount(maps.get(unitItemWithUser.getUserId()).getAdvanceAmount());
                     am.setAdvanceAmount(new BigDecimal(0));
                 }
                 maps.put(unitItemWithUser.getUserId(),am);
-                remarkSb.append(additionalCost==null?"":"+【额外费用】:"+unitItemWithUser.getChargeItem().getAdditionalCost());
+                remarkSb.append(additionalCost==null?"":"+【額外費用】:"+unitItemWithUser.getChargeItem().getAdditionalCost());
                 advanceRecord.setAdvanceRecordId(UUIDUtil.uidString());
                 advanceRecord.setAdvanceId(maps.get(unitItemWithUser.getUserId()).getAdvanceId());
                 advanceRecord.setAdvanceType(Status.advanceTypeOut);
@@ -103,7 +103,7 @@ public class ChargeRecordJob {
                 }
             }else{
                 chargeItemRecord.setRecordStatus(Status.recordStatusOwe);//欠费
-                remarkSb.append("【"+unitItemWithUser.getChargeItem().getItemName()+"】:"+recordAmount).append(additionalCost == null ? "" : "+【额外费用】:"+additionalCost);
+                remarkSb.append("【"+unitItemWithUser.getChargeItem().getItemName()+"】:"+recordAmount).append(additionalCost == null ? "" : "+【額外費用】:"+additionalCost);
             }
             chargeItemRecord.setRecordRemark(remarkSb.toString());
             chargeItemRecord.setRecordAmount(additionalCost==null?recordAmount:recordAmount.add(additionalCost));

@@ -311,6 +311,6 @@
     select
     <include refid="Base_Column_List" />
     from user u inner join community c on u.community_id=c.community_id
-    WHERE DATE_FORMAT(birthday,'%Y%m')=DATE_FORMAT(NOW(),'%Y%m')
+    WHERE DATE_FORMAT(birthday,'%m%d')=DATE_FORMAT(NOW(),'%m%d')
   </select>
 </mapper>

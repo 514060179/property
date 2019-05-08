@@ -57,11 +57,11 @@ public class ExcelController {
                 name = "(已交)";
                 break;
             case 2:
-                name = "（预交）";
+                name = "（預交）";
                 break;
         }
         ExcelData data = new ExcelData();
-        data.setName("物业费"+name);
+        data.setName(name);
         List<String> titles = new ArrayList();
         titles.add("名字");
         List monthList = getMonthStr();
@@ -84,11 +84,11 @@ public class ExcelController {
             row.add(excelUser.getAdvanceAmount()==null?0:excelUser.getAdvanceAmount());
             rows.add(row);
         });
-        titles.add("预收剩余费用");
+        titles.add("預收剩餘費用");
         data.setTitles(titles);
         data.setRows(rows);
         try{
-            ExcelUtils.exportExcel(response,"bms费用收取",data);
+            ExcelUtils.exportExcel(response,"bms澳門物業費用收取",data);
         }catch (Exception e){
             e.printStackTrace();
         }

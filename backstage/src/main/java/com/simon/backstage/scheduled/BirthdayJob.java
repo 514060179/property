@@ -30,7 +30,7 @@ public class BirthdayJob {
         if (userList!=null){
             userList.forEach(user -> {
                 new Thread(()->{
-                    PushPayload pu = JPushUtil.buildPushObjectByAlias("bms澳門物業祝賀你生日快樂",true, user.getUserId(), new HashMap<>(), 0);
+                    PushPayload pu = JPushUtil.buildPushObjectByAlias("管家APP祝賀你生日快樂！",true, user.getUserId(), new HashMap<>(), 0);
                     JPushUtil.push(pu);
                 }).start();
             });
