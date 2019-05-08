@@ -76,13 +76,16 @@
       inner join community c on u.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(ci.item_no,''),IFNULL(ci.item_name,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(ci.item_no,''),IFNULL(ci.item_name,''),IFNULL(uu.user_name,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="unitId!=null and unitId!=''">
-        uci.unit_id = #{unitId,jdbcType=VARCHAR}
+        and uci.unit_id = #{unitId,jdbcType=VARCHAR}
       </if>
       <if test="unitNo!=null and unitNo!=''">
-        uci.unit_no = #{unitNo,jdbcType=VARCHAR}
+        and uci.unit_no = #{unitNo,jdbcType=VARCHAR}
+      </if>
+      <if test="userName!=null and userName!=''">
+        and uu.user_name = #{userName,jdbcType=VARCHAR}
       </if>
       <if test="recordStatus!=null">
         and cir.record_status = #{recordStatus,jdbcType=INTEGER}
