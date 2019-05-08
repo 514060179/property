@@ -1,6 +1,7 @@
 package com.simon.backstage.domain.model;
 
 import com.simon.backstage.domain.vo.Community;
+import com.simon.dal.model.Images;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -71,8 +72,8 @@ public class Event {
     @ApiModelProperty(value = "解决方案",example = "解决方案")
     private String eventSolve;
 
-    @ApiModelProperty(value = "事件报告文件")
-    private List<String> reportPdf;
+    @ApiModelProperty(value = "事件报告图片")
+    private List<Images> reportImages;
 
     @ApiModelProperty(hidden = true)
     private Community community;
@@ -112,12 +113,12 @@ public class Event {
         this.eventId = eventId == null ? null : eventId.trim();
     }
 
-    public List<String> getReportPdf() {
-        return reportPdf;
+    public List<Images> getReportImages() {
+        return reportImages;
     }
 
-    public void setReportPdf(List<String> reportPdf) {
-        this.reportPdf = reportPdf;
+    public void setReportImages(List<Images> reportImages) {
+        this.reportImages = reportImages;
     }
 
     public String getCommunityId() {
