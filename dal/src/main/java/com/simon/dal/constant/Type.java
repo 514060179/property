@@ -7,6 +7,11 @@ package com.simon.dal.constant;
 public class Type {
 
     /**
+     * 事件
+     */
+    public static final int IMAGE_TYPE_EVENT = 5;
+
+    /**
      * 访客拍照
      */
     public static final int IMAGE_TYPE_VISITOR = 4;
