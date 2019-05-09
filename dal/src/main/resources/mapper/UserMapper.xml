@@ -28,10 +28,9 @@
     </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    u.user_id, u.community_id, u.name, u.english_name, u.sex, u.country_code, u.tel, u.email, u.birthday,
+    u.user_id,  u.name, u.english_name, u.sex, u.country_code, u.tel, u.email, u.birthday,
     u.id_card, u.username, u.password, u.portrait, u.marriage_system, u.mate_name, u.deleted, u.create_time,
-    u.update_time,
-    GROUP_CONCAT(c.community_no) as community_no,GROUP_CONCAT(c.community_name) as community_name
+    u.update_time
   </sql>
   <select id="selectUser" resultMap="BaseResultMap" parameterType="com.simon.dal.model.User" >
   	select 
@@ -58,10 +57,14 @@
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    <include refid="Base_Column_List" />,am.advance_amount
-    from user u inner join community c on u.community_id=c.community_id
+    <include refid="Base_Column_List" />,am.advance_amount,
+    GROUP_CONCAT(c.community_id) as community_id,GROUP_CONCAT(c.community_no) as community_no,GROUP_CONCAT(c.community_name) as community_name
+    from user u
+    inner join user_community uc on u.user_id=uc.user_id
+    inner join community c on c.community_id=uc.community_id
     left join advance_money am on u.user_id=am.user_id
     where u.user_id = #{userId,jdbcType=VARCHAR}
+    group by(u.user_id)
   </select>
   <select id="selectUserCommunitys" resultType="com.simon.dal.model.UserWithCommunity" parameterType="java.lang.String" >
     select
@@ -71,7 +74,8 @@
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
     select
-    <include refid="Base_Column_List" />,am.advance_amount
+    <include refid="Base_Column_List" />,am.advance_amount,
+    GROUP_CONCAT(c.community_id) as community_id,GROUP_CONCAT(c.community_no) as community_no,GROUP_CONCAT(c.community_name) as community_name
     from user u
     inner join user_community uc on u.user_id=uc.user_id
     inner join community c on c.community_id=uc.community_id
