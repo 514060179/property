@@ -31,11 +31,18 @@ public class UserServiceImpl implements UserService {
     public User add(User user) {
         user.setUserId(UUIDUtil.uidString());
         user.setPassword(EncryUtil.getMD5(user.getPassword()));
+        user.setCommunityId(user.getUserWithCommunities().get(0).getCommunityId());
         if(userMapper.insertSelective(user)>0){
             userMapper.insertUserCommunity(user);
+            user.getUserWithCommunities().forEach(userWithCommunity -> {
+                User u = new User();
+                user.setUserId(userWithCommunity.getUserId());
+                user.setCommunityId(userWithCommunity.getCommunityId());
+                userMapper.insertUserCommunity(u);
+            });
             return user;
         }
-        return null;
+        return user;
     }
 
     @Override
@@ -67,7 +74,17 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.isEmpty(user.getPassword())){
             user.setPassword(EncryUtil.getMD5(user.getPassword()));
         }
-        return userMapper.updateByPrimaryKeySelective(user);
+        if (userMapper.updateByPrimaryKeySelective(user)>0){
+            //删除之前设定的社区
+            userMapper.delUserCommunity(user.getUserId());
+            user.getUserWithCommunities().forEach(userWithCommunity -> {
+                User u = new User();
+                user.setUserId(userWithCommunity.getUserId());
+                user.setCommunityId(userWithCommunity.getCommunityId());
+                userMapper.insertUserCommunity(u);
+            });
+        }
+        return 1;
     }
 
     @Override

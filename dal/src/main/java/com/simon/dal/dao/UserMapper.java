@@ -19,6 +19,8 @@ public interface UserMapper {
 
     int insertUserCommunity(User record);
 
+    int delUserCommunity(String userId);
+
     User selectByPrimaryKey(String userId);
 
     List<UserWithCommunity> selectUserCommunitys(String userId);

@@ -228,6 +228,10 @@
   <insert id="insertUserCommunity" parameterType="com.simon.dal.model.User" >
     insert into user_community(user_id,community_id)values(#{userId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR})
   </insert>
+
+  <insert id="delUserCommunity" parameterType="string" >
+    delete from user_community where user_id=#{userId}
+  </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.simon.dal.model.User" >
     update user
     <set >
