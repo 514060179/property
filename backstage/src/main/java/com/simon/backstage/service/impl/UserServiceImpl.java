@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
             userMapper.insertUserCommunity(user);
             user.getUserWithCommunities().forEach(userWithCommunity -> {
                 User u = new User();
-                user.setUserId(userWithCommunity.getUserId());
-                user.setCommunityId(userWithCommunity.getCommunityId());
+                u.setUserId(u.getUserId());
+                u.setCommunityId(userWithCommunity.getCommunityId());
                 userMapper.insertUserCommunity(u);
             });
             return user;
@@ -79,8 +79,8 @@ public class UserServiceImpl implements UserService {
             userMapper.delUserCommunity(user.getUserId());
             user.getUserWithCommunities().forEach(userWithCommunity -> {
                 User u = new User();
-                user.setUserId(userWithCommunity.getUserId());
-                user.setCommunityId(userWithCommunity.getCommunityId());
+                u.setUserId(userWithCommunity.getUserId());
+                u.setCommunityId(userWithCommunity.getCommunityId());
                 userMapper.insertUserCommunity(u);
             });
         }
