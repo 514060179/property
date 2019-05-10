@@ -5,6 +5,7 @@
     <id column="complain_id" property="complainId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="event_type" property="type" jdbcType="INTEGER" />
     <result column="complain_position" property="complainPosition" jdbcType="VARCHAR" />
     <result column="complain_specific_position" property="complainSpecificPosition" jdbcType="VARCHAR" />
     <result column="complain_type" property="complainType" jdbcType="VARCHAR" />
@@ -38,6 +39,7 @@
     c.event_id as complain_id,
     c.user_id,
     c.community_id,
+    c.event_type,
     c.complain_position,
     c.complain_specific_position,
     c.complain_type,
@@ -59,7 +61,7 @@
     <include refid="Base_Column_List" />
     from `event` c
     <where>
-      c.event_type=3
+      (c.event_type=3 or c.event_type=4)
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(complain_position,''),IFNULL(complain_type,''),IFNULL(complain_class_type,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
@@ -143,6 +145,9 @@
       <if test="complainVoice != null" >
         complain_voice,
       </if>
+      <if test="type != null" >
+        event_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="complainId != null" >
@@ -186,6 +191,9 @@
       </if>
       <if test="complainVoice != null" >
         #{complainVoice,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

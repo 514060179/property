@@ -1,7 +1,7 @@
 package com.simon.app.service;
 
 import com.simon.app.model.vo.Building;
-import com.simon.dal.model.Community;
+import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.vo.BaseQueryParam;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public interface CommunityService  {
      * 获取社区列表
      * @return
      */
-    List<Community> list(BaseQueryParam baseQueryParam);
+    List<UserWithCommunity> list(BaseQueryParam baseQueryParam);
 
     List<Building> buildingList(BaseQueryParam baseQueryParam);
 }

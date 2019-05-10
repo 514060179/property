@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public User add(User user) {
         user.setUserId(UUIDUtil.uidString());
         user.setPassword(EncryUtil.getMD5(user.getPassword()));
-        user.setCommunityId(user.getUserWithCommunities().get(0).getCommunityId());
+        user.setCommunityId(user.getCommunityId()!=null?user.getCommunityId():user.getUserWithCommunities().get(0).getCommunityId());
         if(userMapper.insertSelective(user)>0){
             userMapper.insertUserCommunity(user);
             user.getUserWithCommunities().forEach(userWithCommunity -> {
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.isEmpty(user.getPassword())){
             user.setPassword(EncryUtil.getMD5(user.getPassword()));
         }
-        if (userMapper.updateByPrimaryKeySelective(user)>0){
+        if (userMapper.updateByPrimaryKeySelective(user)>0&&user.getUserWithCommunities()!=null){
             //删除之前设定的社区
             userMapper.delUserCommunity(user.getUserId());
             user.getUserWithCommunities().forEach(userWithCommunity -> {

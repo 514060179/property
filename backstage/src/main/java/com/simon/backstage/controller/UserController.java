@@ -56,6 +56,7 @@ public class UserController {
         logger.info("修改住户user={}", JSONUtil.objectToJson(user));
         if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
             user.setCommunityId(null);
+            user.setUserWithCommunities(null);
         }
         return ReturnMsg.success(userService.upd(user));
     }

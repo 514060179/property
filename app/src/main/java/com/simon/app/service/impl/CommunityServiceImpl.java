@@ -5,7 +5,7 @@ import com.simon.app.dao.BuildingMapper;
 import com.simon.app.model.vo.Building;
 import com.simon.app.service.CommunityService;
 import com.simon.dal.dao.CommunityMapper;
-import com.simon.dal.model.Community;
+import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +26,9 @@ public class CommunityServiceImpl implements CommunityService {
     private BuildingMapper buildingMapper;
 
     @Override
-    public List<Community> list(BaseQueryParam baseQueryParam) {
+    public List<UserWithCommunity> list(BaseQueryParam baseQueryParam) {
         PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
-        return communityMapper.list(baseQueryParam);
+        return communityMapper.selfList(baseQueryParam);
     }
 
     @Override

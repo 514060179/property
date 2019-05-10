@@ -15,8 +15,11 @@ public class Complain {
     @ApiModelProperty(value="用户id",readOnly=true)
     private String userId;
 
-    @ApiModelProperty(value="社区id",readOnly=true)
+    @ApiModelProperty(value="社区id")
     private String communityId;
+
+    @ApiModelProperty(value="类型3投诉4报修",example = "3")
+    private Integer type;
 
     @ApiModelProperty(value="位置(XX大厦)",example="平安大厦")
     private String complainPosition;
@@ -204,5 +207,13 @@ public class Complain {
 
     public void setCommunityId(String communityId) {
         this.communityId = communityId;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

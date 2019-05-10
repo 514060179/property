@@ -31,7 +31,7 @@ public class BuildingController {
     @ApiOperation("建筑列表")
     public ReturnMsg<PageInfo<Building>> list(BaseQueryParam baseQueryParam,HttpServletRequest request){
         String communityId = ClaimsUtil.getCommunityId(request);
-        baseQueryParam.setCommunityId(communityId);
+        baseQueryParam.setCommunityId(baseQueryParam.getCommunityId()==null?communityId:baseQueryParam.getCommunityId());
         return ReturnMsg.success(new PageInfo<>(communityService.buildingList(baseQueryParam)));
     }
 }

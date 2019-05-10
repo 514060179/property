@@ -476,4 +476,18 @@
     </where>
     order by create_time desc
   </select>
+
+  <select id="selfList" resultType="com.simon.dal.model.UserWithCommunity"  parameterType="com.simon.dal.vo.BaseQueryParam" >
+    select
+      c.community_id as communityId,c.community_name as communityName,uc.user_id as userId
+    from community c inner join user_community uc on c.community_id=uc.community_id
+    <where>
+      <if test="keyword!=null and keyword!=''">
+        CONCAT(IFNULL(c.community_name,'')) LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+      <if test="userId!=null and userId!=''">
+        uc.user_id=#{userId}
+      </if>
+    </where>
+  </select>
 </mapper>
