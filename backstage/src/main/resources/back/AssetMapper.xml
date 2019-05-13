@@ -75,8 +75,7 @@
       	AND a.asset_maintain_remind_cycle = #{assetMaintainRemindCycle,jdbcType=VARCHAR}
       </if>
       <if test="assetOverdueDate != null">
-      	-- AND  UNIX_TIMESTAMP(assetOverdueDate) > UNIX_TIMESTAMP(NOW())
-      	AND  DATE_FORMAT(NOW(),'%Y%m%d') = DATE_FORMAT(asset_overdue_date,'%Y%m%d')
+      	AND  DATE_FORMAT(#{assetOverdueDate,jdbcType=VARCHAR},'%Y%m%d') = DATE_FORMAT(asset_overdue_date,'%Y%m%d')
       </if>
       <if test="assetStatus != null">
       	AND a.asset_status = #{assetStatus,jdbcType=VARCHAR}

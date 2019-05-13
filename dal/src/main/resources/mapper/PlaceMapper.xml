@@ -61,7 +61,7 @@
     </if>
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(place_name,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(place_name,''),IFNULL(place_traditional_name,''),IFNULL(place_english_name,''),IFNULL(community_name,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
 	  <if test="communityId != null">
 	  	AND p.community_id = #{communityId,jdbcType=VARCHAR}
