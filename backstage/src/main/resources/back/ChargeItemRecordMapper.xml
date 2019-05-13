@@ -14,6 +14,8 @@
     <result column="record_late_fee" property="recordLateFee" jdbcType="DECIMAL" />
     <result column="record_late_date" property="recordLateDate" jdbcType="INTEGER" />
     <result column="record_remark" property="recordRemark" jdbcType="VARCHAR" />
+    <result column="unit_type" property="unitType" jdbcType="INTEGER" />
+    <result column="unit_no" property="unitNo" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <association property="community" javaType="com.simon.backstage.domain.vo.Community">
@@ -49,7 +51,7 @@
   <sql id="With_Other_Column_List" >
     cir.record_id, cir.user_id, cir.unit_item_id,cir.record_item_name, cir.record_date, cir.record_status, cir.record_time, cir.record_actual_amount,
     cir.record_amount, cir.record_late_fee, cir.record_late_date, cir.record_remark, cir.create_time, cir.update_time,
-    uu.user_id, uu.name, uu.english_name, uu.sex,
+    uu.user_id, uu.name, uu.english_name, uu.sex,u.unit_type,u.unit_no,
     ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price,ci.additional_cost, ci.late_fee,
     ci.late_date, ci.formula, ci.`describe`,
     c.community_id,c.community_no,c.community_name

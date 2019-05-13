@@ -33,6 +33,10 @@ public class ChargeItemRecord {
     private Integer recordLateDate;
     @ApiModelProperty(value = "备注",example = "周期性收款")
     private String recordRemark;
+    @ApiModelProperty(value = "单位用途1商业2轻型汽车/电单车3住宅",example = "1")
+    private Integer unitType;
+    @ApiModelProperty(value = "单元编号",example = "UNI001")
+    private String unitNo;
     @ApiModelProperty(hidden = true)
     private Date createTime;
     @ApiModelProperty(hidden = true)
@@ -139,6 +143,22 @@ public class ChargeItemRecord {
 
     public void setRecordRemark(String recordRemark) {
         this.recordRemark = recordRemark == null ? null : recordRemark.trim();
+    }
+
+    public Integer getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(Integer unitType) {
+        this.unitType = unitType;
+    }
+
+    public String getUnitNo() {
+        return unitNo;
+    }
+
+    public void setUnitNo(String unitNo) {
+        this.unitNo = unitNo;
     }
 
     public Date getCreateTime() {
