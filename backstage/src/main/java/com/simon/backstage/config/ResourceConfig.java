@@ -33,6 +33,9 @@ public class ResourceConfig {
 	@Value("${resource.imagePath.floorPath}")
 	private String floorPath;
 
+	@Value("${resource.imagePath.userPath}")
+	private String userPath;
+
 	@Value("${resource.imagePath.managerPath}")
 	private String managerPath;
 
@@ -120,6 +123,14 @@ public class ResourceConfig {
 
 	public void setFloorPath(String floorPath) {
 		this.floorPath = floorPath;
+	}
+
+	public String getUserPath() {
+		return userPath;
+	}
+
+	public void setUserPath(String userPath) {
+		this.userPath = userPath;
 	}
 
 	public String getManagerPath() {
