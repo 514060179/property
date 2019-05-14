@@ -52,6 +52,9 @@ public class Unit {
     @ApiModelProperty(value = "单位业权",example = "10")
     private Integer unitTitle;
 
+    @ApiModelProperty(value = "是否为业主",example = "true")
+    private Boolean owner;
+
     @ApiModelProperty(hidden = true)
     private Date createTime;
 
@@ -206,5 +209,13 @@ public class Unit {
 
     public void setUnitTitle(Integer unitTitle) {
         this.unitTitle = unitTitle;
+    }
+
+    public Boolean getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Boolean owner) {
+        this.owner = owner;
     }
 }
