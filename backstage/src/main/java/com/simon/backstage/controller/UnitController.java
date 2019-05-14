@@ -1,11 +1,13 @@
 package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.domain.model.Building;
 import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.model.UserUnit;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.domain.vo.UnitQueryParam;
+import com.simon.backstage.service.BuildingService;
 import com.simon.backstage.service.UnitService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
@@ -38,6 +40,8 @@ public class UnitController {
 
     @Autowired
     private UnitService unitService;
+    @Autowired
+    private BuildingService buildingService;
     @PostMapping("add")
     @ApiOperation("添加单元")
     public ReturnMsg<Unit> add(@RequestBody Unit unit, HttpServletRequest request){
@@ -45,7 +49,9 @@ public class UnitController {
         String communityId = ClaimsUtil.getCommunityId(request);
         if (StringUtils.isEmpty(communityId)){//超级管理员
             if (StringUtils.isEmpty(unit.getCommunityId())){
-                return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
+                Building building = buildingService.detail(unit.getBuildingId());
+                unit.setCommunityId(building.getCommunityId());
+//                return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
             }
         }else{
             unit.setCommunityId(communityId);
