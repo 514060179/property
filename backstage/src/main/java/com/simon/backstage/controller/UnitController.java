@@ -111,7 +111,10 @@ public class UnitController {
 
     @PostMapping("batchAddUser")
     @ApiOperation("批量房间住户绑定(只需要设定userId以及unitId)")
-    public ReturnMsg batchAddUser(@RequestBody List<UserUnit> userUnitList){
+    public ReturnMsg batchAddUser(String userId,String unitId,@RequestBody List<UserUnit> userUnitList){
+        if (!StringUtils.isEmpty(userId)||!StringUtils.isEmpty(unitId)){
+            unitService.delUser(unitId, userId);
+        }
         return ReturnMsg.success(unitService.batchAddUser(userUnitList));
     }
     

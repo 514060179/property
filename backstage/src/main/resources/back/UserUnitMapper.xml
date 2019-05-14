@@ -31,7 +31,14 @@
   </delete>
   <delete id="deleteByUser">
   	delete from user_unit
-  	where user_id = #{userId,jdbcType=VARCHAR} AND unit_id = #{unitId,jdbcType=VARCHAR}
+    <where>
+      <if test="userId != null" >
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="unitId != null" >
+        and unit_id = #{unitId,jdbcType=VARCHAR}
+      </if>
+    </where>
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.UserUnit" >
     insert into user_unit (user_unit_id, user_id, unit_id,owner,convincing,
