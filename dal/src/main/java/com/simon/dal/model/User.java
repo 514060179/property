@@ -63,6 +63,9 @@ public class User {
     @ApiModelProperty(value="是否删除",readOnly=true)
     private Boolean deleted;
 
+    @ApiModelProperty(value="是否为业主")
+    private boolean owner;
+
     @ApiModelProperty(value="预收金额")
     private double advanceAmount;
 
@@ -210,6 +213,14 @@ public class User {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public boolean getOwner() {
+        return owner;
+    }
+
+    public void setOwner(boolean owner) {
+        this.owner = owner;
     }
 
     public Date getCreateTime() {

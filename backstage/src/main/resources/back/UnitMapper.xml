@@ -55,7 +55,7 @@
     <if test="userId != null">
       inner join user_unit uu on uu.unit_id=u.unit_id inner join `user` u2 on uu.user_id=u2.user_id
     </if>
-    left join user_unit uu2 on u.unit_id=uu2.unit_id and owner=1 and convincing=1
+    left join user_unit uu2 on u.unit_id=uu2.unit_id and uu2.owner=1 and uu2.convincing=1
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(u.unit_name,''),IFNULL(b.building_name,'')) LIKE CONCAT('%', #{keyword}, '%')

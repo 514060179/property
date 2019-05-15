@@ -17,10 +17,10 @@ public class UserUnit {
     private String unitId;
 
     @ApiModelProperty(value="是否为业主)", example="true")
-    private Boolean owner;
+    private boolean owner;
 
     @ApiModelProperty(value="出头的业主/首个业主/收费title使用的业主)", readOnly=true)
-    private Boolean convincing;
+    private boolean convincing;
     
     @ApiModelProperty(value="创建时间", readOnly=true)
     private Date createTime;
@@ -52,19 +52,19 @@ public class UserUnit {
         this.unitId = unitId == null ? null : unitId.trim();
     }
 
-    public Boolean getOwner() {
+    public boolean getOwner() {
         return owner;
     }
 
-    public void setOwner(Boolean owner) {
+    public void setOwner(boolean owner) {
         this.owner = owner;
     }
 
-    public Boolean getConvincing() {
+    public boolean getConvincing() {
         return convincing;
     }
 
-    public void setConvincing(Boolean convincing) {
+    public void setConvincing(boolean convincing) {
         this.convincing = convincing;
     }
 
