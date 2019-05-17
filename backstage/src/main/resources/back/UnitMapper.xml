@@ -17,6 +17,7 @@
     <result column="unit_status" property="unitStatus" jdbcType="INTEGER" />
     <result column="unit_title" property="unitTitle" jdbcType="INTEGER" />
     <result column="owner" property="owner" jdbcType="BIT" />
+    <result column="ownerId" property="ownerId" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <association property="community" javaType="com.simon.backstage.domain.vo.Community">
@@ -34,7 +35,7 @@
   <sql id="Base_Column_List" >
     u.unit_id, u.building_id,u.community_id, u.unit_name, u.unit_no, u.unit_covered_area, u.unit_relative_proportion,
     u.unit_child_relative_proportion, u.unit_purpose, u.unit_position, u.unit_type, u.unit_full_address,
-    u.unit_status,u.unit_title, u.create_time, u.update_time,uu2.owner,
+    u.unit_status,u.unit_title, u.create_time, u.update_time,uu2.owner,uu2.user_id as ownerId,
     c.community_id,c.community_no,c.community_name,
     b.building_id, b.building_name, b.building_no
   </sql>

@@ -46,6 +46,9 @@ public class Unit {
     @ApiModelProperty(value = "全址",example = "三楼A001")
     private String unitFullAddress;
 
+    @ApiModelProperty(value = "单元拥有者id",example = "12474sas")
+    private String ownerId;
+
     @ApiModelProperty(value = "单元状态0空置1租赁2装修中3入住",example = "3")
     private Integer unitStatus;
 
@@ -161,6 +164,14 @@ public class Unit {
 
     public void setUnitFullAddress(String unitFullAddress) {
         this.unitFullAddress = unitFullAddress == null ? null : unitFullAddress.trim();
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public Integer getUnitStatus() {
