@@ -4,6 +4,7 @@ import com.simon.backstage.domain.model.ChargeItem;
 import com.simon.backstage.domain.vo.UnitItemWithUser;
 import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.dal.vo.BaseQueryParam;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ public interface ChargeItemMapper {
     int insertSelective(ChargeItem record);
 
     ChargeItem selectByPrimaryKey(String itemId);
+
+    ChargeItem selectByItemIdAndUnitId(@Param("itemId") String itemId, @Param("unitId") String unitId);
 
     List<ChargeItem> selectByCondition(BaseQueryParam baseQueryParam);
 

@@ -30,6 +30,11 @@ public interface ChargeItemService {
     ChargeItem detail(String itemId);
 
     /**
+     * 获取收费项
+     * @return
+     */
+    ChargeItem findItemIdAndUnitId(String itemId,String unitId);
+    /**
      * 修改
      * @param chargeItem
      * @return

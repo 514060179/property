@@ -96,9 +96,11 @@ public class ChargeItemController {
         logger.info("单元添加收费项目unitWithItem={}", JSONUtil.objectToJson(unitWithItemList));
         unitWithItemList.forEach((unitWithItem)->{
             //获取收费项目
-            ChargeItem chargeItem = chargeItemService.detail(unitWithItem.getItemId());
-            unitWithItem.setType(chargeItem.getBillingMode());
-            unitWithItem.setUnitItemId(UUIDUtil.uidString());
+            ChargeItem chargeItem = chargeItemService.findItemIdAndUnitId(unitWithItem.getItemId(),unitWithItem.getUnitId());
+            if (!chargeItem.getRepeat()){
+                unitWithItem.setType(chargeItem.getBillingMode());
+                unitWithItem.setUnitItemId(UUIDUtil.uidString());
+            }
         });
         return ReturnMsg.success(chargeItemService.unitAddItem(unitWithItemList));
     }

@@ -38,6 +38,11 @@ public class ChargeItemServiceImpl implements ChargeItemService {
     }
 
     @Override
+    public ChargeItem findItemIdAndUnitId(String itemId, String unitId) {
+        return chargeItemMapper.selectByItemIdAndUnitId(itemId, unitId);
+    }
+
+    @Override
     public int upd(ChargeItem chargeItem) {
         return chargeItemMapper.updateByPrimaryKeySelective(chargeItem);
     }

@@ -14,6 +14,7 @@
     <result column="late_date" property="lateDate" jdbcType="INTEGER" />
     <result column="formula" property="formula" jdbcType="VARCHAR" />
     <result column="describe" property="describe" jdbcType="VARCHAR" />
+    <result column="repeat" property="repeat" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <association property="community" javaType="com.simon.backstage.domain.vo.Community">
@@ -77,6 +78,14 @@
     select 
     <include refid="Base_Column_List" />
     from charge_item ci inner join community c on ci.community_id=c.community_id
+    where ci.item_id = #{itemId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByItemIdAndUnitId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />,IFNULL(uci.unit_item_id,0) as `repeat`
+    from charge_item ci inner join community c on ci.community_id=c.community_id
+    left join unit_charge_item uci on ci.item_id=uci.item_id and uci.unit_id=#{unitId,jdbcType=VARCHAR}
     where ci.item_id = #{itemId,jdbcType=VARCHAR}
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
