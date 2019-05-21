@@ -164,5 +164,6 @@
     u.update_time,uu.owner
     from user_unit uu inner join `user` u on u.user_id=uu.user_id
     where uu.unit_id=#{unitId,jdbcType=VARCHAR}
+    order by uu.`owner` desc,uu.convincing desc
   </select>
 </mapper>

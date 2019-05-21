@@ -96,7 +96,7 @@
         and u.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
     </where>
-    order by cir.create_time desc
+    order by uu.`name`
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from charge_item_record

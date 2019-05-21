@@ -85,7 +85,7 @@
         CONCAT(IFNULL(u.NAME,''),IFNULL(u.username,''),IFNULL(u.tel,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-      	AND u.community_id = #{communityId, jdbcType=VARCHAR}
+      	AND uc.community_id = #{communityId, jdbcType=VARCHAR}
       </if>
     </where>
     group by(u.user_id) order by u.create_time desc
