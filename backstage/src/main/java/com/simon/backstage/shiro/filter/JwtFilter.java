@@ -72,8 +72,13 @@ public class JwtFilter extends AccessControlFilter {
                 String userId = claims.get("sub", String.class);
                 boolean redis = redisService.hasKey(userId);
                 if(!redis){
-                	 ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.nologin,"该账户未登录！")),response);
+                	 ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.nologin,"該賬戶未登錄！")),response);
                 	 return false;
+//                }else{
+//                    if (!jwt.equals(redisService.get(userId))){
+//                        ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.nologin,"賬戶在其他設備登陸！")),response);
+//                        return false;
+//                    }
                 }
                 String deviceType = claims.get("device", String.class);//PC端每次刷新15分钟
                 if(deviceType==null || !deviceType.equals("1")){
@@ -83,11 +88,11 @@ public class JwtFilter extends AccessControlFilter {
                 return true;
             } catch (AuthenticationException e) {
                 log.error(e.getMessage(),e);
-                ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.nologin,"该账户未登录！")),response);
+                ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.nologin,"該賬戶未登錄！")),response);
 //                WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED,e.getMessage());
             }
         }
-        ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.nologin,"该账户未登录！")),response);
+        ResponseUtil.responseWrite(JSONUtil.objectToJson(ReturnMsg.fail(Code.nologin,"該賬戶未登錄！")),response);
         return false;
     }
 
