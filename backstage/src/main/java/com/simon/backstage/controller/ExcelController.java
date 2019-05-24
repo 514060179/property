@@ -123,4 +123,23 @@ public class ExcelController {
         int month = (end.get(Calendar.YEAR) - start.get(Calendar.YEAR)) * 12;
         return Math.abs(month + result);
     }
+
+
+    @GetMapping("/assetExport")
+    @ApiOperation("资产导出")
+    public void assetExport(HttpServletResponse response, HttpServletRequest request, ExcelQueryParam excelQueryParam){
+
+    }
+
+    @GetMapping("/eventExport")
+    @ApiOperation("事件导出")
+    public void eventExport(HttpServletResponse response, HttpServletRequest request, ExcelQueryParam excelQueryParam){
+
+    }
+
+    @GetMapping("/placeRecordExport")
+    @ApiOperation("订场记录导出")
+    public void placeRecordExport(HttpServletResponse response, HttpServletRequest request, ExcelQueryParam excelQueryParam){
+
+    }
 }
