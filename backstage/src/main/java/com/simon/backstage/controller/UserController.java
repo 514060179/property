@@ -41,7 +41,7 @@ public class UserController {
     public ReturnMsg<User> add(@RequestBody User user, HttpServletRequest request){
         logger.info("添加住户user={}", JSONUtil.objectToJson(user));
         if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
-            if (StringUtils.isEmpty(user.getCommunityId())&&user.getUserWithCommunities().size()>0){
+            if (StringUtils.isEmpty(user.getCommunityId())&&user.getUserWithCommunities().size()<0){
                 return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
             }
         }else{
