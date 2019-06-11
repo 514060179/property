@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public User add(User user) {
         user.setUserId(UUIDUtil.uidString());
         user.setPassword(EncryUtil.getMD5(user.getPassword()));
-        user.setCommunityId(user.getCommunityId()!=null?user.getCommunityId():user.getUserWithCommunities().get(0).getCommunityId());
+        user.setCommunityId(!StringUtils.isEmpty(user.getCommunityId())?user.getCommunityId():user.getUserWithCommunities().get(0).getCommunityId());
         if(userMapper.insertSelective(user)>0){
             user.getUserWithCommunities().forEach(userWithCommunity -> {
                 User u = new User();
