@@ -33,10 +33,9 @@ public class UserServiceImpl implements UserService {
         user.setPassword(EncryUtil.getMD5(user.getPassword()));
         user.setCommunityId(user.getCommunityId()!=null?user.getCommunityId():user.getUserWithCommunities().get(0).getCommunityId());
         if(userMapper.insertSelective(user)>0){
-            userMapper.insertUserCommunity(user);
             user.getUserWithCommunities().forEach(userWithCommunity -> {
                 User u = new User();
-                u.setUserId(u.getUserId());
+                u.setUserId(user.getUserId());
                 u.setCommunityId(userWithCommunity.getCommunityId());
                 userMapper.insertUserCommunity(u);
             });
