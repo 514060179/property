@@ -88,6 +88,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int del(String userId) {
+        //todo 删除对应的关系
         return userMapper.deleteByPrimaryKey(userId);
     }
 
