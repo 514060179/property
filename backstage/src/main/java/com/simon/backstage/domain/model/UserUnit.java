@@ -21,6 +21,9 @@ public class UserUnit {
 
     @ApiModelProperty(value="出头的业主/首个业主/收费title使用的业主)", readOnly=true)
     private boolean convincing;
+
+    @ApiModelProperty(value="业权分配)",example="1")
+    private Integer title;
     
     @ApiModelProperty(value="创建时间", readOnly=true)
     private Date createTime;
@@ -82,5 +85,24 @@ public class UserUnit {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getTitle() {
+        return title;
+    }
+
+    public void setTitle(Integer title) {
+        this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "UserUnit{" +
+                "userUnitId=" + userUnitId +
+                ", userId='" + userId + '\'' +
+                ", unitId='" + unitId + '\'' +
+                ", owner=" + owner +
+                ", convincing=" + convincing +
+                '}';
     }
 }

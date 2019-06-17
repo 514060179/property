@@ -14,6 +14,8 @@ public interface UnitMapper {
 
     Unit selectByPrimaryKey(String unitId);
 
+    Unit selectByUnitNo(String unitNo);
+
     List<Unit> selectByCondition(BaseQueryParam baseQueryParam);
 
     int updateByPrimaryKeySelective(Unit record);
