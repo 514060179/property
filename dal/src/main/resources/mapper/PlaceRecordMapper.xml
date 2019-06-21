@@ -80,7 +80,7 @@
           p.community_id = #{communityId}
         </if>
       </where>
-      GROUP BY pr.place_id
+      GROUP BY pr.place_id,DATE_FORMAT(order_date, '%Y-%m')
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
   	select
