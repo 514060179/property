@@ -12,18 +12,16 @@ import com.simon.backstage.service.UnitService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.User;
-import com.simon.dal.vo.BaseClaims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -132,5 +130,16 @@ public class UnitController {
     @ApiOperation("单元住户列表")
     public ReturnMsg<List<User>> unitUserList(@RequestParam String unitId){
         return ReturnMsg.success(unitService.unitUserList(unitId));
+    }
+
+    @PostMapping("import")
+    @ApiOperation("导入单元")
+    public ReturnMsg importExcel(HttpServletRequest request,@RequestParam String buildingId) throws IOException {
+        //查询社区id
+        Building building = buildingService.detail(buildingId);
+        if (building==null){
+            return ReturnMsg.fail(Code.notfound,"找不到该建筑buildingId="+buildingId);
+        }
+        return ReturnMsg.success(unitService.importExcel(request,building.getCommunityId(),buildingId));
     }
 }

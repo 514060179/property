@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -99,5 +100,14 @@ public class UserController {
 		}
         logger.info("住户列表baseQueryParam={}", JSONUtil.objectToJson(baseClaims));
         return ReturnMsg.success(userService.list(baseClaims));
+    }
+
+    @PostMapping("import")
+    @ApiOperation("导入业主")
+    public ReturnMsg importExcel(HttpServletRequest request,String communityId) throws IOException {
+        if (StringUtils.isEmpty(communityId)&&StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){
+            return ReturnMsg.fail(Code.missingParameter,"缺少參數communityId");
+        }
+        return ReturnMsg.success(userService.importExcel(request,communityId));
     }
 }

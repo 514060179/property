@@ -7,6 +7,7 @@ import com.simon.dal.model.User;
 import com.simon.dal.vo.BaseClaims;
 import com.simon.dal.vo.BaseQueryParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface UnitService {
@@ -87,4 +88,12 @@ public interface UnitService {
      * @return
      */
 	List<User> unitUserList(String unitId);
+
+    /**
+     * excel导入数据
+     * @param request
+     * @param buildingId
+     * @return
+     */
+	String importExcel(HttpServletRequest request,String communityId, String buildingId);
 }
