@@ -10,6 +10,7 @@ import com.simon.dal.model.User;
 import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.vo.BaseClaims;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,6 +105,7 @@ public class UserController {
 
     @PostMapping("import")
     @ApiOperation("导入业主")
+    @ApiImplicitParam(name = "file",value = "资源文件(字节码)",paramType = "payload")
     public ReturnMsg importExcel(HttpServletRequest request,String communityId) throws IOException {
         if (StringUtils.isEmpty(communityId)&&StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){
             return ReturnMsg.fail(Code.missingParameter,"缺少參數communityId");

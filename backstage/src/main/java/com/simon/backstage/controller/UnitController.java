@@ -13,6 +13,7 @@ import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.User;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -134,6 +135,7 @@ public class UnitController {
 
     @PostMapping("import")
     @ApiOperation("导入单元")
+    @ApiImplicitParam(name = "file",value = "资源文件(字节码)",paramType = "payload")
     public ReturnMsg importExcel(HttpServletRequest request,@RequestParam String buildingId) throws IOException {
         //查询社区id
         Building building = buildingService.detail(buildingId);
