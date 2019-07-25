@@ -8,14 +8,21 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    building_id,  building_name, building_no
+    b.building_id,  b.building_name, b.building_no
   </sql>
 
   <select id="selectByCondition" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from building
-    where community_id = #{communityId,jdbcType=VARCHAR}
+    from user_community uc inner join building b on uc.community_id=b.community_id
+    <where>
+      <if test="communityId!=null">
+         b.community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
+      <if test="userId!=null">
+         uc.user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+    </where>
     order by create_time desc
   </select>
 
