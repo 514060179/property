@@ -23,7 +23,7 @@
          uc.user_id = #{userId,jdbcType=VARCHAR}
       </if>
     </where>
-    order by create_time desc
+    order by b.create_time desc
   </select>
 
 </mapper>
