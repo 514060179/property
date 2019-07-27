@@ -34,6 +34,6 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     public List<Building> buildingList(BaseQueryParam baseQueryParam) {
         PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
-        return buildingMapper.selectByCondition(baseQueryParam.getCommunityId());
+        return buildingMapper.selectByCondition(baseQueryParam);
     }
 }
