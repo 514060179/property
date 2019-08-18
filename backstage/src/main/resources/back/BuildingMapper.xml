@@ -230,7 +230,7 @@
   </select>
   <select id="selectBuildingChildListByBuildingId" resultType="com.simon.backstage.domain.model.BuildingChild" parameterType="java.lang.String" >
     select
-    child_id as childId,building_id as buildingId, tips, `value`,sort
+    child_id as childId,building_id as buildingId, tips, `value`,sort,`name`,amount,area,purpose,perthousand
     from building_child
     where building_id = #{buildingId,jdbcType=VARCHAR} order by sort
   </select>
@@ -296,6 +296,21 @@
     <set >
       <if test="tips != null" >
         tips = #{tips,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        `name` = #{name},
+      </if>
+      <if test="amount != null" >
+        `amount` = #{amount},
+      </if>
+      <if test="area != null" >
+        `area` = #{area},
+      </if>
+      <if test="purpose != null" >
+        `purpose` = #{purpose},
+      </if>
+      <if test="perthousand != null" >
+        `perthousand` = #{perthousand},
       </if>
       <if test="value != null" >
         `value` = #{value,jdbcType=VARCHAR},
