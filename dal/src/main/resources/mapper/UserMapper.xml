@@ -80,9 +80,10 @@
     inner join user_community uc on u.user_id=uc.user_id
     inner join community c on c.community_id=uc.community_id
     left join advance_money am on u.user_id=am.user_id
+
     <where>
       <if test="keyword!=null and keyword!=''">
-        CONCAT(IFNULL(u.NAME,''),IFNULL(u.username,''),IFNULL(u.tel,'')) LIKE CONCAT('%', #{keyword}, '%')
+        CONCAT(IFNULL(u.NAME,''),CONCAT(IFNULL(u.user_id,''),CONCAT(IFNULL(u.english_name,''),IFNULL(u.username,''),IFNULL(u.tel,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
       	AND uc.community_id = #{communityId, jdbcType=VARCHAR}
