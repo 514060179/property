@@ -14,8 +14,9 @@ public class BaseQueryParam {
 
     private String keyword;
 
-    @ApiModelProperty(hidden=true)
     private String communityId;
+
+    private String building;
 
     public int getPageNo() {
         return pageNo;
@@ -47,5 +48,18 @@ public class BaseQueryParam {
 
     public void setCommunityId(String communityId) {
         this.communityId = communityId;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
+    }
+
+    public static void main(String[] args) {
+        String s = "停车场数据异常情况统计(每周)-20190819.xlsx";
+        System.out.println(s.matches("[\\s\\S]*.xlsx"));
     }
 }
