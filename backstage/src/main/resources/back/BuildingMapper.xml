@@ -211,6 +211,11 @@
     )
   </foreach>
   </insert>
+
+  <delete id="delFloorByBuildingId">
+    delete from floor where building_id=#{buildingId}
+  </delete>
+
   <insert id="insertBuildingChildSelective">
     insert into building_child (child_id,building_id, tips, `value`,sort)values
     <foreach collection="list" item="item" separator=",">
@@ -366,4 +371,31 @@
     delete from enclosure
     where object_id = #{objectId,jdbcType=VARCHAR} and enclosure_object_type = #{enclosureObjectType,jdbcType=INTEGER}
   </delete>
+
+
+  <resultMap id="PartOfCommunityResultMap" type="com.simon.backstage.domain.model.BuildingPart" >
+    <id column="building_id" property="buildingId" jdbcType="VARCHAR" />
+    <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
+    <result column="building_no" property="buildingNo" jdbcType="VARCHAR" />
+    <collection property="buildingChildList" ofType="com.simon.backstage.domain.model.BuildingChild">
+      <id column="childId" property="childId"/>
+      <result column="building_id" property="buildingId" jdbcType="VARCHAR" />
+      <result column="tips" property="tips" jdbcType="VARCHAR" />
+      <result column="value" property="value" jdbcType="VARCHAR" />
+      <result column="sort" property="sort" jdbcType="VARCHAR" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+      <result column="amount" property="amount" jdbcType="INTEGER" />
+      <result column="area" property="area" jdbcType="DECIMAL" />
+      <result column="purpose" property="purpose" jdbcType="VARCHAR" />
+      <result column="perthousand" property="perthousand" jdbcType="DECIMAL" />
+    </collection>
+  </resultMap>
+
+  <select id="buildPartOfCommunity" resultMap="PartOfCommunityResultMap">
+    select
+    child_id as childId,bc.building_id as buildingId, tips, `value`,sort,`name`,amount,area,purpose,perthousand,
+    building_name as buildingName,building_no as buildingNo
+    from building_child bc inner join building b on bc.building_id = b.building_id
+    where
+  </select>
 </mapper>

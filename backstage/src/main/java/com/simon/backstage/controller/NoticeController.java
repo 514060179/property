@@ -3,6 +3,7 @@ package com.simon.backstage.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import com.simon.backstage.domain.msg.Code;
+import com.simon.backstage.domain.vo.NoticeQueryParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class NoticeController {
 	
 	@GetMapping("list")
 	@ApiOperation("公告列表")
-	public ReturnMsg<PageInfo<Notice>> list(BaseClaims baseClaims, String buildingId, HttpServletRequest request){
+	public ReturnMsg<PageInfo<Notice>> list(NoticeQueryParam baseClaims, String buildingId, HttpServletRequest request){
 		String communityId = ClaimsUtil.getCommunityId(request);
 		if(!StringUtils.isEmpty(communityId)){
 			baseClaims.setCommunityId(communityId);

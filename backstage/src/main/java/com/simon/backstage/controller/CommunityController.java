@@ -1,6 +1,7 @@
 package com.simon.backstage.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.domain.model.BuildingChild;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.CommunityService;
 import com.simon.backstage.util.JSONUtil;
@@ -59,5 +60,12 @@ public class CommunityController {
     public ReturnMsg<Community> detail(String communityId){
     	logger.info("社区列表communityId={}",  JSONUtil.objectToJson(communityId));
     	return ReturnMsg.success(communityService.detail(communityId));
+    }
+
+    @GetMapping("buildPartOfCommunity")
+    @ApiOperation("社区建筑下的子部分")
+    public ReturnMsg<BuildingChild> buildPartOfCommunity(String communityId){
+    	logger.info("社区建筑下的子部分communityId={}",  JSONUtil.objectToJson(communityId));
+    	return ReturnMsg.success(communityService.buildPartOfCommunity(communityId));
     }
 }

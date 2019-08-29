@@ -95,6 +95,9 @@
       <if test="communityId!=null and communityId!=''">
         and u.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
+      <if test="buildingId!=null and buildingId!=''">
+        and u.building_id = #{buildingId,jdbcType=VARCHAR}
+      </if>
     </where>
     order by uu.`name`
   </select>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.simon.dal.model.Notice;
 import com.simon.dal.vo.BaseClaims;
+import com.simon.dal.vo.BaseQueryParam;
 import org.apache.ibatis.annotations.Param;
 
 public interface NoticeMapper {
@@ -21,7 +22,7 @@ public interface NoticeMapper {
 
     int updateByPrimaryKey(Notice record);
     
-    List<Notice> list(@Param("baseClaims") BaseClaims baseClaims, @Param("noticeType") Integer noticeType);
+    List<Notice> list(@Param("baseClaims") BaseQueryParam baseClaims, @Param("noticeType") Integer noticeType);
 
     List<Notice> touchList(BaseClaims baseClaims);
 }

@@ -1,8 +1,12 @@
 package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.domain.model.BuildingChild;
+import com.simon.backstage.domain.model.BuildingPart;
 import com.simon.dal.model.Community;
 import com.simon.dal.vo.BaseQueryParam;
+
+import java.util.List;
 
 public interface CommunityService {
     /**
@@ -40,4 +44,11 @@ public interface CommunityService {
      * @return
      */
     PageInfo<Community> list(BaseQueryParam baseQueryParam);
+
+    /**
+     * 社区下的建筑子部分
+     * @param communityId
+     * @return
+     */
+    List<BuildingPart> buildPartOfCommunity(String communityId);
 }

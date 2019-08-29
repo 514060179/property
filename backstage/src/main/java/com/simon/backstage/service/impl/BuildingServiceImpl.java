@@ -112,6 +112,15 @@ public class BuildingServiceImpl implements BuildingService {
                 building.setBuildingChildList(building.getBuildingChildList());
             }
         }
+        if (building.getFloorList()!=null&&building.getFloorList().size()>0){
+            buildingMapper.delFloorByBuildingId(building.getBuildingId());
+            building.getFloorList().forEach(floor -> {
+                floor.setFloorId(UUIDUtil.uidString());
+                floor.setBuildingId(building.getBuildingId());
+            });
+            buildingMapper.insertFloorSelective(building.getFloorList());
+            building.setFloorList(building.getFloorList());
+        }
         if (building.getCommonPdf()!=null&&building.getCommonPdf().size()>0){
             building.getCommonPdf().forEach(s -> {
                 Enclosure enclosure = new Enclosure();

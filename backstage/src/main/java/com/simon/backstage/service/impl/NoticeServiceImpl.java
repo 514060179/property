@@ -8,6 +8,7 @@ import java.util.Map;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.constant.Status;
+import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,7 +112,7 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public PageInfo<Notice> list(BaseClaims baseClaims) {
+	public PageInfo<Notice> list(BaseQueryParam baseClaims) {
 		PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
 		return new PageInfo<>(noticeMapper.list(baseClaims,null));
 	}

@@ -3,6 +3,8 @@ package com.simon.backstage.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.BuildingMapper;
+import com.simon.backstage.domain.model.BuildingChild;
+import com.simon.backstage.domain.model.BuildingPart;
 import com.simon.backstage.domain.model.Enclosure;
 import com.simon.backstage.service.CommunityService;
 import com.simon.dal.constant.Type;
@@ -87,5 +89,10 @@ public class CommunityServiceImpl implements CommunityService {
     public PageInfo<Community> list(BaseQueryParam baseQueryParam) {
         PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
         return new PageInfo<>(communityMapper.list(baseQueryParam));
+    }
+
+    @Override
+    public List<BuildingPart> buildPartOfCommunity(String communityId) {
+        return buildingMapper.buildPartOfCommunity(communityId);
     }
 }

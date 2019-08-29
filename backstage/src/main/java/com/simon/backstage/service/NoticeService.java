@@ -5,6 +5,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.simon.dal.model.Notice;
 import com.simon.dal.vo.BaseClaims;
+import com.simon.dal.vo.BaseQueryParam;
 
 public interface NoticeService {
 	
@@ -14,7 +15,7 @@ public interface NoticeService {
 	
 	int upd(Notice notice);
 
-	PageInfo<Notice> list(BaseClaims baseClaims);
+	PageInfo<Notice> list(BaseQueryParam baseClaims);
 
 	List<Notice> touchList(BaseClaims baseClaims);
 
