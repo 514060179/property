@@ -72,15 +72,17 @@
     from user_community uc inner join community c on uc.community_id=c.community_id
     where uc.user_id = #{userId,jdbcType=VARCHAR}
   </select>
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseClaims" >
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
     select
     <include refid="Base_Column_List" />,am.advance_amount,
     GROUP_CONCAT(c.community_id) as community_id,GROUP_CONCAT(c.community_no) as community_no,GROUP_CONCAT(c.community_name) as community_name
     from user u
     inner join user_community uc on u.user_id=uc.user_id
     inner join community c on c.community_id=uc.community_id
+    <if test="buildingId != null">
+    inner join building b on c.community_id=b.community_id
+    </if>
     left join advance_money am on u.user_id=am.user_id
-
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(u.NAME,''),CONCAT(IFNULL(u.user_id,''),CONCAT(IFNULL(u.english_name,''),IFNULL(u.username,''),IFNULL(u.tel,'')) LIKE CONCAT('%', #{keyword}, '%')
@@ -88,8 +90,45 @@
       <if test="communityId != null">
       	AND uc.community_id = #{communityId, jdbcType=VARCHAR}
       </if>
+      <if test="buildingId != null">
+      	AND b.building_id = #{buildingId, jdbcType=VARCHAR}
+      </if>
     </where>
     group by(u.user_id) order by u.create_time desc
+  </select>
+
+  <select id="excrlUserList" resultType="java.util.HashMap">
+    SELECT
+	GROUP_CONCAT( DISTINCT c.community_no ) AS community_no,
+	GROUP_CONCAT( DISTINCT c.community_name ) as community_name,
+	u.user_id,
+	u.NAME as name,
+	u.english_name,
+	u.tel,
+	u.email,
+	u.id_card,
+	u.username,
+	u.`PASSWORD`,
+	u.marriage_system,
+	u.mate_name,
+	GROUP_CONCAT(u1.unit_name) as unit_name
+	from `user` u
+	INNER JOIN user_community uc ON u.user_id = uc.user_id
+	INNER JOIN community c ON uc.community_id = c.community_id
+    <if test="buildingId != null">
+      inner join building b on c.community_id=b.community_id
+    </if>
+	INNER JOIN user_unit uu on u.user_id=uu.user_id INNER JOIN unit u1 on uu.unit_id=u1.unit_id
+    <if test="keyword!=null and keyword!=''">
+      CONCAT(IFNULL(u.NAME,''),CONCAT(IFNULL(u.user_id,''),CONCAT(IFNULL(u.english_name,''),IFNULL(u.username,''),IFNULL(u.tel,'')) LIKE CONCAT('%', #{keyword}, '%')
+    </if>
+    <if test="communityId != null">
+      AND uc.community_id = #{communityId, jdbcType=VARCHAR}
+    </if>
+    <if test="buildingId != null">
+      AND b.building_id = #{buildingId, jdbcType=VARCHAR}
+    </if>
+    GROUP BY u.user_id
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from user

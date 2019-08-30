@@ -13,6 +13,7 @@ import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.util.EncryUtil;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseClaims;
+import com.simon.dal.vo.BaseQueryParam;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -117,6 +118,11 @@ public class UserServiceImpl implements UserService {
     public PageInfo<User> list(BaseClaims baseClaims) {
         PageHelper.startPage(baseClaims.getPageNo(),baseClaims.getPageSize());
         return new PageInfo<>(userMapper.selectByCondition(baseClaims));
+    }
+
+    @Override
+    public List<Map<String, Object>> excelUserList(BaseQueryParam baseQueryParam) {
+        return userMapper.excrlUserList(baseQueryParam);
     }
 
     @Override

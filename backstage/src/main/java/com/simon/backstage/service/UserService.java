@@ -4,9 +4,11 @@ import com.github.pagehelper.PageInfo;
 import com.simon.dal.model.User;
 import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.vo.BaseClaims;
+import com.simon.dal.vo.BaseQueryParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户管理
@@ -64,6 +66,9 @@ public interface UserService {
      * @return
      */
     PageInfo<User> list(BaseClaims baseClaims);
+
+
+    List<Map<String,Object>> excelUserList(BaseQueryParam baseQueryParam);
 
     /**
      * excel导入数据

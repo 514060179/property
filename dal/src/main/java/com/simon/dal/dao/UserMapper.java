@@ -4,9 +4,11 @@ import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.vo.BaseClaims;
 
 import com.simon.dal.model.User;
+import com.simon.dal.vo.BaseQueryParam;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserMapper {
     int deleteByPrimaryKey(String userId);
@@ -25,7 +27,9 @@ public interface UserMapper {
 
     List<UserWithCommunity> selectUserCommunitys(String userId);
 
-    List<User> selectByCondition(BaseClaims baseClaims);
+    List<User> selectByCondition(BaseQueryParam baseQueryParam);
+
+    List<Map<String,Object>> excrlUserList(BaseQueryParam baseQueryParam);
 
     int updateByPrimaryKeySelective(User record);
 
