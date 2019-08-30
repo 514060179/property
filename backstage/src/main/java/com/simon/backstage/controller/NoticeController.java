@@ -67,7 +67,7 @@ public class NoticeController {
 	
 	@GetMapping("list")
 	@ApiOperation("公告列表")
-	public ReturnMsg<PageInfo<Notice>> list(NoticeQueryParam baseClaims, String buildingId, HttpServletRequest request){
+	public ReturnMsg<PageInfo<Notice>> list(NoticeQueryParam baseClaims, HttpServletRequest request){
 		String communityId = ClaimsUtil.getCommunityId(request);
 		if(!StringUtils.isEmpty(communityId)){
 			baseClaims.setCommunityId(communityId);

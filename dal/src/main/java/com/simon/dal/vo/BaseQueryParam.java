@@ -16,7 +16,7 @@ public class BaseQueryParam {
 
     private String communityId;
 
-    private String building;
+    private String buildingId;
 
     public int getPageNo() {
         return pageNo;
@@ -50,12 +50,12 @@ public class BaseQueryParam {
         this.communityId = communityId;
     }
 
-    public String getBuilding() {
-        return building;
+    public String getBuildingId() {
+        return buildingId;
     }
 
-    public void setBuilding(String building) {
-        this.building = building;
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId;
     }
 
     public static void main(String[] args) {

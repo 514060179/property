@@ -378,7 +378,7 @@
     <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
     <result column="building_no" property="buildingNo" jdbcType="VARCHAR" />
     <collection property="buildingChildList" ofType="com.simon.backstage.domain.model.BuildingChild">
-      <id column="childId" property="childId"/>
+      <id column="child_id" property="childId"/>
       <result column="building_id" property="buildingId" jdbcType="VARCHAR" />
       <result column="tips" property="tips" jdbcType="VARCHAR" />
       <result column="value" property="value" jdbcType="VARCHAR" />
@@ -393,9 +393,9 @@
 
   <select id="buildPartOfCommunity" resultMap="PartOfCommunityResultMap">
     select
-    child_id as childId,bc.building_id as buildingId, tips, `value`,sort,`name`,amount,area,purpose,perthousand,
-    building_name as buildingName,building_no as buildingNo
-    from building_child bc inner join building b on bc.building_id = b.building_id
-    where
+    child_id,bc.building_id, tips, `value`,sort,`name`,amount,area,purpose,perthousand,
+    building_name,building_no
+    from building b inner join building_child bc on bc.building_id = b.building_id
+    where b.community_id=#{communityId}
   </select>
 </mapper>

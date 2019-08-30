@@ -71,14 +71,14 @@
             AND (uc.user_id=#{baseClaims.userId,jdbcType=VARCHAR} OR n.community_id IS NULL OR n.community_id='')
             AND  UNIX_TIMESTAMP(NOW()) BETWEEN UNIX_TIMESTAMP(start_time) AND UNIX_TIMESTAMP(end_time)
         </if>
-    	<if test="noticeType != null">
-    		AND n.notice_type = #{noticeType,jdbcType=INTEGER}
+    	<if test="baseClaims.noticeType != null">
+    		AND n.notice_type = #{baseClaims.noticeType,jdbcType=INTEGER}
     	</if>
-    	<if test="startTime != null">
-    		AND unix_timestamp(n.create_time) > unix_timestamp(#{startTime,jdbcType=INTEGER})
+    	<if test="baseClaims.startTime != null">
+    		AND unix_timestamp(n.create_time) > unix_timestamp(#{baseClaims.startTime})
     	</if>
-    	<if test="endTime != null">
-    		AND unix_timestamp(#{endTime,jdbcType=})>unix_timestamp(n.create_time)
+    	<if test="baseClaims.endTime != null">
+    		AND unix_timestamp(#{baseClaims.endTime})>unix_timestamp(n.create_time)
     	</if>
     </where>
     order by n.create_time desc
