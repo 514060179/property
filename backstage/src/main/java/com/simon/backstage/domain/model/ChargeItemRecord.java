@@ -15,6 +15,8 @@ public class ChargeItemRecord {
     private String userId;
     @ApiModelProperty(value = "单位收费项目id",example = "er7212e5735b3743d2126b5324fadese2")
     private String unitItemId;
+    @ApiModelProperty(value = "单位收费项目id",example = "er7212e5735b3743d2126b5324fadese2")
+    private String placeRecordId;
     @ApiModelProperty(value = "收费项目名称",example = "物业管理费")
     private String recordItemName;
     @ApiModelProperty(value = "收费记录年月份(2019-01)",example = "2019-01")
@@ -71,6 +73,14 @@ public class ChargeItemRecord {
 
     public void setUnitItemId(String unitItemId) {
         this.unitItemId = unitItemId == null ? null : unitItemId.trim();
+    }
+
+    public String getPlaceRecordId() {
+        return placeRecordId;
+    }
+
+    public void setPlaceRecordId(String placeRecordId) {
+        this.placeRecordId = placeRecordId;
     }
 
     public String getRecordItemName() {

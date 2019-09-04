@@ -132,7 +132,7 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
 
     @Override
     public ChargeItemRecord getChargeItemRecord(String placeRecordId) {
-        return chargeItemRecordMapper.selectByPrimaryKey(placeRecordId);
+        return chargeItemRecordMapper.selectByPlaceRecordId(placeRecordId);
     }
 
     @Override

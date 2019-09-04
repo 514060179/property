@@ -16,6 +16,8 @@ public interface ChargeItemRecordMapper {
 
     ChargeItemRecord selectByPrimaryKey(String recordId);
 
+    ChargeItemRecord selectByPlaceRecordId(String placeRecordId);
+
     List<ChargeItemRecord> selectByCondition(BaseQueryParam baseQueryParam);
 
     int updateByPrimaryKeySelective(ChargeItemRecord record);
