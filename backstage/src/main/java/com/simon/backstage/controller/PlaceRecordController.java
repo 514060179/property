@@ -3,6 +3,8 @@ package com.simon.backstage.controller;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.annotation.Log;
 import com.simon.backstage.annotation.OperateType;
+import com.simon.backstage.domain.model.Unit;
+import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.domain.vo.PlaceRecordQueryParam;
 import com.simon.backstage.service.PlaceRecordService;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author fengtianying
@@ -71,5 +74,23 @@ public class PlaceRecordController {
             placeRecordStatisQuery.setCommunityId(communityId);
         }
         return ReturnMsg.success(placeRecordService.statis(placeRecordStatisQuery));
+    }
+    @GetMapping("creChargeItemRecord")
+    @ApiOperation("列入物业收费")
+    public ReturnMsg creChargeItemRecord(@RequestParam String placeRecordId){
+        //获取定场记录
+        PlaceRecord placeRecord = placeRecordService.detail(placeRecordId);
+        if (Objects.isNull(placeRecord)){
+            return ReturnMsg.fail(Code.notfound,"未找到资源!");
+        }
+        //获取住户单元
+        Unit unit = placeRecordService.getUnitByUserId(placeRecord.getUserId());
+        placeRecordService.creChargeItemRecord(placeRecord.getCommunityId(),placeRecord.getUserId(),placeRecordId,unit.getUnitId(),placeRecord.getTotalCharge());
+        return ReturnMsg.success();
+    }
+    @GetMapping("getChargeItemRecord")
+    @ApiOperation("查询定场收费记录")
+    public ReturnMsg getChargeItemRecord(@RequestParam String placeRecordId){
+        return ReturnMsg.success(placeRecordService.getChargeItemRecord(placeRecordId));
     }
 }

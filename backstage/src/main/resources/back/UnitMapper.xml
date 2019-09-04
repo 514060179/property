@@ -86,7 +86,13 @@
     </where>
     order by b.create_time desc
   </select>
-
+  <select id="getUnitByUserId" resultMap="BaseResultMap">
+    select u.unit_id, u.building_id,u.community_id, u.unit_name, u.unit_no, u.unit_covered_area, u.unit_relative_proportion,
+    u.unit_child_relative_proportion, u.unit_purpose, u.unit_position, u.unit_type, u.unit_full_address,
+    u.unit_status,u.unit_title, u.create_time, u.update_time from unit u inner join user_unit uu on u.unit_id = uu.unit_id
+    where uu.user_id=#{userId} order by
+	`owner` desc,convincing desc;
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from unit
     where unit_id = #{unitId,jdbcType=VARCHAR}

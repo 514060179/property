@@ -3,6 +3,7 @@
 <mapper namespace="com.simon.dal.dao.PlaceRecordMapper" >
   <resultMap id="BaseResultMap" type="com.simon.dal.model.PlaceRecord" >
     <id column="record_id" property="recordId" jdbcType="VARCHAR" />
+    <result column="community_id" property="communityId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="place_id" property="placeId" jdbcType="VARCHAR" />
     <result column="order_date" property="orderDate" jdbcType="DATE" />

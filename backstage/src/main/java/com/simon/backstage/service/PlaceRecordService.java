@@ -1,11 +1,14 @@
 package com.simon.backstage.service;
 
 import com.github.pagehelper.PageInfo;
+import com.simon.backstage.domain.model.ChargeItemRecord;
+import com.simon.backstage.domain.model.Unit;
 import com.simon.dal.model.PlaceRecord;
 import com.simon.dal.vo.BaseQueryParam;
 import com.simon.dal.vo.PlaceRecordStatisData;
 import com.simon.dal.vo.PlaceRecordStatisQuery;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -55,5 +58,33 @@ public interface PlaceRecordService {
      * @return
      */
     List<PlaceRecordStatisData> statis(PlaceRecordStatisQuery placeRecordStatisQuery);
+
+    /**
+     * 列入物业收费
+     *
+     * @param communityId   社区id
+     * @param placeRecordId 定场记录id
+     * @param unitId        单元id
+     * @param price         价格
+     * @return
+     */
+    boolean creChargeItemRecord(String communityId,String userId, String placeRecordId, String unitId, BigDecimal price);
+
+    /**
+     * 查询定场收费记录
+     *
+     * @param placeRecordId
+     * @return
+     */
+    ChargeItemRecord getChargeItemRecord(String placeRecordId);
+
+
+    /**
+     * 根据用户id获取单元
+     *
+     * @param userId
+     * @return
+     */
+    Unit getUnitByUserId(String userId);
 
 }
