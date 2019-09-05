@@ -20,6 +20,9 @@ public class Asset {
     @NotEmpty(message = "社区id不能为空")
     private String communityId;
 
+    @ApiModelProperty(value = "建筑id",example = "b123456")
+    private String buildingId;
+
     @ApiModelProperty(value = "资产编号",example = "ZC001")
     private String assetNo;
 
@@ -119,6 +122,14 @@ public class Asset {
 
     public void setCommunityId(String communityId) {
         this.communityId = communityId == null ? null : communityId.trim();
+    }
+
+    public String getBuildingId() {
+        return buildingId;
+    }
+
+    public void setBuildingId(String buildingId) {
+        this.buildingId = buildingId;
     }
 
     public String getAssetNo() {

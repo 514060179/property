@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.Asset" >
     <id column="asset_id" property="assetId" jdbcType="VARCHAR" />
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="building_id" property="buildingId" jdbcType="VARCHAR" />
     <result column="asset_no" property="assetNo" jdbcType="VARCHAR" />
     <result column="asset_type" property="assetType" jdbcType="VARCHAR" />
     <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
@@ -42,7 +43,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    a.asset_id, a.community_id, a.asset_no, a.asset_type, a.asset_name, a.asset_traditional_name, a.asset_english_name,
+    a.asset_id, a.community_id,a.building_id, a.asset_no, a.asset_type, a.asset_name, a.asset_traditional_name, a.asset_english_name,
     a.asset_position, a.asset_traditional_position, a.asset_english_position,a.asset_maintain,a.asset_maintain_remind_cycle,a.asset_status, a.asset_buy_date,a.asset_overdue_date,a.create_time,
     a.update_time,a.asset_describe, a.asset_traditional_describe, a.asset_english_describe,
     c.community_id,c.community_no,c.community_name
@@ -71,6 +72,9 @@
       <if test="communityId != null">
       	AND a.community_id = #{communityId,jdbcType=VARCHAR}
       </if>
+      <if test="buildingId != null">
+      	AND a.building_id = #{buildingId,jdbcType=VARCHAR}
+      </if>
       <if test="assetMaintainRemindCycle != null">
       	AND a.asset_maintain_remind_cycle = #{assetMaintainRemindCycle,jdbcType=VARCHAR}
       </if>
@@ -94,13 +98,13 @@
     where asset_id = #{assetId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.Asset" >
-    insert into asset (asset_id, community_id,asset_no, asset_type,
+    insert into asset (asset_id, community_id,building_id,asset_no, asset_type,
       asset_name, asset_traditional_name, asset_english_name, 
       asset_position, asset_traditional_position, 
       asset_english_position,asset_maintain, asset_maintain_remind_cycle,asset_status, asset_buy_date,asset_overdue_date,create_time, update_time,
       asset_describe, asset_traditional_describe, 
       asset_english_describe)
-    values (#{assetId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR},#{assetNo,jdbcType=VARCHAR}, #{assetType,jdbcType=VARCHAR},
+    values (#{assetId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR},#{buildingId,jdbcType=VARCHAR},#{assetNo,jdbcType=VARCHAR}, #{assetType,jdbcType=VARCHAR},
       #{assetName,jdbcType=VARCHAR}, #{assetTraditionalName,jdbcType=VARCHAR}, #{assetEnglishName,jdbcType=VARCHAR}, 
       #{assetPosition,jdbcType=VARCHAR}, #{assetTraditionalPosition,jdbcType=VARCHAR}, 
       #{assetEnglishPosition,jdbcType=VARCHAR},#{assetMaintain,jdbcType=BIT},#{assetMaintainRemindCycle,jdbcType=INTEGER},#{assetStatus,jdbcType=INTEGER}, #{assetBuyDate,jdbcType=TIMESTAMP},#{assetOverdueDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
@@ -115,6 +119,9 @@
       </if>
       <if test="communityId != null" >
         community_id,
+      </if>
+      <if test="buildingId != null" >
+        building_id,
       </if>
       <if test="assetNo != null" >
         asset_no,
@@ -178,6 +185,9 @@
       <if test="communityId != null" >
         #{communityId,jdbcType=VARCHAR},
       </if>
+      <if test="buildingId != null" >
+        #{buildingId,jdbcType=VARCHAR},
+      </if>
       <if test="assetNo != null" >
         #{assetNo,jdbcType=VARCHAR},
       </if>
@@ -240,6 +250,9 @@
       <if test="communityId != null" >
         community_id = #{communityId,jdbcType=VARCHAR},
       </if>
+      <if test="buildingId != null" >
+        building_id = #{buildingId,jdbcType=VARCHAR},
+      </if>
       <if test="assetNo != null" >
         asset_no = #{assetNo,jdbcType=VARCHAR},
       </if>
@@ -301,6 +314,7 @@
     update asset
     set
       community_id = #{communityId,jdbcType=VARCHAR},
+      building_id = #{buildingId,jdbcType=VARCHAR},
       asset_no = #{assetNo,jdbcType=VARCHAR},
       asset_type = #{assetType,jdbcType=VARCHAR},
       asset_name = #{assetName,jdbcType=VARCHAR},
@@ -325,6 +339,7 @@
     update asset
     set
       community_id = #{communityId,jdbcType=VARCHAR},
+      building_id = #{buildingId,jdbcType=VARCHAR},
       asset_no = #{assetNo,jdbcType=VARCHAR},
       asset_type = #{assetType,jdbcType=VARCHAR},
       asset_name = #{assetName,jdbcType=VARCHAR},

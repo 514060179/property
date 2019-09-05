@@ -12,3 +12,6 @@ ALTER TABLE `bms`.`asset`
 ALTER TABLE `bms`.`asset`
   ADD COLUMN `asset_overdue_date` DATE NULL COMMENT '过期日期' AFTER `asset_buy_date`,
   ADD COLUMN `asset_status` INT DEFAULT 0 NULL COMMENT '状态0使用中1货存2损坏3弃置' AFTER `asset_type`;
+
+ALTER TABLE `bms`.`asset`
+ADD COLUMN `building_id` varchar(50) NULL COMMENT '建筑id' AFTER `community_id`;
