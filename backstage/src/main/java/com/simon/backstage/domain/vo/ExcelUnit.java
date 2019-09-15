@@ -28,6 +28,9 @@ public class ExcelUnit {
     @ApiModelProperty(value = "单元状态0空置1租赁2装修中3入住",example = "3")
     private Integer unitStatus;
 
+    @ApiModelProperty(value = "覆盖面积大小(单位平方米)",example = "101.05")
+    private BigDecimal unitCoveredArea;
+
     @ApiModelProperty(value = "全址",example = "三楼A001")
     private String unitFullAddress;
 
@@ -37,10 +40,10 @@ public class ExcelUnit {
     @ApiModelProperty(value = "位置(地下,一楼,二楼,三楼,户外.)",example = "三楼")
     private String unitPosition;
 
-    @ApiModelProperty(value = "分层建筑物相对比(千分之一)",example = "0.002")
+    @ApiModelProperty(value = "分层建筑物相对比(百分之一)",example = "0.02")
     private BigDecimal unitRelativeProportion;
 
-    @ApiModelProperty(value = "分层建筑物之子部分相对比(千分之一)",example = "0.05")
+    @ApiModelProperty(value = "分层建筑物之子部分相对比(百分之一)",example = "0.05")
     private BigDecimal unitChildRelativeProportion;
 
     @ApiModelProperty(value = "单位业权",example = "10")
@@ -154,5 +157,13 @@ public class ExcelUnit {
 
     public void setBuildingName(String buildingName) {
         this.buildingName = buildingName;
+    }
+
+    public BigDecimal getUnitCoveredArea() {
+        return unitCoveredArea;
+    }
+
+    public void setUnitCoveredArea(BigDecimal unitCoveredArea) {
+        this.unitCoveredArea = unitCoveredArea;
     }
 }

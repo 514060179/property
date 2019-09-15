@@ -183,7 +183,6 @@ public class UnitServiceImpl implements UnitService {
 
     @Override
     public List<ExcelUnit> getExcelUnits(UnitQueryParam unitQueryParam) {
-        // todo
-        return null;
+        return userUnitMapper.getExcelUnits(unitQueryParam);
     }
 }

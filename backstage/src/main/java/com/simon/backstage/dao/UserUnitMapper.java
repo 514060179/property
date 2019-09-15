@@ -1,6 +1,9 @@
 package com.simon.backstage.dao;
 
+import com.simon.backstage.domain.vo.ExcelUnit;
+import com.simon.backstage.domain.vo.UnitQueryParam;
 import com.simon.dal.model.User;
+import com.simon.dal.vo.BaseQueryParam;
 import org.apache.ibatis.annotations.Param;
 
 import com.simon.backstage.domain.model.UserUnit;
@@ -27,4 +30,7 @@ public interface UserUnitMapper {
 	int deleteByUser(@Param("unitId") String unitId,@Param("userId") String userId);
 
 	List<User> unitUserList(@Param("unitId") String unitId);
+
+    List<ExcelUnit> getExcelUnits(BaseQueryParam baseQueryParam);
+
 }

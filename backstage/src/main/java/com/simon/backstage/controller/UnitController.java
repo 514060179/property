@@ -7,10 +7,12 @@ import com.simon.backstage.domain.model.UserUnit;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.domain.vo.ExcelData;
+import com.simon.backstage.domain.vo.ExcelUnit;
 import com.simon.backstage.domain.vo.UnitQueryParam;
 import com.simon.backstage.service.BuildingService;
 import com.simon.backstage.service.UnitService;
 import com.simon.backstage.util.ClaimsUtil;
+import com.simon.backstage.util.ExcelUtils;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.User;
 import com.simon.dal.vo.BaseQueryParam;
@@ -152,8 +154,6 @@ public class UnitController {
     @GetMapping("export")
     @ApiOperation("导出")
     public void export(UnitQueryParam unitQueryParam, HttpServletRequest request, HttpServletResponse response) {
-        // todo
-
         String communityId = ClaimsUtil.getCommunityId(request);
         if(!StringUtils.isEmpty(communityId)){
             unitQueryParam.setCommunityId(communityId);
@@ -163,24 +163,47 @@ public class UnitController {
         data.setName("單元结构导出");
 
         List<String> titles = new ArrayList();
-
+        List<ExcelUnit> excelUnitList = unitService.getExcelUnits(unitQueryParam);
+        //設置headder
+        titles.add("社區");
+        titles.add("建築");
         titles.add("單位編號");
         titles.add("單位名字");
         titles.add("單位狀態");
         titles.add("用途");
-        titles.add("建築");
         titles.add("面積");
         titles.add("位置");
         titles.add("葉權");
-        titles.add("百分比");
+        titles.add("分层建筑物相对比(百分之一)");
+        titles.add("分层建筑物之子部分相对比(百分之一)");
         titles.add("全址");
         titles.add("業主/住戶");
-
         data.setTitles(titles);
-
         //获取列表
-
-
-//        data.setRows();
+        List<List<Object>> rows = new ArrayList();
+        //設置內容
+        excelUnitList.forEach(excelUnit -> {
+            List<Object> row = new ArrayList<>();
+            row.add(excelUnit.getCommunityName());
+            row.add(excelUnit.getBuildingName());
+            row.add(excelUnit.getUnitNo());
+            row.add(excelUnit.getUnitName());
+            row.add(excelUnit.getUnitStatus());
+            row.add(excelUnit.getUnitPurpose());
+            row.add(excelUnit.getUnitCoveredArea());
+            row.add(excelUnit.getUnitPosition());
+            row.add(excelUnit.getUnitTitle());
+            row.add(excelUnit.getUnitRelativeProportion());
+            row.add(excelUnit.getUnitChildRelativeProportion());
+            row.add(excelUnit.getUnitFullAddress());
+            row.add(excelUnit.getUsers());
+            rows.add(row);
+        });
+        data.setRows(rows);
+        try {
+            ExcelUtils.exportExcel(response,"bms澳門物業单位",data);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
