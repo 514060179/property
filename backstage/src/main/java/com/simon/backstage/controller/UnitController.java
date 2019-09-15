@@ -6,12 +6,14 @@ import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.model.UserUnit;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
+import com.simon.backstage.domain.vo.ExcelData;
 import com.simon.backstage.domain.vo.UnitQueryParam;
 import com.simon.backstage.service.BuildingService;
 import com.simon.backstage.service.UnitService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.User;
+import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +24,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -143,5 +147,40 @@ public class UnitController {
             return ReturnMsg.fail(Code.notfound,"找不到该建筑buildingId="+buildingId);
         }
         return ReturnMsg.success(unitService.importExcel(request,building.getCommunityId(),buildingId));
+    }
+
+    @GetMapping("export")
+    @ApiOperation("导出")
+    public void export(UnitQueryParam unitQueryParam, HttpServletRequest request, HttpServletResponse response) {
+        // todo
+
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if(!StringUtils.isEmpty(communityId)){
+            unitQueryParam.setCommunityId(communityId);
+        }
+        ExcelData data = new ExcelData();
+
+        data.setName("單元结构导出");
+
+        List<String> titles = new ArrayList();
+
+        titles.add("單位編號");
+        titles.add("單位名字");
+        titles.add("單位狀態");
+        titles.add("用途");
+        titles.add("建築");
+        titles.add("面積");
+        titles.add("位置");
+        titles.add("葉權");
+        titles.add("百分比");
+        titles.add("全址");
+        titles.add("業主/住戶");
+
+        data.setTitles(titles);
+
+        //获取列表
+
+
+//        data.setRows();
     }
 }

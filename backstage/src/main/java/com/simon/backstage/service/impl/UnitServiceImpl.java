@@ -6,6 +6,8 @@ import com.simon.backstage.dao.UnitMapper;
 import com.simon.backstage.dao.UserUnitMapper;
 import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.model.UserUnit;
+import com.simon.backstage.domain.vo.ExcelUnit;
+import com.simon.backstage.domain.vo.UnitQueryParam;
 import com.simon.backstage.service.UnitService;
 import com.simon.dal.model.User;
 import com.simon.dal.util.UUIDUtil;
@@ -177,5 +179,11 @@ public class UnitServiceImpl implements UnitService {
             }
         });
         return responseMsg.toString();
+    }
+
+    @Override
+    public List<ExcelUnit> getExcelUnits(UnitQueryParam unitQueryParam) {
+        // todo
+        return null;
     }
 }

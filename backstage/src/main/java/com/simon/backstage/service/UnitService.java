@@ -3,6 +3,8 @@ package com.simon.backstage.service;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.model.UserUnit;
+import com.simon.backstage.domain.vo.ExcelUnit;
+import com.simon.backstage.domain.vo.UnitQueryParam;
 import com.simon.dal.model.User;
 import com.simon.dal.vo.BaseClaims;
 import com.simon.dal.vo.BaseQueryParam;
@@ -96,4 +98,12 @@ public interface UnitService {
      * @return
      */
 	String importExcel(HttpServletRequest request,String communityId, String buildingId);
+
+
+    /**
+     * 获取excel导出单元列表
+     * @param unitQueryParam
+     * @return
+     */
+	List<ExcelUnit> getExcelUnits(UnitQueryParam unitQueryParam);
 }
