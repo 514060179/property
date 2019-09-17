@@ -217,10 +217,10 @@
   </delete>
 
   <insert id="insertBuildingChildSelective">
-    insert into building_child (child_id,building_id, tips, `value`,sort)values
+    insert into building_child (child_id,building_id, tips, `value`,sort,`name`,amount,area,purpose,perthousand)values
     <foreach collection="list" item="item" separator=",">
       (
-      #{item.childId},#{item.buildingId},#{item.tips},#{item.value},#{item.sort}
+      #{item.childId},#{item.buildingId},#{item.tips},#{item.value},#{item.sort},#{item.name},#{item.amount},#{item.area},#{item.purpose},#{item.perthousand}
       )
     </foreach>
   </insert>
