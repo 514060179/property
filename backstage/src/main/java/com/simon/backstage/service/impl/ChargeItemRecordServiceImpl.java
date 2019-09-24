@@ -9,6 +9,7 @@ import com.simon.backstage.dao.ChargeItemRecordMapper;
 import com.simon.backstage.domain.model.AdvanceMoney;
 import com.simon.backstage.domain.model.AdvanceRecord;
 import com.simon.backstage.domain.model.ChargeItemRecord;
+import com.simon.backstage.domain.vo.QueryWithIdParam;
 import com.simon.backstage.domain.vo.UnitChargeVo;
 import com.simon.backstage.domain.vo.UnitCharges;
 import com.simon.backstage.service.ChargeItemRecordService;
@@ -18,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -93,14 +96,35 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
 
     @Override
     public UnitCharges unitChargeList(String communityId) {
-        BaseQueryParam baseQueryParam = new BaseQueryParam();
+        BaseQueryParam baseQueryParam = new QueryWithIdParam();
         baseQueryParam.setCommunityId(communityId);
         List<ChargeItemRecord> list = chargeItemRecordMapper.selectByCondition(baseQueryParam);
         List<UnitChargeVo>  chargeVoList = new ArrayList<>();
+        List<String>  unitList = new ArrayList<>();
         UnitCharges unitCharges = new UnitCharges();
-        list.forEach(chargeItemRecord -> {
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM");
+
+        list.forEach(chargeItemRecord -> {
+            unitList.add(chargeItemRecord.getUnitNo());
+            UnitChargeVo unitChargeVo = new UnitChargeVo();
+            try {
+                unitChargeVo.setxDate(sdf.format(sdf2.parse(chargeItemRecord.getRecordDate())));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            unitChargeVo.setyUnit(chargeItemRecord.getUnitNo());
+            unitChargeVo.setV1Date(sdf1.format(chargeItemRecord.getRecordTime()));
+            unitChargeVo.setV2Money(chargeItemRecord.getRecordActualAmount().toString());
+            chargeVoList.add(unitChargeVo);
         });
-        return null;
+        unitCharges.setxUnitList(unitList);
+        unitCharges.setChargeVoList(chargeVoList);
+        //开始，结束时间
+//        unitCharges.setStartTime();
+//        unitCharges.setEndTime();
+        return unitCharges;
     }
 }

@@ -64,7 +64,7 @@ public class ChargeItemRecordController {
 
     @GetMapping("unitChargeList")
     @ApiOperation("单元收费列表")
-    public ReturnMsg<UnitCharges> unitChargeList(@RequestParam String conmunityId{
+    public ReturnMsg<UnitCharges> unitChargeList(@RequestParam String conmunityId){
         logger.info("单元收费列表conmunityId={}",  JSONUtil.objectToJson(conmunityId));
         return ReturnMsg.success(chargeItemRecordService.unitChargeList(conmunityId));
     }
