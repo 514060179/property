@@ -16,7 +16,7 @@ public class EventUpdParam {
     private String communityId;
 
     @ApiModelProperty(value = "事件进度0开始1待定2完成",example = "0")
-    private Integer eventStatus;
+    private String eventStatus;
 
     @ApiModelProperty(value = "备注",example = "备注")
     private String eventRemark;
@@ -25,7 +25,7 @@ public class EventUpdParam {
     private Date eventDate;
 
     @ApiModelProperty(value = "事件进度0跟进中1报价中2接获投诉3与管理机关讨论中4待定5工程进行中6待开大会表决7完成",example = "1")
-    private Integer eventType;
+    private String eventType;
 
     @ApiModelProperty(value = "完成时间",example = "2018-11-12")
     private Date eventFinishDate;
@@ -78,11 +78,11 @@ public class EventUpdParam {
         this.communityId = communityId;
     }
 
-    public Integer getEventStatus() {
+    public String getEventStatus() {
         return eventStatus;
     }
 
-    public void setEventStatus(Integer eventStatus) {
+    public void setEventStatus(String eventStatus) {
         this.eventStatus = eventStatus;
     }
 
@@ -102,11 +102,11 @@ public class EventUpdParam {
         this.eventDate = eventDate;
     }
 
-    public Integer getEventType() {
+    public String getEventType() {
         return eventType;
     }
 
-    public void setEventType(Integer eventType) {
+    public void setEventType(String eventType) {
         this.eventType = eventType;
     }
 

@@ -15,10 +15,10 @@ public class EventQueryParam extends BaseQueryParam {
     private String communityId;
 
     @ApiModelProperty(value = "事件类型1采购2保养3其他",example = "1")
-    private Integer eventType;
+    private String eventType;
 
     @ApiModelProperty(value = "事件进度0跟进中1报价中2接获投诉3与管理机关讨论中4待定5工程进行中6待开大会表决7完成",example = "0")
-    private Integer eventStatus;
+    private String eventStatus;
 
     @ApiModelProperty(value = "物业资产编号",example = "ZC001")
     private String assetNo;
@@ -34,19 +34,19 @@ public class EventQueryParam extends BaseQueryParam {
         this.communityId = communityId;
     }
 
-    public Integer getEventType() {
+    public String getEventType() {
         return eventType;
     }
 
-    public void setEventType(Integer eventType) {
+    public void setEventType(String eventType) {
         this.eventType = eventType;
     }
 
-    public Integer getEventStatus() {
+    public String getEventStatus() {
         return eventStatus;
     }
 
-    public void setEventStatus(Integer eventStatus) {
+    public void setEventStatus(String eventStatus) {
         this.eventStatus = eventStatus;
     }
 
