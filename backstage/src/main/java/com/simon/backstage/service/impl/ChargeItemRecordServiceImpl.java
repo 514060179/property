@@ -9,6 +9,8 @@ import com.simon.backstage.dao.ChargeItemRecordMapper;
 import com.simon.backstage.domain.model.AdvanceMoney;
 import com.simon.backstage.domain.model.AdvanceRecord;
 import com.simon.backstage.domain.model.ChargeItemRecord;
+import com.simon.backstage.domain.vo.UnitChargeVo;
+import com.simon.backstage.domain.vo.UnitCharges;
 import com.simon.backstage.service.ChargeItemRecordService;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -86,5 +89,18 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
     public PageInfo<ChargeItemRecord> list(BaseQueryParam baseQueryParam) {
         PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
         return new PageInfo<>(chargeItemRecordMapper.selectByCondition(baseQueryParam));
+    }
+
+    @Override
+    public UnitCharges unitChargeList(String communityId) {
+        BaseQueryParam baseQueryParam = new BaseQueryParam();
+        baseQueryParam.setCommunityId(communityId);
+        List<ChargeItemRecord> list = chargeItemRecordMapper.selectByCondition(baseQueryParam);
+        List<UnitChargeVo>  chargeVoList = new ArrayList<>();
+        UnitCharges unitCharges = new UnitCharges();
+        list.forEach(chargeItemRecord -> {
+
+        });
+        return null;
     }
 }

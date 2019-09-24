@@ -4,15 +4,14 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.annotation.Log;
 import com.simon.backstage.annotation.OperateType;
 import com.simon.backstage.domain.model.ChargeItemRecord;
-import com.simon.backstage.domain.msg.Code;
+import com.simon.backstage.domain.vo.UnitChargeVo;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.domain.vo.QueryWithIdParam;
+import com.simon.backstage.domain.vo.UnitCharges;
 import com.simon.backstage.service.ChargeItemRecordService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
-import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +60,13 @@ public class ChargeItemRecordController {
             queryWithIdParam.setCommunityId(ClaimsUtil.getCommunityId(request));
         }
         return ReturnMsg.success(chargeItemRecordService.list(queryWithIdParam));
+    }
+
+    @GetMapping("unitChargeList")
+    @ApiOperation("单元收费列表")
+    public ReturnMsg<UnitCharges> unitChargeList(@RequestParam String conmunityId{
+        logger.info("单元收费列表conmunityId={}",  JSONUtil.objectToJson(conmunityId));
+        return ReturnMsg.success(chargeItemRecordService.unitChargeList(conmunityId));
     }
 
     @GetMapping("detail")
