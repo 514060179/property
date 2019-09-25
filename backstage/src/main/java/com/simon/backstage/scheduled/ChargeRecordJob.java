@@ -68,6 +68,7 @@ public class ChargeRecordJob {
                 //单位面积收费
                 recordAmount = unitItemWithUser.getUnit().getUnitCoveredArea().multiply(unitItemWithUser.getChargeItem().getUnitPrice()).setScale(1,BigDecimal.ROUND_HALF_UP);
             }
+            chargeItemRecord.setUnitId(unitItemWithUser.getUnit().getUnitId());
             chargeItemRecord.setUnitItemId(unitItemWithUser.getUnitItemId());
             chargeItemRecord.setUserId(unitItemWithUser.getUserId());
             BigDecimal additionalCost = unitItemWithUser.getChargeItem().getAdditionalCost();//额外收费

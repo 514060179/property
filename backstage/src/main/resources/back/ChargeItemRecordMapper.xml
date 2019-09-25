@@ -5,6 +5,7 @@
     <id column="record_id" property="recordId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="unit_item_id" property="unitItemId" jdbcType="VARCHAR" />
+    <result column="unit_id" property="unitId" jdbcType="VARCHAR" />
     <result column="record_item_name" property="recordItemName" jdbcType="VARCHAR" />
     <result column="record_date" property="recordDate" jdbcType="VARCHAR" />
     <result column="record_status" property="recordStatus" jdbcType="INTEGER" />
@@ -45,11 +46,11 @@
     </association>
   </resultMap>
   <sql id="Base_Column_List" >
-    record_id, user_id, unit_item_id,record_item_name, record_date, record_status, record_time, record_actual_amount,
+    record_id, user_id, unit_item_id,unit_id,record_item_name, record_date, record_status, record_time, record_actual_amount,
     record_amount, record_late_fee, record_late_date, record_remark, create_time, update_time
   </sql>
   <sql id="With_Other_Column_List" >
-    cir.record_id, cir.user_id, cir.unit_item_id,cir.record_item_name, cir.record_date, cir.record_status, cir.record_time, cir.record_actual_amount,
+    cir.record_id, cir.user_id, cir.unit_item_id,cir.unit_id,cir.record_item_name, cir.record_date, cir.record_status, cir.record_time, cir.record_actual_amount,
     cir.record_amount, cir.record_late_fee, cir.record_late_date, cir.record_remark, cir.create_time, cir.update_time,
     uu.user_id, uu.name, uu.english_name, uu.sex,u.unit_type,u.unit_no,
     ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price,ci.additional_cost, ci.late_fee,
@@ -117,12 +118,12 @@
     where record_id = #{recordId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.ChargeItemRecord" >
-    insert into charge_item_record (record_id, user_id, unit_item_id, record_item_name,
+    insert into charge_item_record (record_id, user_id, unit_item_id, unit_id, record_item_name,
       record_date, record_status, record_time, 
       record_actual_amount, record_amount, record_late_fee, 
       record_late_date, record_remark, create_time, 
       update_time)
-    values (#{recordId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{unitItemId,jdbcType=VARCHAR}, #{recordItemName,jdbcType=VARCHAR},
+    values (#{recordId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{unitItemId,jdbcType=VARCHAR},#{unitId,jdbcType=VARCHAR}, #{recordItemName,jdbcType=VARCHAR},
       #{recordDate,jdbcType=VARCHAR}, #{recordStatus,jdbcType=INTEGER}, #{recordTime,jdbcType=TIMESTAMP}, 
       #{recordActualAmount,jdbcType=DECIMAL}, #{recordAmount,jdbcType=DECIMAL}, #{recordLateFee,jdbcType=DECIMAL}, 
       #{recordLateDate,jdbcType=INTEGER}, #{recordRemark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
@@ -139,6 +140,9 @@
       </if>
       <if test="unitItemId != null" >
         unit_item_id,
+      </if>
+      <if test="unitId != null" >
+        unit_id,
       </if>
       <if test="placeRecordId != null" >
         place_record_id,
@@ -186,6 +190,9 @@
       </if>
       <if test="unitItemId != null" >
         #{unitItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null" >
+        #{unitId,jdbcType=VARCHAR},
       </if>
       <if test="placeRecordId != null" >
         #{placeRecordId,jdbcType=VARCHAR},
@@ -265,6 +272,7 @@
     update charge_item_record
     set user_id = #{userId,jdbcType=VARCHAR},
       unit_item_id = #{unitItemId,jdbcType=VARCHAR},
+      unit_id = #{unitId,jdbcType=VARCHAR},
       record_item_name = #{recordItemName,jdbcType=VARCHAR},
       record_date = #{recordDate,jdbcType=VARCHAR},
       record_status = #{recordStatus,jdbcType=INTEGER},
@@ -292,12 +300,12 @@
   </update>
 
   <insert id="addBatch" keyProperty="jnId" useGeneratedKeys="true">
-    insert into charge_item_record (record_id, user_id, unit_item_id,record_item_name,
+    insert into charge_item_record (record_id, user_id, unit_item_id,unit_id,record_item_name,
     record_date, record_status, record_time,
     record_actual_amount, record_amount, record_late_fee,
     record_late_date, record_remark) values
     <foreach collection="list" item="item" separator=",">
-      (#{item.recordId,jdbcType=VARCHAR}, #{item.userId,jdbcType=VARCHAR}, #{item.unitItemId,jdbcType=VARCHAR},#{item.recordItemName,jdbcType=VARCHAR},
+      (#{item.recordId,jdbcType=VARCHAR}, #{item.userId,jdbcType=VARCHAR}, #{item.unitItemId,jdbcType=VARCHAR},#{item.unitId,jdbcType=VARCHAR},#{item.recordItemName,jdbcType=VARCHAR},
       #{item.recordDate,jdbcType=VARCHAR}, #{item.recordStatus,jdbcType=INTEGER}, #{item.recordTime,jdbcType=TIMESTAMP},
       #{item.recordActualAmount,jdbcType=DECIMAL}, #{item.recordAmount,jdbcType=DECIMAL}, #{item.recordLateFee,jdbcType=DECIMAL},
       #{item.recordLateDate,jdbcType=INTEGER}, #{item.recordRemark,jdbcType=VARCHAR})
