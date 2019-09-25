@@ -1,16 +1,15 @@
 package com.simon.backstage.service.impl;
 import java.math.BigDecimal;
+
+import com.simon.backstage.dao.*;
 import com.simon.backstage.domain.model.ChargeItem;
+import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.User;
 import java.util.Date;
 import com.simon.backstage.domain.vo.Community;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.simon.backstage.dao.AdvanceMoneyMapper;
-import com.simon.backstage.dao.AdvanceRecordMapper;
-import com.simon.backstage.dao.ChargeItemMapper;
-import com.simon.backstage.dao.ChargeItemRecordMapper;
 import com.simon.backstage.domain.model.AdvanceMoney;
 import com.simon.backstage.domain.model.AdvanceRecord;
 import com.simon.backstage.domain.model.ChargeItemRecord;
@@ -54,6 +53,8 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
     private AdvanceMoneyMapper advanceMoneyMapper;
     @Autowired
     private AdvanceRecordMapper advanceRecordMapper;
+    @Autowired
+    private UnitMapper unitMapper;
     @Override
     public ChargeItemRecord add(ChargeItemRecord chargeItemRecord) {
         chargeItemRecord.setRecordId(UUIDUtil.uidString());
@@ -161,6 +162,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                 int last = xssfRow.getLastCellNum();
                 System.out.println("这是第"+i+"行。值分别：");
                 String unitNo = null;
+                Unit unit = null;
                 for (int j = 0 ; j <= last ; j++){
                     //获取表头日期
                     if (i == 0 && j >= 4 && j % 2 == 0) {
@@ -174,7 +176,10 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         String date = map.get(j+"");//物业收费日期
                         XSSFCell d = xssfRow.getCell(j);//缴费日期
                         XSSFCell m = xssfRow.getCell(j+1);//缴费金额
-                        if (d == null || m == null){
+                        String recordTime = getCellValue(d);
+                        String amount = getCellValue(m);
+                        getCellValue(m);
+                        if ("".equals(recordTime) || "".equals(amount)){
                             continue;
                         }
                         ChargeItemRecord chargeItemRecord = new ChargeItemRecord();
@@ -183,18 +188,25 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         chargeItemRecord.setRecordItemName("導入數據收費");
                         chargeItemRecord.setRecordDate(date);
                         chargeItemRecord.setRecordStatus(1);
+                        chargeItemRecord.setUnitId(unit.getUnitId());
 //                        chargeItemRecord.setUserId();
-                        chargeItemRecord.setRecordTime(simpleDateFormat.parse(getCellValue(d)));
-                        chargeItemRecord.setRecordActualAmount(new BigDecimal(getCellValue(m)));
-                        chargeItemRecord.setRecordAmount(new BigDecimal(getCellValue(m)));
+                        chargeItemRecord.setRecordTime(simpleDateFormat.parse(recordTime));
+                        chargeItemRecord.setRecordActualAmount(new BigDecimal(amount));
+                        chargeItemRecord.setRecordAmount(new BigDecimal(amount));
                         chargeItemRecord.setRecordRemark("導入數據收費");
                         chargeItemRecord.setUnitType(0);
                         chargeItemRecord.setUnitNo(unitNo);
                         chargeItemRecord.setCreateTime(new Date());
+                        System.out.println(JSONUtil.objectToJson(chargeItemRecord));
                     }else if(i > 0 && j == 0){//单位号
                         XSSFCell xssfCell = xssfRow.getCell(j);
                         //获取单位号
                         unitNo = getCellValue(xssfCell);
+                        //
+                        unit = unitMapper.selectByUnitNo(unitNo);
+                        if (unit==null){
+                            break;
+                        }
                     }else {
                         continue;
 
@@ -209,7 +221,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
     }
 
     public String getCellValue(XSSFCell cell) {
-        String strCell = "";
+        String strCell = null;
         if (cell != null) {
             switch (cell.getCellType()) {
                 case Cell.CELL_TYPE_STRING://字符串类型
@@ -240,7 +252,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                     break;
             }
         }
-        if (strCell.equals("") || strCell == null) {
+        if (strCell == null|| strCell.equals("") ) {
             strCell = "";
         }
         return strCell.trim();
