@@ -83,7 +83,7 @@ public class EventController {
     	logger.info("处理事件eventId={}", JSONUtil.objectToJson(eventId));
     	Event event = new Event();
     	event.setEventId(eventId);
-    	event.setEventStatus(Integer.parseInt(eventStatus));
+    	event.setEventStatus(eventStatus);
     	return ReturnMsg.success(eventService.changeStatus(event));
     }
 }

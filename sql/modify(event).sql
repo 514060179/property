@@ -10,3 +10,9 @@ ALTER TABLE `bms`.`event`
   ADD COLUMN `complain_voice` VARCHAR (50) NULL COMMENT '投诉声音' AFTER `complain_class_type`,
   ADD COLUMN `complain_reply` VARCHAR (200) NULL COMMENT '投诉进度回复' AFTER `complain_voice`,
   ADD COLUMN `event_channel` INT (11) DEFAULT 0 NULL COMMENT '接收渠道:0公司1app2业主口头投诉' AFTER `complain_reply`;
+
+
+
+ALTER TABLE `bms`.`event`
+  CHANGE `event_status` `event_status` VARCHAR(11) NULL COMMENT '事件进度0跟进中1报价中2接获投诉3与管理机关讨论中4待定5工程进行中6待开大会表决7完成',
+  CHANGE `event_type` `event_type` VARCHAR(11) DEFAULT '3' NULL COMMENT '事件类型1采购2保养3投诉4损坏';

@@ -123,7 +123,7 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public int changeStatus(Event event) {
-		if(event.getEventStatus()==2){//事件完成
+		if("完成".equalsIgnoreCase(event.getEventStatus())){//事件完成
 			event.setEventFinishDate(new Date());
 		}
 		return eventMapper.updateByPrimaryKeySelective(event);

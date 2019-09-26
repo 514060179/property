@@ -4,8 +4,12 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.AdvanceMoney;
 import com.simon.backstage.domain.model.AdvanceRecord;
 import com.simon.backstage.domain.model.ChargeItemRecord;
+import com.simon.backstage.domain.vo.UnitChargeVo;
+import com.simon.backstage.domain.vo.UnitCharges;
 import com.simon.dal.vo.BaseQueryParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -61,4 +65,19 @@ public interface ChargeItemRecordService {
      * @return
      */
     PageInfo<ChargeItemRecord> list(BaseQueryParam baseQueryParam);
+    /**
+     * 单元收费列表
+     * @param communityId
+     * @return
+     */
+    UnitCharges unitChargeList(String communityId);
+
+
+    /**
+     * 导入物业收费
+     * @param file
+     * @param communityId
+     * @return
+     */
+    String importExcel(MultipartFile file, String communityId);
 }

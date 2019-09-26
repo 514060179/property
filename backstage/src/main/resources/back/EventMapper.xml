@@ -12,11 +12,11 @@
     <result column="complain_class_type" property="complainClassType" jdbcType="VARCHAR" />
     <result column="complain_voice" property="complainVoice" jdbcType="VARCHAR" />
     <result column="complain_reply" property="complainReply" jdbcType="VARCHAR" />
-    <result column="event_status" property="eventStatus" jdbcType="INTEGER" />
+    <result column="event_status" property="eventStatus" jdbcType="VARCHAR" />
     <result column="event_channel" property="eventChannel" jdbcType="INTEGER" />
     <result column="event_remark" property="eventRemark" jdbcType="VARCHAR" />
     <result column="event_date" property="eventDate" jdbcType="DATE" />
-    <result column="event_type" property="eventType" jdbcType="INTEGER" />
+    <result column="event_type" property="eventType" jdbcType="VARCHAR" />
     <result column="event_remind_cycle" property="eventRemindCycle" jdbcType="INTEGER" />
     <result column="event_finish_date" property="eventFinishDate" jdbcType="DATE" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -84,10 +84,10 @@
       	AND e.asset_no = #{assetNo,jdbcType=VARCHAR}
       </if>
       <if test="eventType != null">
-      	AND e.event_type = #{eventType,jdbcType=INTEGER}
+      	AND e.event_type = #{eventType,jdbcType=VARCHAR}
       </if>
       <if test="eventStatus != null">
-      	AND e.event_status = #{eventStatus,jdbcType=INTEGER}
+      	AND e.event_status = #{eventStatus,jdbcType=VARCHAR}
       </if>
       <if test="eventRemindCycle != null">
       	AND e.event_remind_cycle = #{eventRemindCycle,jdbcType=INTEGER}
@@ -117,8 +117,8 @@
     values (#{eventId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR},
       #{assetNo,jdbcType=VARCHAR},#{userId,jdbcType=VARCHAR},#{complainPosition,jdbcType=VARCHAR},
       #{complainSpecificPosition,jdbcType=VARCHAR},#{complainType,jdbcType=VARCHAR},#{complainClassType,jdbcType=VARCHAR},
-      #{complainVoice,jdbcType=VARCHAR},#{complainReply,jdbcType=VARCHAR},#{eventStatus,jdbcType=INTEGER},#{eventChannel,jdbcType=INTEGER},
-      #{eventRemark,jdbcType=VARCHAR}, #{eventDate,jdbcType=DATE}, #{eventType,jdbcType=INTEGER}, #{eventRemindCycle,jdbcType=INTEGER},
+      #{complainVoice,jdbcType=VARCHAR},#{complainReply,jdbcType=VARCHAR},#{eventStatus,jdbcType=VARCHAR},#{eventChannel,jdbcType=INTEGER},
+      #{eventRemark,jdbcType=VARCHAR}, #{eventDate,jdbcType=DATE}, #{eventType,jdbcType=VARCHAR}, #{eventRemindCycle,jdbcType=INTEGER},
       #{eventFinishDate,jdbcType=DATE}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{eventContent,jdbcType=LONGVARCHAR}, #{eventCause,jdbcType=LONGVARCHAR}, #{eventSolve,jdbcType=LONGVARCHAR}
       )
@@ -225,7 +225,7 @@
         #{complainReply,jdbcType=VARCHAR},
       </if>
       <if test="eventStatus != null" >
-        #{eventStatus,jdbcType=INTEGER},
+        #{eventStatus,jdbcType=VARCHAR},
       </if>
       <if test="eventChannel != null" >
         #{eventChannel,jdbcType=INTEGER},
@@ -237,7 +237,7 @@
         #{eventDate,jdbcType=DATE},
       </if>
       <if test="eventType != null" >
-        #{eventType,jdbcType=INTEGER},
+        #{eventType,jdbcType=VARCHAR},
       </if>
       <if test="eventRemindCycle != null" >
         #{eventRemindCycle,jdbcType=INTEGER},
@@ -269,7 +269,7 @@
         community_id = #{communityId,jdbcType=VARCHAR},
       </if>
       <if test="eventStatus != null" >
-        event_status = #{eventStatus,jdbcType=INTEGER},
+        event_status = #{eventStatus,jdbcType=VARCHAR},
       </if>
       <if test="eventChannel != null" >
         event_channel = #{eventChannel,jdbcType=INTEGER},
@@ -305,7 +305,7 @@
         event_date = #{eventDate,jdbcType=DATE},
       </if>
       <if test="eventType != null" >
-        event_type = #{eventType,jdbcType=INTEGER},
+        event_type = #{eventType,jdbcType=VARCHAR},
       </if>
       <if test="eventRemindCycle != null" >
         event_remind_cycle = #{eventRemindCycle,jdbcType=INTEGER},
@@ -356,7 +356,7 @@
         complain_reply = #{complainReply,jdbcType=VARCHAR},
       </if>
       <if test="eventStatus != null" >
-        event_status = #{eventStatus,jdbcType=INTEGER},
+        event_status = #{eventStatus,jdbcType=VARCHAR},
       </if>
       <if test="eventChannel != null" >
         event_channel = #{eventChannel,jdbcType=INTEGER},
@@ -368,7 +368,7 @@
         event_date = #{eventDate,jdbcType=DATE},
       </if>
       <if test="eventType != null" >
-        event_type = #{eventType,jdbcType=INTEGER},
+        event_type = #{eventType,jdbcType=VARCHAR},
       </if>
       <if test="eventRemindCycle != null" >
         event_remind_cycle = #{eventRemindCycle,jdbcType=INTEGER},
@@ -406,11 +406,11 @@
       complain_class_type = #{complainClassType,jdbcType=VARCHAR},
       complain_voice = #{complainVoice,jdbcType=VARCHAR},
       complain_reply = #{complainReply,jdbcType=VARCHAR},
-      event_status = #{eventStatus,jdbcType=INTEGER},
+      event_status = #{eventStatus,jdbcType=VARCHAR},
       event_channel = #{eventChannel,jdbcType=INTEGER},
       event_remark = #{eventRemark,jdbcType=VARCHAR},
       event_date = #{eventDate,jdbcType=DATE},
-      event_type = #{eventType,jdbcType=INTEGER},
+      event_type = #{eventType,jdbcType=VARCHAR},
       event_remind_cycle = #{eventRemindCycle,jdbcType=INTEGER},
       event_finish_date = #{eventFinishDate,jdbcType=DATE},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -432,11 +432,11 @@
       complain_class_type = #{complainClassType,jdbcType=VARCHAR},
       complain_voice = #{complainVoice,jdbcType=VARCHAR},
       complain_reply = #{complainReply,jdbcType=VARCHAR},
-      event_status = #{eventStatus,jdbcType=INTEGER},
+      event_status = #{eventStatus,jdbcType=VARCHAR},
       event_channel = #{eventChannel,jdbcType=INTEGER},
       event_remark = #{eventRemark,jdbcType=VARCHAR},
       event_date = #{eventDate,jdbcType=DATE},
-      event_type = #{eventType,jdbcType=INTEGER},
+      event_type = #{eventType,jdbcType=VARCHAR},
       event_remind_cycle = #{eventRemindCycle,jdbcType=INTEGER},
       event_finish_date = #{eventFinishDate,jdbcType=DATE},
       create_time = #{createTime,jdbcType=TIMESTAMP},
