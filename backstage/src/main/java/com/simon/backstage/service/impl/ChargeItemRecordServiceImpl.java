@@ -118,18 +118,12 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
         List<String>  unitList = new ArrayList<>();
         UnitCharges unitCharges = new UnitCharges();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月");
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM");
 
         list.forEach(chargeItemRecord -> {
             unitList.add(chargeItemRecord.getUnitNo());
             UnitChargeVo unitChargeVo = new UnitChargeVo();
-            try {
-                unitChargeVo.setxDate(sdf.format(sdf2.parse(chargeItemRecord.getRecordDate())));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            unitChargeVo.setxDate(chargeItemRecord.getRecordDate());
             unitChargeVo.setyUnit(chargeItemRecord.getUnitNo());
             unitChargeVo.setV1Date(sdf1.format(chargeItemRecord.getRecordTime()));
             unitChargeVo.setV2Money(chargeItemRecord.getRecordActualAmount().toString());
@@ -144,6 +138,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
     }
 
     @Override
+    @Transactional
     public String importExcel(MultipartFile file, String communityId) {
         int success = 0;
         int fail = 0;
@@ -162,7 +157,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                 int last = xssfRow.getLastCellNum();
                 System.out.println("这是第"+i+"行。值分别：");
                 String unitNo = null;
-                Unit unit = null;
+                String unitId = null;
                 for (int j = 0 ; j <= last ; j++){
                     //获取表头日期
                     if (i == 0 && j >= 4 && j % 2 == 0) {
@@ -188,7 +183,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         chargeItemRecord.setRecordItemName("導入數據收費");
                         chargeItemRecord.setRecordDate(date);
                         chargeItemRecord.setRecordStatus(1);
-                        chargeItemRecord.setUnitId(unit.getUnitId());
+                        chargeItemRecord.setUnitId(unitId);
 //                        chargeItemRecord.setUserId();
                         chargeItemRecord.setRecordTime(simpleDateFormat.parse(recordTime));
                         chargeItemRecord.setRecordActualAmount(new BigDecimal(amount));
@@ -197,15 +192,15 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         chargeItemRecord.setUnitType(0);
                         chargeItemRecord.setUnitNo(unitNo);
                         chargeItemRecord.setCreateTime(new Date());
-                        System.out.println(JSONUtil.objectToJson(chargeItemRecord));
+                        chargeItemRecordMapper.insertSelective(chargeItemRecord);
                     }else if(i > 0 && j == 0){//单位号
                         XSSFCell xssfCell = xssfRow.getCell(j);
                         //获取单位号
                         unitNo = getCellValue(xssfCell);
                         //
-                        unit = unitMapper.selectByUnitNo(unitNo);
-                        if (unit==null){
-                            break;
+                        Unit unit = unitMapper.selectByUnitNo(unitNo);
+                        if (unit!=null){
+                            unitId = unit.getUnitId();
                         }
                     }else {
                         continue;

@@ -144,6 +144,9 @@
       <if test="unitId != null" >
         unit_id,
       </if>
+      <if test="unitNo != null" >
+        unit_no,
+      </if>
       <if test="placeRecordId != null" >
         place_record_id,
       </if>
@@ -193,6 +196,9 @@
       </if>
       <if test="unitId != null" >
         #{unitId,jdbcType=VARCHAR},
+      </if>
+      <if test="unitNo != null" >
+        #{unitNo,jdbcType=VARCHAR},
       </if>
       <if test="placeRecordId != null" >
         #{placeRecordId,jdbcType=VARCHAR},

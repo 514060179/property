@@ -7,11 +7,5 @@ ALTER TABLE `bms`.`unit`
   CHANGE `unit_type` `unit_type` INT(11) DEFAULT 1 NULL COMMENT '单位用途1商业2轻型汽车/电单车3住宅';
   ADD COLUMN `unit_title` INT(11) NULL COMMENT '单位业权' AFTER `unit_status`;
 
-
-ALTER TABLE `bms`.`charge_item_record`
-ADD COLUMN `unit_id` varchar(50) NULL AFTER `user_id`;
-
-
-ALTER TABLE `bms`.`charge_item_record` DROP FOREIGN KEY `charge_item_record_ibfk_1`;
-
-ALTER TABLE `bms`.`charge_item_record` DROP FOREIGN KEY `charge_item_record_ibfk_2`;
+ALTER TABLE `bms`.`unit`
+ADD COLUMN `child_id` varchar(50) NULL COMMENT '建筑字部分id' AFTER `community_id`;
