@@ -177,7 +177,7 @@ public class ExcelController {
             if(!StringUtils.isEmpty(asset.getCommunity())){
                 row.add(asset.getCommunity().getCommunityName());
             }else{
-                row.add("");
+                row.add("-");
             }
             rows.add(row);
         });
@@ -217,7 +217,7 @@ public class ExcelController {
             if(!StringUtils.isEmpty(event.getCommunity())){
                 row.add(event.getCommunity().getCommunityName());
             }else{
-                row.add("");
+                row.add("-");
             }
             row.add(event.getEventType());
             row.add(event.getEventDate());
