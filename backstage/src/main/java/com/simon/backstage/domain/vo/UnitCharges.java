@@ -50,7 +50,7 @@ public class UnitCharges {
 
     public List<String> getxDateList() {
 
-        return getMonthStr();
+        return this.xDateList;
     }
 
     public void setxDateList(List<String> xDateList) {

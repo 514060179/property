@@ -79,6 +79,18 @@
       inner join community c on u.community_id=c.community_id
     where cir.place_record_id = #{placeRecordId,jdbcType=VARCHAR}
   </select>
+  <select id="selectByCommunityId" resultMap="BaseResultMap" parameterType="string" >
+    select
+    cir.record_id, cir.user_id, cir.unit_item_id,cir.unit_id,cir.unit_no,cir.record_item_name, cir.record_date, cir.record_status, cir.record_time, cir.record_actual_amount,
+    cir.record_amount, cir.record_late_fee, cir.record_late_date, cir.record_remark, cir.create_time, cir.update_time
+    from charge_item_record cir
+    <where>
+      <if test="communityId!=null and communityId!=''">
+        and cir.community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by cir.unit_no,cir.record_date
+  </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
     select
     <include refid="With_Other_Column_List" />
@@ -147,6 +159,9 @@
       <if test="unitNo != null" >
         unit_no,
       </if>
+      <if test="communityId != null" >
+        community_id,
+      </if>
       <if test="placeRecordId != null" >
         place_record_id,
       </if>
@@ -199,6 +214,9 @@
       </if>
       <if test="unitNo != null" >
         #{unitNo,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null" >
+        #{communityId,jdbcType=VARCHAR},
       </if>
       <if test="placeRecordId != null" >
         #{placeRecordId,jdbcType=VARCHAR},

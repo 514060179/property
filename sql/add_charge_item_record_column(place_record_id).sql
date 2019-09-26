@@ -26,3 +26,7 @@ set c.unit_no=u.unit_no,c.community_id=u.community_id
 
 ALTER TABLE `bms`.`charge_item_record`
 MODIFY COLUMN `unit_item_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '单位收费项目id' AFTER `unit_no`;
+
+
+ALTER TABLE `bms`.`charge_item_record`
+  ADD COLUMN `unit_no` VARCHAR(50) NULL COMMENT '单元编号' AFTER `unit_id`;

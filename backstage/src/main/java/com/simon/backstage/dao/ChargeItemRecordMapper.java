@@ -2,6 +2,7 @@ package com.simon.backstage.dao;
 
 import com.simon.backstage.domain.model.ChargeItemRecord;
 import com.simon.dal.vo.BaseQueryParam;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public interface ChargeItemRecordMapper {
     ChargeItemRecord selectByPlaceRecordId(String placeRecordId);
 
     List<ChargeItemRecord> selectByCondition(BaseQueryParam baseQueryParam);
+
+    List<ChargeItemRecord> selectByCommunityId(@Param("communityId") String communityId);
 
     int updateByPrimaryKeySelective(ChargeItemRecord record);
 

@@ -111,18 +111,23 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
 
     @Override
     public UnitCharges unitChargeList(String communityId) {
-        BaseQueryParam baseQueryParam = new QueryWithIdParam();
-        baseQueryParam.setCommunityId(communityId);
-        List<ChargeItemRecord> list = chargeItemRecordMapper.selectByCondition(baseQueryParam);
+        List<ChargeItemRecord> list = chargeItemRecordMapper.selectByCommunityId(communityId);
         List<UnitChargeVo>  chargeVoList = new ArrayList<>();
         List<String>  unitList = new ArrayList<>();
+        List<String>  dataList = new ArrayList<>();
         UnitCharges unitCharges = new UnitCharges();
 
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM");
 
         list.forEach(chargeItemRecord -> {
-            unitList.add(chargeItemRecord.getUnitNo());
+            if(!unitList.contains(chargeItemRecord.getUnitNo())){
+                unitList.add(chargeItemRecord.getUnitNo());
+            }
+            if(!dataList.contains(chargeItemRecord.getRecordDate())){
+                dataList.add(chargeItemRecord.getRecordDate());
+            }
             UnitChargeVo unitChargeVo = new UnitChargeVo();
+            unitChargeVo.setId(chargeItemRecord.getRecordId());
             unitChargeVo.setxDate(chargeItemRecord.getRecordDate());
             unitChargeVo.setyUnit(chargeItemRecord.getUnitNo());
             unitChargeVo.setV1Date(sdf1.format(chargeItemRecord.getRecordTime()));
@@ -131,6 +136,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
         });
         unitCharges.setxUnitList(unitList);
         unitCharges.setChargeVoList(chargeVoList);
+        unitCharges.setxDateList(dataList);
         //开始，结束时间 todo
 //        unitCharges.setStartTime();
 //        unitCharges.setEndTime();
@@ -192,6 +198,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         chargeItemRecord.setUnitType(0);
                         chargeItemRecord.setUnitNo(unitNo);
                         chargeItemRecord.setCreateTime(new Date());
+                        chargeItemRecord.setCommunityId(communityId);
                         chargeItemRecordMapper.insertSelective(chargeItemRecord);
                     }else if(i > 0 && j == 0){//单位号
                         XSSFCell xssfCell = xssfRow.getCell(j);

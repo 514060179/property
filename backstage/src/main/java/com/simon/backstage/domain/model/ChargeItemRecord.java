@@ -13,6 +13,8 @@ public class ChargeItemRecord {
     private String recordId;
     @ApiModelProperty(value = "住户id",example = "0e722e5735b743d98826b5824fade372")
     private String userId;
+    @ApiModelProperty(value = "社区Id",example = "er7212e5735b3743d2126b5324fadese2")
+    private String communityId;
     @ApiModelProperty(value = "单位收费项目id",example = "er7212e5735b3743d2126b5324fadese2")
     private String unitItemId;
     @ApiModelProperty(value = "单位id",example = "er7212e5735b3743d2126b5324fadese2")
@@ -219,5 +221,13 @@ public class ChargeItemRecord {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getCommunityId() {
+        return communityId;
+    }
+
+    public void setCommunityId(String communityId) {
+        this.communityId = communityId;
     }
 }
