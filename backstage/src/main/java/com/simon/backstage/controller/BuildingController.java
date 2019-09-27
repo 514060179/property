@@ -100,4 +100,10 @@ public class BuildingController {
         logger.info("社区列表communityId={}",  JSONUtil.objectToJson(communityId));
         return ReturnMsg.success(buildingService.communityWithBuildingAndUnit(communityId));
     }
+    @GetMapping("childList")
+    @ApiOperation("楼宇子部分列表")
+    public ReturnMsg<List<BuildingChild>> childList(@RequestParam String buildingId){
+        logger.info("楼宇子部分列表buildingId={}",  buildingId);
+        return ReturnMsg.success(buildingService.childList(buildingId));
+    }
 }

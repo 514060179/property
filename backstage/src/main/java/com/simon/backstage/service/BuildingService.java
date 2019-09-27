@@ -69,4 +69,10 @@ public interface BuildingService {
      */
     List<CommunityWithBuilding> communityWithBuildingAndUnit(String communityId);
 
+    /**
+     * 获取建筑子部分
+     * @return
+     */
+    List<BuildingChild> childList(String buildingId);
+
 }
