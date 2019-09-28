@@ -160,6 +160,7 @@ public class ExcelController {
         titles.add("社区");
         data.setTitles(titles);
         List<List<Object>> rows = new ArrayList();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         assetsList.forEach(asset -> {
             List<Object> row = new ArrayList();
             row.add(asset.getAssetNo());
@@ -169,15 +170,15 @@ public class ExcelController {
             row.add(asset.getAssetEnglishName());
             row.add(asset.getAssetStatus());
             row.add(asset.getAssetMaintainRemindCycle());
-            row.add(asset.getAssetOverdueDate());
+            row.add(sdf.format(asset.getAssetOverdueDate()));
             row.add(asset.getAssetPosition());
             row.add(asset.getAssetEnglishPosition());
             row.add(asset.getAssetMaintain());
-            row.add(asset.getAssetBuyDate());
+            row.add(sdf.format(asset.getAssetBuyDate()));
             if(!StringUtils.isEmpty(asset.getCommunity())){
                 row.add(asset.getCommunity().getCommunityName());
             }else{
-                row.add("-");
+                row.add("--");
             }
             rows.add(row);
         });
@@ -212,21 +213,21 @@ public class ExcelController {
         titles.add("解决方案");
         data.setTitles(titles);
         List<List<Object>> rows = new ArrayList();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         eventList.forEach(event -> {
             List<Object> row = new ArrayList();
             if(!StringUtils.isEmpty(event.getCommunity())){
                 row.add(event.getCommunity().getCommunityName());
             }else{
-                row.add("-");
+                row.add("--");
             }
             row.add(event.getEventType());
-            row.add(event.getEventDate());
             row.add(event.getEventStatus());
             row.add(event.getEventChannel());
             row.add(event.getEventCause());
             row.add(event.getEventContent());
-            row.add(event.getEventDate());
-            row.add(event.getEventFinishDate());
+            row.add(event.getEventDate()==null?"--":sdf.format(event.getEventDate()));
+            row.add(event.getEventFinishDate()==null?"--":sdf.format(event.getEventFinishDate()));
             row.add(event.getEventRemark());
             row.add(event.getEventSolve());
             rows.add(row);
@@ -255,7 +256,7 @@ public class ExcelController {
         titles.add("场所名称（英文）");
         titles.add("附加费用");
         titles.add("每小时费用");
-        titles.add("创建事件");
+        titles.add("创建时间");
         titles.add("预定时间");
         titles.add("结束时间");
         titles.add("开始时间");
@@ -265,20 +266,23 @@ public class ExcelController {
         titles.add("更新时间");
         data.setTitles(titles);
         List<List<Object>> rows = new ArrayList();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf_year = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm:ss");
         placeRecordList.forEach(placeRecord -> {
             List<Object> row = new ArrayList();
             row.add(placeRecord.getPlace().getPlaceName());
             row.add(placeRecord.getPlace().getPlaceEnglishName());
             row.add(placeRecord.getAttachCharge());
             row.add(placeRecord.getAverageCharge());
-            row.add(placeRecord.getCreateTime());
-            row.add(placeRecord.getOrderDate());
-            row.add(placeRecord.getOrderEndTime());
-            row.add(placeRecord.getOrderStartTime());
+            row.add(sdf.format(placeRecord.getCreateTime()));
+            row.add(sdf_year.format(placeRecord.getOrderDate()));
+            row.add(sdf_time.format(placeRecord.getOrderEndTime()));
+            row.add(sdf_time.format(placeRecord.getOrderStartTime()));
             row.add(placeRecord.getRecordStatus());
             row.add(placeRecord.getTotalCharge());
             row.add(placeRecord.getTotalHour());
-            row.add(placeRecord.getUpdateTime());
+            row.add(sdf.format(placeRecord.getUpdateTime()));
             rows.add(row);
         });
         data.setRows(rows);
