@@ -180,4 +180,9 @@ public class BuildingServiceImpl implements BuildingService {
         communityWithBuildingList.forEach((communityWithBuilding -> communityWithBuilding.setUnitList(map.get(communityWithBuilding.getCommunityId()))));
         return communityWithBuildingList;
     }
+
+    @Override
+    public List<BuildingChild> childList(String buildingId) {
+        return buildingMapper.selectBuildingChildListByBuildingId(buildingId);
+    }
 }
