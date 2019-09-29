@@ -30,3 +30,9 @@ MODIFY COLUMN `unit_item_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_g
 
 ALTER TABLE `bms`.`charge_item_record`
   ADD COLUMN `unit_no` VARCHAR(50) NULL COMMENT '单元编号' AFTER `unit_id`;
+
+
+
+  ALTER TABLE `bms`.`charge_item_record`
+  ADD COLUMN `record_type` INT(10) DEFAULT 0 NULL COMMENT '记录类型0物业费1基金收费2订场收费3其他收费' AFTER `place_record_id`;
+

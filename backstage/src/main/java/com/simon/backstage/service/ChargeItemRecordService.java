@@ -70,7 +70,7 @@ public interface ChargeItemRecordService {
      * @param communityId
      * @return
      */
-    UnitCharges unitChargeList(String communityId);
+    UnitCharges unitChargeList(String communityId,int recordType);
 
 
     /**
@@ -79,5 +79,5 @@ public interface ChargeItemRecordService {
      * @param communityId
      * @return
      */
-    String importExcel(MultipartFile file, String communityId);
+    String importExcel(MultipartFile file, String communityId,int recordType);
 }

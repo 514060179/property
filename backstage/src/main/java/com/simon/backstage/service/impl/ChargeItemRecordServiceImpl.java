@@ -1,4 +1,5 @@
 package com.simon.backstage.service.impl;
+import java.io.IOException;
 import java.math.BigDecimal;
 
 import com.simon.backstage.dao.*;
@@ -110,8 +111,8 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
     }
 
     @Override
-    public UnitCharges unitChargeList(String communityId) {
-        List<ChargeItemRecord> list = chargeItemRecordMapper.selectByCommunityId(communityId);
+    public UnitCharges unitChargeList(String communityId,int recordType) {
+        List<ChargeItemRecord> list = chargeItemRecordMapper.selectByCommunityId(communityId,recordType);
         List<UnitChargeVo>  chargeVoList = new ArrayList<>();
         List<String>  unitList = new ArrayList<>();
         List<String>  dataList = new ArrayList<>();
@@ -145,23 +146,18 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
 
     @Override
     @Transactional
-    public String importExcel(MultipartFile file, String communityId) {
-        int success = 0;
-        int fail = 0;
+    public String importExcel(MultipartFile file, String communityId,int recordType) {
         InputStream is =null;
         try {
             is = file.getInputStream();
             XSSFWorkbook xssfWorkbook = new XSSFWorkbook(is);
             XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(0);
-            List<Unit> unitList = new ArrayList<>();
-            StringBuffer failMsg = new StringBuffer("");
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM");
 
             Map<String,String> map = new HashMap();
             for (int i = 0; i <= xssfSheet.getLastRowNum(); i++) {
                 XSSFRow xssfRow = xssfSheet.getRow(i);
                 int last = xssfRow.getLastCellNum();
-                System.out.println("这是第"+i+"行。值分别：");
                 String unitNo = null;
                 String unitId = null;
                 for (int j = 0 ; j <= last ; j++){
@@ -190,6 +186,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         chargeItemRecord.setRecordDate(date);
                         chargeItemRecord.setRecordStatus(1);
                         chargeItemRecord.setUnitId(unitId);
+                        chargeItemRecord.setRecordType(recordType);
 //                        chargeItemRecord.setUserId();
                         chargeItemRecord.setRecordTime(simpleDateFormat.parse(recordTime));
                         chargeItemRecord.setRecordActualAmount(new BigDecimal(amount));
@@ -214,10 +211,17 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
 
                     }
                 }
-                System.out.println();
             }
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+            if (is != null){
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }

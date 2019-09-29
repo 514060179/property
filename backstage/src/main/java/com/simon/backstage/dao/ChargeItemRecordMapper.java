@@ -21,7 +21,7 @@ public interface ChargeItemRecordMapper {
 
     List<ChargeItemRecord> selectByCondition(BaseQueryParam baseQueryParam);
 
-    List<ChargeItemRecord> selectByCommunityId(@Param("communityId") String communityId);
+    List<ChargeItemRecord> selectByCommunityId(@Param("communityId") String communityId,@Param("recordType") int recordType);
 
     int updateByPrimaryKeySelective(ChargeItemRecord record);
 

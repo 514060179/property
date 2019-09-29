@@ -27,6 +27,8 @@ public class ChargeItemRecord {
     private String recordDate;
     @ApiModelProperty(value = "状态0欠费1已付2预支付",example = "0")
     private Integer recordStatus;
+    @ApiModelProperty(value = "记录类型0物业费1基金收费2订场收费3其他收费",example = "0")
+    private Integer recordType;
     @ApiModelProperty(value = "收费时间",example = "2019-01-11 12:12:00")
     private Date recordTime;
     @ApiModelProperty(value = "实际收取金额",example = "45.2")
@@ -117,6 +119,14 @@ public class ChargeItemRecord {
 
     public void setRecordStatus(Integer recordStatus) {
         this.recordStatus = recordStatus;
+    }
+
+    public Integer getRecordType() {
+        return recordType;
+    }
+
+    public void setRecordType(Integer recordType) {
+        this.recordType = recordType;
     }
 
     public Date getRecordTime() {

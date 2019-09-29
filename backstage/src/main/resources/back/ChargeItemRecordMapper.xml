@@ -79,27 +79,23 @@
       inner join community c on u.community_id=c.community_id
     where cir.place_record_id = #{placeRecordId,jdbcType=VARCHAR}
   </select>
-  <select id="selectByCommunityId" resultMap="BaseResultMap" parameterType="string" >
+  <select id="selectByCommunityId" resultMap="BaseResultMap">
     select
     cir.record_id, cir.user_id, cir.unit_item_id,cir.unit_id,cir.unit_no,cir.record_item_name, cir.record_date, cir.record_status, cir.record_time, cir.record_actual_amount,
     cir.record_amount, cir.record_late_fee, cir.record_late_date, cir.record_remark, cir.create_time, cir.update_time
     from charge_item_record cir
-    <where>
-      <if test="communityId!=null and communityId!=''">
-        and cir.community_id = #{communityId,jdbcType=VARCHAR}
-      </if>
-    </where>
+    where cir.community_id = #{communityId} and cir.record_type = #{recordType}
     order by cir.unit_no,cir.record_date
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
     select
     <include refid="With_Other_Column_List" />
     from charge_item_record cir
-      inner join `user` uu on cir.user_id=uu.user_id
-      inner join unit_charge_item uci on cir.unit_item_id=uci.unit_item_id
-      inner join charge_item ci on uci.item_id=ci.item_id
-      inner join unit u on uci.unit_id=u.unit_id
-      inner join community c on u.community_id=c.community_id
+      LEFT join `user` uu on cir.user_id=uu.user_id
+      LEFT join unit_charge_item uci on cir.unit_item_id=uci.unit_item_id
+      LEFT join charge_item ci on uci.item_id=ci.item_id
+      LEFT join unit u on uci.unit_id=u.unit_id
+      inner join community c on cir.community_id = c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(ci.item_no,''),IFNULL(ci.item_name,''),IFNULL(uu.`name`,'')) LIKE CONCAT('%', #{keyword}, '%')
@@ -174,6 +170,9 @@
       <if test="recordStatus != null" >
         record_status,
       </if>
+      <if test="recordType != null" >
+        record_type,
+      </if>
       <if test="recordTime != null" >
         record_time,
       </if>
@@ -229,6 +228,9 @@
       </if>
       <if test="recordStatus != null" >
         #{recordStatus,jdbcType=INTEGER},
+      </if>
+      <if test="recordType != null" >
+        #{recordType,jdbcType=INTEGER},
       </if>
       <if test="recordTime != null" >
         #{recordTime,jdbcType=TIMESTAMP},
