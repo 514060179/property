@@ -119,12 +119,14 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
         chargeItemRecord.setRecordActualAmount(new BigDecimal("0"));
         chargeItemRecord.setRecordAmount(price);
         chargeItemRecord.setRecordRemark("盯場收費");
+        chargeItemRecord.setCommunityId(communityId);
+        chargeItemRecord.setUnitId(unitId);
         chargeItemRecord.setPlaceRecordId(placeRecordId);
         chargeItemRecordMapper.insertSelective(chargeItemRecord);
         return true;
     }
     public String nextMonthDate(Date date){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy年MM月");
         Calendar calendar = Calendar.getInstance(); //得到日历
         calendar.setTime(date);//把当前时间赋给日历
         calendar.add(calendar.MONTH, 1);
