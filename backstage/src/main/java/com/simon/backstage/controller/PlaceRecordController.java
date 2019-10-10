@@ -3,6 +3,7 @@ package com.simon.backstage.controller;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.annotation.Log;
 import com.simon.backstage.annotation.OperateType;
+import com.simon.backstage.domain.model.ChargeItemRecord;
 import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.msg.Code;
 import com.simon.backstage.domain.msg.ReturnMsg;
@@ -77,18 +78,22 @@ public class PlaceRecordController {
     }
     @GetMapping("creChargeItemRecord")
     @ApiOperation("列入物业收费")
-    public ReturnMsg creChargeItemRecord(@RequestParam String placeRecordId){
+    public ReturnMsg creChargeItemRecord(@RequestParam String placeRecordId) {
         //获取定场记录
         PlaceRecord placeRecord = placeRecordService.detail(placeRecordId);
-        if (Objects.isNull(placeRecord)){
-            return ReturnMsg.fail(Code.notfound,"未找到资源!");
+        if (Objects.isNull(placeRecord)) {
+            return ReturnMsg.fail(Code.notfound, "未找到资源!");
         }
         //获取住户单元
         Unit unit = placeRecordService.getUnitByUserId(placeRecord.getUserId());
         if (unit == null) {
-            return ReturnMsg.fail(Code.notfound,"未找到该住户绑定单元!");
+            return ReturnMsg.fail(Code.notfound, "未找到该住户绑定单元!");
         }
-        placeRecordService.creChargeItemRecord(placeRecord.getCommunityId(),placeRecord.getUserId(),placeRecordId,unit,placeRecord.getTotalCharge());
+        ChargeItemRecord chargeItemRecord = placeRecordService.getChargeItemRecord(placeRecordId);
+        if (chargeItemRecord != null) {
+            return ReturnMsg.fail(Code.duplicate, "重复添加！!");
+        }
+        placeRecordService.creChargeItemRecord(placeRecord.getCommunityId(), placeRecord.getUserId(), placeRecordId, unit, placeRecord.getTotalCharge());
         return ReturnMsg.success();
     }
     @GetMapping("getChargeItemRecord")
