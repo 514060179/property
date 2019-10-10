@@ -85,6 +85,9 @@ public class PlaceRecordController {
         }
         //获取住户单元
         Unit unit = placeRecordService.getUnitByUserId(placeRecord.getUserId());
+        if (unit == null) {
+            return ReturnMsg.fail(Code.notfound,"未找到该住户绑定单元!");
+        }
         placeRecordService.creChargeItemRecord(placeRecord.getCommunityId(),placeRecord.getUserId(),placeRecordId,unit.getUnitId(),placeRecord.getTotalCharge());
         return ReturnMsg.success();
     }

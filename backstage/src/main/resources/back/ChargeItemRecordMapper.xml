@@ -84,7 +84,7 @@
     cir.record_id, cir.user_id, cir.unit_item_id,cir.unit_id,cir.unit_no,cir.record_item_name, cir.record_date, cir.record_status, cir.record_time, cir.record_actual_amount,
     cir.record_amount, cir.record_late_fee, cir.record_late_date, cir.record_remark, cir.create_time, cir.update_time
     from charge_item_record cir
-    where cir.community_id = #{communityId} and cir.record_type = #{recordType}
+    where cir.community_id = #{communityId} and cir.record_type = #{recordType} and cir.record_status!=0
     order by cir.unit_no,cir.record_date
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >

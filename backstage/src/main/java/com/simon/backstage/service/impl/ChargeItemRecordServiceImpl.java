@@ -267,6 +267,6 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
 
     public static void main(String[] args) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM");
-        System.out.println(simpleDateFormat.parse("21-12"));
+        System.out.println(simpleDateFormat.format(simpleDateFormat.parse("21-12")));
     }
 }

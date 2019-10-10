@@ -32,6 +32,10 @@ ALTER TABLE `bms`.`charge_item_record`
   ADD COLUMN `unit_no` VARCHAR(50) NULL COMMENT '单元编号' AFTER `unit_id`;
 
 
+ALTER TABLE `bms`.`charge_item_record`
+ADD COLUMN `record_type` int(3) NULL DEFAULT 0 COMMENT '记录类型0物业费1基金收费2订场收费3其他收费' AFTER `unit_item_id`;
+
+
 
   ALTER TABLE `bms`.`charge_item_record`
   ADD COLUMN `record_type` INT(10) DEFAULT 0 NULL COMMENT '记录类型0物业费1基金收费2订场收费3其他收费' AFTER `place_record_id`;

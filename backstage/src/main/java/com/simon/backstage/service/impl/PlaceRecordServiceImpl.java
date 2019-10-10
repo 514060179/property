@@ -119,6 +119,7 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
         chargeItemRecord.setRecordActualAmount(new BigDecimal("0"));
         chargeItemRecord.setRecordAmount(price);
         chargeItemRecord.setRecordRemark("盯場收費");
+        chargeItemRecord.setPlaceRecordId(placeRecordId);
         chargeItemRecordMapper.insertSelective(chargeItemRecord);
         return true;
     }
