@@ -68,7 +68,7 @@ public interface PlaceRecordService {
      * @param price         价格
      * @return
      */
-    boolean creChargeItemRecord(String communityId,String userId, String placeRecordId, String unitId, BigDecimal price);
+    boolean creChargeItemRecord(String communityId,String userId, String placeRecordId, Unit unit, BigDecimal price);
 
     /**
      * 查询定场收费记录

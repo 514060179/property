@@ -88,7 +88,7 @@ public class PlaceRecordController {
         if (unit == null) {
             return ReturnMsg.fail(Code.notfound,"未找到该住户绑定单元!");
         }
-        placeRecordService.creChargeItemRecord(placeRecord.getCommunityId(),placeRecord.getUserId(),placeRecordId,unit.getUnitId(),placeRecord.getTotalCharge());
+        placeRecordService.creChargeItemRecord(placeRecord.getCommunityId(),placeRecord.getUserId(),placeRecordId,unit,placeRecord.getTotalCharge());
         return ReturnMsg.success();
     }
     @GetMapping("getChargeItemRecord")

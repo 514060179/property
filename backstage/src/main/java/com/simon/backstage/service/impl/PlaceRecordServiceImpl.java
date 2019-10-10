@@ -81,7 +81,7 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
     }
 
     @Override
-    public boolean creChargeItemRecord(String communityId,String userId, String placeRecordId, String unitId, BigDecimal price) {
+    public boolean creChargeItemRecord(String communityId,String userId, String placeRecordId, Unit unit, BigDecimal price) {
         //1.生成收费项目
         //2.生成收费项目绑定关系
         //3.生成收费记录
@@ -105,7 +105,7 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
         String unitItemId = UUIDUtil.uidString();
         unitChargeItem.setUnitItemId(unitItemId);
         unitChargeItem.setItemId(itemId);
-        unitChargeItem.setUnitId(unitId);
+        unitChargeItem.setUnitId(unit.getUnitId());
         unitChargeItem.setCreateTime(new Date());
         unitChargeItemMapper.insertSelective(unitChargeItem);
         ChargeItemRecord chargeItemRecord = new ChargeItemRecord();
@@ -120,7 +120,8 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
         chargeItemRecord.setRecordAmount(price);
         chargeItemRecord.setRecordRemark("盯場收費");
         chargeItemRecord.setCommunityId(communityId);
-        chargeItemRecord.setUnitId(unitId);
+        chargeItemRecord.setUnitId(unit.getUnitId());
+        chargeItemRecord.setUnitNo(unit.getUnitNo());
         chargeItemRecord.setPlaceRecordId(placeRecordId);
         chargeItemRecordMapper.insertSelective(chargeItemRecord);
         return true;
