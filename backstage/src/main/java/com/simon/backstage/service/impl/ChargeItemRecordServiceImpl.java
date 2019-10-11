@@ -226,6 +226,47 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
         return null;
     }
 
+    @Override
+    @Transactional
+    public int saveList(String communityId,Integer recordType,List<UnitChargeVo> unitChargeVoList) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        unitChargeVoList.forEach(unitChargeVo -> {
+            try{
+                if (unitChargeVo.getId() == null) {//更新
+                    Unit unit = unitMapper.selectByUnitNo(unitChargeVo.getyUnit());
+                    ChargeItemRecord chargeItemRecord = new ChargeItemRecord();
+                    chargeItemRecord.setRecordId(UUIDUtil.uidString());
+                    chargeItemRecord.setUserId("");
+                    chargeItemRecord.setRecordItemName("列表錄入收費紀錄");
+                    chargeItemRecord.setRecordDate(unitChargeVo.getxDate());
+                    chargeItemRecord.setRecordStatus(1);
+                    chargeItemRecord.setUnitId(unit==null?null:unit.getUnitId());
+                    chargeItemRecord.setRecordType(recordType);
+                    chargeItemRecord.setRecordTime(simpleDateFormat.parse(unitChargeVo.getV1Date()));
+                    chargeItemRecord.setRecordActualAmount(new BigDecimal(unitChargeVo.getV2Money()));
+                    chargeItemRecord.setRecordAmount(new BigDecimal(unitChargeVo.getV2Money()));
+                    chargeItemRecord.setRecordRemark("列表錄入收費紀錄");
+                    chargeItemRecord.setUnitType(0);
+                    chargeItemRecord.setUnitNo(unitChargeVo.getyUnit());
+                    chargeItemRecord.setCreateTime(new Date());
+                    chargeItemRecord.setCommunityId(communityId);
+                    chargeItemRecordMapper.insertSelective(chargeItemRecord);
+                } else {
+                    ChargeItemRecord updateRecord = new ChargeItemRecord();
+                    updateRecord.setPlaceRecordId(unitChargeVo.getId());
+                    updateRecord.setRecordTime(simpleDateFormat.parse(unitChargeVo.getV1Date()));
+                    updateRecord.setRecordActualAmount(new BigDecimal(unitChargeVo.getV2Money()));
+                    updateRecord.setRecordAmount(new BigDecimal(unitChargeVo.getV2Money()));
+                    chargeItemRecordMapper.updateByPrimaryKeySelective(updateRecord);
+                }
+            }catch (ParseException e){
+                throw new RuntimeException(e.getMessage());
+            }
+
+        });
+        return 1;
+    }
+
     public String getCellValue(XSSFCell cell) {
         String strCell = null;
         if (cell != null) {

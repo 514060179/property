@@ -80,4 +80,14 @@ public interface ChargeItemRecordService {
      * @return
      */
     String importExcel(MultipartFile file, String communityId,int recordType);
+
+
+    /**
+     * 保存新增或修改
+     * @param communityId
+     * @param recordType
+     * @param unitChargeVoList
+     * @return
+     */
+    int saveList(String communityId,Integer recordType,List<UnitChargeVo> unitChargeVoList);
 }

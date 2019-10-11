@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "UnitChargeVo", description = "物业收费表格vo")
 public class UnitChargeVo {
 
-    @ApiModelProperty(value="id,用于修改v1Date,v2Money时传")
+    @ApiModelProperty(value="id,用于修改v1Date,v2Money时传,不传为新增")
     private String id;
 
     @ApiModelProperty(value="x轴-日期")

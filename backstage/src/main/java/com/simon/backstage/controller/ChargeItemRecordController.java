@@ -10,6 +10,7 @@ import com.simon.backstage.domain.vo.UnitChargeVo;
 import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.domain.vo.QueryWithIdParam;
 import com.simon.backstage.domain.vo.UnitCharges;
+import com.simon.backstage.domain.vo.UnitChargesUpdVo;
 import com.simon.backstage.service.ChargeItemRecordService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
@@ -103,5 +104,13 @@ public class ChargeItemRecordController {
     public ReturnMsg importExcel(MultipartFile file,String communityId,@RequestParam(required = false,defaultValue = "0") int recordType) {
 
         return ReturnMsg.success(chargeItemRecordService.importExcel(file, communityId,recordType));
+    }
+
+
+    @PostMapping("save")
+    @ApiOperation("单元收费新增修改（表格）")
+    public ReturnMsg save(@RequestBody UnitChargesUpdVo unitChargeVos){
+        chargeItemRecordService.saveList(unitChargeVos.getCommunityId(),unitChargeVos.getRecordType(),unitChargeVos.getUnitChargeVos());
+        return ReturnMsg.success();
     }
 }
