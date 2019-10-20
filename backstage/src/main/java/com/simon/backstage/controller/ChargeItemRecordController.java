@@ -14,6 +14,7 @@ import com.simon.backstage.domain.vo.UnitChargesUpdVo;
 import com.simon.backstage.service.ChargeItemRecordService;
 import com.simon.backstage.util.ClaimsUtil;
 import com.simon.backstage.util.JSONUtil;
+import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -101,9 +102,16 @@ public class ChargeItemRecordController {
             @ApiImplicitParam(name = "communityId",value = "社区id",required = true,dataTypeClass = String.class),
             @ApiImplicitParam(name = "recordType",value = "记录类型0物业费1基金收费2订场收费3其他收费",required = false,dataTypeClass = Integer.class)
             })*/
-    public ReturnMsg importExcel(MultipartFile file,String communityId,@RequestParam(required = false,defaultValue = "0") int recordType) {
-
-        return ReturnMsg.success(chargeItemRecordService.importExcel(file, communityId,recordType));
+    public ReturnMsg importExcel(MultipartFile file, @RequestParam String communityId, @RequestParam(required = false, defaultValue = "0") int recordType) {
+        //同一个社区不能多次导入
+        BaseQueryParam baseQueryParam = new QueryWithIdParam();
+        baseQueryParam.setCommunityId(communityId);
+        PageInfo<ChargeItemRecord> chargeItemRecordPageInfo = chargeItemRecordService.list(baseQueryParam);
+        if (chargeItemRecordPageInfo.getList() != null && !chargeItemRecordPageInfo.getList().isEmpty()) {
+            return ReturnMsg.fail(Code.error,"同一个社区不能多次导入");
+        } else {
+            return ReturnMsg.success(chargeItemRecordService.importExcel(file, communityId, recordType));
+        }
     }
 
 

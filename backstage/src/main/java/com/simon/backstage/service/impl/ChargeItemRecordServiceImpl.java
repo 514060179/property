@@ -232,7 +232,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
         unitChargeVoList.forEach(unitChargeVo -> {
             try{
-                if (unitChargeVo.getId() == null) {//更新
+                if (unitChargeVo.getId() == null) {
                     Unit unit = unitMapper.selectByUnitNo(unitChargeVo.getyUnit());
                     ChargeItemRecord chargeItemRecord = new ChargeItemRecord();
                     chargeItemRecord.setRecordId(UUIDUtil.uidString());
@@ -251,9 +251,9 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                     chargeItemRecord.setCreateTime(new Date());
                     chargeItemRecord.setCommunityId(communityId);
                     chargeItemRecordMapper.insertSelective(chargeItemRecord);
-                } else {
+                } else {//更新
                     ChargeItemRecord updateRecord = new ChargeItemRecord();
-                    updateRecord.setPlaceRecordId(unitChargeVo.getId());
+                    updateRecord.setRecordId(unitChargeVo.getId());
                     updateRecord.setRecordTime(simpleDateFormat.parse(unitChargeVo.getV1Date()));
                     updateRecord.setRecordActualAmount(new BigDecimal(unitChargeVo.getV2Money()));
                     updateRecord.setRecordAmount(new BigDecimal(unitChargeVo.getV2Money()));
