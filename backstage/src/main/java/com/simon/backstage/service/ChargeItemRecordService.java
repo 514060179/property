@@ -70,7 +70,7 @@ public interface ChargeItemRecordService {
      * @param communityId
      * @return
      */
-    UnitCharges unitChargeList(String communityId,int recordType);
+    UnitCharges unitChargeList(String communityId, int recordType, String dateStart, String dateEnd);
 
 
     /**

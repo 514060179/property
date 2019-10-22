@@ -75,11 +75,13 @@ public class ChargeItemRecordController {
     @ApiOperation("单元收费列表")
     @ApiImplicitParams(
             {@ApiImplicitParam(name = "conmunityId",value = "社区Id",required = true,dataTypeClass = String.class),
-                    @ApiImplicitParam(name = "recordType",value = "记录类型0物业费1基金收费2订场收费3其他收费",required = false,dataTypeClass = Integer.class)
+                    @ApiImplicitParam(name = "recordType",value = "记录类型0物业费1基金收费2订场收费3其他收费",required = false,dataTypeClass = Integer.class),
+                    @ApiImplicitParam(name = "dateStart",value = "开始日期",example = "16年03月",required = false,dataTypeClass = String.class),
+                    @ApiImplicitParam(name = "dateEnd",value = "结束日期",example = "19年12月",required = false,dataTypeClass = String.class)
             })
-    public ReturnMsg<UnitCharges> unitChargeList(@RequestParam String conmunityId,@RequestParam(required = false,defaultValue = "0") int recordType) {
+    public ReturnMsg<UnitCharges> unitChargeList(@RequestParam String conmunityId,@RequestParam(required = false,defaultValue = "0") int recordType,String dateStart,String dateEnd) {
         logger.info("单元收费列表conmunityId={}", JSONUtil.objectToJson(conmunityId));
-        return ReturnMsg.success(chargeItemRecordService.unitChargeList(conmunityId,recordType));
+        return ReturnMsg.success(chargeItemRecordService.unitChargeList(conmunityId,recordType,dateStart,dateEnd));
     }
 
     @GetMapping("detail")

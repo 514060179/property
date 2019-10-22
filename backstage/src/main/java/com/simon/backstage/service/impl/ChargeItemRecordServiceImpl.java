@@ -111,8 +111,8 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
     }
 
     @Override
-    public UnitCharges unitChargeList(String communityId,int recordType) {
-        List<ChargeItemRecord> list = chargeItemRecordMapper.selectByCommunityId(communityId,recordType);
+    public UnitCharges unitChargeList(String communityId,int recordType,String dateStart,String dateEnd) {
+        List<ChargeItemRecord> list = chargeItemRecordMapper.selectExcelCondition(communityId,recordType,dateStart,dateEnd);
         List<UnitChargeVo>  chargeVoList = new ArrayList<>();
         List<String>  unitList = new ArrayList<>();
         List<String>  dataList = new ArrayList<>();

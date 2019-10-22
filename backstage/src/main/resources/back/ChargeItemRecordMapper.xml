@@ -79,12 +79,18 @@
       inner join community c on u.community_id=c.community_id
     where cir.place_record_id = #{placeRecordId,jdbcType=VARCHAR}
   </select>
-  <select id="selectByCommunityId" resultMap="BaseResultMap">
+  <select id="selectExcelCondition" resultMap="BaseResultMap">
     select
     cir.record_id, cir.user_id, cir.unit_item_id,cir.unit_id,cir.unit_no,cir.record_item_name, cir.record_date, cir.record_status, cir.record_time, cir.record_actual_amount,
     cir.record_amount, cir.record_late_fee, cir.record_late_date, cir.record_remark, cir.create_time, cir.update_time
     from charge_item_record cir
     where cir.community_id = #{communityId} and cir.record_type = #{recordType} and cir.record_status!=0
+      <if test="dateStart">
+          and record_date>=#{dateStart}
+      </if>
+      <if test="dateEnd">
+          and #{dateEnd}>=record_date
+      </if>
     order by cir.unit_no,cir.record_date
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
@@ -114,6 +120,12 @@
       </if>
       <if test="communityId!=null and communityId!=''">
         and cir.community_id = #{communityId,jdbcType=VARCHAR}
+      </if>
+      <if test="buildingId!=null and buildingId!=''">
+        and u.building_id = #{buildingId,jdbcType=VARCHAR}
+      </if>
+      <if test="buildingId!=null and buildingId!=''">
+        and u.building_id = #{buildingId,jdbcType=VARCHAR}
       </if>
       <if test="buildingId!=null and buildingId!=''">
         and u.building_id = #{buildingId,jdbcType=VARCHAR}
