@@ -1,6 +1,7 @@
 package com.simon.dal.dao;
 
 import com.simon.dal.model.Community;
+import com.simon.dal.model.CommunityChild;
 import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.vo.BaseQueryParam;
 
@@ -26,4 +27,6 @@ public interface CommunityMapper {
 	String findName(String communityId);
 	
 	String findId();
+
+	int batchAddCommunityChild(List<CommunityChild> communityChildList);
 }

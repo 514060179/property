@@ -10,6 +10,7 @@ import com.simon.backstage.service.CommunityService;
 import com.simon.dal.constant.Type;
 import com.simon.dal.dao.CommunityMapper;
 import com.simon.dal.model.Community;
+import com.simon.dal.model.CommunityChild;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,10 @@ public class CommunityServiceImpl implements CommunityService {
                     enclosureList.add(enclosure);
                 });
                 buildingMapper.insertEnclosures(enclosureList);
+            }
+            List<CommunityChild> communityChildList = community.getCommunityChildList();
+            if (communityChildList != null && !communityChildList.isEmpty()) {
+                communityMapper.batchAddCommunityChild(communityChildList);
             }
         }
         return community;

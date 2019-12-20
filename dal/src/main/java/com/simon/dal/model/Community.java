@@ -107,6 +107,9 @@ public class Community {
     @ApiModelProperty(value = "楼宇之共同部分")
     private List<String> commonPdf;
 
+    @ApiModelProperty(value = "社区子部分")
+    private List<CommunityChild> communityChildList;
+
     public String getCommunityId() {
         return communityId;
     }
@@ -393,5 +396,13 @@ public class Community {
 
     public void setCommonPdf(List<String> commonPdf) {
         this.commonPdf = commonPdf;
+    }
+
+    public List<CommunityChild> getCommunityChildList() {
+        return communityChildList;
+    }
+
+    public void setCommunityChildList(List<CommunityChild> communityChildList) {
+        this.communityChildList = communityChildList;
     }
 }
