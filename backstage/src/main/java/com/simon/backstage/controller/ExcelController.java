@@ -170,11 +170,11 @@ public class ExcelController {
             row.add(asset.getAssetEnglishName());
             row.add(asset.getAssetStatus());
             row.add(asset.getAssetMaintainRemindCycle());
-            row.add(sdf.format(asset.getAssetOverdueDate()));
+            row.add(asset.getAssetOverdueDate()==null?"--":sdf.format(asset.getAssetOverdueDate()));
             row.add(asset.getAssetPosition());
             row.add(asset.getAssetEnglishPosition());
             row.add(asset.getAssetMaintain());
-            row.add(sdf.format(asset.getAssetBuyDate()));
+            row.add(asset.getAssetBuyDate()==null?"--":sdf.format(asset.getAssetBuyDate()));
             if(!StringUtils.isEmpty(asset.getCommunity())){
                 row.add(asset.getCommunity().getCommunityName());
             }else{
@@ -275,14 +275,14 @@ public class ExcelController {
             row.add(placeRecord.getPlace().getPlaceEnglishName());
             row.add(placeRecord.getAttachCharge());
             row.add(placeRecord.getAverageCharge());
-            row.add(sdf.format(placeRecord.getCreateTime()));
-            row.add(sdf_year.format(placeRecord.getOrderDate()));
-            row.add(sdf_time.format(placeRecord.getOrderEndTime()));
-            row.add(sdf_time.format(placeRecord.getOrderStartTime()));
+            row.add(placeRecord.getCreateTime()==null?"--":sdf.format(placeRecord.getCreateTime()));
+            row.add(placeRecord.getOrderDate()==null?"--":sdf_year.format(placeRecord.getOrderDate()));
+            row.add(placeRecord.getOrderEndTime()==null?"--":sdf_time.format(placeRecord.getOrderEndTime()));
+            row.add(placeRecord.getOrderStartTime()==null?"--":sdf_time.format(placeRecord.getOrderStartTime()));
             row.add(placeRecord.getRecordStatus());
             row.add(placeRecord.getTotalCharge());
             row.add(placeRecord.getTotalHour());
-            row.add(sdf.format(placeRecord.getUpdateTime()));
+            row.add(placeRecord.getUpdateTime()==null?"--":sdf.format(placeRecord.getUpdateTime()));
             rows.add(row);
         });
         data.setRows(rows);
