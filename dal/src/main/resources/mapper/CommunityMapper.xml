@@ -476,6 +476,12 @@
     </where>
     order by create_time desc
   </select>
+  <select id="childList" resultType="com.simon.dal.model.CommunityChild" >
+    select
+    community_child_id as communityChildId,community_id as communityId, tips, `value`,sort,`name`,amount,area,purpose,perthousand
+    from community_child
+    where community_id=#{communityId}
+  </select>
 
   <select id="selfList" resultType="com.simon.dal.model.UserWithCommunity"  parameterType="com.simon.dal.vo.BaseQueryParam" >
     select
@@ -492,11 +498,17 @@
   </select>
 
   <insert id="batchAddCommunityChild" >
-    insert into community_child
+    insert into community_child (community_child_id,community_id, tips, `value`,sort,`name`,amount,area,purpose,perthousand)values
     <foreach collection="list" item="item" separator=",">
       (
-      #{item.childId},#{item.buildingId},#{item.tips},#{item.value},#{item.sort},#{item.name},#{item.amount},#{item.area},#{item.purpose},#{item.perthousand}
+      #{item.communityChildId},#{item.communityId},#{item.tips},#{item.value},#{item.sort},#{item.name},#{item.amount},#{item.area},#{item.purpose},#{item.perthousand}
       )
     </foreach>
   </insert>
+
+  <delete id="delCommunityChildByCommunityId">
+    delete from community_child
+    where community_id = #{communityId,jdbcType=VARCHAR}
+  </delete>
+
 </mapper>

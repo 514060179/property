@@ -6,6 +6,7 @@ import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.service.CommunityService;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.Community;
+import com.simon.dal.model.CommunityChild;
 import com.simon.dal.vo.BaseQueryParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -54,7 +55,14 @@ public class CommunityController {
         logger.info("社区列表baseQueryParam={}",  JSONUtil.objectToJson(baseQueryParam));
         return ReturnMsg.success(communityService.list(baseQueryParam));
     }
-    
+
+    @GetMapping("childList")
+    @ApiOperation("社区列表")
+    public ReturnMsg<CommunityChild> childList(BaseQueryParam baseQueryParam){
+        logger.info("社区子部分列表baseQueryParam={}",  JSONUtil.objectToJson(baseQueryParam));
+        return ReturnMsg.success(communityService.childList(baseQueryParam));
+    }
+
     @GetMapping("detail")
     @ApiOperation("社区详情")
     public ReturnMsg<Community> detail(String communityId){

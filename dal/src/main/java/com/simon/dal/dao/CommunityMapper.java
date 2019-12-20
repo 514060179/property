@@ -22,11 +22,15 @@ public interface CommunityMapper {
 
     List<Community> list(BaseQueryParam baseQueryParam);
 
+    List<CommunityChild> childList(BaseQueryParam baseQueryParam);
+
     List<UserWithCommunity> selfList(BaseQueryParam baseQueryParam);
 
 	String findName(String communityId);
 	
 	String findId();
 
-	int batchAddCommunityChild(List<CommunityChild> communityChildList);
+	int batchAddCommunityChild(List<CommunityChild> list);
+
+	int delCommunityChildByCommunityId(String communityId);
 }

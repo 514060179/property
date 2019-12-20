@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import java.util.List;
 
-import javax.validation.constraints.NotEmpty;
 
 @ApiModel(value = "Building", description = "楼宇信息")
 public class Building {
@@ -17,6 +16,9 @@ public class Building {
 
     @ApiModelProperty(value = "社区id",example = "c123456")
     private String communityId;
+
+    @ApiModelProperty(value = "社区子部分id",example = "c123456")
+    private String communityChildId;
 
     @ApiModelProperty(value = "楼宇名字",example = "生产楼")
     private String buildingName;
@@ -38,6 +40,12 @@ public class Building {
 
     @ApiModelProperty(value = "楼下几层",example = "4")
     private Integer floorLowNum;
+
+    @ApiModelProperty(value = "住宅数量",example = "30")
+    private Integer houseNum;
+
+    @ApiModelProperty(value = "车场数量",example = "4")
+    private Integer parkingNum;
 
     @ApiModelProperty("管理类型(0简单管理1综合管理)")
     private Integer managementType;
@@ -80,6 +88,14 @@ public class Building {
 
     public void setCommunityId(String communityId) {
         this.communityId = communityId == null ? null : communityId.trim();
+    }
+
+    public String getCommunityChildId() {
+        return communityChildId;
+    }
+
+    public void setCommunityChildId(String communityChildId) {
+        this.communityChildId = communityChildId;
     }
 
     public String getBuildingName() {
@@ -208,5 +224,21 @@ public class Building {
 
     public void setRosterPdf(List<String> rosterPdf) {
         this.rosterPdf = rosterPdf;
+    }
+
+    public Integer getHouseNum() {
+        return houseNum;
+    }
+
+    public void setHouseNum(Integer houseNum) {
+        this.houseNum = houseNum;
+    }
+
+    public Integer getParkingNum() {
+        return parkingNum;
+    }
+
+    public void setParkingNum(Integer parkingNum) {
+        this.parkingNum = parkingNum;
     }
 }

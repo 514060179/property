@@ -32,7 +32,8 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     @Transactional
     public Community add(Community community) {
-        community.setCommunityId(UUIDUtil.uidString());
+        String communityId = UUIDUtil.uidString();
+        community.setCommunityId(communityId);
         if (communityMapper.insertSelective(community)>0){
             List<Enclosure> enclosureList = new ArrayList<>();
             List<String> pdfList = community.getCommonPdf();
@@ -50,6 +51,8 @@ public class CommunityServiceImpl implements CommunityService {
             }
             List<CommunityChild> communityChildList = community.getCommunityChildList();
             if (communityChildList != null && !communityChildList.isEmpty()) {
+                communityMapper.delCommunityChildByCommunityId(communityId);
+                communityChildList.forEach(communityChild -> communityChild.setCommunityId(communityId));
                 communityMapper.batchAddCommunityChild(communityChildList);
             }
         }
@@ -81,6 +84,13 @@ public class CommunityServiceImpl implements CommunityService {
                 buildingMapper.delEnclosure(community.getCommunityId(),Type.ENCLOSURE_OBJECT_TYPE_COMMUNITY);
                 buildingMapper.insertEnclosures(enclosureList);
             }
+
+            List<CommunityChild> communityChildList = community.getCommunityChildList();
+            if (communityChildList != null && !communityChildList.isEmpty()) {
+                communityMapper.delCommunityChildByCommunityId(community.getCommunityId());
+                communityChildList.forEach(communityChild -> communityChild.setCommunityId(community.getCommunityId()));
+                communityMapper.batchAddCommunityChild(communityChildList);
+            }
         }
         return i;
     }
@@ -94,6 +104,11 @@ public class CommunityServiceImpl implements CommunityService {
     public PageInfo<Community> list(BaseQueryParam baseQueryParam) {
         PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
         return new PageInfo<>(communityMapper.list(baseQueryParam));
+    }
+
+    @Override
+    public List<CommunityChild> childList(BaseQueryParam baseQueryParam) {
+        return communityMapper.childList(baseQueryParam);
     }
 
     @Override

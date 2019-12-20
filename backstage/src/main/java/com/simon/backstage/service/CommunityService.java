@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.backstage.domain.model.BuildingChild;
 import com.simon.backstage.domain.model.BuildingPart;
 import com.simon.dal.model.Community;
+import com.simon.dal.model.CommunityChild;
 import com.simon.dal.vo.BaseQueryParam;
 
 import java.util.List;
@@ -44,6 +45,9 @@ public interface CommunityService {
      * @return
      */
     PageInfo<Community> list(BaseQueryParam baseQueryParam);
+
+
+    List<CommunityChild> childList(BaseQueryParam baseQueryParam);
 
     /**
      * 社区下的建筑子部分

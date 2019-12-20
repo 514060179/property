@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.Building" >
     <id column="building_id" property="buildingId" jdbcType="VARCHAR" />
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+    <result column="community_child_id" property="communityChildId" jdbcType="VARCHAR" />
     <result column="building_name" property="buildingName" jdbcType="VARCHAR" />
     <result column="building_no" property="buildingNo" jdbcType="VARCHAR" />
     <result column="full_address" property="fullAddress" jdbcType="VARCHAR" />
@@ -11,6 +12,8 @@
     <result column="building_direction" property="buildingDirection" jdbcType="VARCHAR" />
     <result column="floor_up_num" property="floorUpNum" jdbcType="INTEGER" />
     <result column="floor_low_num" property="floorLowNum" jdbcType="INTEGER" />
+    <result column="house_num" property="houseNum" jdbcType="INTEGER" />
+    <result column="parking_num" property="parkingNum" jdbcType="INTEGER" />
     <result column="management_type" property="managementType" jdbcType="INTEGER" />
     <result column="deleted" property="deleted" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -55,8 +58,8 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    b.building_id, b.community_id, b.building_name, b.building_no, b.full_address, b.building_struct,
-    b.building_direction, b.floor_up_num, b.floor_low_num, c.community_management_type as management_type, b.deleted, b.create_time, b.update_time,
+    b.building_id, b.community_id,b.community_child_id, b.building_name, b.building_no, b.full_address, b.building_struct,
+    b.building_direction, b.floor_up_num, b.floor_low_num,b.house_num,b.parking_num, c.community_management_type as management_type, b.deleted, b.create_time, b.update_time,
     c.community_id,c.community_no,c.community_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -111,14 +114,14 @@
     where building_id = #{buildingId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.simon.backstage.domain.model.Building" >
-    insert into building (building_id, community_id, building_name, 
+    insert into building (building_id, community_id,community_child_id, building_name,
       building_no, full_address, building_struct, 
-      building_direction, floor_up_num, floor_low_num, 
+      building_direction, floor_up_num, floor_low_num,house_num,parking_num,
       deleted, create_time, update_time
       )
-    values (#{buildingId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, #{buildingName,jdbcType=VARCHAR}, 
+    values (#{buildingId,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR},#{communityChildId,jdbcType=VARCHAR}, #{buildingName,jdbcType=VARCHAR},
       #{buildingNo,jdbcType=VARCHAR}, #{fullAddress,jdbcType=VARCHAR}, #{buildingStruct,jdbcType=VARCHAR}, 
-      #{buildingDirection,jdbcType=VARCHAR}, #{floorUpNum,jdbcType=INTEGER}, #{floorLowNum,jdbcType=INTEGER}, 
+      #{buildingDirection,jdbcType=VARCHAR}, #{floorUpNum,jdbcType=INTEGER}, #{floorLowNum,jdbcType=INTEGER},#{houseNum,jdbcType=INTEGER}, #{parkingNum,jdbcType=INTEGER},
       #{deleted,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -130,6 +133,9 @@
       </if>
       <if test="communityId != null" >
         community_id,
+      </if>
+      <if test="communityChildId != null" >
+        community_child_id,
       </if>
       <if test="buildingName != null" >
         building_name,
@@ -152,6 +158,12 @@
       <if test="floorLowNum != null" >
         floor_low_num,
       </if>
+      <if test="houseNum != null" >
+        house_num,
+      </if>
+      <if test="parkingNum != null" >
+        parking_num,
+      </if>
       <if test="deleted != null" >
         deleted,
       </if>
@@ -168,6 +180,9 @@
       </if>
       <if test="communityId != null" >
         #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="communityChildId != null" >
+        #{communityChildId,jdbcType=VARCHAR},
       </if>
       <if test="buildingName != null" >
         #{buildingName,jdbcType=VARCHAR},
@@ -189,6 +204,12 @@
       </if>
       <if test="floorLowNum != null" >
         #{floorLowNum,jdbcType=INTEGER},
+      </if>
+      <if test="houseNum != null" >
+        #{houseNum,jdbcType=INTEGER},
+      </if>
+      <if test="parkingNum != null" >
+        #{parkingNum,jdbcType=INTEGER},
       </if>
       <if test="deleted != null" >
         #{deleted,jdbcType=BIT},
@@ -245,6 +266,9 @@
       <if test="communityId != null" >
         community_id = #{communityId,jdbcType=VARCHAR},
       </if>
+      <if test="communityChildId != null" >
+        community_child_id = #{communityChildId,jdbcType=VARCHAR},
+      </if>
       <if test="buildingName != null" >
         building_name = #{buildingName,jdbcType=VARCHAR},
       </if>
@@ -265,6 +289,12 @@
       </if>
       <if test="floorLowNum != null" >
         floor_low_num = #{floorLowNum,jdbcType=INTEGER},
+      </if>
+      <if test="houseNum != null" >
+        house_num = #{houseNum,jdbcType=INTEGER},
+      </if>
+      <if test="parkingNum != null" >
+        parking_num = #{parkingNum,jdbcType=INTEGER},
       </if>
       <if test="deleted != null" >
         deleted = #{deleted,jdbcType=BIT},
@@ -328,7 +358,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.simon.backstage.domain.model.Building" >
     update building
-    set community_id = #{communityId,jdbcType=VARCHAR},
+    set community_id = #{communityId,jdbcType=VARCHAR},community_child_id = #{communityChildId,jdbcType=VARCHAR},
       building_name = #{buildingName,jdbcType=VARCHAR},
       building_no = #{buildingNo,jdbcType=VARCHAR},
       full_address = #{fullAddress,jdbcType=VARCHAR},
@@ -336,6 +366,8 @@
       building_direction = #{buildingDirection,jdbcType=VARCHAR},
       floor_up_num = #{floorUpNum,jdbcType=INTEGER},
       floor_low_num = #{floorLowNum,jdbcType=INTEGER},
+      house_num = #{houseNum,jdbcType=INTEGER},
+      parking_num = #{parkingNum,jdbcType=INTEGER},
       deleted = #{deleted,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
