@@ -52,7 +52,10 @@ public class CommunityServiceImpl implements CommunityService {
             List<CommunityChild> communityChildList = community.getCommunityChildList();
             if (communityChildList != null && !communityChildList.isEmpty()) {
                 communityMapper.delCommunityChildByCommunityId(communityId);
-                communityChildList.forEach(communityChild -> communityChild.setCommunityId(communityId));
+                communityChildList.forEach(communityChild -> {
+                    communityChild.setCommunityChildId(UUIDUtil.uidString());
+                    communityChild.setCommunityId(communityId);
+                });
                 communityMapper.batchAddCommunityChild(communityChildList);
             }
         }
@@ -61,7 +64,11 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public Community detail(String communityId) {
-        return communityMapper.selectByPrimaryKey(communityId);
+        Community community = communityMapper.selectByPrimaryKey(communityId);
+        BaseQueryParam baseQueryParam = new BaseQueryParam();
+        baseQueryParam.setCommunityId(communityId);
+        community.setCommunityChildList(communityMapper.childList(baseQueryParam));
+        return community;
     }
 
     @Override
@@ -88,7 +95,10 @@ public class CommunityServiceImpl implements CommunityService {
             List<CommunityChild> communityChildList = community.getCommunityChildList();
             if (communityChildList != null && !communityChildList.isEmpty()) {
                 communityMapper.delCommunityChildByCommunityId(community.getCommunityId());
-                communityChildList.forEach(communityChild -> communityChild.setCommunityId(community.getCommunityId()));
+                communityChildList.forEach(communityChild -> {
+                    communityChild.setCommunityChildId(UUIDUtil.uidString());
+                    communityChild.setCommunityId(community.getCommunityId());
+                });
                 communityMapper.batchAddCommunityChild(communityChildList);
             }
         }
