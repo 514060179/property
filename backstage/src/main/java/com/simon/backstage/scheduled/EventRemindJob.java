@@ -1,9 +1,14 @@
 package com.simon.backstage.scheduled;
+import com.google.common.collect.Lists;
+import com.simon.backstage.domain.vo.Community;
 
 import com.simon.backstage.dao.AssetMapper;
+import com.simon.backstage.dao.EventMapper;
 import com.simon.backstage.dao.ManagerMapper;
 import com.simon.backstage.domain.model.Asset;
+import com.simon.backstage.domain.model.Event;
 import com.simon.backstage.domain.model.Manager;
+import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +41,9 @@ public class EventRemindJob {
     private AssetMapper assetMapper;
 
     @Autowired
+    private EventMapper eventMapper;
+
+    @Autowired
     private JavaMailSender javaMailSender;
 
     @Autowired
@@ -56,6 +64,24 @@ public class EventRemindJob {
                     new Thread(()->{
                         emialSendHtml("定期維護提醒",manager.getEmail(),asset.getAssetNo()+"/"+asset.getAssetName());
                     }).start();
+                    //生成事件
+                    Event event = new Event();
+                    event.setEventContent(asset.getAssetName()+"定期維護");
+                    event.setEventCause(asset.getAssetName()+"定期維護");
+                    event.setEventSolve(asset.getAssetName()+"定期維護");
+                    event.setEventId(UUIDUtil.uidString());
+                    event.setReportImages(Lists.newArrayList());
+                    event.setCommunityId(manager.getCommunityId());
+                    event.setEventStatus("推到行政中");
+                    event.setEventDate(new Date());
+                    event.setEventType("2");
+                    event.setEventRemindCycle(0);
+                    event.setEventFinishDate(new Date());
+                    event.setCreateTime(new Date());
+                    event.setUpdateTime(new Date());
+                    event.setAssetNo(asset.getAssetNo());
+                    event.setEventChannel(0);
+                    eventMapper.insertSelective(event);
                 });
             }
         });
