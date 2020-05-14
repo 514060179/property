@@ -46,6 +46,9 @@ public class UserServiceImpl implements UserService {
     private UnitMapper unitMapper;
     @Autowired
     private UserUnitMapper userUnitMapper;
+    @Autowired
+    private UserService userService;
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
@@ -144,7 +147,7 @@ public class UserServiceImpl implements UserService {
                     if(row==null || invalidData(row)){
                         continue;
                     }
-                    save(communityId,row,map);
+                    userService.save(communityId,row,map);
                     //todo 处理事务问题
                     success++;
                 } catch (Exception e) {
@@ -168,6 +171,8 @@ public class UserServiceImpl implements UserService {
         }
         return responseMsg.toString();
     }
+
+
     @Transactional
     public void save(String communityId,XSSFRow xssfRow,Map<String,User> map){
         XSSFCell username = xssfRow.getCell(0);
@@ -206,6 +211,7 @@ public class UserServiceImpl implements UserService {
         user.setMateName(peiou==null?null:peiou.getStringCellValue());
         if (!map.containsKey(user.getName())){
             userMapper.insertSelective(user);
+            int i = 1/0;
             userMapper.insertUserCommunity(user);
             map.put(user.getName(),user);
         }

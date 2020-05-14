@@ -5,6 +5,7 @@ import com.simon.dal.model.User;
 import com.simon.dal.model.UserWithCommunity;
 import com.simon.dal.vo.BaseClaims;
 import com.simon.dal.vo.BaseQueryParam;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -76,4 +77,6 @@ public interface UserService {
      * @return
      */
     String importExcel(HttpServletRequest request, String communityId);
+
+    void save(String communityId, XSSFRow xssfRow, Map<String,User> map);
 }

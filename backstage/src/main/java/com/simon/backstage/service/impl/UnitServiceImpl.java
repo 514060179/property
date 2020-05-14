@@ -138,6 +138,11 @@ public class UnitServiceImpl implements UnitService {
                     unit.setCommunityId(communityId);
                     unit.setBuildingId(buildingId);
                     unit.setUnitName(String.valueOf(mingcheng.getStringCellValue()));
+                    Unit findUnit = unitMapper.selectByUnitNo(bianhao.getStringCellValue());
+                    if(findUnit != null){
+                        logger.info("单元编号已存在，跳过该行:{}", findUnit.getUnitNo());
+                        continue;
+                    }
                     unit.setUnitNo(String.valueOf(bianhao.getStringCellValue()));
                     unit.setUnitRelativeProportion(new BigDecimal(baifenbi.getNumericCellValue()).multiply(new BigDecimal(100)));
                     unit.setUnitPosition(String.valueOf(weizhi.getStringCellValue()));
