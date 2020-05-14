@@ -120,7 +120,7 @@ public class UnitServiceImpl implements UnitService {
                 XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(0);
                 List<Unit> unitList = new ArrayList<>();
                 StringBuffer failMsg = new StringBuffer("");
-                for (int i = 1; i <= xssfSheet.getLastRowNum(); i++) {
+                for (int i = 1; i < xssfSheet.getLastRowNum(); i++) {
                     XSSFRow xssfRow = xssfSheet.getRow(i);
                     if(xssfRow==null || invalidData(xssfRow)){
                         continue;

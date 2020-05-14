@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserService {
             Map<String,User> map = new HashMap<String,User>();
             int success = 0;
             int fail = 0;
-            for (int i = 1; i <= xssfSheet.getLastRowNum(); i++){
+            for (int i = 1; i < xssfSheet.getLastRowNum(); i++){
                 try {
                     XSSFRow row = xssfSheet.getRow(i);
                     if(row==null || invalidData(row)){
