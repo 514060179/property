@@ -140,7 +140,11 @@ public class UserServiceImpl implements UserService {
             int fail = 0;
             for (int i = 1; i <= xssfSheet.getLastRowNum(); i++){
                 try {
-                    save(communityId,xssfSheet.getRow(i),map);
+                    XSSFRow row = xssfSheet.getRow(i);
+                    if(row==null || invalidData(row)){
+                        continue;
+                    }
+                    save(communityId,row,map);
                     //todo 处理事务问题
                     success++;
                 } catch (Exception e) {
@@ -190,7 +194,7 @@ public class UserServiceImpl implements UserService {
         user.setUserId(UUIDUtil.uidString());
         user.setCommunityId(communityId);
         user.setName(name.getStringCellValue());
-        user.setEnglishName(ename.getStringCellValue());
+        user.setEnglishName(ename==null?null:ename.getStringCellValue());
         user.setSex("男".equals(sex.getStringCellValue())?1:0);
         user.setCountryCode(quhao==null?null:quhao.getStringCellValue());
         user.setTel(tel==null?null:tel.getStringCellValue());
@@ -198,7 +202,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(username.getStringCellValue());
         user.setPassword(EncryUtil.getMD5("123456"));
         user.setEmail(email==null?null:email.getStringCellValue());
-        user.setMarriageSystem(hunyinzhidu.getStringCellValue());
+        user.setMarriageSystem(hunyinzhidu==null?null:hunyinzhidu.getStringCellValue());
         user.setMateName(peiou==null?null:peiou.getStringCellValue());
         if (!map.containsKey(user.getName())){
             userMapper.insertSelective(user);
@@ -223,4 +227,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    //判断是否为空行
+    private boolean invalidData(XSSFRow row){
+        for(int i = 0; i < row.getLastCellNum(); i++){
+            XSSFCell cell = row.getCell(i);
+            if(cell!=null && !StringUtils.isEmpty(cell.getStringCellValue())){
+                return false;
+            }
+        }
+        return true;
+    }
 }

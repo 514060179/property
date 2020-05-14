@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -121,6 +122,9 @@ public class UnitServiceImpl implements UnitService {
                 StringBuffer failMsg = new StringBuffer("");
                 for (int i = 1; i <= xssfSheet.getLastRowNum(); i++) {
                     XSSFRow xssfRow = xssfSheet.getRow(i);
+                    if(xssfRow==null || invalidData(xssfRow)){
+                        continue;
+                    }
                     XSSFCell yongtu = xssfRow.getCell(0);
                     XSSFCell bianhao = xssfRow.getCell(1);
                     XSSFCell mingcheng = xssfRow.getCell(2);
@@ -168,6 +172,7 @@ public class UnitServiceImpl implements UnitService {
                 responseMsg.append("成功导入：").append(success).append("导入失败：").append(fail).append(failMsg);
             } catch (IOException e) {
                 e.printStackTrace();
+                logger.error("导入excel异常",e.getMessage());
             }finally {
                 if(is!=null){
                     try {
@@ -184,5 +189,16 @@ public class UnitServiceImpl implements UnitService {
     @Override
     public List<ExcelUnit> getExcelUnits(UnitQueryParam unitQueryParam) {
         return userUnitMapper.getExcelUnits(unitQueryParam);
+    }
+
+    //判断是否为空行
+    private boolean invalidData(XSSFRow row){
+        for(int i = 0; i < row.getLastCellNum(); i++){
+            XSSFCell cell = row.getCell(i);
+            if(cell!=null && !StringUtils.isEmpty(cell.getStringCellValue())){
+                return false;
+            }
+        }
+        return true;
     }
 }
