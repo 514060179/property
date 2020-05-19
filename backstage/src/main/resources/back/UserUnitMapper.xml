@@ -196,8 +196,8 @@
       group_concat(u2.NAME) as users
     FROM unit u INNER JOIN community c ON u.community_id = c.community_id
       INNER JOIN building b ON u.building_id = b.building_id
-      inner join user_unit uu ON u.unit_id = uu.unit_id
-      inner join user u2 ON uu.user_id = u2.user_id
+      LEFT join user_unit uu ON u.unit_id = uu.unit_id
+      LEFT join user u2 ON uu.user_id = u2.user_id
     <where>
       <if test="communityId != null" >
         and u.community_id = #{communityId,jdbcType=VARCHAR}
