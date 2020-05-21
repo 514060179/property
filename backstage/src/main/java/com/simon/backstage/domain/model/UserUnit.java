@@ -23,7 +23,7 @@ public class UserUnit {
     private boolean convincing;
 
     @ApiModelProperty(value="业权分配)",example="1")
-    private Integer title;
+    private Integer title = 0;
     
     @ApiModelProperty(value="创建时间", readOnly=true)
     private Date createTime;
@@ -92,7 +92,11 @@ public class UserUnit {
     }
 
     public void setTitle(Integer title) {
-        this.title = title;
+        if(title == null){
+            this.title = 0;
+        }else{
+            this.title = title;
+        }
     }
 
     @Override
