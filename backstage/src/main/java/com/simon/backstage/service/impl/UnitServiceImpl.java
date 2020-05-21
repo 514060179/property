@@ -6,6 +6,7 @@ import com.simon.backstage.dao.UnitMapper;
 import com.simon.backstage.dao.UserUnitMapper;
 import com.simon.backstage.domain.model.Unit;
 import com.simon.backstage.domain.model.UserUnit;
+import com.simon.backstage.domain.msg.ReturnMsg;
 import com.simon.backstage.domain.vo.ExcelUnit;
 import com.simon.backstage.domain.vo.UnitQueryParam;
 import com.simon.backstage.service.UnitService;
@@ -86,7 +87,14 @@ public class UnitServiceImpl implements UnitService {
 	}
 
     @Override
-    public int batchAddUser(List<UserUnit> userUnitList) {
+    @Transactional
+    public int batchAddUser(String userId, String unitId, List<UserUnit> userUnitList) {
+        if (!StringUtils.isEmpty(userId)||!StringUtils.isEmpty(unitId)){
+            delUser(unitId, userId);//清空绑定关系
+        }
+        if (userUnitList==null||userUnitList.isEmpty()){
+            return 0;
+        }
         return userUnitMapper.batchAddUser(userUnitList);
     }
 

@@ -211,7 +211,6 @@ public class UserServiceImpl implements UserService {
         user.setMateName(peiou==null?null:peiou.getStringCellValue());
         if (!map.containsKey(user.getName())){
             userMapper.insertSelective(user);
-            int i = 1/0;
             userMapper.insertUserCommunity(user);
             map.put(user.getName(),user);
         }

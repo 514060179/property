@@ -68,7 +68,7 @@ public interface UnitService {
      * @param userUnitList
      * @return
      */
-    int batchAddUser(List<UserUnit> userUnitList);
+    int batchAddUser(String userId, String unitId, List<UserUnit> userUnitList);
 
     /**
      * 房间住户添加
