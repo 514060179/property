@@ -81,7 +81,17 @@ public class User {
     @ApiModelProperty(hidden = true)
     private Community community;
 
-     private List<UserWithCommunity> userWithCommunities;
+    private List<UserWithCommunity> userWithCommunities;
+
+    private Long title;
+
+    public Long getTitle() {
+        return title;
+    }
+
+    public void setTitle(Long title) {
+        this.title = title;
+    }
 
     public String getUserId() {
         return userId;

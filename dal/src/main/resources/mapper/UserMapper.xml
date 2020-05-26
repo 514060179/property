@@ -122,7 +122,7 @@
     <if test="keyword!=null and keyword!=''">
       CONCAT(IFNULL(u.NAME,''),CONCAT(IFNULL(u.user_id,''),CONCAT(IFNULL(u.english_name,''),IFNULL(u.username,''),IFNULL(u.tel,'')) LIKE CONCAT('%', #{keyword}, '%')
     </if>
-    <if test="communityId != null">
+    <if test="communityId != null and communityId != ''">
       AND uc.community_id = #{communityId, jdbcType=VARCHAR}
     </if>
     <if test="buildingId != null">
