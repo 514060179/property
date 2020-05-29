@@ -67,6 +67,7 @@ public class ChargeItemServiceImpl implements ChargeItemService {
                 if(item.getItemId().equals(unitWithItemList.get(i).getItemId())){
                     //表示已关联该收费项目
                     unitWithItemList.remove(i);
+                    break;
                 }
             }
         }
