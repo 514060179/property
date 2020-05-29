@@ -59,7 +59,21 @@ public class ChargeItemServiceImpl implements ChargeItemService {
 
     @Override
     public int unitAddItem(List<UnitWithItem> unitWithItemList) {
-        return chargeItemMapper.unitAddItem(unitWithItemList);
+        for (int i = 0; i < unitWithItemList.size(); i++) {
+            QueryWithIdParam queryWithIdParam = new QueryWithIdParam();
+            queryWithIdParam.setUnitId(unitWithItemList.get(i).getUnitId());
+            List<ChargeItem> items = chargeItemMapper.unitItemList(queryWithIdParam);
+            for (ChargeItem item : items) {
+                if(item.getItemId().equals(unitWithItemList.get(i).getItemId())){
+                    //表示已关联该收费项目
+                    unitWithItemList.remove(i);
+                }
+            }
+        }
+        if(unitWithItemList.size() > 0){
+            return chargeItemMapper.unitAddItem(unitWithItemList);
+        }
+        return 0;
     }
 
     @Override
