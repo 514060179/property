@@ -38,7 +38,8 @@ public class PlaceRecordController {
     @ApiOperation("修改场所记录")
     @Log(description = "修改场所记录",operateType = OperateType.modify)
     public ReturnMsg<PlaceRecord> upd(@RequestBody PlaceRecord placeRecord, HttpServletRequest request){
-        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (!StringUtils.isEmpty(communityId) && !ClaimsUtil.isMutilString(communityId)){//普通管理员
             placeRecord.setCommunityId(null);
         }
         return ReturnMsg.success(placeRecordService.upd(placeRecord));

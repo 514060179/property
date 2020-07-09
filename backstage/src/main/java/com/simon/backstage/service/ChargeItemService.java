@@ -47,6 +47,12 @@ public interface ChargeItemService {
      * @return
      */
     int del(String itemId);
+    /**
+     * 删除单元的收费项目
+     * @param unitItemId
+     * @return
+     */
+    int delUnitChargeItem(String unitItemId);
 
     /**
      * 列表

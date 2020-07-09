@@ -42,12 +42,13 @@ public class ChargeItemController {
     @ApiOperation("添加收费项目")
     public ReturnMsg<ChargeItem> add(@RequestBody ChargeItem chargeItem, HttpServletRequest request){
         logger.info("添加收费项目chargeItem={}", JSONUtil.objectToJson(chargeItem));
-        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (StringUtils.isEmpty(communityId) || ClaimsUtil.isMutilString(communityId) ){//超级管理员
             if (StringUtils.isEmpty(chargeItem.getCommunityId())){
                 return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
             }
         }else{
-            chargeItem.setCommunityId(ClaimsUtil.getCommunityId(request));
+            chargeItem.setCommunityId(communityId);
         }
         return ReturnMsg.success(chargeItemService.add(chargeItem));
     }
@@ -57,7 +58,8 @@ public class ChargeItemController {
     @Log(description = "修改收费项目",operateType = OperateType.modify)
     public ReturnMsg upd(@RequestBody ChargeItem chargeItem, HttpServletRequest request){
         logger.info("添加收费项目chargeItem={}", JSONUtil.objectToJson(chargeItem));
-        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (!StringUtils.isEmpty(communityId) && !ClaimsUtil.isMutilString(communityId)){//普通管理员
             chargeItem.setCommunityId(null);
         }
         return ReturnMsg.success(chargeItemService.upd(chargeItem));
@@ -69,6 +71,13 @@ public class ChargeItemController {
     public ReturnMsg del(@RequestParam String itemId){
         logger.info("删除收费项目itemId={}", itemId);
         return ReturnMsg.success(chargeItemService.del(itemId));
+    }
+
+    @GetMapping("delUnitChargeItem")
+    @ApiOperation("删除单元的收费项目")
+    public ReturnMsg delUnitChargeItem(@RequestParam String unitItemId){
+        logger.info("删除单元的收费项目unitItemId={}", unitItemId);
+        return ReturnMsg.success(chargeItemService.delUnitChargeItem(unitItemId));
     }
 
     @GetMapping("list")
@@ -107,8 +116,8 @@ public class ChargeItemController {
 
     @GetMapping("unitItemList")
     @ApiOperation("单元收费项目列表")
-    @ApiImplicitParam(name="unitId",value="单元id",required=true)
-    public ReturnMsg<ChargeItem> unitItemList(QueryWithIdParam queryWithIdParam, @RequestParam String unitId) {
+//    @ApiImplicitParam(name="unitId",value="单元id",required=true)
+    public ReturnMsg<ChargeItem> unitItemList(QueryWithIdParam queryWithIdParam) {
         logger.info("单元收费项目列表unitWithItem={}", JSONUtil.objectToJson(queryWithIdParam));
         return ReturnMsg.success(chargeItemService.unitItemList(queryWithIdParam));
     }

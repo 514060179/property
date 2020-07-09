@@ -52,7 +52,7 @@ public class UnitController {
     public ReturnMsg<Unit> add(@RequestBody Unit unit, HttpServletRequest request){
         logger.info("添加单元unit={}", JSONUtil.objectToJson(unit));
         String communityId = ClaimsUtil.getCommunityId(request);
-        if (StringUtils.isEmpty(communityId)){//超级管理员
+        if (StringUtils.isEmpty(communityId) || ClaimsUtil.isMutilString(communityId)){//超级管理员
             if (StringUtils.isEmpty(unit.getCommunityId())){
                 Building building = buildingService.detail(unit.getBuildingId());
                 unit.setCommunityId(building.getCommunityId());

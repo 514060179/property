@@ -38,12 +38,13 @@ public class EventController {
     @ApiOperation("添加事件")
     public ReturnMsg<Event> add(@RequestBody Event event, HttpServletRequest request){
         logger.info("添加事件event={}", JSONUtil.objectToJson(event));
-        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (StringUtils.isEmpty(communityId) || ClaimsUtil.isMutilString(communityId)){//超级管理员
             if (StringUtils.isEmpty(event.getCommunityId())){
                 return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
             }
         }else{
-            event.setCommunityId(ClaimsUtil.getCommunityId(request));
+            event.setCommunityId(communityId);
         }
         return ReturnMsg.success(eventService.add(event));
     }
@@ -51,7 +52,8 @@ public class EventController {
     @PostMapping("upd")
     @ApiOperation("修改事件")
     public ReturnMsg<Event> upd(@RequestBody Event event, HttpServletRequest request){
-        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (!StringUtils.isEmpty(communityId) && !ClaimsUtil.isMutilString(communityId)){//普通管理员
             event.setCommunityId(null);
         }
         return ReturnMsg.success(eventService.upd(event));

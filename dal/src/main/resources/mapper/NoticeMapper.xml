@@ -62,7 +62,12 @@
           CONCAT(IFNULL(n.notice_title,''),IFNULL(n.notice_type,'')) LIKE CONCAT('%', #{baseClaims.keyword}, '%')
     	</if>
     	<if test="baseClaims.communityId != null">
-    		AND n.community_id = #{baseClaims.communityId,jdbcType=VARCHAR} OR n.community_id IS NULL OR n.community_id=''
+          and n.community_id in (
+          <foreach collection="baseClaims.communityId.split(',')" item="item" index="index" separator=",">
+            #{item}
+          </foreach>
+          )
+    		OR n.community_id IS NULL OR n.community_id=''
     	</if>
     	<if test="baseClaims.buildingId != null">
     		AND n.building_id = #{baseClaims.buildingId,jdbcType=VARCHAR} OR n.building_id IS NULL OR n.building_id=''

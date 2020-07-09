@@ -48,7 +48,8 @@ public class UserController {
     @ApiOperation("添加住户")
     public ReturnMsg<User> add(@RequestBody User user, HttpServletRequest request){
         logger.info("添加住户user={}", JSONUtil.objectToJson(user));
-        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (StringUtils.isEmpty(communityId) || ClaimsUtil.isMutilString(communityId)){//超级管理员
             if (StringUtils.isEmpty(user.getCommunityId())&&user.getUserWithCommunities().size()<0){
                 return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
             }
@@ -62,7 +63,8 @@ public class UserController {
     @ApiOperation("修改住户")
     public ReturnMsg<User> upd(@RequestBody User user, HttpServletRequest request){
         logger.info("修改住户user={}", JSONUtil.objectToJson(user));
-        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (!StringUtils.isEmpty(communityId) && !ClaimsUtil.isMutilString(communityId)){//普通管理员
             user.setCommunityId(null);
             user.setUserWithCommunities(null);
         }

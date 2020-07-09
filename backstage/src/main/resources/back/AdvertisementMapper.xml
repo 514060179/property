@@ -41,7 +41,11 @@
         CONCAT(IFNULL(a.title,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-        AND a.community_id = #{communityId,jdbcType=VARCHAR}
+        AND a.community_id in (
+        <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
+            #{item}
+        </foreach>
+        )
       </if>
     </where>
     order by a.create_time desc

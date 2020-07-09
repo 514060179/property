@@ -29,6 +29,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -82,6 +85,18 @@ public class ChargeItemRecordController {
     public ReturnMsg<UnitCharges> unitChargeList(@RequestParam String conmunityId,@RequestParam(required = false,defaultValue = "0") int recordType,String dateStart,String dateEnd) {
         logger.info("单元收费列表conmunityId={}", JSONUtil.objectToJson(conmunityId));
         return ReturnMsg.success(chargeItemRecordService.unitChargeList(conmunityId,recordType,dateStart,dateEnd));
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yy年MM月");
+//        Date dateS = null;
+//        Date dateE = null;
+//        try {
+//            dateS = simpleDateFormat.parse(dateStart);
+//            dateE = simpleDateFormat.parse(dateStart);
+//            return ReturnMsg.success(chargeItemRecordService.unitChargeList(conmunityId,recordType,simpleDateFormat1.format(dateS),simpleDateFormat1.format(dateE)));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return ReturnMsg.success();
     }
 
     @GetMapping("detail")

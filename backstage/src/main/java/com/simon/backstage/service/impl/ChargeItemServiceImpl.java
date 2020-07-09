@@ -2,6 +2,7 @@ package com.simon.backstage.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.ChargeItemMapper;
+import com.simon.backstage.dao.UnitChargeItemMapper;
 import com.simon.backstage.domain.model.ChargeItem;
 import com.simon.backstage.domain.vo.QueryWithIdParam;
 import com.simon.backstage.domain.vo.UnitItemWithUser;
@@ -23,6 +24,8 @@ public class ChargeItemServiceImpl implements ChargeItemService {
 
     @Autowired
     private ChargeItemMapper chargeItemMapper;
+    @Autowired
+    private UnitChargeItemMapper unitChargeItemMapper;
     @Override
     public ChargeItem add(ChargeItem chargeItem) {
         chargeItem.setItemId(UUIDUtil.uidString());
@@ -50,6 +53,15 @@ public class ChargeItemServiceImpl implements ChargeItemService {
     @Override
     public int del(String itemId) {
         return chargeItemMapper.deleteByPrimaryKey(itemId);
+    }
+
+    @Override
+    public int delUnitChargeItem(String unitItemId) {
+        String[] ids = unitItemId.split(",");
+        for (String id : ids) {
+            unitChargeItemMapper.deleteByPrimaryKey(id);
+        }
+        return 0;
     }
 
     @Override

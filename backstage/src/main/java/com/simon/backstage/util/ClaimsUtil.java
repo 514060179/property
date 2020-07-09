@@ -26,6 +26,19 @@ public class ClaimsUtil {
         }
         return claims.get("community",String.class);
     }
+    //是否多个组合使用逗号隔开的字符串
+    public static boolean isMutilString(String str) {
+        try {
+            String[] split = str.split(",");
+            if (split.length > 1) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     //触摸板使用
     public static String getBuildingId(HttpServletRequest request){
         Claims claims = (Claims)request.getAttribute("claims");

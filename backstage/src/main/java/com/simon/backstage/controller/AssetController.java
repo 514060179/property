@@ -37,12 +37,13 @@ public class AssetController {
     @ApiOperation("添加资源")
     public ReturnMsg<Asset> add(@RequestBody Asset asset, HttpServletRequest request){
         logger.info("添加资源asset={}", JSONUtil.objectToJson(asset));
-        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (StringUtils.isEmpty(communityId)  || ClaimsUtil.isMutilString(communityId)){//超级管理员或者经理
             if (StringUtils.isEmpty(asset.getCommunityId())){
                 return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
             }
         }else{
-            asset.setCommunityId(ClaimsUtil.getCommunityId(request));
+            asset.setCommunityId(communityId);
         }
         return ReturnMsg.success(assetService.add(asset));
     }
@@ -51,7 +52,8 @@ public class AssetController {
     @ApiOperation("修改资源")
     public ReturnMsg<Asset> upd(@RequestBody Asset asset, HttpServletRequest request){
         logger.info("修改资源asset={}", JSONUtil.objectToJson(asset));
-        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (!StringUtils.isEmpty(communityId) && !ClaimsUtil.isMutilString(communityId)){//普通管理员
             asset.setCommunityId(null);
         }
         return ReturnMsg.success(assetService.upd(asset));
