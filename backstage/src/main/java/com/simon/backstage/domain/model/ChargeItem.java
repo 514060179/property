@@ -9,6 +9,7 @@ import java.util.Date;
 @ApiModel(value = "ChargeItem", description = "收费项目")
 public class ChargeItem {
     private String itemId;
+    private String unitItemId;
     @ApiModelProperty(value = "社区id",example = "c123456")
     private String communityId;
     @ApiModelProperty(value = "收费项目编号",example = "A0001")
@@ -40,6 +41,24 @@ public class ChargeItem {
 
     @ApiModelProperty(hidden = true)
     private Community community;
+
+    private Unit unit;
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
+    public String getUnitItemId() {
+        return unitItemId;
+    }
+
+    public void setUnitItemId(String unitItemId) {
+        this.unitItemId = unitItemId;
+    }
 
     public String getItemId() {
         return itemId;

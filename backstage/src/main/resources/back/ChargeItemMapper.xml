@@ -3,6 +3,7 @@
 <mapper namespace="com.simon.backstage.dao.ChargeItemMapper" >
   <resultMap id="BaseResultMap" type="com.simon.backstage.domain.model.ChargeItem" >
     <id column="item_id" property="itemId" jdbcType="VARCHAR" />
+    <result column="unit_item_id" property="unitItemId" jdbcType="VARCHAR" />
     <result column="item_no" property="itemNo" jdbcType="VARCHAR" />
     <result column="community_id" property="communityId" jdbcType="VARCHAR" />
     <result column="item_name" property="itemName" jdbcType="VARCHAR" />
@@ -21,6 +22,21 @@
       <id column="community_id" property="communityId" jdbcType="VARCHAR" />
       <result column="community_no" property="communityNo" jdbcType="VARCHAR" />
       <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    </association>
+    <association property="unit" javaType="com.simon.backstage.domain.model.Unit">
+      <id column="unit_id" property="unitId" jdbcType="VARCHAR" />
+      <result column="building_id" property="buildingId" jdbcType="VARCHAR" />
+      <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+      <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+      <result column="unit_no" property="unitNo" jdbcType="VARCHAR" />
+      <result column="unit_covered_area" property="unitCoveredArea" jdbcType="DECIMAL" />
+      <result column="unit_relative_proportion" property="unitRelativeProportion" jdbcType="DECIMAL" />
+      <result column="unit_child_relative_proportion" property="unitChildRelativeProportion" jdbcType="DECIMAL" />
+      <result column="unit_purpose" property="unitPurpose" jdbcType="VARCHAR" />
+      <result column="unit_position" property="unitPosition" jdbcType="VARCHAR" />
+      <result column="unit_type" property="unitType" jdbcType="INTEGER" />
+      <result column="unit_full_address" property="unitFullAddress" jdbcType="VARCHAR" />
+      <result column="unit_status" property="unitStatus" jdbcType="INTEGER" />
     </association>
   </resultMap>
 
@@ -64,7 +80,10 @@
   </sql>
   <sql id="With_Other_Column_List" >
     ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price,ci.additional_cost, ci.late_fee,
-    ci.late_date, ci.formula, ci.`describe`, ci.create_time, ci.update_time
+    ci.late_date, ci.formula, ci.`describe`, ci.create_time, ci.update_time,u.unit_id, u.building_id,u.community_id, u.unit_name, u.unit_no, u.unit_covered_area, u.unit_relative_proportion,
+    uci.unit_item_id,
+    u.unit_child_relative_proportion, u.unit_purpose, u.unit_position, u.unit_type, u.unit_full_address,
+    u.unit_status
   </sql>
   <sql id="With_User_Column_List" >
     ci.item_id, ci.item_no,ci.community_id, ci.item_name, ci.billing_mode, ci.alculation_method, ci.unit_price,ci.additional_cost, ci.late_fee,

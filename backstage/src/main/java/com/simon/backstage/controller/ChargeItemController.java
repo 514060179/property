@@ -71,6 +71,13 @@ public class ChargeItemController {
         return ReturnMsg.success(chargeItemService.del(itemId));
     }
 
+    @GetMapping("delUnitChargeItem")
+    @ApiOperation("删除单元的收费项目")
+    public ReturnMsg delUnitChargeItem(@RequestParam String unitItemId){
+        logger.info("删除单元的收费项目unitItemId={}", unitItemId);
+        return ReturnMsg.success(chargeItemService.delUnitChargeItem(unitItemId));
+    }
+
     @GetMapping("list")
     @ApiOperation("收费项目列表")
     public ReturnMsg<PageInfo<ChargeItem>> list(BaseQueryParam baseQueryParam, HttpServletRequest request){
@@ -107,8 +114,8 @@ public class ChargeItemController {
 
     @GetMapping("unitItemList")
     @ApiOperation("单元收费项目列表")
-    @ApiImplicitParam(name="unitId",value="单元id",required=true)
-    public ReturnMsg<ChargeItem> unitItemList(QueryWithIdParam queryWithIdParam, @RequestParam String unitId) {
+//    @ApiImplicitParam(name="unitId",value="单元id",required=true)
+    public ReturnMsg<ChargeItem> unitItemList(QueryWithIdParam queryWithIdParam) {
         logger.info("单元收费项目列表unitWithItem={}", JSONUtil.objectToJson(queryWithIdParam));
         return ReturnMsg.success(chargeItemService.unitItemList(queryWithIdParam));
     }
