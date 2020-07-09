@@ -160,6 +160,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                 int last = xssfRow.getLastCellNum();
                 String unitNo = null;
                 String unitId = null;
+                String userId = null;
                 for (int j = 0 ; j <= last ; j++){
                     //获取表头日期
                     if (i == 0 && j >= 4 && j % 2 == 0) {
@@ -187,7 +188,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         chargeItemRecord.setRecordStatus(1);
                         chargeItemRecord.setUnitId(unitId);
                         chargeItemRecord.setRecordType(recordType);
-//                        chargeItemRecord.setUserId();
+                        chargeItemRecord.setUserId(userId);
                         chargeItemRecord.setRecordTime(simpleDateFormat.parse(recordTime));
                         chargeItemRecord.setRecordActualAmount(new BigDecimal(amount));
                         chargeItemRecord.setRecordAmount(new BigDecimal(amount));
@@ -205,6 +206,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         Unit unit = unitMapper.selectByUnitNo(unitNo);
                         if (unit!=null){
                             unitId = unit.getUnitId();
+                            userId = unit.getOwnerId();
                         }
                     }else {
                         continue;

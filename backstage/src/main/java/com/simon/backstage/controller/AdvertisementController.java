@@ -37,10 +37,11 @@ public class AdvertisementController {
     @ApiOperation("添加广告")
     public ReturnMsg<Advertisement> add(@RequestBody Advertisement advertisement, HttpServletRequest request){
         logger.info("添加广告advertisement={}", JSONUtil.objectToJson(advertisement));
-        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (StringUtils.isEmpty(communityId) || ClaimsUtil.isMutilString(communityId)){//超级管理员或者经理
 
         }else{
-            advertisement.setCommunityId(ClaimsUtil.getCommunityId(request));
+            advertisement.setCommunityId(communityId);
         }
         return ReturnMsg.success(advertisementService.add(advertisement));
     }
@@ -49,7 +50,8 @@ public class AdvertisementController {
     @ApiOperation("修改广告")
     public ReturnMsg<Advertisement> upd(@RequestBody Advertisement advertisement, HttpServletRequest request){
         logger.info("修改广告advertisement={}", JSONUtil.objectToJson(advertisement));
-        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (!StringUtils.isEmpty(communityId) && !ClaimsUtil.isMutilString(communityId)) {//普通管理员
             advertisement.setCommunityId(null);
         }
         return ReturnMsg.success(advertisementService.upd(advertisement));

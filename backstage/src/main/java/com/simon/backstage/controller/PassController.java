@@ -47,7 +47,7 @@ public class PassController {
     	if(result != null){
     		String roles = managerService.findManagerAndRole(result.getManagerId());
     		String communityId = "";
-    		if (result.getType()==0){//普通管理员
+			if (result.getType() != 1) {//普通管理员
 				communityId = result.getCommunityId();
 			}
     		String token = JwtHelper.issueJwt(UUID.randomUUID().toString(), result.getManagerId(),

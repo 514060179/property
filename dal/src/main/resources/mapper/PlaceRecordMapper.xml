@@ -93,7 +93,11 @@
         CONCAT(IFNULL(c.community_name,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-        pr.community_id = #{communityId,jdbcType=VARCHAR}
+        pr.community_id in (
+        <foreach collection="baseClaims.communityId.split(',')" item="item" index="index" separator=",">
+          #{item}
+        </foreach>
+        )
       </if>
       <if test="communityNo != null">
         c.community_no = #{communityNo,jdbcType=VARCHAR}

@@ -40,10 +40,11 @@ public class NoticeController {
 	@ApiOperation("添加公告")
 	public ReturnMsg<Notice> add(@RequestBody Notice notice, HttpServletRequest request){
 		logger.info("添加公告notice={}", JSONUtil.objectToJson(notice));
-		if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+		String communityId = ClaimsUtil.getCommunityId(request);
+		if (StringUtils.isEmpty(communityId) || ClaimsUtil.isMutilString(communityId)){//超级管理员
 
 		}else{
-			notice.setCommunityId(ClaimsUtil.getCommunityId(request));
+			notice.setCommunityId(communityId);
 		}
 		return ReturnMsg.success(noticeService.add(notice));
 	}
@@ -59,7 +60,8 @@ public class NoticeController {
 	@ApiOperation("修改公告")
 	public ReturnMsg upd(@RequestBody Notice notice, HttpServletRequest request){
 		logger.info("修改公告notice={}", JSONUtil.objectToJson(notice));
-		if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+		String communityId = ClaimsUtil.getCommunityId(request);
+		if (!StringUtils.isEmpty(communityId) && !ClaimsUtil.isMutilString(communityId)){//普通管理员
 			notice.setCommunityId(null);
 		}
 		return ReturnMsg.success(noticeService.upd(notice));

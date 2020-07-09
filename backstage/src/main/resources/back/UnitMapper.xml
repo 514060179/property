@@ -73,7 +73,11 @@
         CONCAT(IFNULL(u.unit_name,''),IFNULL(b.building_name,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-      	AND c.community_id = #{communityId,jdbcType=VARCHAR}
+        and c.community_id in (
+        <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
+          #{item}
+        </foreach>
+        )
       </if>
       <if test="buildingId != null">
       	AND b.building_id = #{buildingId, jdbcType=VARCHAR}

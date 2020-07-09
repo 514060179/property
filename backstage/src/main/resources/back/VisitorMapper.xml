@@ -60,7 +60,11 @@
         CONCAT(IFNULL(v.visitor_name,''),IFNULL(v.visitor_phone,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
       <if test="communityId != null">
-      	AND v.community_id = #{communityId,jdbcType=VARCHAR}
+        and v.community_id in (
+        <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
+          #{item}
+        </foreach>
+        )
       </if>
     </where>
     order by v.create_time desc

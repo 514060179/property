@@ -72,7 +72,11 @@
       	AND c.user_id = #{userId,jdbcType=VARCHAR}
       </if>
       <if test="communityId != null">
-      	AND c.community_id = #{communityId, jdbcType=VARCHAR}
+        and c.community_id in (
+        <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
+          #{item}
+        </foreach>
+        )
       </if>
     </where>
     order by c.create_time desc

@@ -40,12 +40,13 @@ public class BuildingController {
     @ApiOperation("添加建筑")
     public ReturnMsg<Building> add(@RequestBody Building building, HttpServletRequest request){
         logger.info("添加建筑building={}", JSONUtil.objectToJson(building));
-        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (StringUtils.isEmpty(communityId) || ClaimsUtil.isMutilString(communityId)){//超级管理员或者经理
             if (StringUtils.isEmpty(building.getCommunityId())){
                 return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
             }
         }else{
-            building.setCommunityId(ClaimsUtil.getCommunityId(request));
+            building.setCommunityId(communityId);
         }
         return ReturnMsg.success(buildingService.add(building));
     }
@@ -53,7 +54,8 @@ public class BuildingController {
     @ApiOperation("修改建筑")
     public ReturnMsg<Building> upd(@RequestBody Building building, HttpServletRequest request){
         logger.info("修改建筑building={}", JSONUtil.objectToJson(building));
-        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (!StringUtils.isEmpty(communityId) && !ClaimsUtil.isMutilString(communityId)) {//普通管理员
             building.setCommunityId(null);
         }
         return ReturnMsg.success(buildingService.upd(building));

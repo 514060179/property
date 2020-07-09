@@ -33,7 +33,8 @@ public class PlaceController {
     @ApiOperation("添加场所")
     public ReturnMsg<Place> add(@RequestBody @Validated Place place, HttpServletRequest request){
         logger.info("添加场所place={}", JSONUtil.objectToJson(place));
-        if (StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//超级管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (StringUtils.isEmpty(communityId) || ClaimsUtil.isMutilString(communityId)){//超级管理员
             if (StringUtils.isEmpty(place.getCommunityId())){
                 return ReturnMsg.fail(Code.missingParameter,"缺少社区参数communityId");
             }
@@ -47,7 +48,8 @@ public class PlaceController {
     @ApiOperation("修改场所")
     public ReturnMsg<Place> upd(@RequestBody @Validated Place place, HttpServletRequest request){
         logger.info("修改场所place={}", JSONUtil.objectToJson(place));
-        if (!StringUtils.isEmpty(ClaimsUtil.getCommunityId(request))){//普通管理员
+        String communityId = ClaimsUtil.getCommunityId(request);
+        if (!StringUtils.isEmpty(communityId) && !ClaimsUtil.isMutilString(communityId)){//普通管理员
             place.setCommunityId(null);
         }
         return ReturnMsg.success(placeService.upd(place));
