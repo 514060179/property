@@ -6,6 +6,7 @@ import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.dal.vo.BaseQueryParam;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ChargeItemMapper {
@@ -32,4 +33,6 @@ public interface ChargeItemMapper {
     List<ChargeItem> unitItemList(BaseQueryParam baseQueryParam);
 
     List<UnitItemWithUser> cycleUnitItem();
+
+    ChargeItem selectByAmount(BigDecimal unitPrice);
 }

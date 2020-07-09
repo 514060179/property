@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 
 import com.simon.backstage.dao.*;
 import com.simon.backstage.domain.model.ChargeItem;
+import com.simon.backstage.domain.vo.*;
 import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.model.User;
 import java.util.Date;
-import com.simon.backstage.domain.vo.Community;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -15,9 +15,6 @@ import com.simon.backstage.domain.model.AdvanceMoney;
 import com.simon.backstage.domain.model.AdvanceRecord;
 import com.simon.backstage.domain.model.ChargeItemRecord;
 import com.simon.backstage.domain.model.Unit;
-import com.simon.backstage.domain.vo.QueryWithIdParam;
-import com.simon.backstage.domain.vo.UnitChargeVo;
-import com.simon.backstage.domain.vo.UnitCharges;
 import com.simon.backstage.service.ChargeItemRecordService;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
@@ -30,6 +27,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -179,7 +178,37 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         if ("".equals(recordTime) || "".equals(amount)){
                             continue;
                         }
+                        //绑定收费项目
+                        Unit unit = unitMapper.selectByUnitNo(unitNo);
+                        if(unit == null){
+                            continue;
+                        }
+                        ChargeItem chargeItem = chargeItemMapper.selectByAmount(new BigDecimal(amount));
+                        if(chargeItem == null){
+                            chargeItem = new ChargeItem();
+                            chargeItem.setItemId(UUIDUtil.uidString());
+                            chargeItem.setCommunityId(communityId);
+                            chargeItem.setItemName(recordType==1?"物業收費":"基金收費");
+                            chargeItem.setItemNo("Item_"+ new Date().getTime());
+                            chargeItem.setBillingMode(0);
+                            chargeItem.setAlculationMethod(0);
+                            chargeItem.setUnitPrice(new BigDecimal(amount));
+                            chargeItemMapper.insert(chargeItem);
+                        }
+                        //绑定到具体单元
+                        ChargeItem item = chargeItemMapper.selectByItemIdAndUnitId(chargeItem.getItemId(), unit.getUnitId());
+                        if(item == null || !item.getRepeat()){
+                            List<UnitWithItem> list = new ArrayList();
+                            UnitWithItem unitWithItem = new UnitWithItem();
+                            unitWithItem.setUnitItemId(UUIDUtil.uidString());
+                            unitWithItem.setUnitId(unit.getUnitId());
+                            unitWithItem.setItemId(chargeItem.getItemId());
+                            list.add(unitWithItem);
+                            chargeItemMapper.unitAddItem(list);
+                        }
+
                         ChargeItemRecord chargeItemRecord = new ChargeItemRecord();
+                        chargeItemRecord.setUnitItemId(unit.getUnitId());
                         chargeItemRecord.setRecordId(UUIDUtil.uidString());
                         chargeItemRecord.setUserId("");
                         chargeItemRecord.setRecordItemName("導入數據收費");
