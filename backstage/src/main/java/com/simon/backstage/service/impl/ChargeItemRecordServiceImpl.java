@@ -154,12 +154,54 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM");
 
             Map<String,String> map = new HashMap();
+            Map<String,ChargeItem> itemMap = new HashMap<>();
             for (int i = 0; i <= xssfSheet.getLastRowNum(); i++) {
                 XSSFRow xssfRow = xssfSheet.getRow(i);
+
                 int last = xssfRow.getLastCellNum();
                 String unitNo = null;
                 String unitId = null;
                 String userId = null;
+                String unitItemId = null;
+                //绑定收费项目
+                if(i != 0) {
+                    unitNo = getCellValue(xssfRow.getCell(0));//单元编号格
+                    Unit unit = unitMapper.selectByUnitNo(unitNo);
+                    if (unit == null) {
+                        continue;
+                    }
+                    String amount = getCellValue(xssfRow.getCell(2));
+                    ChargeItem chargeItem = null;
+                    if(!itemMap.containsKey(amount)){//保证整个excel表格相同单价只创建一个收费项
+                        chargeItem = new ChargeItem();
+                        chargeItem.setItemId(UUIDUtil.uidString());
+                        chargeItem.setCommunityId(communityId);
+                        chargeItem.setItemName(recordType == 1 ? "物業收費" : "基金收費");
+                        chargeItem.setItemNo("Item_" + new Date().getTime());
+                        chargeItem.setBillingMode(0);
+                        chargeItem.setAlculationMethod(0);
+                        chargeItem.setUnitPrice(new BigDecimal(amount));
+                        chargeItemMapper.insert(chargeItem);
+                        itemMap.put(amount, chargeItem);
+                    }else{
+                        chargeItem = itemMap.get(amount);
+                    }
+
+                    //绑定到具体单元
+                    //ChargeItem item = chargeItemMapper.selectByItemIdAndUnitId(chargeItem.getItemId(), unit.getUnitId());
+                    //unitItemId = item.getRepeat();
+                    //if(item == null || unitItemId == null){
+                        List<UnitWithItem> list = new ArrayList();
+                        UnitWithItem unitWithItem = new UnitWithItem();
+                        unitItemId = UUIDUtil.uidString();
+                        unitWithItem.setUnitItemId(unitItemId);
+                        unitWithItem.setUnitId(unit.getUnitId());
+                        unitWithItem.setItemId(chargeItem.getItemId());
+                        list.add(unitWithItem);
+                        chargeItemMapper.unitAddItem(list);
+                    //}
+                }
+
                 for (int j = 0 ; j <= last ; j++){
                     //获取表头日期
                     if (i == 0 && j >= 4 && j % 2 == 0) {
@@ -178,36 +220,6 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         getCellValue(m);
                         if ("".equals(recordTime) || "".equals(amount)){
                             continue;
-                        }
-                        //绑定收费项目
-                        Unit unit = unitMapper.selectByUnitNo(unitNo);
-                        if(unit == null){
-                            continue;
-                        }
-                        ChargeItem chargeItem = chargeItemMapper.selectByAmount(new BigDecimal(amount));
-                        if(chargeItem == null){
-                            chargeItem = new ChargeItem();
-                            chargeItem.setItemId(UUIDUtil.uidString());
-                            chargeItem.setCommunityId(communityId);
-                            chargeItem.setItemName(recordType==1?"物業收費":"基金收費");
-                            chargeItem.setItemNo("Item_"+ new Date().getTime());
-                            chargeItem.setBillingMode(0);
-                            chargeItem.setAlculationMethod(0);
-                            chargeItem.setUnitPrice(new BigDecimal(amount));
-                            chargeItemMapper.insert(chargeItem);
-                        }
-                        //绑定到具体单元
-                        ChargeItem item = chargeItemMapper.selectByItemIdAndUnitId(chargeItem.getItemId(), unit.getUnitId());
-                        String unitItemId = item.getRepeat();
-                        if(item == null || unitItemId == null){
-                            List<UnitWithItem> list = new ArrayList();
-                            UnitWithItem unitWithItem = new UnitWithItem();
-                            unitItemId = UUIDUtil.uidString();
-                            unitWithItem.setUnitItemId(unitItemId);
-                            unitWithItem.setUnitId(unit.getUnitId());
-                            unitWithItem.setItemId(chargeItem.getItemId());
-                            list.add(unitWithItem);
-                            chargeItemMapper.unitAddItem(list);
                         }
 
                         ChargeItemRecord chargeItemRecord = new ChargeItemRecord();
