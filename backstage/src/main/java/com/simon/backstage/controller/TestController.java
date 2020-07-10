@@ -143,7 +143,7 @@ public class TestController {
             }
             System.out.println(user);
             //获取单元id
-            Unit unit = unitMapper.selectByUnitNo(unitNo.getStringCellValue());
+            Unit unit = unitMapper.selectByUnitNo(unitNo.getStringCellValue(),communityId.getStringCellValue());
             if (unit!=null){
 //                userUnit.setUserUnitId(UUIDUtil.uidString());
                 userUnit.setUserId(map.get(user.getName()).getUserId());

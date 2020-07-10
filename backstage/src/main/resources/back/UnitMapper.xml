@@ -56,7 +56,7 @@
     inner join building b on b.building_id=u.building_id
     inner join community c on c.community_id=b.community_id
     left join user_unit uu2 on u.unit_id=uu2.unit_id and uu2.owner=1 and uu2.convincing=1
-    where u.unit_no = #{unitNo,jdbcType=VARCHAR}
+    where u.unit_no = #{unitNo,jdbcType=VARCHAR} and u.community_id = #{communityId,jdbcType=VARCHAR}
   </select>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.simon.dal.vo.BaseQueryParam" >
     SELECT

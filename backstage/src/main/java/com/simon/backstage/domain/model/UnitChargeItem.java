@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
-@ApiModel(value = "AdvanceMoney", description = "预付账户")
+@ApiModel(value = "UnitChargeItem", description = "单位关联收费项")
 public class UnitChargeItem {
     private String unitItemId;
     @ApiModelProperty(value = "项目id",example = "23722e5355b741234882qwee4fade372")

@@ -216,7 +216,7 @@ public class UserServiceImpl implements UserService {
         }
         System.out.println(user);
         //获取单元id
-        Unit unit = unitMapper.selectByUnitNo(unitNo.getStringCellValue());
+        Unit unit = unitMapper.selectByUnitNo(unitNo.getStringCellValue(),communityId);
         if (unit!=null){
             userUnit.setUserId(map.get(user.getName()).getUserId());
             userUnit.setUnitId(unit.getUnitId());

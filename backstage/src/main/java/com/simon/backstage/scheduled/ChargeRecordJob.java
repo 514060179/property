@@ -41,7 +41,7 @@ public class ChargeRecordJob {
     /**
      * 周期性记录插入
      */
-    @Scheduled(cron = "0 1/10 * * * ? ")
+    @Scheduled(cron = "1/30 * * * * ? ")
     public void job1(){
         logger.info("定时任务周期性记录插入");
         //周期性收费项目
@@ -77,7 +77,7 @@ public class ChargeRecordJob {
             if (maps.get(unitItemWithUser.getUserId())!=null){
                 AdvanceMoney am = maps.get(unitItemWithUser.getUserId());
                 if (maps.get(unitItemWithUser.getUserId()).getAdvanceAmount().compareTo(recordAmount.add(additionalCost == null ? new BigDecimal(0) : additionalCost)) >= 0) {//账户余额足够支付
-                    chargeItemRecord.setRecordStatus(Status.recordStatusPre);//预支付
+                    chargeItemRecord.setRecordStatus(Status.recordStatusPaid);//已支付
                     advanceMoney.setAdvanceAmount(recordAmount.add(additionalCost == null ? new BigDecimal(0) : additionalCost));
                     advanceRecord.setAdvanceAmount(recordAmount.add(additionalCost == null ? new BigDecimal(0) : additionalCost));
                     chargeItemRecord.setRecordActualAmount(recordAmount.add(additionalCost));//实际收取金额
@@ -108,6 +108,8 @@ public class ChargeRecordJob {
             }
             chargeItemRecord.setRecordRemark(remarkSb.toString());
             chargeItemRecord.setRecordAmount(additionalCost==null?recordAmount:recordAmount.add(additionalCost));
+            chargeItemRecord.setCommunityId(unitItemWithUser.getChargeItem().getCommunityId());
+            chargeItemRecord.setUnitNo(unitItemWithUser.getUnit().getUnitNo());
             chargeItemRecords.add(chargeItemRecord);
         });
         try {

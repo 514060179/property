@@ -74,7 +74,10 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
         if (!Objects.isNull(advanceRecords)&&advanceRecords.size()>0)
             advanceRecordMapper.batchAdd(advanceRecords);
         //3.批量加入收费记录
-        chargeItemRecordMapper.addBatch(chargeItemRecordList);
+//        chargeItemRecordMapper.addBatch(chargeItemRecordList);
+        chargeItemRecordList.forEach(chargeItemRecord -> {
+            chargeItemRecordMapper.insertSelective(chargeItemRecord);
+        });
         //4.更新所有临时订单
         chargeItemMapper.updateAllTemporary();
         return 1;
@@ -166,7 +169,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                 //绑定收费项目
                 if(i != 0) {
                     unitNo = getCellValue(xssfRow.getCell(0));//单元编号格
-                    Unit unit = unitMapper.selectByUnitNo(unitNo);
+                    Unit unit = unitMapper.selectByUnitNo(unitNo,communityId);
                     if (unit == null) {
                         continue;
                     }
@@ -245,7 +248,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         //获取单位号
                         unitNo = getCellValue(xssfCell);
                         //
-                        Unit unit = unitMapper.selectByUnitNo(unitNo);
+                        Unit unit = unitMapper.selectByUnitNo(unitNo,communityId);
                         if (unit!=null){
                             unitId = unit.getUnitId();
                             userId = unit.getOwnerId();
@@ -277,7 +280,7 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
         unitChargeVoList.forEach(unitChargeVo -> {
             try{
                 if (unitChargeVo.getId() == null) {
-                    Unit unit = unitMapper.selectByUnitNo(unitChargeVo.getyUnit());
+                    Unit unit = unitMapper.selectByUnitNo(unitChargeVo.getyUnit(),communityId);
                     ChargeItemRecord chargeItemRecord = new ChargeItemRecord();
                     chargeItemRecord.setRecordId(UUIDUtil.uidString());
                     chargeItemRecord.setUserId("");
