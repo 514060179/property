@@ -198,10 +198,12 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         }
                         //绑定到具体单元
                         ChargeItem item = chargeItemMapper.selectByItemIdAndUnitId(chargeItem.getItemId(), unit.getUnitId());
-                        if(item == null || !item.getRepeat()){
+                        String unitItemId = item.getRepeat();
+                        if(item == null || unitItemId == null){
                             List<UnitWithItem> list = new ArrayList();
                             UnitWithItem unitWithItem = new UnitWithItem();
-                            unitWithItem.setUnitItemId(UUIDUtil.uidString());
+                            unitItemId = UUIDUtil.uidString();
+                            unitWithItem.setUnitItemId(unitItemId);
                             unitWithItem.setUnitId(unit.getUnitId());
                             unitWithItem.setItemId(chargeItem.getItemId());
                             list.add(unitWithItem);
@@ -209,9 +211,8 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         }
 
                         ChargeItemRecord chargeItemRecord = new ChargeItemRecord();
-                        chargeItemRecord.setUnitItemId(unit.getUnitId());
+                        chargeItemRecord.setUnitItemId(unitItemId);
                         chargeItemRecord.setRecordId(UUIDUtil.uidString());
-                        chargeItemRecord.setUserId("");
                         chargeItemRecord.setRecordItemName("導入數據收費");
                         chargeItemRecord.setRecordDate(date);
                         chargeItemRecord.setRecordStatus(1);

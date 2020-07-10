@@ -37,7 +37,7 @@ public class ChargeItem {
     @ApiModelProperty(hidden = true)
     private Date updateTime;
     //是否存在
-    private boolean repeat;
+    private String repeat;
 
     @ApiModelProperty(hidden = true)
     private Community community;
@@ -172,11 +172,11 @@ public class ChargeItem {
         this.updateTime = updateTime;
     }
 
-    public boolean getRepeat() {
+    public String getRepeat() {
         return repeat;
     }
 
-    public void setRepeat(boolean repeat) {
+    public void setRepeat(String repeat) {
         this.repeat = repeat;
     }
 

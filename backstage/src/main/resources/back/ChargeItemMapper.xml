@@ -108,7 +108,7 @@
 
   <select id="selectByItemIdAndUnitId" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
-    <include refid="Base_Column_List" />,IF(uci.unit_item_id IS NOT NULL, 1, 0) as `repeat`
+    <include refid="Base_Column_List" />,IFNULL(uci.unit_item_id, NULL) AS `repeat`
     from charge_item ci inner join community c on ci.community_id=c.community_id
     left join unit_charge_item uci on ci.item_id=uci.item_id and uci.unit_id=#{unitId,jdbcType=VARCHAR}
     where ci.item_id = #{itemId,jdbcType=VARCHAR}

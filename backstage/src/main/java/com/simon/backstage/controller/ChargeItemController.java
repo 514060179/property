@@ -106,7 +106,7 @@ public class ChargeItemController {
         unitWithItemList.forEach((unitWithItem)->{
             //获取收费项目
             ChargeItem chargeItem = chargeItemService.findItemIdAndUnitId(unitWithItem.getItemId(),unitWithItem.getUnitId());
-            if (!chargeItem.getRepeat()){
+            if (chargeItem.getRepeat() == null){
                 unitWithItem.setType(chargeItem.getBillingMode());
                 unitWithItem.setUnitItemId(UUIDUtil.uidString());
             }

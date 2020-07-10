@@ -99,7 +99,7 @@ public class PlaceRecordServiceImpl implements PlaceRecordService {
         chargeItem.setLateDate(0);
         chargeItem.setFormula("");
         chargeItem.setDescribe("盯場收費列入物業收費");
-        chargeItem.setRepeat(false);
+        chargeItem.setRepeat(null);
         chargeItemMapper.insertSelective(chargeItem);
         UnitChargeItem unitChargeItem = new UnitChargeItem();
         String unitItemId = UUIDUtil.uidString();
