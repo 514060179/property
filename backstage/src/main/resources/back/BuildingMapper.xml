@@ -97,7 +97,11 @@
       left join unit u on b.building_id=u.building_id
     <where>
       <if test="communityId != null">
-        AND c.community_id = #{communityId,jdbcType=VARCHAR}
+        AND c.community_id in (
+        <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
+          #{item}
+        </foreach>
+        )
       </if>
     </where>
   </select>
@@ -109,7 +113,11 @@
       left join unit u on c.community_id = u.community_id AND u.unit_type=3
     <where>
       <if test="communityId != null">
-        AND c.community_id = #{communityId,jdbcType=VARCHAR}
+        AND c.community_id in (
+        <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
+          #{item}
+        </foreach>
+        )
       </if>
     </where>
   </select>
