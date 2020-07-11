@@ -84,7 +84,7 @@
     select
     <include refid="Base_Column_List"/>
     from manager m
-    inner join community c on m.community_id=c.community_id
+    left join community c on m.community_id=c.community_id
     <where>
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(m.`NAME`,''),IFNULL(m.username,''),IFNULL(m.email,'')) LIKE CONCAT('%', #{keyword}, '%')
