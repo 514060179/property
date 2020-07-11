@@ -37,7 +37,7 @@
   <select id="findManager" resultMap="BaseResultMap" parameterType="com.simon.backstage.domain.model.Manager">
   	select
   	<include refid="Base_Column_List"/>
-  	from manager m inner join community c on m.community_id=c.community_id
+  	from manager m left join community c on m.community_id=c.community_id
   	<where>
   	  <if test="managerId != null" >
         m.manager_id = #{managerId,jdbcType=VARCHAR}
