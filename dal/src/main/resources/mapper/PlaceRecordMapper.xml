@@ -94,7 +94,7 @@
       </if>
       <if test="communityId != null">
         pr.community_id in (
-        <foreach collection="baseClaims.communityId.split(',')" item="item" index="index" separator=",">
+        <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
           #{item}
         </foreach>
         )
