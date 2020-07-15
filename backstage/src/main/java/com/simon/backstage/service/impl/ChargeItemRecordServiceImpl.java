@@ -176,10 +176,11 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                     String amount = getCellValue(xssfRow.getCell(2));
                     ChargeItem chargeItem = null;
                     if(!itemMap.containsKey(amount)){//保证整个excel表格相同单价只创建一个收费项
+                        String itemName = recordType == 0 ? "物業收費" : "基金收費";
                         chargeItem = new ChargeItem();
                         chargeItem.setItemId(UUIDUtil.uidString());
                         chargeItem.setCommunityId(communityId);
-                        chargeItem.setItemName(recordType == 0 ? "物業收費" : "基金收費");
+                        chargeItem.setItemName(itemName+amount);
                         chargeItem.setItemNo("item_" + new Date().getTime());
                         chargeItem.setBillingMode(0);
                         chargeItem.setAlculationMethod(0);
