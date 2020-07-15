@@ -25,6 +25,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -55,6 +57,8 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
     private AdvanceRecordMapper advanceRecordMapper;
     @Autowired
     private UnitMapper unitMapper;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
     public ChargeItemRecord add(ChargeItemRecord chargeItemRecord) {
         chargeItemRecord.setRecordId(UUIDUtil.uidString());
@@ -76,7 +80,12 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
         //3.批量加入收费记录
 //        chargeItemRecordMapper.addBatch(chargeItemRecordList);
         chargeItemRecordList.forEach(chargeItemRecord -> {
-            chargeItemRecordMapper.insertSelective(chargeItemRecord);
+            try {
+                chargeItemRecordMapper.insertSelective(chargeItemRecord);
+            } catch (Exception e) {
+                logger.error("批量执行物业收费任务入库错误！", e);
+                e.printStackTrace();
+            }
         });
         //4.更新所有临时订单
         chargeItemMapper.updateAllTemporary();

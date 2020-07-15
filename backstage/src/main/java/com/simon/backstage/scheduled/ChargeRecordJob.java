@@ -41,7 +41,7 @@ public class ChargeRecordJob {
     /**
      * 周期性记录插入
      */
-    @Scheduled(cron = "1/30 * * * * ? ")
+    @Scheduled(cron = "0 0 2 * * ?")
     public void job1(){
         logger.info("定时任务周期性记录插入");
         //周期性收费项目
