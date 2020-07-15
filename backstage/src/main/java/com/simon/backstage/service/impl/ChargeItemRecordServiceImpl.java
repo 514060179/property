@@ -179,8 +179,8 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
                         chargeItem = new ChargeItem();
                         chargeItem.setItemId(UUIDUtil.uidString());
                         chargeItem.setCommunityId(communityId);
-                        chargeItem.setItemName(recordType == 1 ? "物業收費" : "基金收費");
-                        chargeItem.setItemNo("Item_" + new Date().getTime());
+                        chargeItem.setItemName(recordType == 0 ? "物業收費" : "基金收費");
+                        chargeItem.setItemNo("item_" + new Date().getTime());
                         chargeItem.setBillingMode(0);
                         chargeItem.setAlculationMethod(0);
                         chargeItem.setUnitPrice(new BigDecimal(amount));
