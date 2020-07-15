@@ -120,7 +120,7 @@ public class ChargeRecordJob {
         }
     }
     private String recordDate(){
-        return new SimpleDateFormat("yyyy/MM").format(new Date());
+        return new SimpleDateFormat("yyyy年MM月").format(new Date());
     }
 
 
