@@ -1,5 +1,6 @@
 package com.simon.backstage.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.ChargeItemMapper;
 import com.simon.backstage.dao.UnitChargeItemMapper;
@@ -66,6 +67,7 @@ public class ChargeItemServiceImpl implements ChargeItemService {
 
     @Override
     public PageInfo<ChargeItem> list(BaseQueryParam baseQueryParam) {
+        PageHelper.startPage(baseQueryParam.getPageNo(),baseQueryParam.getPageSize());
         return new PageInfo<>(chargeItemMapper.selectByCondition(baseQueryParam));
     }
 
