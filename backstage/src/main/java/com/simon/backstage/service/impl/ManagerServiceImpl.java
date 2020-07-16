@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.simon.backstage.dao.ManagerMapper;
 import com.simon.backstage.domain.model.Manager;
+import com.simon.backstage.domain.model.Role;
 import com.simon.backstage.service.ManagerService;
 import com.simon.dal.dao.CommunityMapper;
 import com.simon.dal.util.EncryUtil;
@@ -80,6 +81,13 @@ public class ManagerServiceImpl implements ManagerService{
 	@Override
 	public Manager findOne(String managerId) {
 		// TODO Auto-generated method stub
-		return managerMapper.selectByPrimaryKey(managerId);
-	}
+        //获取角色
+        String roles = managerMapper.findManagerAndRoleIds(managerId);
+        Manager manager = managerMapper.selectByPrimaryKey(managerId);
+        if (manager != null) {
+            manager.setRoleIds(roles);
+            return manager;
+        }
+        return null;
+    }
 }

@@ -288,4 +288,14 @@
     SELECT role_id as roleId,role_default as roleDefault, role_name as roleName,role_description as roleDescription
     FROM role
   </select>
+
+  <select id="findManagerAndRoleIds" resultType="java.lang.String" parameterType="java.lang.String">
+  	SELECT
+      	concat(group_concat(r.role_id),'') AS roleId
+  	FROM
+	  	user_role ur
+		LEFT JOIN role r ON r.role_id = ur.role_id
+  	WHERE
+		ur.manager_id = #{userId,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -39,6 +39,8 @@ public interface ManagerMapper {
     
     String findManagerAndRole(String managerId);
 
+    String findManagerAndRoleIds(String managerId);
+
     int addUserRole(List<Map<String,Object>> list);
 
     List<Role> findAllRole();

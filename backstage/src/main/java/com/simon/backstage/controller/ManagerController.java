@@ -62,7 +62,9 @@ public class ManagerController {
     @PostMapping("upd")
     @ApiOperation("修改管理员")
     public ReturnMsg<Manager> upd(@RequestBody @Validated Manager manager){
-    	manager.setPassword(EncryUtil.getMD5(manager.getPassword()));
+        if (manager.getPassword() != null && !"".equals(manager.getPassword().trim())) {
+            manager.setPassword(EncryUtil.getMD5(manager.getPassword()));
+        }
         logger.info("修改管理员manager={}", JSONUtil.objectToJson(manager));
         return ReturnMsg.success(managerService.upd(manager));
     }
