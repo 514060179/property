@@ -121,7 +121,7 @@
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(ci.item_no,''),IFNULL(ci.item_name,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
-      <if test="communityId != null">
+      <if test="communityId != null and communityId != ''">
         AND ci.community_id in (
         <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
           #{item}

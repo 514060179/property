@@ -77,7 +77,7 @@
       <if test="keyword!=null and keyword!=''">
         CONCAT(IFNULL(b.building_name,'')) LIKE CONCAT('%', #{keyword}, '%')
       </if>
-      <if test="communityId != null">
+      <if test="communityId != null and communityId != ''">
         AND b.community_id in (
         <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
           #{item}
@@ -96,7 +96,7 @@
       left join building b on c.community_id=b.community_id
       left join unit u on b.building_id=u.building_id
     <where>
-      <if test="communityId != null">
+      <if test="communityId != null and communityId != ''">
         AND c.community_id in (
         <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
           #{item}
@@ -112,7 +112,7 @@
     from community c
       left join unit u on c.community_id = u.community_id AND u.unit_type=3
     <where>
-      <if test="communityId != null">
+      <if test="communityId != null and communityId != ''">
         AND c.community_id in (
         <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
           #{item}

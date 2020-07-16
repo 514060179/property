@@ -71,7 +71,7 @@
       <if test="userId != null">
       	AND c.user_id = #{userId,jdbcType=VARCHAR}
       </if>
-      <if test="communityId != null">
+      <if test="communityId != null and communityId != ''">
         and c.community_id in (
         <foreach collection="communityId.split(',')" item="item" index="index" separator=",">
           #{item}

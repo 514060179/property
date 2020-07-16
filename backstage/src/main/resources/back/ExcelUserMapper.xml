@@ -35,7 +35,7 @@
       inner join community c on u.community_id=c.community_id
       left join advance_money am on u.`user_id` = am.`user_id`
     <where>
-        <if test="communityId != null">
+        <if test="communityId != null and communityId != ''">
             AND u.community_id = #{communityId, jdbcType=VARCHAR}
         </if>
         <if test="recordStatus !=null">
