@@ -1,6 +1,7 @@
 package com.simon.backstage.scheduled;
 
 import com.simon.backstage.constant.Status;
+import com.simon.backstage.dao.ChargeItemRecordMapper;
 import com.simon.backstage.domain.model.AdvanceMoney;
 import com.simon.backstage.domain.model.AdvanceRecord;
 import com.simon.backstage.domain.model.ChargeItemRecord;
@@ -15,8 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,13 +31,16 @@ import java.util.stream.Collectors;
  * @author fengtianying
  * @date 2019/2/19 9:04
  */
-@Component
+@RestController
 @EnableScheduling
+@RequestMapping("job")
 public class ChargeRecordJob {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ChargeItemRecordService chargeItemRecordService;
+    @Autowired
+    private ChargeItemRecordMapper chargeItemRecordMapper;
     @Autowired
     private ChargeItemService chargeItemService;
     @Autowired
@@ -42,6 +50,7 @@ public class ChargeRecordJob {
      * 周期性记录插入
      */
     @Scheduled(cron = "0 0 10 * * ?")
+    @GetMapping("charge1")
     public void job1(){
         logger.info("定时任务周期性记录插入");
         //周期性收费项目
@@ -119,9 +128,76 @@ public class ChargeRecordJob {
             e.printStackTrace();
         }
     }
-    private String recordDate(){
-        return new SimpleDateFormat("yyyy年MM月").format(new Date());
+
+    private String recordDate() {
+        return simpleDateFormat.format(new Date());
     }
 
+    /**
+     * 周期性补全所有未缴费记录
+     */
+    @Scheduled(cron = "0 0 9 * * ?")
+    @GetMapping("charge2")
+    public void job2() {
+        logger.info("周期性补全所有未缴费记录========开始=========");
+        List<ChargeItemRecord> list = chargeItemRecordService.selectMaxRecord();
+        if (list != null && list.size() > 0) {
+            list.forEach(chargeItemRecord -> {
+                List<String> recordDates = getDateList(chargeItemRecord.getRecordDate());
+                if (recordDates != null) {
+                    List<ChargeItemRecord> chargeItemRecordList = new ArrayList();
+                    recordDates.forEach(date->{
+                        ChargeItemRecord c = new ChargeItemRecord();
+                        c.setRecordId(UUIDUtil.uidString());
+                        c.setUnitNo(chargeItemRecord.getUnitNo());
+                        c.setCommunityId(chargeItemRecord.getCommunityId());
+                        c.setUnitId(chargeItemRecord.getUnitId());
+                        c.setUnitItemId(chargeItemRecord.getUnitItemId());
+                        c.setRecordActualAmount(new BigDecimal(0));
+                        c.setRecordAmount(chargeItemRecord.getRecordActualAmount());
+                        c.setRecordType(0);
+                        c.setRecordStatus(0);
+                        c.setRecordRemark("補全未收費紀錄");
+                        c.setRecordItemName("補全未收費紀錄");
+                        c.setUserId(chargeItemRecord.getUserId());
+                        c.setRecordDate(date);
+                        chargeItemRecordList.add(c);
+                    });
+                    try {
+                        chargeItemRecordMapper.addBatch(chargeItemRecordList);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        logger.info("周期性补全所有未缴费记录========结束=========");
+    }
 
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy年MM月");
+
+    private List<String> getDateList(String dateStr) {
+        List<String> result = new ArrayList<>();
+        try {
+            Date date = simpleDateFormat.parse(dateStr);
+            Date now = new Date();
+            if (now.getTime() < date.getTime()) {//小于当前日期
+                return null;
+            }
+            while (date.getTime() <= now.getTime()) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                calendar.add(Calendar.MONTH, 1);
+                date = calendar.getTime();
+                result.add(simpleDateFormat.format(date));
+            }
+            result.remove(result.size() - 1);//移除两个月
+            result.remove(result.size() - 1);
+            return result;
+        } catch (ParseException e) {
+            logger.error("日期转换异常======", dateStr);
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

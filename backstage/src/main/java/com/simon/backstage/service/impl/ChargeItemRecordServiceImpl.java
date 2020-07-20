@@ -324,6 +324,11 @@ public class ChargeItemRecordServiceImpl implements ChargeItemRecordService {
         return 1;
     }
 
+    @Override
+    public List<ChargeItemRecord> selectMaxRecord() {
+        return chargeItemRecordMapper.selectMaxRecord();
+    }
+
     public String getCellValue(XSSFCell cell) {
         String strCell = null;
         if (cell != null) {

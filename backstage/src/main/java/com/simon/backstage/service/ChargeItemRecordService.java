@@ -90,4 +90,11 @@ public interface ChargeItemRecordService {
      * @return
      */
     int saveList(String communityId,Integer recordType,List<UnitChargeVo> unitChargeVoList);
+
+    /**
+     * 获取各单位最大日期数收费记录
+     * @return
+     */
+    List<ChargeItemRecord> selectMaxRecord();
+
 }

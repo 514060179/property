@@ -21,6 +21,8 @@ public interface ChargeItemRecordMapper {
 
     List<ChargeItemRecord> selectByCondition(BaseQueryParam baseQueryParam);
 
+    List<ChargeItemRecord> selectMaxRecord();
+
     List<ChargeItemRecord> selectExcelCondition(@Param("communityId") String communityId,@Param("recordType") int recordType,@Param("dateStart") String dateStart,@Param("dateEnd") String dateEnd);
 
     int updateByPrimaryKeySelective(ChargeItemRecord record);
