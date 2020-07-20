@@ -368,5 +368,6 @@
         INNER JOIN unit_charge_item uci ON a.unit_id = uci.unit_id
         INNER JOIN charge_item ci ON uci.item_id = ci.item_id
         INNER JOIN unit u ON uci.unit_id = u.unit_id
+    where DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 MONTH),'%y年%m月')>a.record_date;
   </select>
 </mapper>
