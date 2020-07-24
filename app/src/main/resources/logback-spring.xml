@@ -2,7 +2,12 @@
 <configuration>
 
     <!-- 定义日志文件 输出位置 -->
-    <property name="log.home_dir" value="/simon/server/property/logs/app"/>
+    <springProfile name="dev">
+        <property name="log.home_dir" value="/simon/server/property/logs/app"/>
+    </springProfile>
+    <springProfile name="local">
+        <property name="log.home_dir" value="../logs/app"/>
+    </springProfile>
     <!-- 日志最大的历史 30天 -->
     <property name="log.maxHistory" value="30"/>
     <!--等级-->
