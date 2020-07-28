@@ -121,8 +121,9 @@ public class ChargeItemRecordController {
             })*/
     public ReturnMsg importExcel(MultipartFile file, @RequestParam String communityId, @RequestParam(required = false, defaultValue = "0") int recordType) {
         //同一个社区不能多次导入
-        BaseQueryParam baseQueryParam = new QueryWithIdParam();
+        QueryWithIdParam baseQueryParam = new QueryWithIdParam();
         baseQueryParam.setCommunityId(communityId);
+        baseQueryParam.setRecordType(recordType);
         PageInfo<ChargeItemRecord> chargeItemRecordPageInfo = chargeItemRecordService.list(baseQueryParam);
         if (chargeItemRecordPageInfo.getList() != null && !chargeItemRecordPageInfo.getList().isEmpty()) {
             return ReturnMsg.fail(Code.error,"同一个社区不能多次导入");
