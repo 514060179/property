@@ -114,7 +114,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public int del(String userId) {
         //todo 删除对应的关系
-        return userMapper.deleteByPrimaryKey(userId);
+        String[] ids = userId.split(",");
+        int i = 0;
+        for (String id : ids) {
+            userMapper.deleteByPrimaryKey(id);
+            i++;
+        }
+        return i;
     }
 
     @Override

@@ -66,8 +66,15 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
+    @Transactional
     public int del(String unitId) {
-        return unitMapper.deleteByPrimaryKey(unitId);
+        String[] ids = unitId.split(",");
+        int i = 0;
+        for (String id : ids) {
+            unitMapper.deleteByPrimaryKey(id);
+            i++;
+        }
+        return i;
     }
 
     @Override
