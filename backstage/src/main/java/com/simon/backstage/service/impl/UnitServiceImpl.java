@@ -166,6 +166,7 @@ public class UnitServiceImpl implements UnitService {
                         case "商业":unitType=1;break;
                         case "商業":unitType=1;break;
                         case "轻型汽车/电单车":unitType=2;break;
+                        case "輕型汽車/電單車":unitType=2;break;
                         case "住宅":unitType=3;break;
                     }
                     int statusInt = 0;//0空置1租赁2装修中3入
