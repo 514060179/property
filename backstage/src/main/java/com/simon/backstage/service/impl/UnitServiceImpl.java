@@ -162,11 +162,12 @@ public class UnitServiceImpl implements UnitService {
                     unit.setUnitRelativeProportion(new BigDecimal(baifenbi.getNumericCellValue()).multiply(new BigDecimal(100)));
                     unit.setUnitPosition(String.valueOf(weizhi.getStringCellValue()));
                     int unitType = 2;//1商业2轻型汽车/电单车3住宅
-                    switch (yongtu.getStringCellValue()){
+
+                    switch (yongtu.getStringCellValue().replaceAll("\\/","")){
                         case "商业":unitType=1;break;
                         case "商業":unitType=1;break;
-                        case "轻型汽车/电单车":unitType=2;break;
-                        case "輕型汽車/電單車":unitType=2;break;
+                        case "轻型汽车电单车":unitType=2;break;
+                        case "輕型汽車電單車":unitType=2;break;
                         case "住宅":unitType=3;break;
                     }
                     int statusInt = 0;//0空置1租赁2装修中3入
