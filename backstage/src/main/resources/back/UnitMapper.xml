@@ -89,7 +89,7 @@
       	AND u.unit_type = #{unitType, jdbcType=INTEGER}
       </if>
     </where>
-    order by b.create_time,u.create_time
+    order by b.create_time desc , u.unit_no asc
   </select>
   <select id="getUnitByUserId" resultMap="BaseResultMap">
     select u.unit_id, u.building_id,u.child_id,u.community_id, u.unit_name, u.unit_no, u.unit_covered_area, u.unit_relative_proportion,
