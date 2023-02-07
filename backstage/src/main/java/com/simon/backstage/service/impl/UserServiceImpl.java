@@ -227,7 +227,7 @@ public class UserServiceImpl implements UserService {
             userUnit.setUserId(map.get(user.getName()).getUserId());
             userUnit.setUnitId(unit.getUnitId());
             userUnit.setTitle((int)yequan.getNumericCellValue());
-            if (unit.getOwner()){
+            if (userUnit.getTitle()==0){
                 userUnit.setOwner(false);
                 userUnit.setConvincing(false);
             }else{
