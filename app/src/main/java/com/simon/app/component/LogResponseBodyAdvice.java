@@ -28,7 +28,7 @@ public class LogResponseBodyAdvice implements ResponseBodyAdvice {
     @Nullable
     @Override
     public Object beforeBodyWrite(@Nullable Object object, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-//        logger.info("响应参数:{}", JSONUtil.objectToJson(object));
+        logger.info("响应参数:{}", JSONUtil.objectToJson(object));
         return object;
     }
 }

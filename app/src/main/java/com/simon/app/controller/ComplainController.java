@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.simon.app.model.vo.ReturnMsg;
 import com.simon.app.service.ComplainService;
 import com.simon.app.util.ClaimsUtil;
+import com.simon.app.util.JSONUtil;
 import com.simon.dal.model.Complain;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseClaims;
@@ -14,6 +15,8 @@ import io.swagger.annotations.ApiOperation;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +29,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/complain")
 @Api(tags = "complain", description = "投诉/报修")
 public class ComplainController {
+
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private ComplainService complainService;
@@ -48,11 +54,12 @@ public class ComplainController {
     @PostMapping("add")
     @ApiOperation("添加")
     public ReturnMsg<Complain> add(@RequestBody Complain complain,HttpServletRequest request){
-    	complain.setComplainId(UUIDUtil.uidString());
-    	complain.setUserId(ClaimsUtil.getUserId(request));
-    	complain.setCommunityId(ClaimsUtil.getCommunityId(request));
+        logger.info("添加获取参数：{}", JSONUtil.objectToJson(complain));
+        complain.setComplainId(UUIDUtil.uidString());
+        complain.setUserId(ClaimsUtil.getUserId(request));
+        complain.setCommunityId(ClaimsUtil.getCommunityId(request));
         complain.setComplainStatus("2");
     	complainService.addComplain(complain);
-    	return ReturnMsg.success(complainService.findOne(complain.getComplainId()));
+    	return ReturnMsg.success(complain);
     }
 }

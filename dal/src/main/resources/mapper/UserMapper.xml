@@ -34,7 +34,7 @@
   </sql>
   <select id="selectUser" resultMap="BaseResultMap" parameterType="com.simon.dal.model.User" >
   	select 
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,u.community_id
     from user u inner join community c on u.community_id=c.community_id
     <where>
 	    <if test="userId != null" >
@@ -98,7 +98,7 @@
       	AND b.building_id = #{buildingId, jdbcType=VARCHAR}
       </if>
     </where>
-    group by(u.user_id) order by u.create_time desc
+    group by(u.user_id) order by u.username
   </select>
 
   <select id="excrlUserList" resultType="java.util.HashMap">
