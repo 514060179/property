@@ -108,8 +108,8 @@ public class ChargeItemController {
             ChargeItem chargeItem = chargeItemService.findItemIdAndUnitId(unitWithItem.getItemId(),unitWithItem.getUnitId());
             if (chargeItem.getRepeat() == null){
                 unitWithItem.setType(chargeItem.getBillingMode());
-                unitWithItem.setUnitItemId(UUIDUtil.uidString());
             }
+            unitWithItem.setUnitItemId(UUIDUtil.uidString());
         });
         return ReturnMsg.success(chargeItemService.unitAddItem(unitWithItemList));
     }

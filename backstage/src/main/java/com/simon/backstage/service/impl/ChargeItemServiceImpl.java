@@ -9,11 +9,15 @@ import com.simon.backstage.domain.vo.QueryWithIdParam;
 import com.simon.backstage.domain.vo.UnitItemWithUser;
 import com.simon.backstage.domain.vo.UnitWithItem;
 import com.simon.backstage.service.ChargeItemService;
+import com.simon.backstage.util.JSONUtil;
 import com.simon.dal.util.UUIDUtil;
 import com.simon.dal.vo.BaseQueryParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,6 +26,8 @@ import java.util.List;
  */
 @Service
 public class ChargeItemServiceImpl implements ChargeItemService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private ChargeItemMapper chargeItemMapper;
@@ -73,19 +79,24 @@ public class ChargeItemServiceImpl implements ChargeItemService {
 
     @Override
     public int unitAddItem(List<UnitWithItem> unitWithItemList) {
-        for (int i = 0; i < unitWithItemList.size(); i++) {
+        Iterator<UnitWithItem> it = unitWithItemList.iterator();
+        while (it.hasNext()){
+            UnitWithItem unitWithItem = it.next();
             QueryWithIdParam queryWithIdParam = new QueryWithIdParam();
-            queryWithIdParam.setUnitId(unitWithItemList.get(i).getUnitId());
+            queryWithIdParam.setUnitId(unitWithItem.getUnitId());
             List<ChargeItem> items = chargeItemMapper.unitItemList(queryWithIdParam);
             for (ChargeItem item : items) {
-                if(item.getItemId().equals(unitWithItemList.get(i).getItemId())){
+                logger.info("item.getItemId()={},unitWithItemList.get(i).getItemId()={}", item.getItemId(), unitWithItem.getItemId());
+                if(item.getItemId().equals(unitWithItem.getItemId())){
                     //表示已关联该收费项目
-                    unitWithItemList.remove(i);
+                    logger.info("移除关联收费项 item={}", JSONUtil.objectToJson(item));
+                    it.remove();
                     break;
                 }
             }
         }
         if(unitWithItemList.size() > 0){
+            logger.info("添加绑定收费项 list={}", JSONUtil.objectToJson(unitWithItemList));
             return chargeItemMapper.unitAddItem(unitWithItemList);
         }
         return 0;
